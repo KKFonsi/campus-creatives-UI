@@ -1,0 +1,1868 @@
+Continue the existing “PUP: Campus Creatives” interface project created in Phases 1, 2, and 3.
+
+This phase is still for interface design only.
+
+Do not add:
+
+- Backend
+- Database
+- API routes
+- Authentication logic
+- Real moderation logic
+- Real admin actions
+- Real file processing
+- Data persistence
+- Analytics computation
+- Email or notification delivery
+
+Use static sample data and front-end-only prototype interactions.
+
+Do not rebuild or redesign completed Phase 1, Phase 2, or Phase 3 screens.
+
+Preserve the existing:
+
+- PUP-inspired maroon and gold theme
+- Typography
+- Navigation
+- Cards
+- Buttons
+- Inputs
+- Tables
+- Badges
+- Status colors
+- Spacing
+- Corner-radius system
+- Shadows
+- Icons
+- Responsive behavior
+- Existing routes
+- Existing front-end prototype interactions
+
+Phase 4 should feel like the same product, extended into moderator and admin interfaces.
+
+Create both:
+
+1. Desktop website interface
+2. Mobile-responsive interface
+
+The desktop version should provide the full moderation and administration experience.
+
+The mobile version should focus on essential moderator tasks and simplified admin oversight. Do not force dense desktop tables into mobile layouts.
+
+==================================================
+PHASE 4 PURPOSE
+==================================================
+
+Phase 4 focuses on moderation, content safety, featured works, event management, and system administration.
+
+The interfaces should support:
+
+- Reviewing pending student submissions
+- Checking ownership and copyright information
+- Approving submissions
+- Rejecting submissions
+- Requesting revisions
+- Managing reports
+- Selecting featured works
+- Managing events and open calls
+- Managing colleges and creative categories
+- Viewing users and creator accounts
+- Viewing platform activity and analytics summaries
+- Reviewing official content
+- Managing recognition labels
+
+The design must remain:
+
+- Clear
+- Fair
+- Structured
+- Transparent
+- Campus-centered
+- Accessible
+- Consistent with the student experience
+- Suitable for a university environment
+
+It must not feel like:
+
+- A generic corporate admin template
+- A dark technical control panel
+- A social media moderation console
+- A police-like enforcement system
+- A cluttered spreadsheet
+- An unrelated dashboard product
+
+The moderation experience should feel responsible and supportive, not hostile.
+
+==================================================
+PHASE 4 SCREENS
+==================================================
+
+Create these screens:
+
+MODERATOR SCREENS
+
+1. Moderator Dashboard
+2. Pending Reviews
+3. Submission Review
+4. Request Revision Modal
+5. Reject Submission Modal
+6. Approval Confirmation
+7. Reports Dashboard
+8. Report Detail
+9. Featured Works Management
+10. Official Content Review
+11. Moderation History
+
+ADMIN SCREENS
+
+12. Admin Dashboard
+13. User Management
+14. User Detail
+15. College Management
+16. Creative Category Management
+17. Event Management
+18. Create or Edit Event
+19. Recognition and Badge Management
+20. Analytics Overview
+21. System Activity Log
+22. Role and Permission Overview
+
+Do not add real functionality.
+
+All actions should be visual prototype interactions using static data.
+
+==================================================
+PUP-INSPIRED VISUAL IDENTITY
+==================================================
+
+Continue using the exact established color system.
+
+Primary colors:
+
+- PUP Maroon: #800000
+- Deep Maroon: #5B0000
+- Dark Maroon: #3D0000
+- PUP Gold: #FFB81C
+- Warm Gold: #D89B00
+- Soft Gold: #FFF2CC
+
+Supporting colors:
+
+- Crimson Accent: #A71930
+- Soft Maroon Surface: #F5E7E7
+
+Neutral colors:
+
+- Main Background: #F8F6F1
+- Warm White: #FFFDF8
+- Card Background: #FFFFFF
+- Secondary Surface: #F1EDE6
+- Primary Text: #211B1B
+- Secondary Text: #665D5D
+- Muted Text: #8A8080
+- Border: #DDD5CC
+- Dark Surface: #251717
+
+Status colors:
+
+- Draft: #6B7280
+- Pending Review: #B7791F
+- Approved: #2F7D57
+- Needs Revision: #C76A24
+- Rejected: #B63737
+- Featured: gold background with dark maroon text
+- Flagged: #A71930
+- Archived: #6D5F5F
+- Information: #356B9C
+
+Color rules:
+
+- Maroon remains the main action and navigation color.
+- Gold is for featured items, recognition, selected states, and official highlights.
+- Use status colors with icons and text labels.
+- Avoid large blocks of bright status colors.
+- Use warm cream and white surfaces.
+- Maintain readable contrast.
+- Do not introduce a separate dashboard color theme.
+
+==================================================
+ROLE-BASED NAVIGATION
+==================================================
+
+Create a moderator and admin navigation structure.
+
+MODERATOR DESKTOP NAVIGATION
+
+Use a left sidebar or compact administrative navigation with:
+
+- Dashboard
+- Pending Reviews
+- Reports
+- Featured Works
+- Official Content
+- Moderation History
+
+Top bar:
+
+- Search
+- Notifications
+- Role label
+- User avatar
+- Switch to Student View
+
+ADMIN DESKTOP NAVIGATION
+
+Use:
+
+- Dashboard
+- Users
+- Colleges
+- Categories
+- Events
+- Recognition
+- Reports
+- Analytics
+- Activity Log
+- Roles
+
+Top bar:
+
+- Global Search
+- Notifications
+- Admin role label
+- User avatar
+- Switch to Student View
+
+Keep the original Campus Creatives wordmark visible.
+
+MOBILE MODERATOR NAVIGATION
+
+Use a compact top header and bottom navigation:
+
+- Dashboard
+- Reviews
+- Reports
+- More
+
+Inside More:
+
+- Featured Works
+- History
+- Official Content
+- Switch to Student View
+
+MOBILE ADMIN NAVIGATION
+
+Use a simplified mobile structure:
+
+- Overview
+- Users
+- Events
+- More
+
+Inside More:
+
+- Colleges
+- Categories
+- Recognition
+- Analytics
+- Activity Log
+- Roles
+
+Do not attempt to fit all desktop navigation items in a mobile bottom bar.
+
+==================================================
+SCREEN 1 — MODERATOR DASHBOARD
+==================================================
+
+Create a responsive Moderator Dashboard.
+
+Page title:
+
+“Moderator Dashboard”
+
+Supporting text:
+
+“Review student submissions, manage reports, and help maintain a safe and supportive creative community.”
+
+Summary cards:
+
+- Pending Reviews
+- Needs Revision
+- Reported Content
+- Approved Today
+- Featured Works
+- Open Reports
+
+Use realistic static counts.
+
+Example:
+
+- Pending Reviews: 24
+- Needs Revision: 8
+- Reported Content: 6
+- Approved Today: 12
+- Featured Works: 18
+- Open Reports: 4
+
+Dashboard sections:
+
+1. Review Queue
+2. Priority Reports
+3. Recent Decisions
+4. Submissions by Category
+5. Submissions by College
+6. Review Status Summary
+7. Featured Candidates
+
+Review Queue card should show:
+
+- Work thumbnail
+- Title
+- Creator
+- College
+- Category
+- Submission date
+- Time waiting
+- Status
+- Open Review action
+
+Priority Report card should show:
+
+- Report reason
+- Work title
+- Reporter
+- Date
+- Severity label
+- Open Report action
+
+Recent Decisions should show:
+
+- Approved
+- Needs Revision
+- Rejected
+- Featured
+
+Desktop:
+
+- Summary cards in a wide grid
+- Review queue and reports side by side
+- Small charts or visual summaries
+
+Mobile:
+
+- Two-column summary cards
+- Stacked review cards
+- Horizontal sections
+- One main action per card
+
+==================================================
+SCREEN 2 — PENDING REVIEWS
+==================================================
+
+Create a full review queue.
+
+Page title:
+
+“Pending Reviews”
+
+Include:
+
+- Search
+- Filter controls
+- Sort
+- Result count
+- Bulk selection
+- Review list
+- Empty state
+- Loading state
+
+Filters:
+
+- College
+- Program
+- Category
+- Content type
+- Event
+- Submission date
+- Ownership concern
+- Accessibility issue
+- Review priority
+
+Sort options:
+
+- Oldest First
+- Newest First
+- Priority
+- College
+- Category
+
+Review item content:
+
+- Thumbnail
+- Work title
+- Creator
+- College
+- Program
+- Category
+- Content type
+- Submission reference
+- Date submitted
+- Waiting time
+- Ownership confirmation
+- Event association
+- Accessibility status
+- Open Review
+
+Priority labels:
+
+- Standard
+- Time Sensitive
+- Event Deadline
+- Reported
+- Copyright Concern
+
+Desktop:
+
+- Table-card hybrid
+- Sticky filter bar
+- Optional right-side summary
+
+Mobile:
+
+- Stacked review cards
+- Filter bottom sheet
+- Compact metadata
+- Open Review primary action
+
+Prototype interactions:
+
+- Apply filters
+- Remove filters
+- Sort queue
+- Select review
+- Open Submission Review
+
+==================================================
+SCREEN 3 — SUBMISSION REVIEW
+==================================================
+
+Create a complete moderator review interface.
+
+Use sample submission:
+
+Title:
+“Digital Sinta”
+
+Creator:
+“Rafael Mendoza”
+
+College:
+“College of Computer and Information Sciences”
+
+Program:
+“Bachelor of Science in Information Technology”
+
+Category:
+“Digital Art”
+
+Submission reference:
+“CC-WORK-2026-0148”
+
+Status:
+“Pending Review”
+
+Desktop layout:
+
+Use three main areas:
+
+1. Media and project preview
+2. Submission details
+3. Moderation controls
+
+Media area:
+
+- Cover image
+- Supporting images
+- Video or audio placeholder
+- Media navigation
+- Full-screen preview
+- Alt text
+- Captions
+
+Submission details:
+
+- Title
+- Short description
+- Artist statement
+- Content type
+- Category
+- Tags
+- Tools or medium
+- Collaborators
+- College and program
+- Event association
+- Visibility settings
+- Submission date
+- Submission reference
+
+Ownership section:
+
+- Ownership confirmation
+- Collaborator permission
+- Copyright declaration
+- Reference material disclosure
+- External source links
+- Moderator concern checkbox
+
+Accessibility section:
+
+- Alt text status
+- Captions
+- Transcript
+- Audio description
+- Readability
+- Accessibility issue note
+
+Creator summary:
+
+- Avatar
+- Name
+- College
+- Previous approved works
+- Previous revision requests
+- Previous reports
+- View Creator Profile
+
+Moderation controls:
+
+- Approve
+- Approve and Feature
+- Request Revision
+- Reject
+- Save Review Notes
+- Flag for Senior Review
+
+Review checklist:
+
+- Content is appropriate
+- Ownership confirmation is complete
+- Description is clear
+- Categories are accurate
+- Media quality is acceptable
+- Accessibility details are complete
+- Event requirements are met
+- Community guidelines are followed
+
+Include a private moderator notes field.
+
+Mobile:
+
+- Full-width media
+- Collapsible detail sections
+- Sticky moderation action bar
+- Bottom sheets for decisions
+- Review checklist in expandable sections
+
+==================================================
+SCREEN 4 — REQUEST REVISION MODAL
+==================================================
+
+Create a reusable Request Revision modal or mobile bottom sheet.
+
+Title:
+
+“Request revisions”
+
+Include issue categories:
+
+- Media Quality
+- Ownership
+- Copyright
+- Description
+- Classification
+- Accessibility
+- Event Requirement
+- Community Guidelines
+- Other
+
+Allow multiple issues.
+
+Fields:
+
+- Moderator feedback
+- Required changes
+- Optional suggestions
+- Revision deadline
+- Allow resubmission toggle
+
+Use supportive language.
+
+Example feedback:
+
+“Please add alt text to all images and clarify whether the reference photographs were taken by you. The third image should also be replaced with a higher-resolution version.”
+
+Actions:
+
+- Cancel
+- Save Draft Feedback
+- Send Revision Request
+
+Confirmation state:
+
+“Revision request sent.”
+
+Do not use hostile or accusatory language.
+
+==================================================
+SCREEN 5 — REJECT SUBMISSION MODAL
+==================================================
+
+Create a careful rejection interface.
+
+Title:
+
+“Reject submission”
+
+Reasons:
+
+- Clear copyright violation
+- Stolen or unauthorized work
+- Inappropriate content
+- Does not meet event requirements
+- Repeated unresolved guideline issue
+- Misleading information
+- Other
+
+Include:
+
+- Required explanation
+- Internal moderator note
+- Allow new submission toggle
+- Escalate to senior moderator toggle
+
+Warning panel:
+
+“Rejection should be used only when revision is not appropriate.”
+
+Actions:
+
+- Cancel
+- Reject Submission
+
+Confirmation:
+
+“Submission rejected.”
+
+Use a confirmation step before final rejection.
+
+==================================================
+SCREEN 6 — APPROVAL CONFIRMATION
+==================================================
+
+Create an approval modal.
+
+Title:
+
+“Approve this work?”
+
+Show:
+
+- Work title
+- Creator
+- Category
+- College
+- Portfolio visibility
+- Event association
+
+Options:
+
+- Approve for public display
+- Add to creator portfolio
+- Include in Explore
+- Include in college showcase
+- Nominate for feature
+- Add moderator note
+
+Actions:
+
+- Cancel
+- Approve Work
+
+Success state:
+
+“Work approved and published.”
+
+For Approve and Feature:
+
+Show a secondary confirmation asking for:
+
+- Feature type
+- Feature duration
+- Featured section
+- Recognition badge
+
+==================================================
+SCREEN 7 — REPORTS DASHBOARD
+==================================================
+
+Create a Reports Dashboard.
+
+Page title:
+
+“Reports and Content Safety”
+
+Summary cards:
+
+- Open Reports
+- Under Review
+- Resolved
+- Escalated
+- Copyright Reports
+- Comment Reports
+
+Tabs:
+
+- All
+- Work Reports
+- Comment Reports
+- Creator Reports
+- Copyright
+- Resolved
+
+Filters:
+
+- Report type
+- Reason
+- Status
+- Date
+- College
+- Priority
+
+Report cards should include:
+
+- Reported item
+- Thumbnail or avatar
+- Reason
+- Reporter
+- Reported creator
+- Date
+- Status
+- Priority
+- Open Report
+
+Use sample report reasons:
+
+- Suspected stolen work
+- Copyright concern
+- Inappropriate content
+- Harassment
+- Misleading information
+- Spam
+
+Mobile:
+
+- Summary cards
+- Horizontal tabs
+- Stacked report cards
+- Filter sheet
+
+==================================================
+SCREEN 8 — REPORT DETAIL
+==================================================
+
+Create a full Report Detail page.
+
+Include:
+
+- Report reference
+- Report type
+- Status
+- Priority
+- Date submitted
+- Reporter
+- Reported user
+- Reported work or comment
+- Original content preview
+- Report reason
+- Explanation
+- Supporting screenshots or evidence placeholders
+- Related reports
+- Previous moderation actions
+- Internal notes
+
+Actions:
+
+- Dismiss Report
+- Request More Information
+- Hide Content Temporarily
+- Remove Content
+- Warn User
+- Escalate
+- Resolve Report
+
+For copyright concerns, show:
+
+- Claimed original source
+- Submission ownership declaration
+- External reference links
+- Comparison preview
+- Senior review recommendation
+
+Use clear confirmation modals for destructive actions.
+
+Mobile:
+
+- Stacked content
+- Expandable evidence
+- Sticky action menu
+- Decision bottom sheet
+
+==================================================
+SCREEN 9 — FEATURED WORKS MANAGEMENT
+==================================================
+
+Create a page for managing curated featured content.
+
+Page title:
+
+“Featured Works”
+
+Sections:
+
+- Current Homepage Features
+- Featured Creator
+- College Highlights
+- Moderator’s Picks
+- Event Highlights
+- Feature Candidates
+- Scheduled Features
+- Previous Features
+
+Featured item card:
+
+- Thumbnail
+- Work title
+- Creator
+- College
+- Feature type
+- Start date
+- End date
+- Recognition badge
+- Remove or Edit Feature
+
+Feature types:
+
+- Work of the Week
+- Creator of the Month
+- College Highlight
+- Moderator’s Pick
+- Rising Creator
+- Event Finalist
+- Showcase Winner
+- Campus Highlight
+
+Create Add Feature modal:
+
+- Select work
+- Select feature type
+- Select display location
+- Start date
+- End date
+- Recognition label
+- Short editorial caption
+- Preview feature card
+
+Include:
+
+- Maximum active feature warning
+- Scheduling conflict warning
+- Preview on Home action
+
+Mobile:
+
+- Stacked feature cards
+- Feature type filter
+- Add Feature bottom sheet
+- Compact schedule view
+
+==================================================
+SCREEN 10 — OFFICIAL CONTENT REVIEW
+==================================================
+
+Create a review area for official posts submitted by authorized college or organization representatives.
+
+Page title:
+
+“Official Content Review”
+
+Content examples:
+
+- College event announcement
+- Competition winners
+- Organization showcase
+- Campus creative announcement
+- Official award recognition
+
+Official submission card should include:
+
+- Source organization
+- Authorized representative
+- Post title
+- Post type
+- Date submitted
+- Verification label
+- Event association
+- Review status
+- Open Review
+
+Review page should show:
+
+- Source identity
+- Authorized role
+- Official label preview
+- Content
+- Media
+- Event details
+- Target audience
+- Publish date
+- Expiration date
+
+Actions:
+
+- Approve
+- Request Revision
+- Reject
+- Schedule Publication
+- Mark as Campus Highlight
+
+Clearly distinguish official content from individual student work.
+
+==================================================
+SCREEN 11 — MODERATION HISTORY
+==================================================
+
+Create a searchable moderation history.
+
+Page title:
+
+“Moderation History”
+
+Filters:
+
+- Moderator
+- Action
+- Status
+- Date
+- Category
+- College
+- Submission reference
+
+History item:
+
+- Date and time
+- Moderator
+- Action
+- Work or report
+- Previous status
+- New status
+- Short note
+- View Record
+
+Actions:
+
+- Approved
+- Requested Revision
+- Rejected
+- Featured
+- Removed Content
+- Resolved Report
+- Escalated
+
+Desktop:
+
+- Searchable table
+- Expandable rows
+- Export placeholder
+
+Mobile:
+
+- Timeline-style cards
+- Filter sheet
+- Expandable detail
+
+==================================================
+SCREEN 12 — ADMIN DASHBOARD
+==================================================
+
+Create a high-level Admin Dashboard.
+
+Page title:
+
+“System Administration”
+
+Supporting text:
+
+“Manage platform records, academic units, events, users, recognition, and system-wide activity.”
+
+Summary cards:
+
+- Total Users
+- Active Creators
+- Approved Works
+- Pending Reviews
+- Open Events
+- Reports
+- Colleges
+- Categories
+
+Dashboard sections:
+
+- User Growth
+- Creative Works by Category
+- Activity by College
+- Event Participation
+- Moderation Status
+- Recent Administrative Actions
+- System Alerts
+- Most Active Colleges
+- Popular Creative Categories
+
+Use visual charts and summaries with static data.
+
+Avoid dense analytics overload.
+
+Mobile:
+
+- Two-column summary cards
+- Compact charts
+- Stacked sections
+- View Details links
+
+==================================================
+SCREEN 13 — USER MANAGEMENT
+==================================================
+
+Create a User Management interface.
+
+Page title:
+
+“Users”
+
+Tabs:
+
+- All Users
+- Students
+- Creators
+- Moderators
+- College Representatives
+- Admins
+- Restricted Accounts
+
+Search by:
+
+- Name
+- PUP email
+- Student number
+- College
+- Role
+
+Filters:
+
+- Role
+- College
+- Account status
+- Creator status
+- Date joined
+
+User row or card:
+
+- Avatar
+- Name
+- Email
+- Student number
+- College
+- Program
+- Role
+- Account status
+- Approved works count
+- Date joined
+- View User
+
+Account statuses:
+
+- Active
+- Pending Verification
+- Restricted
+- Suspended
+- Archived
+
+Prototype actions:
+
+- View User
+- Change Role
+- Restrict Account
+- Restore Account
+- Reset Profile Flags placeholder
+
+Do not include permanent deletion without a strong confirmation interface.
+
+Mobile:
+
+- Stacked user cards
+- Search
+- Filter sheet
+- Role badge
+- One primary action
+
+==================================================
+SCREEN 14 — USER DETAIL
+==================================================
+
+Create an administrative user detail page.
+
+Include:
+
+- Profile information
+- Student number
+- Email
+- College
+- Program
+- Role
+- Account status
+- Date joined
+- Last active
+- Creator profile link
+- Approved works
+- Pending submissions
+- Reports received
+- Reports submitted
+- Events joined
+- Recognition badges
+- Moderation history
+- Account notes
+
+Admin actions:
+
+- Change Role
+- Restrict Account
+- Suspend Account
+- Restore Account
+- Send Warning placeholder
+- View Public Profile
+- View Submissions
+
+Use confirmation modals for restrictions and suspensions.
+
+==================================================
+SCREEN 15 — COLLEGE MANAGEMENT
+==================================================
+
+Create a College Management interface using the exact college list established in earlier phases.
+
+Include all:
+
+- CAF
+- CADBE
+- CAL
+- CBA
+- COC
+- CCIS
+- COED
+- CE
+- CHK
+- CL
+- CPSPA
+- CS
+- CSSD
+- CTHTM
+- ITECH
+- GS
+
+Page content:
+
+- Search college
+- College cards or table
+- Abbreviation
+- Full name
+- Description
+- Creator count
+- Work count
+- Event count
+- Featured work count
+- Status
+- Edit College
+
+Create Edit College modal:
+
+- College name
+- Abbreviation
+- Description
+- Creative focus
+- Cover image placeholder
+- Official representative
+- Visibility
+- Save Changes
+
+Do not change the official college names in sample data.
+
+==================================================
+SCREEN 16 — CREATIVE CATEGORY MANAGEMENT
+==================================================
+
+Create a category management interface.
+
+Categories:
+
+- Visual Art
+- Digital Art
+- Photography
+- Graphic Design
+- Music
+- Dance
+- Spoken Word
+- Poetry
+- Writing
+- Film and Video
+- Animation
+- Theater and Performance
+- Crafts
+- Fashion and Cosplay
+- UI/UX and Multimedia
+- Other
+
+Include:
+
+- Category name
+- Description
+- Icon
+- Work count
+- Active status
+- Featured status
+- Display order
+
+Actions:
+
+- Add Category
+- Edit Category
+- Disable Category
+- Reorder
+- Merge Category placeholder
+
+Create Add or Edit Category modal.
+
+Include a warning when disabling a category with existing works.
+
+==================================================
+SCREEN 17 — EVENT MANAGEMENT
+==================================================
+
+Create an Event Management page.
+
+Page title:
+
+“Events Management”
+
+Tabs:
+
+- All
+- Draft
+- Open
+- Closing Soon
+- Upcoming
+- Ongoing
+- Completed
+- Archived
+
+Event row or card:
+
+- Cover
+- Event title
+- Event code
+- Organizer
+- Event type
+- Deadline
+- Status
+- Entry count
+- Featured entry count
+- View
+- Edit
+- Duplicate
+- Archive
+
+Use existing sample events:
+
+- PUP Likha 2026
+- Sinta Short Film Festival
+- Guhit Iskolar Digital Art Competition
+- Sta. Mesa Through the Lens
+- PUP Spoken Word Night
+- Creative Tech Challenge 2026
+- COC Media Festival
+- Foundation Week Poster-Making Contest
+- Tinig ng PUP Music Showcase
+- Polytechnic Design Week
+- Iskolar Literary Folio Open Call
+- PUP Campus Mural Project
+
+Mobile:
+
+- Stacked event cards
+- Status chips
+- Search
+- Filter sheet
+- Edit action sheet
+
+==================================================
+SCREEN 18 — CREATE OR EDIT EVENT
+==================================================
+
+Create a multi-section event form.
+
+Sections:
+
+1. Basic Information
+2. Organizer
+3. Categories and Eligibility
+4. Dates and Deadline
+5. Venue or Online Setup
+6. Submission Requirements
+7. Judging Criteria
+8. Recognition and Prizes
+9. Cover and Media
+10. Publication Settings
+11. Review
+
+Fields:
+
+- Event title
+- Event code
+- Description
+- Event type
+- Organizer
+- Contact information
+- Eligible colleges
+- Eligible programs
+- Creative categories
+- Start date
+- Submission deadline
+- Review period
+- Announcement date
+- Event date
+- Venue
+- Online link placeholder
+- Rules
+- Required files
+- Maximum entries
+- Individual or team
+- Judging criteria
+- Recognition
+- Prizes
+- Cover image
+- Event status
+- Publish date
+- Visibility
+
+Actions:
+
+- Save Draft
+- Preview Event
+- Publish Event
+- Cancel
+
+Use a progress indicator.
+
+Mobile:
+
+- One focused section at a time
+- Sticky actions
+- Preview screen
+- Confirmation modal
+
+==================================================
+SCREEN 19 — RECOGNITION AND BADGE MANAGEMENT
+==================================================
+
+Create a recognition management page.
+
+Recognition examples:
+
+- Artwork of the Week
+- Creator of the Month
+- Moderator’s Pick
+- College Highlight
+- Rising Creator
+- Event Finalist
+- Showcase Winner
+- Community Choice
+- Best Event Entry
+- Campus Highlight
+- Consistent Creator
+- Multi-Talent Creator
+- Community Supporter
+
+Badge card:
+
+- Badge icon
+- Name
+- Description
+- Badge color
+- Awarding criteria
+- Active status
+- Number awarded
+- Edit
+
+Create Add or Edit Badge modal:
+
+- Badge name
+- Description
+- Icon
+- Color
+- Criteria
+- Display priority
+- Expiration behavior
+- Automatic or manual award
+- Active status
+
+Keep badge design consistent with the existing PUP visual identity.
+
+==================================================
+SCREEN 20 — ANALYTICS OVERVIEW
+==================================================
+
+Create a visual analytics page using static prototype data.
+
+Page title:
+
+“Platform Analytics”
+
+Date filters:
+
+- Last 7 Days
+- Last 30 Days
+- Semester
+- Academic Year
+- Custom Range
+
+Sections:
+
+- Total approved works
+- Active creators
+- Appreciations
+- Saves
+- Comments
+- Event participation
+- Pending reviews
+- Reports
+- Popular categories
+- Active colleges
+- Featured works
+- Creator growth
+
+Suggested charts:
+
+- Works submitted over time
+- Works by category
+- Creators by college
+- Event participation
+- Moderation outcomes
+- Engagement summary
+- Most saved works
+- Most active categories
+
+Use clear chart labels.
+
+Do not use color alone to identify data.
+
+Mobile:
+
+- One chart per section
+- Horizontal scrolling only when unavoidable
+- Summary cards
+- Compact date selector
+
+==================================================
+SCREEN 21 — SYSTEM ACTIVITY LOG
+==================================================
+
+Create a system-wide activity log.
+
+Include:
+
+- Date and time
+- User
+- Role
+- Action
+- Record type
+- Record name
+- Previous value
+- New value
+- IP or device placeholder if needed
+- View Details
+
+Filters:
+
+- Role
+- Action type
+- Record type
+- Date
+- User
+
+Example actions:
+
+- User role changed
+- Event published
+- Category disabled
+- Submission approved
+- Report resolved
+- Badge created
+- College description updated
+- Account restricted
+
+Use expandable rows.
+
+==================================================
+SCREEN 22 — ROLE AND PERMISSION OVERVIEW
+==================================================
+
+Create a clear role management interface.
+
+Roles:
+
+- Student
+- Moderator
+- College Representative
+- Organization Admin
+- System Admin
+- Guest
+
+Show a permission matrix with sections:
+
+- View Public Content
+- Submit Work
+- Manage Own Portfolio
+- Create Official Posts
+- Create Events
+- Review Submissions
+- Manage Reports
+- Feature Works
+- Manage Users
+- Manage Colleges
+- Manage Categories
+- View Analytics
+- Manage Roles
+
+Use:
+
+- Check icons
+- Limited access labels
+- No access indicators
+- Explanatory tooltips
+
+Create Edit Role modal with permission toggles.
+
+Add warning:
+
+“Role changes affect access across Campus Creatives.”
+
+No real role update is required.
+
+==================================================
+REQUIRED MODALS AND DIALOGS
+==================================================
+
+Create reusable interface patterns for:
+
+- Approve Submission
+- Approve and Feature
+- Request Revision
+- Reject Submission
+- Resolve Report
+- Remove Content
+- Restrict User
+- Suspend User
+- Archive Event
+- Disable Category
+- Publish Event
+- Save Changes
+- Unsaved Changes
+- Confirmation Success
+- Action Failed visual state
+
+Destructive actions must:
+
+- Use clear warning text
+- Explain consequences
+- Require confirmation
+- Avoid using only color
+- Use specific button labels
+
+Avoid vague labels such as “Yes” or “Confirm.”
+
+Use labels such as:
+
+- Reject Submission
+- Remove Content
+- Suspend Account
+- Archive Event
+
+==================================================
+REQUIRED VISUAL STATES
+==================================================
+
+Create examples for:
+
+- Default dashboard
+- Empty review queue
+- Filtered review queue
+- Loading review
+- Review in progress
+- Approved
+- Needs Revision
+- Rejected
+- Featured
+- Flagged
+- Open report
+- Under review report
+- Resolved report
+- Escalated report
+- Active user
+- Restricted user
+- Suspended user
+- Draft event
+- Open event
+- Completed event
+- Archived event
+- Active category
+- Disabled category
+- Successful save
+- Failed action
+- Unsaved changes
+- Mobile action sheet
+- Desktop modal
+- Empty analytics
+- No search results
+
+==================================================
+HCI AND ACCESSIBILITY
+==================================================
+
+Follow these principles:
+
+- Keep moderator decisions transparent.
+- Clearly show the current submission or report status.
+- Show the consequences of actions.
+- Use supportive language for revision requests.
+- Use rejection only as a clearly final action.
+- Keep private moderator notes visually separate from student-facing feedback.
+- Clearly distinguish student content from official content.
+- Use text and icons alongside status colors.
+- Keep filters visible and removable.
+- Preserve search and filter context.
+- Use breadcrumbs on deep desktop pages.
+- Use clear Back behavior on mobile.
+- Maintain visible focus states.
+- Use accessible table structures.
+- Provide labels for all form controls.
+- Keep mobile touch targets at least 44px.
+- Use confirmation for destructive actions.
+- Avoid overcrowding tables.
+- Allow tables to transform into cards on mobile.
+- Keep analytics readable and not overly decorative.
+- Avoid making moderation feel punitive.
+- Keep user privacy information appropriately limited.
+
+==================================================
+RESPONSIVE RULES
+==================================================
+
+Desktop target:
+
+- 1440px width
+- Maximum content width: 1200–1280px
+
+Tablet target:
+
+- 768px width
+
+Mobile target:
+
+- 390px width
+- Side margins around 16px
+
+Desktop:
+
+- Sidebar navigation
+- Multi-column dashboards
+- Searchable tables
+- Side-by-side review layouts
+- Persistent moderation controls where useful
+
+Mobile:
+
+- Compact header
+- Bottom navigation
+- Stacked cards instead of wide tables
+- Filter bottom sheets
+- Sticky decision actions
+- Collapsible detail sections
+- One chart per row
+- No horizontal overflow unless required for a permission matrix
+- Large touch targets
+
+==================================================
+PROTOTYPE CONNECTIONS
+==================================================
+
+Connect these flows:
+
+Moderator Review:
+
+Moderator Dashboard → Pending Reviews → Submission Review
+
+Approval:
+
+Submission Review → Approve → Approval Confirmation → Approved State
+
+Approval and Feature:
+
+Submission Review → Approve and Feature → Feature Setup → Success
+
+Revision:
+
+Submission Review → Request Revision → Confirmation → Needs Revision State
+
+Rejection:
+
+Submission Review → Reject Submission → Confirmation → Rejected State
+
+Reports:
+
+Reports Dashboard → Report Detail → Resolve or Escalate → Confirmation
+
+Featured Works:
+
+Moderator Dashboard → Featured Works → Add Feature → Preview → Save
+
+Admin Users:
+
+Admin Dashboard → Users → User Detail → Restrict or Change Role
+
+Admin Events:
+
+Admin Dashboard → Events → Edit Event → Preview → Publish
+
+Colleges:
+
+Admin Dashboard → Colleges → Edit College → Save
+
+Categories:
+
+Admin Dashboard → Categories → Edit Category → Save
+
+Analytics:
+
+Admin Dashboard → Analytics Overview
+
+Roles:
+
+Admin Dashboard → Role and Permission Overview → Edit Role
+
+Switch View:
+
+Moderator or Admin Navigation → Switch to Student View → Student Home
+
+All actions should be front-end-only prototype interactions.
+
+Do not add real persistence.
+
+==================================================
+FILE NAMING
+==================================================
+
+Use lowercase kebab-case.
+
+Moderator pages:
+
+- moderator-dashboard-page.tsx
+- pending-reviews-page.tsx
+- submission-review-page.tsx
+- reports-dashboard-page.tsx
+- report-detail-page.tsx
+- featured-works-page.tsx
+- official-content-review-page.tsx
+- moderation-history-page.tsx
+
+Admin pages:
+
+- admin-dashboard-page.tsx
+- user-management-page.tsx
+- user-detail-page.tsx
+- college-management-page.tsx
+- category-management-page.tsx
+- event-management-page.tsx
+- event-form-page.tsx
+- recognition-management-page.tsx
+- analytics-page.tsx
+- activity-log-page.tsx
+- role-permissions-page.tsx
+
+Components:
+
+- admin-sidebar.tsx
+- moderator-sidebar.tsx
+- dashboard-stat-card.tsx
+- review-queue-card.tsx
+- submission-review-panel.tsx
+- review-checklist.tsx
+- ownership-review-panel.tsx
+- accessibility-review-panel.tsx
+- request-revision-modal.tsx
+- reject-submission-modal.tsx
+- approval-modal.tsx
+- report-card.tsx
+- report-evidence-panel.tsx
+- feature-management-card.tsx
+- user-management-card.tsx
+- event-management-card.tsx
+- category-management-row.tsx
+- college-management-card.tsx
+- recognition-badge-card.tsx
+- analytics-summary-card.tsx
+- activity-log-row.tsx
+- permission-matrix.tsx
+- confirmation-dialog.tsx
+- mobile-admin-nav.tsx
+- mobile-moderator-nav.tsx
+
+Asset examples:
+
+- moderator-dashboard-banner.webp
+- digital-sinta-review.webp
+- official-event-preview.webp
+- featured-work-preview.webp
+- admin-campus-overview.webp
+
+Do not use spaces or uppercase letters in file names.
+
+==================================================
+FINAL REQUIREMENTS
+==================================================
+
+Before finishing Phase 4:
+
+- Ensure all screens use the existing design system.
+- Ensure the PUP maroon and gold identity remains consistent.
+- Ensure desktop and mobile layouts are both complete.
+- Ensure moderation language is supportive and transparent.
+- Ensure student-facing feedback is separate from internal notes.
+- Ensure approval, revision, rejection, and reporting flows are clear.
+- Ensure official content is clearly labeled.
+- Ensure admin pages do not look like an unrelated generic template.
+- Ensure tables adapt into mobile cards.
+- Ensure destructive actions use clear confirmations.
+- Ensure analytics remain readable and restrained.
+- Ensure all actions are interface-only.
+- Ensure no backend, database, API, authentication, or persistence is added.
+- Do not redesign Phases 1, 2, or 3.
+- Do not proceed beyond Phase 4.
