@@ -2,7 +2,15 @@ import React from 'react';
 import { Search, Bell, Menu } from 'lucide-react';
 import '../_group.css';
 
-export function DesktopNav({ authenticated = false }: { authenticated?: boolean }) {
+export function DesktopNav({ authenticated = false, active = "Home" }: { authenticated?: boolean; active?: string }) {
+  const navLinks = [
+    { name: "Home", href: "#" },
+    { name: "Explore", href: "#" },
+    { name: "Gallery", href: "#" },
+    { name: "Events", href: "#" },
+    { name: "Spotlight", href: "#" },
+  ];
+
   return (
     <nav className="w-full h-20 bg-warm-white border-b border-border flex items-center justify-center px-8 sticky top-0 z-50">
       <div className="w-full max-w-[1200px] flex items-center justify-between">
@@ -14,10 +22,19 @@ export function DesktopNav({ authenticated = false }: { authenticated?: boolean 
 
         {/* Links */}
         <div className="flex items-center gap-8 text-[15px] font-medium text-secondary-text">
-          <a href="#" className="text-pup-maroon font-semibold border-b-2 border-pup-gold pb-1">Home</a>
-          <a href="#" className="hover:text-pup-maroon transition-colors">Explore</a>
-          <a href="#" className="hover:text-pup-maroon transition-colors">Gallery</a>
-          <a href="#" className="hover:text-pup-maroon transition-colors">Events</a>
+          {navLinks.map((link) => (
+            <a
+              key={link.name}
+              href={link.href}
+              className={`${
+                active === link.name
+                  ? "text-pup-maroon font-semibold border-b-2 border-pup-gold pb-1"
+                  : "hover:text-pup-maroon transition-colors"
+              }`}
+            >
+              {link.name}
+            </a>
+          ))}
         </div>
 
         {/* Actions */}

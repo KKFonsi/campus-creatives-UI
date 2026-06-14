@@ -1,0 +1,1505 @@
+Continue the existing “PUP: Campus Creatives” interface project created in Phase 1.
+
+This phase is still for interface design only.
+
+Do not add:
+
+- Backend
+- Database
+- API routes
+- Authentication logic
+- File upload logic
+- Real form submission
+- Moderator functionality
+- Admin functionality
+- Data persistence
+
+Use static sample data and front-end-only prototype interactions.
+
+Do not rebuild or redesign Phase 1 from scratch.
+
+Preserve the existing:
+
+- PUP-inspired visual identity
+- Maroon and gold color palette
+- Typography
+- Buttons
+- Inputs
+- Cards
+- Navigation
+- Spacing system
+- Corner radius system
+- Shadow system
+- Icon style
+- Desktop and mobile behavior
+
+Phase 2 should look like a direct continuation of Phase 1.
+
+Create both:
+
+1. Desktop website interface
+2. Mobile-responsive interface
+
+The mobile version must be properly adapted for smaller screens rather than simply shrinking the desktop design.
+
+==================================================
+PHASE 2 PURPOSE
+==================================================
+
+Phase 2 focuses on public creative discovery.
+
+Users should be able to:
+
+- Browse approved student creative works
+- Search and filter works
+- Open a complete creative work or project
+- Browse curated campus exhibitions
+- Discover events and open calls
+- Open detailed event information
+- Browse student talent by college
+- View short-form creative Spotlight content
+- Appreciate, save, comment on, share, and report content through visual prototype interactions
+
+The design must remain:
+
+- Portfolio-first
+- Media-focused
+- Organized
+- Campus-centered
+- Moderated
+- Supportive
+- Professional enough for student portfolios
+
+It must not become:
+
+- A generic social media feed
+- A TikTok clone
+- A Facebook clone
+- A commercial art marketplace
+- A corporate content-management interface
+
+==================================================
+PHASE 2 SCREENS
+==================================================
+
+Create these screens:
+
+1. Explore Page
+2. Creative Work Detail Page
+3. Campus Gallery Page
+4. Exhibition Detail Page
+5. Events and Open Calls Page
+6. Event Detail Page
+7. College Directory
+8. College Showcase Page
+9. Spotlight Page
+10. Expanded Search Interface
+11. Share Modal
+12. Report Modal
+13. Comments Panel or Section
+
+Do not fully create:
+
+- Creator Profile
+- Edit Profile
+- Submit Work
+- Submission Status
+- Portfolio Management
+- Event Entry Form
+- Moderator Dashboard
+- Admin Dashboard
+
+Those belong to later phases.
+
+Use clear placeholder destinations when Phase 2 links to future screens.
+
+==================================================
+PUP-INSPIRED VISUAL IDENTITY
+==================================================
+
+Continue using the Phase 1 PUP palette.
+
+Primary colors:
+
+- PUP Maroon: #800000
+- Deep Maroon: #5B0000
+- Dark Maroon: #3D0000
+- PUP Gold: #FFB81C
+- Warm Gold: #D89B00
+- Soft Gold: #FFF2CC
+
+Supporting colors:
+
+- Crimson Accent: #A71930
+- Soft Maroon Surface: #F5E7E7
+
+Neutral colors:
+
+- Main Background: #F8F6F1
+- Warm White: #FFFDF8
+- Card Background: #FFFFFF
+- Secondary Surface: #F1EDE6
+- Primary Text: #211B1B
+- Secondary Text: #665D5D
+- Muted Text: #8A8080
+- Border: #DDD5CC
+- Dark Surface: #251717
+
+Status colors:
+
+- Approved: #2F7D57
+- Pending: #B7791F
+- Needs Revision: #C76A24
+- Rejected: #B63737
+- Information: #356B9C
+
+Color usage:
+
+- Use maroon for primary actions and active navigation.
+- Use gold for recognition, official labels, featured works, selected states, and deadlines.
+- Use warm neutral backgrounds.
+- Do not introduce purple or blue as primary theme colors.
+- Do not overuse gold.
+- Do not make every section maroon.
+- Maintain accessible contrast.
+
+==================================================
+IMAGE DIRECTION
+==================================================
+
+Use sample images that resemble a Philippine public university and PUP-related student life.
+
+Suitable subjects:
+
+- Filipino students creating artwork
+- Digital art and illustration
+- Student photography
+- Sta. Mesa-inspired urban scenes
+- Railway and commuter photography
+- Student musicians
+- Campus dance performances
+- Spoken word events
+- Theater performances
+- Film production
+- Broadcasting activities
+- Journalism photography
+- Architecture models
+- Engineering and creative technology projects
+- Student exhibitions
+- Campus murals
+- Filipino cultural artwork
+- University events using maroon and gold details
+
+Avoid:
+
+- Foreign university branding
+- Ivy League campuses
+- Corporate office teams
+- Luxury art galleries
+- Western graduation stock photos
+- Images clearly showing another school’s logo
+- Generic influencer imagery
+
+Use remote sample images from reliable public sources.
+
+Use descriptive alt text.
+
+If a suitable image cannot be found, use a custom abstract placeholder with:
+
+- Maroon and gold geometric composition
+- Campus silhouettes
+- Filipino-inspired patterns
+- Creative discipline icons
+- Student-work collage treatment
+
+==================================================
+NAVIGATION
+==================================================
+
+Reuse the Phase 1 navigation.
+
+Desktop authenticated navigation:
+
+- Home
+- Explore
+- Gallery
+- Events
+- Spotlight
+- Submit
+- Profile
+
+Right-side actions:
+
+- Search
+- Notifications
+- Submit Work
+- User avatar
+
+Mobile bottom navigation:
+
+- Home
+- Explore
+- Submit
+- Events
+- Profile
+
+Gallery and Spotlight can be accessed through:
+
+- Explore
+- Home
+- Secondary menu
+- Page links
+
+Use the same active state as Phase 1:
+
+- Maroon text
+- Gold underline or indicator
+- Visible hover and focus states
+
+==================================================
+SCREEN 1 — EXPLORE PAGE
+==================================================
+
+Create a structured discovery page.
+
+Page title:
+
+“Explore PUP Creativity”
+
+Supporting text:
+
+“Discover student works by college, discipline, creator, event, and creative field.”
+
+Desktop structure:
+
+1. Page header
+2. Large search field
+3. Filter controls
+4. Active filter chips
+5. Result count
+6. Sort dropdown
+7. Creative work grid
+8. Load More button
+9. Empty state
+10. Loading skeleton example
+
+Filters:
+
+- College
+- Program
+- Creative category
+- Content type
+- Event
+- Recognition
+- Official or student work
+- Date approved
+
+Creative categories:
+
+- Visual Art
+- Digital Art
+- Photography
+- Graphic Design
+- Music
+- Dance
+- Spoken Word
+- Poetry
+- Writing
+- Film and Video
+- Animation
+- Theater and Performance
+- Crafts
+- Fashion and Cosplay
+- UI/UX and Multimedia
+- Other
+
+Content types:
+
+- Artwork
+- Project
+- Performance
+- Spotlight
+- Written Work
+- Event Entry
+- Portfolio Piece
+- Official Highlight
+
+Sort options:
+
+- Recently Approved
+- Featured
+- Most Appreciated
+- Most Saved
+- Most Viewed
+
+Desktop filters may use:
+
+- Left sidebar, or
+- Expandable top filter row
+
+Creative work cards should include:
+
+- Large thumbnail
+- Work title
+- Creator avatar and name
+- College abbreviation
+- Program where useful
+- Category
+- Optional Featured, Official, Event Entry, or Award badge
+- Appreciate count
+- Save button
+- View Project action on hover
+
+Do not include too many actions inside each card.
+
+Suggested sample work titles:
+
+- Sta. Mesa After the Rain
+- Sinta sa Riles
+- Polytechnic Dreams
+- Tinig ng Bayan
+- Campus Frequencies
+- Concrete and Creativity
+- Digital Sinta
+- Railway Sketches
+- Pasig at Dusk
+- Voices from the Lagoon
+- Engineering in Motion
+- Manila Student Life
+
+Mobile Explore:
+
+- Sticky search field
+- Horizontal category chips
+- Filter button
+- Sort button
+- Filter bottom sheet
+- Selected-filter count
+- Clear All action
+- One- or two-column work grid
+- Load More button
+- No Results state
+
+Prototype interactions:
+
+- Toggle filters
+- Remove filter chips
+- Change sorting
+- Show filtered sample results
+- Open Work Detail
+- Toggle Save
+- Toggle Appreciate
+
+No real filtering logic or persistence is required.
+
+==================================================
+SCREEN 2 — CREATIVE WORK DETAIL
+==================================================
+
+Create a detailed portfolio-style project page.
+
+It must feel like a student creative project presentation rather than a social media post.
+
+Desktop layout:
+
+Use a wide editorial content area.
+
+Include:
+
+- Large main media
+- Supporting image gallery
+- Optional video or audio preview
+- Work title
+- Creator identity
+- College and program
+- Category
+- Content type
+- Approval date
+- Short description
+- Full artist statement
+- Tools or medium
+- Tags
+- Collaborators
+- Event association
+- Recognition badges
+- Official label where applicable
+
+Suggested sample project:
+
+Title:
+“Sta. Mesa After the Rain”
+
+Creator:
+“Bianca Reyes”
+
+College:
+“College of Communication”
+
+Program:
+“Bachelor of Arts in Broadcasting”
+
+Category:
+“Photography”
+
+Recognition:
+“Campus Highlight”
+
+Description:
+A documentary photography series showing student life, commuters, campus streets, and quiet moments around Sta. Mesa after heavy rain.
+
+Actions:
+
+- Appreciate
+- Save
+- Comment
+- Share
+- Follow Creator
+- Recommend for Feature
+- Report Content
+
+Use “Appreciate,” not “Like.”
+
+Creator summary panel:
+
+- Avatar
+- Creator name
+- College and program
+- Creative fields
+- Short biography
+- View Portfolio placeholder
+- Follow Creator
+- Three related work previews
+
+Comments section:
+
+- Comment input
+- Sample comments
+- Reply action
+- Report action
+- Load More
+- Empty state example
+
+Keep comments visually secondary to the work.
+
+Related sections:
+
+- More from This Creator
+- Similar Works
+- More from This College
+- Related Event Entries
+
+Mobile Work Detail:
+
+- Full-width swipeable media
+- Compact creator row
+- Expandable description
+- Horizontal tags
+- Clear interaction buttons
+- Report inside overflow menu
+- Comments lower on the page or inside a sheet
+- Related works in horizontal cards or two-column grid
+
+Prototype interactions:
+
+- Toggle Appreciate
+- Toggle Save
+- Toggle Follow
+- Open comments
+- Open Share modal
+- Open Report modal
+- Expand description
+- Switch supporting media
+
+==================================================
+SCREEN 3 — CAMPUS GALLERY
+==================================================
+
+Create a curated editorial gallery.
+
+Page title:
+
+“PUP Campus Gallery”
+
+Supporting text:
+
+“Curated exhibitions celebrating the creative voices, stories, and talents of the PUP community.”
+
+The Gallery must feel different from Explore.
+
+Explore is:
+
+- Broad
+- Searchable
+- Filter-driven
+
+Gallery is:
+
+- Curated
+- Themed
+- Exhibition-based
+- Recognition-focused
+
+Sections:
+
+1. Featured Exhibition
+2. Current Exhibitions
+3. Monthly Gallery
+4. College Galleries
+5. Moderator’s Picks
+6. Awarded Works
+7. Event Highlights
+8. Archived Exhibitions
+
+Suggested exhibition names:
+
+- Sinta: Stories of the PUP Community
+- Sta. Mesa in Frames
+- Guhit ng Iskolar
+- Polytechnic Perspectives
+- Creative Futures
+- Voices from the Red and Gold
+- Best of the Semester
+- Likha at Laya
+- Manila Through Student Eyes
+- Art and Technology
+- Foundation Week Creative Showcase
+
+Featured Exhibition content:
+
+- Large editorial cover
+- Exhibition title
+- Theme
+- Short description
+- Date range
+- Curator or organizer
+- Number of works
+- View Exhibition button
+
+Example:
+
+Title:
+“Sinta: Stories of the PUP Community”
+
+Theme:
+“Identity, daily life, and creative expression among Iskolar ng Bayan”
+
+Curator:
+“Campus Creatives Editorial Team”
+
+Add a small label:
+
+“Sample academic prototype exhibition.”
+
+Exhibition cards:
+
+- Cover image
+- Exhibition title
+- Theme
+- Number of works
+- Date
+- Curator or organizing college
+- View Gallery action
+
+Mobile Gallery:
+
+- Full-width featured exhibition
+- Horizontal exhibition cards
+- Large media thumbnails
+- Editorial vertical flow
+- Compact text blocks
+- Clear View Exhibition actions
+
+==================================================
+SCREEN 4 — EXHIBITION DETAIL
+==================================================
+
+Create a full exhibition page.
+
+Include:
+
+- Exhibition title
+- Cover image or collage
+- Theme
+- Date range
+- Curator or organizer
+- Number of works
+- Introduction
+- Curator’s note
+- Featured works
+- Participating creators
+- Work grid
+- Related exhibitions
+
+Example exhibition:
+
+“Sinta: Stories of the PUP Community”
+
+Sections:
+
+- About the Exhibition
+- Curator’s Note
+- Featured Pieces
+- Participating Creators
+- Complete Collection
+- Related Exhibitions
+
+Use varied editorial layouts:
+
+- Large feature image
+- Two-column image and text
+- Three-column work grid
+- Quote or curator statement
+- Creator strip
+
+Mobile:
+
+- Stacked editorial sections
+- Full-width images
+- Expandable curator note
+- Two-column work grid where appropriate
+- Horizontal creator cards
+
+==================================================
+SCREEN 5 — EVENTS AND OPEN CALLS
+==================================================
+
+Create an events discovery page.
+
+Page title:
+
+“Events and Open Calls”
+
+Supporting text:
+
+“Find contests, exhibitions, auditions, workshops, publication calls, and creative opportunities across PUP.”
+
+Sections:
+
+1. Featured Event
+2. Event status tabs
+3. Search
+4. Filters
+5. Event grid
+6. Past Events
+7. Empty and loading states
+
+Status tabs:
+
+- Open
+- Closing Soon
+- Upcoming
+- Ongoing
+- Completed
+
+Filters:
+
+- Event type
+- Creative category
+- College
+- Organizer
+- Eligibility
+- Deadline
+- Online or campus-based
+
+Event types:
+
+- Contest
+- Exhibition
+- Audition
+- Showcase
+- Open Call
+- Workshop
+- Collaboration
+- Publication Call
+- Film Screening
+- Performance
+- Design Challenge
+
+Use realistic fictional event names:
+
+- PUP Likha 2026: Student Creative Showcase
+- Sinta Short Film Festival
+- Guhit Iskolar Digital Art Competition
+- Sta. Mesa Through the Lens
+- PUP Spoken Word Night
+- Creative Tech Challenge 2026
+- PUP College of Communication Media Festival
+- Foundation Week Poster-Making Contest
+- Tinig ng PUP Music Showcase
+- Polytechnic Design Week
+- Iskolar Literary Folio Open Call
+- PUP Campus Mural Project
+- Red and Gold Photography Walk
+- PUP Student Creatives Collaboration Fair
+
+Use realistic fictional organizers:
+
+- PUP Office for Student Affairs
+- College of Arts and Letters
+- College of Communication
+- College of Computer and Information Sciences
+- Institute of Technology
+- Campus student organizations
+- College student councils
+- Cultural and performing arts groups
+
+Add a small disclaimer:
+
+“Event names and details are sample academic prototype content.”
+
+Event cards should include:
+
+- Cover image
+- Event title
+- Event code
+- Organizer
+- Event type
+- Category
+- Deadline
+- Venue or online label
+- Eligibility
+- Open, Closing Soon, Upcoming, Ongoing, or Completed badge
+- Number of entries where appropriate
+- View Event action
+
+Event code examples:
+
+- PUP-LIKHA-2026
+- SINTA-FILM-2026
+- GUHIT-ISKOLAR-2026
+- COC-MEDIA-FEST-2026
+- CCIS-CREATIVE-TECH-2026
+
+Mobile Events:
+
+- Sticky search
+- Horizontal status chips
+- Filter button
+- Stacked event cards
+- Large deadline visibility
+- One primary action per card
+
+Prototype interactions:
+
+- Switch status tabs
+- Open filter sheet
+- Change sample results
+- Save an event visually
+- Open Event Detail
+
+==================================================
+SCREEN 6 — EVENT DETAIL
+==================================================
+
+Create a complete event information interface.
+
+Suggested sample event:
+
+Title:
+“PUP Likha 2026: Student Creative Showcase”
+
+Code:
+“PUP-LIKHA-2026”
+
+Organizer:
+“PUP Office for Student Affairs”
+
+Status:
+“Open”
+
+Venue:
+“PUP Main Campus, Sta. Mesa”
+
+Include:
+
+- Event cover
+- Title
+- Event code
+- Organizer
+- Event type
+- Status
+- Deadline
+- Venue or online format
+- Eligibility
+- Save Event
+- Share Event
+- Submit Entry placeholder
+
+Main sections:
+
+- Overview
+- Rules and Guidelines
+- Categories
+- Important Dates
+- Submission Requirements
+- Judging Criteria
+- Recognition or Prizes
+- Organizer Information
+- Updates
+- Approved Entries
+- Featured Entries
+- Winners
+
+Deadline card:
+
+- Deadline
+- Remaining time
+- Status
+- Submit Entry button
+- Save
+- Share
+
+Use an interface-only countdown example.
+
+Important dates timeline:
+
+- Announcement
+- Submission opening
+- Submission deadline
+- Review period
+- Featured entries announcement
+- Showcase date
+
+Approved entry cards:
+
+- Work thumbnail
+- Title
+- Creator
+- College
+- Category
+- Finalist or Featured badge where appropriate
+
+For completed event examples:
+
+Replace Submit Entry with:
+
+“View Results”
+
+Mobile Event Detail:
+
+- Full-width cover
+- Deadline card near top
+- Sticky Submit Entry or View Results button
+- Expandable rules
+- Vertical timeline
+- Horizontal approved-entry cards
+
+Submit Entry must lead to a Phase 3 placeholder.
+
+==================================================
+SCREEN 7 — COLLEGE DIRECTORY
+==================================================
+
+Create a page listing all PUP colleges and academic units.
+
+Page title:
+
+“Explore by College”
+
+Supporting text:
+
+“Discover student creators, creative disciplines, and recognized works from across the PUP academic community.”
+
+Use exactly these colleges:
+
+1. College of Accountancy and Finance
+Abbreviation: CAF
+Description:
+Majors include Accountancy, Management Accounting, and Financial Management.
+
+2. College of Architecture, Design and the Built Environment
+Abbreviation: CADBE
+Description:
+Offers Architecture, Interior Design, and Environmental Planning.
+
+3. College of Arts and Letters
+Abbreviation: CAL
+Description:
+Includes programs in English Language Studies, Filipinologia, Literature, and Philosophy.
+
+4. College of Business Administration
+Abbreviation: CBA
+Description:
+Offers Human Resource Management, Marketing Management, and Entrepreneurial Management.
+
+5. College of Communication
+Abbreviation: COC
+Description:
+Focuses on Journalism, Broadcasting, and Advertising/Public Relations.
+
+6. College of Computer and Information Sciences
+Abbreviation: CCIS
+Description:
+Houses Computer Science and Information Technology programs.
+
+7. College of Education
+Abbreviation: COED
+Description:
+Trains future educators for secondary and elementary levels, as well as business teacher education.
+
+8. College of Engineering
+Abbreviation: CE
+Description:
+Offers Civil, Computer, Electrical, Electronics, Industrial, and Mechanical Engineering.
+
+9. College of Human Kinetics
+Abbreviation: CHK
+Description:
+Focuses on Exercise and Sports Sciences.
+
+10. College of Law
+Abbreviation: CL
+Description:
+Provides Juris Doctor programs.
+
+11. College of Political Science and Public Administration
+Abbreviation: CPSPA
+Description:
+Includes Public Administration, Political Science, and Legal Management.
+
+12. College of Science
+Abbreviation: CS
+Description:
+Offers Biology, Chemistry, Mathematics, Physics, Applied Mathematics, Food Technology, Nutrition and Dietetics, and Statistics.
+
+13. College of Social Sciences and Development
+Abbreviation: CSSD
+Description:
+Includes History, Sociology, Economics, Cooperatives, and Psychology.
+
+14. College of Tourism, Hospitality and Transportation Management
+Abbreviation: CTHTM
+Description:
+Houses Tourism Management, Hospitality Management, and Transportation Management programs.
+
+15. Institute of Technology
+Abbreviation: ITECH
+Description:
+Offers various three-year diploma programs, including Computer Engineering Technology, Information Technology, and Railway Engineering Technology, leading to a baccalaureate degree.
+
+16. Graduate School
+Abbreviation: GS
+Description:
+Provides advanced graduate programs across multiple academic fields.
+
+College cards should include:
+
+- Abbreviation
+- Full college name
+- Description
+- Creative category preview
+- Creator count
+- Work count
+- Featured thumbnail
+- View Showcase action
+
+Desktop:
+
+- Three-column directory grid
+
+Mobile:
+
+- Stacked cards or two-column compact cards
+- Search college field
+- Horizontal category chips
+
+==================================================
+SCREEN 8 — COLLEGE SHOWCASE
+==================================================
+
+Create a reusable College Showcase page.
+
+Primary example:
+
+“College of Computer and Information Sciences”
+
+Abbreviation:
+
+“CCIS”
+
+Description:
+
+“Houses Computer Science and Information Technology programs.”
+
+Include:
+
+- College header
+- College name and abbreviation
+- Description
+- Creator count
+- Approved work count
+- Featured work count
+- Featured College Work
+- Featured Creators
+- Creative Categories
+- Recent Approved Works
+- Recognized Students
+- College Events
+- Official Announcements
+
+CCIS category examples:
+
+- UI/UX
+- Digital Art
+- Multimedia
+- Film and Video
+- Photography
+- Graphic Design
+- Creative Technology
+
+Suggested featured work:
+
+“Digital Sinta”
+
+Creator:
+“Rafael Mendoza”
+
+Program:
+“Bachelor of Science in Information Technology”
+
+Recognition:
+“CCIS College Highlight”
+
+Featured creator cards should include:
+
+- Portrait
+- Name
+- Program
+- Creative field
+- Work previews
+- View Profile placeholder
+
+Recognized student badges:
+
+- College Highlight
+- Rising Creator
+- Event Winner
+- Moderator’s Pick
+
+Official announcements should be clearly labeled but should not dominate the student work.
+
+Create additional visual examples for:
+
+- CAL
+- COC
+- CADBE
+- ITECH
+
+These may use the same reusable layout with changed static content.
+
+Mobile:
+
+- Compact college header
+- Horizontal statistics
+- Full-width featured work
+- Horizontal creator cards
+- Category chips
+- Two-column work grid
+- Stacked events and announcements
+
+==================================================
+SCREEN 9 — SPOTLIGHT
+==================================================
+
+Create a short-form creative discovery interface.
+
+Suitable content:
+
+- Dance clips
+- Music performances
+- Spoken word
+- Animation
+- Art process
+- Short film teasers
+- Theater previews
+- Cosplay
+- Campus event highlights
+- Behind-the-scenes production
+
+Do not visually copy TikTok.
+
+Desktop Spotlight:
+
+- Centered vertical media panel
+- Previous and next controls
+- Related Spotlight list
+- Creator name
+- College
+- Category
+- Short caption
+- Appreciate
+- Comment
+- Save
+- Share
+- Follow Creator
+- View Full Project
+
+Suggested Spotlight example:
+
+Title:
+“Tinig sa Lagoon”
+
+Creator:
+“Mika Santos”
+
+College:
+“College of Arts and Letters”
+
+Category:
+“Spoken Word”
+
+Caption:
+“A short performance about student identity, daily travel, and finding one’s voice inside the university.”
+
+Mobile Spotlight:
+
+- Full-screen vertical media
+- Swipe-style presentation
+- Readable text overlay
+- Creator identity
+- College
+- Category
+- Caption
+- Vertical action controls
+- View Full Project action
+
+Use gradient overlays only where needed for readability.
+
+Prototype interactions:
+
+- Move to next Spotlight
+- Toggle Appreciate
+- Toggle Save
+- Open comments
+- Open Share modal
+- Follow Creator
+- Open Work Detail
+
+==================================================
+SCREEN 10 — EXPANDED SEARCH
+==================================================
+
+Create a consistent search interface.
+
+Search should visually support:
+
+- Creative work titles
+- Creator names
+- Colleges
+- Categories
+- Tags
+- Events
+- Exhibitions
+
+Desktop:
+
+- Expandable search field or overlay
+- Recent searches
+- Suggested categories
+- Grouped results
+
+Mobile:
+
+- Full-screen search page
+- Search input
+- Cancel action
+- Recent searches
+- Suggested categories
+- Grouped results
+
+Grouped results:
+
+- Works
+- Creators
+- Events
+- Colleges
+- Galleries
+
+Prototype interactions:
+
+- Enter sample query
+- Show sample results
+- Clear query
+- Remove recent search
+- Open selected result
+
+==================================================
+SHARE MODAL
+==================================================
+
+Create a reusable Share modal or mobile bottom sheet.
+
+Options:
+
+- Copy Link
+- Share to Facebook
+- Share to Messenger
+- Share to Instagram
+- Share using Device
+
+Include:
+
+- Content preview
+- Work or event title
+- Creator or organizer
+- Copy confirmation state
+
+These are interface-only actions.
+
+==================================================
+REPORT MODAL
+==================================================
+
+Create a reusable Report modal or bottom sheet.
+
+Report reasons:
+
+- Suspected stolen work
+- Copyright concern
+- Inappropriate content
+- Harassment
+- Misleading information
+- Spam
+- Other
+
+Include:
+
+- Selected reason
+- Optional explanation
+- Cancel
+- Submit Report
+- Confirmation state
+
+Add a short note:
+
+“Reports are reviewed by Campus Creatives moderators.”
+
+No real report submission is required.
+
+==================================================
+COMMENTS PANEL
+==================================================
+
+Create a reusable comments interface.
+
+Include:
+
+- Comment count
+- Add comment input
+- User avatar
+- Sample comments
+- Reply action
+- More options
+- Report comment
+- Load More
+- Empty state
+
+Use realistic fictional Filipino names.
+
+Do not let comments visually overpower the creative work.
+
+On mobile, comments may open in a bottom sheet.
+
+==================================================
+REQUIRED VISUAL STATES
+==================================================
+
+Create interface examples for:
+
+- Loading
+- Empty results
+- No search results
+- Filtered results
+- Saved state
+- Appreciated state
+- Followed state
+- Event saved state
+- Featured work
+- Official work
+- Event Entry
+- Awarded work
+- Open event
+- Closing Soon event
+- Upcoming event
+- Completed event
+- Report confirmation
+- Copied link confirmation
+- Mobile filter sheet
+- Desktop filter sidebar
+- Expanded description
+- Collapsed description
+
+==================================================
+HCI AND ACCESSIBILITY
+==================================================
+
+Follow these principles:
+
+- Maintain navigation consistency with Phase 1.
+- Clearly display active filters.
+- Allow filters to be removed individually.
+- Show result counts.
+- Make event deadlines prominent.
+- Clearly distinguish official and student content.
+- Use both labels and colors for statuses.
+- Use visible focus states.
+- Keep mobile touch targets at least 44px.
+- Use meaningful alt text.
+- Preserve readable contrast.
+- Keep headings semantically organized.
+- Use progressive disclosure for long descriptions and event rules.
+- Keep important actions in consistent positions.
+- Preserve user context when returning from Work Detail.
+- Use supportive interaction language.
+- Avoid making engagement metrics overly competitive.
+
+==================================================
+RESPONSIVE RULES
+==================================================
+
+Desktop target:
+
+- 1440px
+- Maximum content width: 1200–1280px
+
+Tablet target:
+
+- 768px
+
+Mobile target:
+
+- 390px
+- Side margins around 16px
+
+Desktop:
+
+- Three- or four-column work grids
+- Two- or three-column event grids
+- Visible filtering area
+- Wide detail layouts
+- Editorial gallery sections
+
+Mobile:
+
+- One- or two-column work grids
+- Stacked event cards
+- Full-width media
+- Bottom sheets for filters and modals
+- Fixed bottom navigation
+- No horizontal overflow
+- Large touch targets
+
+==================================================
+PROTOTYPE CONNECTIONS
+==================================================
+
+Connect these flows:
+
+Discover Work:
+
+Home → Explore → Apply Filter → Open Work Detail
+
+Gallery:
+
+Home or Navigation → Campus Gallery → Exhibition Detail → Work Detail
+
+Events:
+
+Events → Event Detail → Submit Entry Placeholder
+
+College Discovery:
+
+Explore or College Directory → College Showcase → Work Detail
+
+Spotlight:
+
+Home or Explore → Spotlight → View Full Project → Work Detail
+
+Interaction:
+
+Work Detail → Appreciate → Save → Share Modal
+
+Reporting:
+
+Work Detail → Report Modal → Confirmation
+
+Creator links:
+
+Work Detail → Creator Profile Placeholder
+
+Do not leave major buttons without either:
+
+- A prototype interaction, or
+- A clearly labeled future-phase placeholder
+
+==================================================
+FILE NAMING
+==================================================
+
+Use lowercase kebab-case.
+
+Pages:
+
+- explore-page.tsx
+- work-detail-page.tsx
+- campus-gallery-page.tsx
+- exhibition-detail-page.tsx
+- events-page.tsx
+- event-detail-page.tsx
+- college-directory-page.tsx
+- college-showcase-page.tsx
+- spotlight-page.tsx
+- search-page.tsx
+
+Components:
+
+- explore-filter-bar.tsx
+- filter-sidebar.tsx
+- mobile-filter-sheet.tsx
+- creative-work-card.tsx
+- project-media-gallery.tsx
+- interaction-bar.tsx
+- comment-section.tsx
+- event-card.tsx
+- event-deadline-card.tsx
+- exhibition-card.tsx
+- college-directory-card.tsx
+- college-header.tsx
+- spotlight-player.tsx
+- share-modal.tsx
+- report-modal.tsx
+- search-results-panel.tsx
+
+Asset examples:
+
+- sta-mesa-after-rain.webp
+- sinta-sa-riles.webp
+- campus-frequencies.webp
+- sinta-community-gallery.webp
+- guhit-iskolar-gallery.webp
+- pup-likha-2026.webp
+- spoken-word-night.webp
+- ccis-creative-showcase.webp
+- red-gold-photo-walk.webp
+
+Do not use spaces or uppercase letters in file names.
+
+==================================================
+FINAL REQUIREMENTS
+==================================================
+
+Before finishing Phase 2:
+
+- Ensure all Phase 2 pages use the exact Phase 1 design system.
+- Ensure the theme remains clearly PUP-inspired.
+- Ensure desktop and mobile layouts are both complete.
+- Ensure sample content feels appropriate for a PUP and Philippine university setting.
+- Ensure Explore and Gallery feel visually different.
+- Ensure Work Detail is portfolio-focused.
+- Ensure events clearly show deadlines and eligibility.
+- Ensure College Showcase pages emphasize student creators.
+- Ensure Spotlight connects short-form content to full creative projects.
+- Ensure future features use clear placeholders.
+- Ensure no backend, database, API, or persistence is added.
+- Do not redesign completed Phase 1 screens.
+- Do not proceed to Phase 3.
