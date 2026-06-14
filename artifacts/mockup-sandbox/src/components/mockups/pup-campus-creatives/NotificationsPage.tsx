@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { DesktopNav } from './_shared/DesktopNav';
-import { Check, Settings, Image as ImageIcon, Award, AlertCircle, Info, MessageSquare } from 'lucide-react';
+import { Check, Settings, Image as ImageIcon, Award, AlertCircle, Info, MessageSquare, Heart, Calendar, Bell } from 'lucide-react';
 import './_group.css';
 
 const NOTIFICATIONS = [
@@ -137,15 +137,4 @@ export function NotificationsPage() {
       </main>
     </div>
   );
-}
-
-// Quick placeholder for calendar icon missing from lucide import
-function Calendar(props: any) {
-  return <svg xmlns="http://www.w3.org/2000/svg" width={props.size || 24} height={props.size || 24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinelinejoin="round" {...props}><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>;
-}
-function Heart(props: any) {
-  return <svg xmlns="http://www.w3.org/2000/svg" width={props.size || 24} height={props.size || 24} viewBox="0 0 24 24" fill={props.fill || "none"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinelinejoin="round" {...props}><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>;
-}
-function Bell(props: any) {
-  return <svg xmlns="http://www.w3.org/2000/svg" width={props.size || 24} height={props.size || 24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinelinejoin="round" {...props}><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>;
 }
