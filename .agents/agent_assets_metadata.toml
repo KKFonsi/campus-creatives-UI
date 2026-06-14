@@ -1,0 +1,86 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "8bMk1PqF7FbD5tI8MwF-D"
+uri = "file://artifacts/mockup-sandbox/public/images/hero-collage.jpg"
+type = "image"
+title = "university campus creative art exhibition board filipino student"
+
+[[outputs]]
+id = "_cBwt9qTMvxy0HBz4AjRB"
+uri = "file://artifacts/mockup-sandbox/public/images/thumbnail_1.jpg"
+type = "image"
+title = "filipino student art photography"
+
+[[outputs]]
+id = "jnNl-4XcKvivOCtjVIAA4"
+uri = "file://artifacts/mockup-sandbox/public/images/thumbnail_2.jpg"
+type = "image"
+title = "filipino student art photography"
+
+[[outputs]]
+id = "xfXkSAIOBzE0WDn0E5SZd"
+uri = "file://artifacts/mockup-sandbox/public/images/thumbnail_3.jpg"
+type = "image"
+title = "filipino student art photography"
+
+[[outputs]]
+id = "GwCo0uG8joknkLDme-vPt"
+uri = "file://artifacts/mockup-sandbox/public/images/thumbnail_4.jpg"
+type = "image"
+title = "filipino student art photography"
+
+[[outputs]]
+id = "ld698nGp66mLO-JqvYE3O"
+uri = "file://artifacts/mockup-sandbox/public/images/creator-portrait.jpg"
+type = "image"
+title = "filipino university student friendly portrait"
+
+[[outputs]]
+id = "1HFh7Cj-CXN2hVIoICex-"
+uri = "file://artifacts/mockup-sandbox/public/images/event_1.jpg"
+type = "image"
+title = "creative event poster student exhibition"
+
+[[outputs]]
+id = "2hIsUAkvATQfl-B6rmn9R"
+uri = "file://artifacts/mockup-sandbox/public/images/event_2.jpg"
+type = "image"
+title = "creative event poster student exhibition"
+
+[[outputs]]
+id = "vNhko05THlQoKTDhjIEC9"
+uri = "file://artifacts/mockup-sandbox/public/images/event_3.jpg"
+type = "image"
+title = "creative event poster student exhibition"
+
+[[outputs]]
+id = "DSMtQmG-6jDSCdrkuBSYx"
+uri = "file://artifacts/mockup-sandbox/public/images/college_1.jpg"
+type = "image"
+title = "university campus life student work"
+
+[[outputs]]
+id = "GiIQ2bqqh-N8dVcGxrmE6"
+uri = "file://artifacts/mockup-sandbox/public/images/college_2.jpg"
+type = "image"
+title = "university campus life student work"
+
+[[outputs]]
+id = "LAXx9lyjq8GcYknXE3QFp"
+uri = "file://artifacts/mockup-sandbox/public/images/college_3.jpg"
+type = "image"
+title = "university campus life student work"
+
+[[outputs]]
+id = "XiXQBTYJi2ti7-DUQ9W2v"
+uri = "file://artifacts/mockup-sandbox/public/images/college_4.jpg"
+type = "image"
+title = "university campus life student work"
+
+[[outputs]]
+id = "1rWnTyUuiTI4bupAxxN-k"
+uri = "file://artifacts/mockup-sandbox/public/images/college_5.jpg"
+type = "image"
+title = "university campus life student work"

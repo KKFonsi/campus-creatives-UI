@@ -1,0 +1,1106 @@
+Design Phase 1 of “PUP: Campus Creatives,” a responsive university creative portfolio and showcase interface for the Polytechnic University of the Philippines.
+
+This phase is for interface design only.
+
+Do not build:
+
+- Backend
+- Database
+- Authentication logic
+- API routes
+- File upload logic
+- Real form submission
+- Admin functionality
+- Moderator functionality
+- Full Explore, Gallery, Events, or Creator Profile pages
+
+Use static sample data and front-end-only prototype interactions.
+
+Create both:
+
+1. Desktop website interface
+2. Mobile-responsive interface
+
+The desktop and mobile versions must use the same visual system and content, but the mobile version must be properly adapted instead of simply shrinking the desktop layout.
+
+==================================================
+PROJECT PURPOSE
+==================================================
+
+Campus Creatives is a university-based creative portfolio and showcase platform for PUP students.
+
+It allows students to:
+
+- Discover creative works
+- Build a campus creative identity
+- View featured student creators
+- Find events and open calls
+- Gain recognition through highlights and badges
+- Organize creative works in a more lasting way than ordinary social media
+
+The platform should feel like:
+
+- A PUP campus creative hub
+- A student portfolio platform
+- A university gallery
+- A curated campus showcase
+- A modern academic creative community
+
+It should not feel like:
+
+- Facebook
+- TikTok
+- A generic social media feed
+- A corporate dashboard
+- A luxury art marketplace
+- A generic startup landing page
+
+The interface must be portfolio-first, organized, supportive, and clearly connected to the PUP campus community.
+
+==================================================
+PHASE 1 SCOPE
+==================================================
+
+Create only these screens:
+
+1. Public Landing Page
+2. Login Page
+3. Sign Up Page
+4. Student Onboarding
+5. Authenticated Student Home Page
+6. Notifications Page
+7. Responsive desktop navigation
+8. Responsive mobile navigation
+9. Small design system reference page
+
+Use placeholder destinations for:
+
+- Explore
+- Gallery
+- Events
+- Submit Work
+- Creator Profile
+
+Do not fully design those pages yet.
+
+==================================================
+PUP-INSPIRED VISUAL IDENTITY
+==================================================
+
+Use a visual theme strongly based on the PUP maroon and gold color family.
+
+Primary colors:
+
+- PUP Maroon: #800000
+- Deep Maroon: #5B0000
+- Dark Maroon: #3D0000
+- PUP Gold: #FFB81C
+- Warm Gold: #D89B00
+- Soft Gold: #FFF2CC
+
+Supporting red:
+
+- Crimson Accent: #A71930
+- Soft Maroon Surface: #F5E7E7
+
+Neutral colors:
+
+- Main Background: #F8F6F1
+- Warm White: #FFFDF8
+- Card Background: #FFFFFF
+- Secondary Surface: #F1EDE6
+- Primary Text: #211B1B
+- Secondary Text: #665D5D
+- Muted Text: #8A8080
+- Border: #DDD5CC
+- Dark Surface: #251717
+
+Status colors:
+
+- Approved: #2F7D57
+- Pending: #B7791F
+- Needs Revision: #C76A24
+- Rejected: #B63737
+- Information: #356B9C
+
+Color rules:
+
+- Maroon is the main brand and action color.
+- Gold is used for recognition, selected states, highlights, official labels, and featured content.
+- Use warm white or cream backgrounds instead of cold gray.
+- Do not use purple or blue as the main theme.
+- Do not cover entire pages in maroon.
+- Do not overuse bright gold.
+- Maintain readable contrast.
+- Never use gold body text on white.
+
+==================================================
+DESIGN STYLE
+==================================================
+
+Use a clean, modern, academic, and creative visual style.
+
+The design should combine:
+
+- PUP campus identity
+- Portfolio layouts
+- Gallery presentation
+- Editorial campus features
+- Student-friendly navigation
+
+Use:
+
+- Large media previews
+- Warm backgrounds
+- Clean cards
+- Thin borders
+- Soft shadows
+- Strong typography hierarchy
+- Clear section spacing
+- Maroon highlights
+- Gold recognition badges
+- Rounded but not overly playful shapes
+- Editorial featured sections
+- Campus-related visual details
+
+Avoid:
+
+- Excessive gradients
+- Glassmorphism
+- Neon colors
+- Heavy shadows
+- Cartoon-like illustrations
+- Oversized decorations
+- Dense interfaces
+- Endless vertical social feeds
+- Floating elements without purpose
+
+Corner radius system:
+
+- Small controls: 8px
+- Inputs and buttons: 10–12px
+- Standard cards: 14–16px
+- Featured panels: 18–20px
+
+Use subtle shadows only.
+
+==================================================
+TYPOGRAPHY
+==================================================
+
+Use one main sans-serif font:
+
+- Inter
+- Manrope
+- Plus Jakarta Sans
+
+Preferred choice: Inter.
+
+Desktop type sizes:
+
+- Hero title: 48–56px
+- Page title: 32–40px
+- Section heading: 24–28px
+- Card title: 16–18px
+- Body: 15–16px
+- Metadata: 13–14px
+
+Mobile type sizes:
+
+- Hero title: 32–38px
+- Page title: 26–30px
+- Section heading: 20–24px
+- Card title: 15–17px
+- Body: 14–16px
+- Metadata: 12–14px
+
+Do not use very small text.
+
+==================================================
+IMAGE DIRECTION
+==================================================
+
+Use sample images that look appropriate for PUP and a Philippine university creative community.
+
+Suitable image subjects:
+
+- Filipino university students creating art
+- Students painting or sketching
+- Campus photography
+- Urban Manila student life
+- Sta. Mesa-inspired streets and transportation
+- Railway and commuter photography
+- Student musicians
+- Spoken word performances
+- Campus theater
+- Student film production
+- Graphic design projects
+- Digital art
+- Architecture models
+- Creative technology projects
+- Photography around a public university campus
+- Campus events using maroon and gold decorations
+- Filipino-inspired student artwork
+
+Avoid:
+
+- Foreign university branding
+- Western graduation stock photos
+- Ivy League campuses
+- Corporate office images
+- Luxury galleries
+- Generic business teams
+- Images showing logos from other schools
+
+Use remote images from reliable public image services.
+
+If appropriate images are unavailable, use custom abstract placeholders with:
+
+- Maroon and gold geometric patterns
+- Campus building silhouettes
+- Creative icons
+- Filipino-inspired patterns
+- Student art collage layouts
+
+Use descriptive alt text.
+
+Do not repeatedly use the official PUP seal as decoration.
+
+Use a simple original wordmark:
+
+“PUP: Campus Creatives”
+
+==================================================
+DESKTOP NAVIGATION
+==================================================
+
+Create a consistent desktop top navigation.
+
+Public navigation:
+
+Left:
+
+- PUP: Campus Creatives wordmark
+
+Center:
+
+- Home
+- Explore
+- Gallery
+- Events
+
+Right:
+
+- Log In
+- Join Campus Creatives
+
+Authenticated navigation:
+
+Left:
+
+- PUP: Campus Creatives wordmark
+
+Center:
+
+- Home
+- Explore
+- Gallery
+- Events
+
+Right:
+
+- Search
+- Notifications
+- Submit Work
+- User avatar
+
+Active page styling:
+
+- Maroon text
+- Gold underline or small indicator
+- Clear focus and hover states
+
+For Phase 1, Explore, Gallery, Events, Submit Work, and Profile may lead to a simple placeholder screen.
+
+==================================================
+MOBILE NAVIGATION
+==================================================
+
+Use a compact top header containing:
+
+- Campus Creatives wordmark or monogram
+- Search icon
+- Notification icon
+
+Use a fixed bottom navigation with:
+
+- Home
+- Explore
+- Submit
+- Events
+- Profile
+
+The Submit item may be more visually prominent using maroon.
+
+Keep all touch targets at least 44px.
+
+Do not overcrowd the header.
+
+==================================================
+SCREEN 1 — PUBLIC LANDING PAGE
+==================================================
+
+Create a polished public landing page.
+
+Sections:
+
+1. Header
+2. Hero
+3. Platform benefits
+4. Featured student works
+5. Featured creator
+6. Active events preview
+7. College showcase preview
+8. Final call to action
+9. Footer
+
+Hero content:
+
+Small label:
+
+“PUP Student Creative Community”
+
+Headline:
+
+“Where PUP creativity is discovered, organized, and recognized.”
+
+Supporting text:
+
+“Build your campus creative portfolio, discover student talent, join showcases, and share approved works beyond scattered social media posts.”
+
+Primary button:
+
+“Explore Campus Creatives”
+
+Secondary button:
+
+“Create Your Portfolio”
+
+Use a two-column hero on desktop.
+
+Left:
+
+- Text content
+- Buttons
+- Small PUP-inspired decorative details
+
+Right:
+
+- Creative collage using student artwork, photography, music, design, performance, and campus visuals
+
+The collage must feel like a campus art wall or exhibition board, not a social media feed.
+
+Platform benefit cards:
+
+- Build a Creative Portfolio
+- Discover PUP Talent
+- Join Events and Open Calls
+- Gain Campus Recognition
+
+Each benefit card should include:
+
+- Simple icon
+- Short heading
+- One-sentence description
+
+Featured works preview:
+
+Show 4 work cards on desktop.
+
+Each card must include:
+
+- Large thumbnail
+- Work title
+- Fictional Filipino creator name
+- College abbreviation
+- Category
+- Appreciate count
+- Optional recognition badge
+
+Suggested sample work titles:
+
+- Sta. Mesa After the Rain
+- Sinta sa Riles
+- Polytechnic Dreams
+- Tinig ng Bayan
+
+Featured creator section:
+
+Show:
+
+- Creator portrait
+- Fictional Filipino name
+- College and program
+- Creative fields
+- Short bio
+- Three work previews
+- “View Portfolio” button
+
+Active event preview:
+
+Use realistic fictional PUP-style events:
+
+- PUP Likha 2026: Student Creative Showcase
+- Sta. Mesa Through the Lens
+- PUP Spoken Word Night
+
+Each event card should include:
+
+- Event cover
+- Organizer
+- Deadline
+- Category
+- Open Call status
+- View Event action
+
+Add a small note:
+
+“Sample academic prototype content.”
+
+College showcase preview:
+
+Use:
+
+- College of Arts and Letters
+- College of Communication
+- College of Computer and Information Sciences
+- College of Engineering
+- Institute of Technology
+
+Each college card should include:
+
+- College abbreviation
+- College name
+- Short creative focus
+- Featured work thumbnail
+- View Showcase action
+
+Final call-to-action section:
+
+Headline:
+
+“Turn your creative work into a lasting campus portfolio.”
+
+Buttons:
+
+- Join Campus Creatives
+- Browse Featured Works
+
+Use a dark maroon background with restrained gold details.
+
+Footer links:
+
+- About
+- Explore
+- Galleries
+- Events
+- Community Guidelines
+- Copyright and Ownership
+- Help
+- Privacy
+- Academic Prototype Disclaimer
+
+==================================================
+SCREEN 2 — LOGIN PAGE
+==================================================
+
+Create a clean responsive login page.
+
+Fields:
+
+- PUP email address
+- Password
+- Show password
+- Remember me
+- Forgot password
+
+Actions:
+
+- Log In
+- Create Account
+
+Desktop layout:
+
+- Split-screen composition
+- Form on one side
+- PUP campus creative collage on the other
+
+Visual panel text:
+
+“Your creative campus identity starts here.”
+
+Mobile:
+
+- Single-column layout
+- Compact logo
+- Minimal decorative image
+- Large readable form
+- Clear primary button
+
+Create interface examples for:
+
+- Default form
+- Invalid email
+- Empty password
+- Incorrect password
+- Loading button
+- Disabled button
+
+These are only visual states.
+
+==================================================
+SCREEN 3 — SIGN UP PAGE
+==================================================
+
+Create a student registration interface.
+
+Fields:
+
+- First name
+- Last name
+- PUP email address
+- Student number
+- College
+- Program
+- Password
+- Confirm password
+- Community guidelines checkbox
+- Ownership policy checkbox
+
+Password requirement list:
+
+- At least 8 characters
+- Uppercase letter
+- Lowercase letter
+- Number
+- Special character
+
+Show visual validation states.
+
+College dropdown should use these choices:
+
+- College of Accountancy and Finance
+- College of Architecture, Design and the Built Environment
+- College of Arts and Letters
+- College of Business Administration
+- College of Communication
+- College of Computer and Information Sciences
+- College of Education
+- College of Engineering
+- College of Human Kinetics
+- College of Law
+- College of Political Science and Public Administration
+- College of Science
+- College of Social Sciences and Development
+- College of Tourism, Hospitality and Transportation Management
+- Institute of Technology
+- Graduate School
+
+Mobile:
+
+- Single-column scrollable form
+- Sticky or clearly visible Create Account button
+- Large form controls
+- Readable agreement text
+
+==================================================
+SCREEN 4 — STUDENT ONBOARDING
+==================================================
+
+Create a 5-step onboarding interface.
+
+Step 1 — Creator Identity
+
+Fields:
+
+- Profile picture
+- Display name
+- College
+- Program
+- Short biography
+
+Step 2 — Creative Interests
+
+Selectable options:
+
+- Visual Art
+- Digital Art
+- Photography
+- Graphic Design
+- Music
+- Dance
+- Spoken Word
+- Poetry
+- Writing
+- Film and Video
+- Animation
+- Theater and Performance
+- Crafts
+- Fashion and Cosplay
+- UI/UX and Multimedia
+- Other
+
+Step 3 — User Goals
+
+Selectable options:
+
+- Build my portfolio
+- Share creative works
+- Discover student creators
+- Join events and open calls
+- Support classmates
+- Find collaborators
+
+Step 4 — Optional Links
+
+Fields:
+
+- Facebook
+- Instagram
+- Behance or portfolio
+- YouTube
+- Other creative link
+
+Step 5 — Profile Preview
+
+Show:
+
+- Profile image
+- Display name
+- College and program
+- Creative fields
+- Short bio
+- Selected goals
+- Social links
+
+Primary action:
+
+“Enter Campus Creatives”
+
+Desktop:
+
+- Step indicator on the left or top
+- Main content panel
+- Optional live profile preview
+
+Mobile:
+
+- One focused step at a time
+- Progress bar
+- Back and Continue buttons
+- Full-width selectable chips
+- Compact preview
+
+==================================================
+SCREEN 5 — AUTHENTICATED STUDENT HOME
+==================================================
+
+Create a curated home page for a signed-in student.
+
+Do not create an endless timeline.
+
+Use organized sections.
+
+Header greeting:
+
+“Good day, Andrea.”
+
+Supporting text:
+
+“Discover new student works, creative opportunities, and campus highlights.”
+
+Actions:
+
+- Submit Work
+- View My Portfolio
+
+Sections:
+
+1. Featured Work of the Week
+2. Featured Creator
+3. Latest Approved Works
+4. Browse by Category
+5. Active Events and Open Calls
+6. College Highlights
+7. Official Campus Highlights
+8. Suggested Creators
+
+Featured Work of the Week:
+
+Use a large editorial card.
+
+Sample:
+
+Title:
+“Sta. Mesa After the Rain”
+
+Creator:
+“Bianca Reyes”
+
+College:
+“College of Communication”
+
+Category:
+“Photography”
+
+Recognition:
+“Campus Highlight”
+
+Include:
+
+- Large image
+- Short description
+- Appreciate
+- Save
+- View Work
+
+Featured Creator:
+
+Sample:
+
+“Marco Villanueva”
+
+College:
+“College of Arts and Letters”
+
+Creative fields:
+
+- Illustration
+- Spoken Word
+- Digital Art
+
+Include:
+
+- Portrait
+- Bio
+- Three work previews
+- Follow Creator
+- View Portfolio
+
+Latest Approved Works:
+
+Use 4 cards on desktop.
+
+Suggested titles:
+
+- Sinta sa Riles
+- Campus Frequencies
+- Concrete and Creativity
+- Digital Sinta
+- Railway Sketches
+- Voices from the Lagoon
+
+Browse by Category:
+
+Use visual chips or compact cards for:
+
+- Visual Art
+- Photography
+- Graphic Design
+- Music
+- Film and Video
+- Spoken Word
+- UI/UX
+- Performance
+
+Active Events:
+
+Use:
+
+- PUP Likha 2026
+- Guhit Iskolar Digital Art Competition
+- PUP Spoken Word Night
+
+College Highlights:
+
+Use:
+
+- CAL
+- COC
+- CCIS
+- CE
+- ITECH
+
+Official Campus Highlights:
+
+Clearly distinguish these using:
+
+- Official label
+- Maroon border
+- Gold accent
+- Source name
+
+Do not let official content dominate student work.
+
+Suggested Creators:
+
+Show 4 compact creator cards with:
+
+- Avatar
+- Name
+- College abbreviation
+- Creative field
+- Follow button
+
+Mobile Home:
+
+- Compact greeting
+- Search field
+- Full-width featured work
+- Horizontal creator and event cards
+- Two-column work grid where space allows
+- Horizontal category chips
+- Bottom navigation always visible
+
+==================================================
+SCREEN 6 — NOTIFICATIONS
+==================================================
+
+Create a notifications page.
+
+Tabs:
+
+- All
+- Submissions
+- Recognition
+- Events
+- Community
+
+Notification examples:
+
+- “Your work ‘Digital Sinta’ is now pending review.”
+- “Your submission ‘Campus Frequencies’ was approved.”
+- “A moderator requested revisions to ‘Railway Sketches.’”
+- “Your work was selected as a CCIS College Highlight.”
+- “Mika Santos appreciated your project.”
+- “PUP Likha 2026 closes in three days.”
+- “A creator you follow published a new work.”
+
+Each notification should include:
+
+- Icon or avatar
+- Message
+- Timestamp
+- Read or unread state
+- Relevant badge
+- Contextual action
+
+Include:
+
+- Mark all as read
+- Unread count
+- Empty state
+- Notification settings shortcut
+
+Desktop:
+
+- Centered page or two-column layout
+- Filter tabs
+- Clear unread styling
+
+Mobile:
+
+- Full-screen notification list
+- Sticky header
+- Horizontally scrollable tabs
+
+==================================================
+DESIGN SYSTEM PAGE
+==================================================
+
+Create a small design system reference section.
+
+Include:
+
+- Color tokens
+- Typography hierarchy
+- Primary button
+- Secondary button
+- Text button
+- Icon button
+- Inputs
+- Select
+- Checkbox
+- Category chip
+- Recognition badge
+- Status badge
+- Creative work card
+- Creator card
+- Event card
+- College card
+- Notification item
+- Desktop navigation
+- Mobile navigation
+- Empty state
+- Loading skeleton
+
+Keep all components visually consistent.
+
+==================================================
+RESPONSIVE RULES
+==================================================
+
+Desktop frame target:
+
+- 1440px width
+- Maximum content width: 1200–1280px
+
+Tablet target:
+
+- 768px width
+
+Mobile frame target:
+
+- 390px width
+- Side margins around 16px
+
+Desktop:
+
+- 3–4-column card grids
+- Wider editorial sections
+- Visible top navigation
+- Larger media previews
+
+Mobile:
+
+- 1–2-column grids
+- Horizontal carousels where useful
+- Fixed bottom navigation
+- Full-width cards where appropriate
+- Bottom sheets for future filters
+- No horizontal overflow
+- Minimum 44px touch targets
+
+==================================================
+HCI AND ACCESSIBILITY
+==================================================
+
+Follow these requirements:
+
+- Clear navigation
+- Strong content hierarchy
+- Consistent controls
+- Visible active states
+- Readable contrast
+- Visible keyboard focus
+- Clear form labels
+- Error messages near fields
+- Do not rely only on color
+- Use icons with labels for important actions
+- Maintain readable mobile text
+- Use descriptive alt text
+- Keep buttons and links predictable
+- Keep repeated actions in consistent positions
+- Use supportive wording such as “Appreciate” instead of “Like”
+- Make recognition visible without making the platform overly competitive
+
+==================================================
+PROTOTYPE INTERACTIONS
+==================================================
+
+Use front-end-only navigation and visual interactions.
+
+Connect:
+
+- Landing Page → Login
+- Landing Page → Sign Up
+- Login → Student Home
+- Sign Up → Onboarding
+- Onboarding → Student Home
+- Student Home → Notifications
+- Student Home → Explore placeholder
+- Student Home → Gallery placeholder
+- Student Home → Events placeholder
+- Student Home → Creator Profile placeholder
+- Student Home → Submit Work placeholder
+
+Prototype-only interactions may include:
+
+- Open and close menus
+- Toggle password visibility
+- Change onboarding steps
+- Select interests
+- Select goals
+- Open notification panel
+- Mark notification visually as read
+- Toggle Appreciate
+- Toggle Save
+- Toggle Follow
+- Open mobile navigation
+- Show loading and empty-state examples
+
+No data persistence is required.
+
+==================================================
+FILE NAMING
+==================================================
+
+Use lowercase kebab-case file names.
+
+Suggested page names:
+
+- landing-page.tsx
+- login-page.tsx
+- sign-up-page.tsx
+- onboarding-page.tsx
+- student-home-page.tsx
+- notifications-page.tsx
+- placeholder-page.tsx
+- design-system-page.tsx
+
+Suggested component names:
+
+- desktop-header.tsx
+- mobile-header.tsx
+- mobile-bottom-nav.tsx
+- creative-work-card.tsx
+- featured-work-card.tsx
+- creator-card.tsx
+- event-card.tsx
+- college-card.tsx
+- official-highlight-card.tsx
+- notification-item.tsx
+- category-chip.tsx
+- recognition-badge.tsx
+- status-badge.tsx
+- profile-preview.tsx
+- onboarding-progress.tsx
+
+Suggested asset names:
+
+- pup-campus-creative-hero.webp
+- sta-mesa-after-rain.webp
+- sinta-sa-riles.webp
+- pup-likha-event.webp
+- spoken-word-night.webp
+- ccis-showcase.webp
+- campus-creative-collage.webp
+
+Do not use spaces or uppercase letters in file names.
+
+==================================================
+FINAL REQUIREMENTS
+==================================================
+
+Before finishing Phase 1:
+
+- Ensure every screen uses the same PUP-inspired theme.
+- Ensure desktop and mobile layouts are complete.
+- Ensure no page looks like an unrelated template.
+- Ensure student creative work remains the main visual focus.
+- Ensure the landing page, onboarding, and Home page feel connected.
+- Ensure sample images and text feel appropriate for PUP and the Philippine university setting.
+- Ensure placeholder pages clearly indicate future phases.
+- Ensure no backend or database code is added.
+- Ensure the result is interface-only.
+- Do not proceed to Phase 2.

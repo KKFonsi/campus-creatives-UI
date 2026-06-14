@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+@theme inline {
+  --color-pup-maroon: #800000;
+  --color-deep-maroon: #5B0000;
+  --color-dark-maroon: #3D0000;
+  --color-pup-gold: #FFB81C;
+  --color-warm-gold: #D89B00;
+  --color-soft-gold: #FFF2CC;
+  --color-crimson-accent: #A71930;
+  --color-soft-maroon: #F5E7E7;
+  --color-main-bg: #F8F6F1;
+  --color-warm-white: #FFFDF8;
+  --color-card-bg: #FFFFFF;
+  --color-secondary-surface: #F1EDE6;
+  --color-primary-text: #211B1B;
+  --color-secondary-text: #665D5D;
+  --color-muted-text: #8A8080;
+  --color-border: #DDD5CC;
+  --color-dark-surface: #251717;
+  
+  --color-status-approved: #2F7D57;
+  --color-status-pending: #B7791F;
+  --color-status-needs-revision: #C76A24;
+  --color-status-rejected: #B63737;
+  --color-status-info: #356B9C;
+
+  --font-inter: 'Inter', sans-serif;
+}
+
+:root {
+  --background: 43 27% 96%; /* #F8F6F1 */
+  --foreground: 0 10% 12%; /* #211B1B */
+  
+  --card: 0 0% 100%; /* #FFFFFF */
+  --card-foreground: 0 10% 12%;
+  
+  --popover: 0 0% 100%;
+  --popover-foreground: 0 10% 12%;
+  
+  --primary: 0 100% 25%; /* #800000 */
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 38 24% 92%; /* #F1EDE6 */
+  --secondary-foreground: 0 10% 12%;
+  
+  --muted: 0 44% 93%; /* #F5E7E7 */
+  --muted-foreground: 0 5% 38%; /* #665D5D */
+  
+  --accent: 45 100% 90%; /* #FFF2CC */
+  --accent-foreground: 0 100% 25%;
+  
+  --destructive: 0 54% 47%; /* #B63737 */
+  --destructive-foreground: 0 0% 100%;
+
+  --border: 32 17% 83%; /* #DDD5CC */
+  --input: 32 17% 83%;
+  --ring: 0 100% 25%;
+  
+  --radius: 0.75rem;
+}
+
+body {
+  font-family: var(--font-inter);
+  background-color: var(--color-main-bg);
+  color: var(--color-primary-text);
+}
