@@ -1,0 +1,1415 @@
+Continue the existing “PUP: Campus Creatives” interface project created in Phases 1 and 2.
+
+This phase is still for interface design only.
+
+Do not add:
+
+- Backend
+- Database
+- API routes
+- Authentication logic
+- Real file upload
+- Real form submission
+- Data persistence
+- Moderator functionality
+- Admin functionality
+
+Use static sample data and front-end-only prototype interactions.
+
+Do not rebuild or redesign completed Phase 1 and Phase 2 screens.
+
+Preserve the existing:
+
+- PUP-inspired maroon and gold visual identity
+- Typography
+- Navigation
+- Buttons
+- Inputs
+- Cards
+- Icons
+- Spacing
+- Corner radius system
+- Shadows
+- Responsive behavior
+- Desktop and mobile layouts
+- Existing routes and prototype interactions
+
+Phase 3 should feel like a direct continuation of the same product.
+
+Create both:
+
+1. Desktop website interface
+2. Mobile-responsive interface
+
+The mobile version must be intentionally adapted for smaller screens rather than simply shrinking the desktop design.
+
+==================================================
+PHASE 3 PURPOSE
+==================================================
+
+Phase 3 focuses on the student creator experience.
+
+Users should be able to:
+
+- View a complete creator profile
+- Edit their creator information
+- Organize a portfolio
+- Submit a creative work
+- Submit an entry to an event
+- Review a submission before sending it
+- Track moderation status
+- Read moderator feedback
+- Revise a submission
+- View saved works
+- Manage portfolio visibility
+- Share their creator profile
+
+The design must remain:
+
+- Portfolio-first
+- Campus-centered
+- Moderated
+- Organized
+- Supportive
+- Professional
+- Student-friendly
+
+It must not become:
+
+- A generic social media profile
+- A commercial portfolio marketplace
+- A content creator dashboard
+- A cluttered upload system
+- A corporate form portal
+
+==================================================
+PHASE 3 SCREENS
+==================================================
+
+Create these screens:
+
+1. Creator Profile
+2. Edit Creator Profile
+3. Portfolio Management
+4. Submit Work — Step 1: Basic Information
+5. Submit Work — Step 2: Media
+6. Submit Work — Step 3: Classification
+7. Submit Work — Step 4: Ownership and Visibility
+8. Submit Work — Step 5: Review and Submit
+9. Submission Confirmation
+10. My Submissions
+11. Submission Detail
+12. Needs Revision State
+13. Revise Submission
+14. Event Entry Submission
+15. Saved Works
+16. Share Creator Profile modal
+17. Portfolio visibility and organization controls
+
+Do not fully create:
+
+- Moderator Dashboard
+- Submission Review for moderators
+- Reports Management
+- Featured Works Management
+- Admin Dashboard
+- User Management
+- Event Management
+- College Management
+- Analytics
+
+Those belong to Phase 4.
+
+==================================================
+PUP-INSPIRED VISUAL IDENTITY
+==================================================
+
+Continue using the established palette.
+
+Primary colors:
+
+- PUP Maroon: #800000
+- Deep Maroon: #5B0000
+- Dark Maroon: #3D0000
+- PUP Gold: #FFB81C
+- Warm Gold: #D89B00
+- Soft Gold: #FFF2CC
+
+Supporting colors:
+
+- Crimson Accent: #A71930
+- Soft Maroon Surface: #F5E7E7
+
+Neutral colors:
+
+- Main Background: #F8F6F1
+- Warm White: #FFFDF8
+- Card Background: #FFFFFF
+- Secondary Surface: #F1EDE6
+- Primary Text: #211B1B
+- Secondary Text: #665D5D
+- Muted Text: #8A8080
+- Border: #DDD5CC
+- Dark Surface: #251717
+
+Status colors:
+
+- Draft: #6B7280
+- Pending Review: #B7791F
+- Approved: #2F7D57
+- Needs Revision: #C76A24
+- Rejected: #B63737
+- Featured: gold background with dark maroon text
+- Archived: #6D5F5F
+
+Color rules:
+
+- Use maroon for primary actions.
+- Use gold for featured work, recognitions, selected states, and milestones.
+- Use status colors with both icons and text labels.
+- Do not rely on color alone.
+- Keep warm neutral backgrounds.
+- Do not introduce unrelated blue or purple themes.
+- Preserve accessible contrast.
+
+==================================================
+NAVIGATION
+==================================================
+
+Reuse the authenticated navigation from previous phases.
+
+Desktop:
+
+- Home
+- Explore
+- Gallery
+- Events
+- Spotlight
+- Submit
+- Profile
+
+Right side:
+
+- Search
+- Notifications
+- Submit Work
+- User avatar
+
+Mobile bottom navigation:
+
+- Home
+- Explore
+- Submit
+- Events
+- Profile
+
+For Phase 3:
+
+- Profile should open the Creator Profile.
+- Submit should open the Submit Work flow.
+- Saved Works may appear under Profile or a secondary menu.
+- My Submissions should appear in the Profile menu and Creator Space navigation.
+
+Use the same active page styling:
+
+- Maroon text
+- Gold underline or indicator
+- Visible hover, focus, and pressed states
+
+==================================================
+SCREEN 1 — CREATOR PROFILE
+==================================================
+
+Create a full portfolio-style creator profile.
+
+The profile must feel like a professional student portfolio, not a social media timeline.
+
+Use this sample creator:
+
+Name:
+“Rafael Mendoza”
+
+College:
+“College of Computer and Information Sciences”
+
+Program:
+“Bachelor of Science in Information Technology”
+
+Creative fields:
+
+- UI/UX
+- Digital Art
+- Multimedia
+- Photography
+
+Bio:
+“A student designer and multimedia creator exploring campus identity, public spaces, and the relationship between technology and visual storytelling.”
+
+Profile sections:
+
+1. Profile header
+2. Creator information
+3. Statistics
+4. Featured Works
+5. Portfolio
+6. Recognitions
+7. Events Joined
+8. About
+9. Social and portfolio links
+10. Suggested related creators
+
+Profile header should include:
+
+- Cover image
+- Profile picture
+- Display name
+- College and program
+- Creative fields
+- Short bio
+- Edit Profile
+- Share Profile
+- Portfolio link
+- Optional collaboration status
+
+Example collaboration status:
+
+“Open to campus collaborations”
+
+Statistics:
+
+- Approved Works
+- Featured Works
+- Appreciations
+- Followers
+- Events Joined
+
+Do not overemphasize follower counts.
+
+Profile tabs:
+
+- Portfolio
+- Featured
+- Recognitions
+- Events
+- About
+
+Desktop layout:
+
+- Wide cover image
+- Profile summary beneath or overlapping the cover
+- Main portfolio content
+- Optional right-side information panel
+- Three- or four-column portfolio grid
+
+Mobile layout:
+
+- Compact cover
+- Centered or left-aligned profile identity
+- Horizontally scrollable tabs
+- Two-column portfolio grid
+- Expandable bio
+- Clear Edit or Follow action
+- Compact statistics
+
+Portfolio cards should include:
+
+- Thumbnail
+- Title
+- Category
+- Status or recognition badge
+- Event association where relevant
+- Appreciate count
+- Visibility indicator for the owner
+
+Owner view actions:
+
+- Edit Work
+- Hide from Portfolio
+- Move to Featured
+- Archive
+
+These are visual prototype interactions only.
+
+==================================================
+SCREEN 2 — EDIT CREATOR PROFILE
+==================================================
+
+Create a responsive profile editing interface.
+
+Sections:
+
+1. Profile Identity
+2. Academic Information
+3. Creative Fields
+4. Biography
+5. Social Links
+6. Portfolio Preferences
+7. Collaboration Status
+8. Profile Preview
+
+Fields:
+
+- Profile picture
+- Cover image
+- Display name
+- First name
+- Last name
+- College
+- Program
+- Short biography
+- Creative fields
+- Facebook
+- Instagram
+- Behance or portfolio
+- YouTube
+- Other link
+- Collaboration status
+- Public profile toggle
+- Show college and program toggle
+- Show social links toggle
+
+Actions:
+
+- Save Changes
+- Cancel
+- Preview Profile
+
+Show interface states for:
+
+- Unsaved changes
+- Save success
+- Required field error
+- Invalid link
+- Image preview
+- Remove image confirmation
+
+Desktop:
+
+- Left-side section navigation or tabs
+- Main editing form
+- Right-side live profile preview
+
+Mobile:
+
+- Stacked form sections
+- Sticky Save button or bottom action bar
+- Full-screen image picker placeholder
+- Compact preview card
+
+No actual upload or persistence is required.
+
+==================================================
+SCREEN 3 — PORTFOLIO MANAGEMENT
+==================================================
+
+Create a page where creators organize approved works.
+
+Page title:
+
+“Manage Portfolio”
+
+Supporting text:
+
+“Arrange your approved works, select featured pieces, and control what appears on your public creator profile.”
+
+Include:
+
+- Portfolio visibility summary
+- Featured works section
+- All approved works
+- Hidden works
+- Archived works
+- Portfolio order controls
+- Bulk selection mode
+- Preview Public Profile action
+
+Work management card should include:
+
+- Thumbnail
+- Title
+- Category
+- Approval date
+- Recognition badge
+- Event association
+- Public, Hidden, or Archived status
+- Drag handle
+- More actions menu
+
+Available prototype actions:
+
+- Move up or down
+- Drag to reorder
+- Set as Featured
+- Remove from Featured
+- Show on Profile
+- Hide from Profile
+- Archive
+- Open Work Detail
+
+Featured works limit:
+
+Show a visual rule such as:
+
+“You can feature up to 4 works.”
+
+Desktop:
+
+- Drag-and-drop style grid
+- Separate featured row
+- Filter and sort controls
+- Multi-select actions
+
+Mobile:
+
+- Reorder handles
+- Stacked or two-column work cards
+- Bottom action sheet
+- Compact feature limit indicator
+
+Include:
+
+- Empty portfolio state
+- No featured works state
+- Maximum featured works warning
+- Archive confirmation modal
+
+==================================================
+SUBMIT WORK FLOW
+==================================================
+
+Create a guided five-step submission process.
+
+Submission status flow:
+
+Draft → Pending Review → Approved / Needs Revision / Rejected
+
+The form must feel guided and understandable.
+
+Use:
+
+- Progress indicator
+- Clear step titles
+- Save as Draft
+- Back
+- Continue
+- Exit confirmation
+- Help text
+- Required field labels
+- Validation examples
+
+Desktop:
+
+- Left-side or top progress indicator
+- Main form content
+- Right-side submission summary or guidance panel
+
+Mobile:
+
+- One focused step at a time
+- Progress bar
+- Back and Continue buttons
+- Sticky bottom actions
+- No overcrowded multi-column forms
+
+==================================================
+SCREEN 4 — SUBMIT WORK: BASIC INFORMATION
+==================================================
+
+Step title:
+
+“Tell us about your work”
+
+Fields:
+
+- Work title
+- Short description
+- Full artist statement
+- Content type
+- Primary category
+- Date created
+- Collaborators
+- Tools or medium used
+
+Content type options:
+
+- Artwork
+- Project
+- Performance
+- Spotlight
+- Written Work
+- Event Entry
+- Portfolio Piece
+
+Category options:
+
+- Visual Art
+- Digital Art
+- Photography
+- Graphic Design
+- Music
+- Dance
+- Spoken Word
+- Poetry
+- Writing
+- Film and Video
+- Animation
+- Theater and Performance
+- Crafts
+- Fashion and Cosplay
+- UI/UX and Multimedia
+- Other
+
+Include:
+
+- Character counters
+- Optional and required labels
+- Add Collaborator action
+- Tool or medium chips
+- Writing guidance
+
+Sample title:
+
+“Digital Sinta”
+
+Sample short description:
+
+“A multimedia poster series inspired by student life, commuter culture, and PUP campus identity.”
+
+==================================================
+SCREEN 5 — SUBMIT WORK: MEDIA
+==================================================
+
+Step title:
+
+“Add your creative media”
+
+Create a visual upload interface only.
+
+Supported media examples:
+
+- Images
+- Video
+- Audio
+- PDF
+- Written document
+- External project link
+
+Include:
+
+- Main cover media
+- Additional media
+- Drag-and-drop area
+- Browse Files button
+- Media preview
+- Reorder media
+- Remove media
+- Add alt text
+- Add caption
+- Select cover image
+- Upload progress visual state
+- Unsupported file error
+- File too large error
+
+Show sample file cards:
+
+- digital-sinta-cover.webp
+- digital-sinta-process-01.webp
+- digital-sinta-process-02.webp
+- digital-sinta-presentation.mp4
+
+Use lowercase kebab-case file naming examples.
+
+Add copyright guidance:
+
+“Upload only media you created or have permission to use.”
+
+No real upload logic is required.
+
+Mobile:
+
+- Large upload button
+- Camera or Gallery visual choices
+- Full-screen preview
+- Reorder via handles
+- Compact progress indicators
+
+==================================================
+SCREEN 6 — SUBMIT WORK: CLASSIFICATION
+==================================================
+
+Step title:
+
+“Help others discover your work”
+
+Fields and controls:
+
+- College
+- Program
+- Primary category
+- Secondary categories
+- Tags
+- Event association
+- Portfolio collection
+- Content language
+- Accessibility details
+
+Tags example:
+
+- campus-life
+- sta-mesa
+- student-design
+- commuter-stories
+- digital-art
+- filipino-identity
+
+Event association options:
+
+- Not for an event
+- PUP Likha 2026
+- Guhit Iskolar Digital Art Competition
+- Creative Tech Challenge 2026
+- Other available sample events
+
+Portfolio collection examples:
+
+- Featured Projects
+- Campus Photography
+- UI/UX Works
+- Multimedia Experiments
+- Event Entries
+
+Accessibility details:
+
+- Alt text completed
+- Captions included
+- Transcript available
+- Audio description available where applicable
+
+Include searchable category and tag controls.
+
+==================================================
+SCREEN 7 — SUBMIT WORK: OWNERSHIP AND VISIBILITY
+==================================================
+
+Step title:
+
+“Confirm ownership and visibility”
+
+Ownership confirmations:
+
+- I created this work or have permission from all collaborators.
+- I understand that suspected stolen or copyrighted content may be reported.
+- I confirm that all included media follows community guidelines.
+- I have permission to identify collaborators included in this submission.
+
+Visibility options:
+
+- Add to Public Portfolio after approval
+- Keep approved work unlisted
+- Allow comments
+- Allow sharing
+- Allow recommendation for feature
+- Show college and program
+- Show collaborators
+
+Copyright reminder panel:
+
+Use a visible but non-alarming maroon and soft-gold information panel.
+
+Text:
+
+“Campus Creatives protects student ownership. Moderators may request clarification or proof of authorship when necessary.”
+
+Include:
+
+- Community Guidelines link
+- Copyright and Ownership Policy link
+- Report misuse information
+
+==================================================
+SCREEN 8 — SUBMIT WORK: REVIEW
+==================================================
+
+Step title:
+
+“Review your submission”
+
+Show a complete summary:
+
+- Cover media
+- Title
+- Description
+- Artist statement
+- Creator information
+- Collaborators
+- Content type
+- Categories
+- Tags
+- College and program
+- Event association
+- Media count
+- Ownership confirmation
+- Visibility settings
+
+Include Edit actions beside each section.
+
+Show moderation notice:
+
+“After submission, your work will be marked Pending Review. A moderator may approve it, reject it, or request revisions.”
+
+Actions:
+
+- Back
+- Save as Draft
+- Submit for Review
+
+Create a final confirmation modal:
+
+Title:
+“Submit this work for review?”
+
+Message:
+“You can still view the submission while it is being reviewed, but editing will be limited unless a moderator requests changes.”
+
+Actions:
+
+- Cancel
+- Submit Work
+
+==================================================
+SCREEN 9 — SUBMISSION CONFIRMATION
+==================================================
+
+Create a success screen.
+
+Headline:
+
+“Your work has been submitted.”
+
+Status:
+
+“Pending Review”
+
+Show:
+
+- Submission title
+- Submission reference
+- Date submitted
+- Expected next step
+- Notification reminder
+- View Submission
+- Go to My Submissions
+- Return Home
+
+Use sample reference:
+
+“CC-WORK-2026-0148”
+
+Include a simple status timeline:
+
+Submitted → Pending Review → Decision
+
+Do not show a guaranteed review time.
+
+==================================================
+SCREEN 10 — MY SUBMISSIONS
+==================================================
+
+Create a submission tracking page.
+
+Page title:
+
+“My Submissions”
+
+Tabs:
+
+- All
+- Drafts
+- Pending Review
+- Approved
+- Needs Revision
+- Rejected
+- Archived
+
+Each submission card should include:
+
+- Thumbnail
+- Title
+- Category
+- Submission reference
+- Date submitted
+- Current status
+- Event association
+- Moderator feedback preview
+- Contextual action
+
+Actions by status:
+
+Draft:
+- Continue Editing
+- Delete Draft
+
+Pending Review:
+- View Submission
+- Withdraw Submission
+
+Approved:
+- View Published Work
+- Manage Portfolio
+
+Needs Revision:
+- View Feedback
+- Revise and Resubmit
+
+Rejected:
+- View Decision
+- Duplicate as New Draft
+
+Archived:
+- Restore
+- Delete Permanently visual placeholder
+
+Use sample submissions:
+
+- Digital Sinta — Pending Review
+- Campus Frequencies — Approved
+- Railway Sketches — Needs Revision
+- Concrete and Creativity — Draft
+- Polytechnic Dreams — Featured
+- Commuter’s Canvas — Rejected
+
+Desktop:
+
+- Status tabs
+- Filter and sort controls
+- Table-card hybrid or stacked cards
+
+Mobile:
+
+- Horizontal status tabs
+- Stacked cards
+- Status labels near titles
+- One main action per card
+
+Include:
+
+- No submissions state
+- No results in selected status
+- Loading state
+
+==================================================
+SCREEN 11 — SUBMISSION DETAIL
+==================================================
+
+Create a detailed student-facing submission page.
+
+Include:
+
+- Submission title
+- Submission reference
+- Status
+- Date submitted
+- Last updated
+- Media preview
+- Submission details
+- Visibility settings
+- Ownership confirmations
+- Event association
+- Status timeline
+- Moderator feedback
+- Submission history
+- Available actions
+
+Status timeline example:
+
+Draft
+Submitted
+Pending Review
+Approved
+
+For Pending Review:
+
+- View-only state
+- Withdraw Submission
+- Copy Reference
+
+For Approved:
+
+- Open Published Work
+- Add to Featured Portfolio
+- Share Work
+
+For Rejected:
+
+- View decision explanation
+- Duplicate as New Draft
+- Return to Guidelines
+
+==================================================
+SCREEN 12 — NEEDS REVISION STATE
+==================================================
+
+Create a clear Needs Revision interface.
+
+Use sample work:
+
+“Railway Sketches”
+
+Status:
+
+“Needs Revision”
+
+Moderator feedback sample:
+
+“Please provide clearer ownership details for the reference photographs and add alt text to all uploaded images. The third image also needs a higher-resolution replacement.”
+
+Show feedback grouped by:
+
+- Media
+- Ownership
+- Accessibility
+- Description
+- Classification
+
+Each feedback item should include:
+
+- Issue label
+- Moderator note
+- Related section
+- Fix Now action
+
+Include:
+
+- Revision deadline if applicable
+- View Original Submission
+- Start Revision
+- Contact Support placeholder
+
+Use orange as the status color, but combine it with text and icon labels.
+
+Do not make the screen feel punitive.
+
+==================================================
+SCREEN 13 — REVISE SUBMISSION
+==================================================
+
+Create a revision form based on the original submission flow.
+
+Only affected sections should be highlighted.
+
+Include:
+
+- Moderator feedback panel
+- Original value
+- Revised value
+- Resolved checkbox
+- Remaining issue count
+- Preview changes
+- Resubmit for Review
+
+Show sample required fixes:
+
+- Replace third image
+- Add image alt text
+- Clarify ownership of reference photos
+- Update artist statement
+
+Confirmation modal:
+
+“Resubmit revised work?”
+
+Message:
+
+“Your revised submission will return to Pending Review.”
+
+==================================================
+SCREEN 14 — EVENT ENTRY SUBMISSION
+==================================================
+
+Create a student event-entry submission interface.
+
+Example event:
+
+“PUP Likha 2026: Student Creative Showcase”
+
+Event code:
+
+“PUP-LIKHA-2026”
+
+Show:
+
+- Event title
+- Organizer
+- Deadline
+- Eligibility
+- Allowed categories
+- Submission requirements
+- Entry rules summary
+
+Entry options:
+
+- Use an existing approved work
+- Submit a new work
+
+Existing work selection should show:
+
+- Work thumbnail
+- Title
+- Category
+- Approval status
+- Eligibility match
+
+New work should lead into a condensed version of the Submit Work flow.
+
+Additional event entry fields:
+
+- Entry title
+- Event category
+- Short entry statement
+- Team or individual
+- Team members
+- Agreement to event rules
+
+Review section:
+
+- Selected work
+- Event
+- Category
+- Eligibility confirmation
+- Rules confirmation
+- Submit Entry
+
+No real submission is required.
+
+==================================================
+SCREEN 15 — SAVED WORKS
+==================================================
+
+Create a Saved Works page.
+
+Page title:
+
+“Saved Works”
+
+Supporting text:
+
+“Keep creative works you want to revisit, study, or support.”
+
+Include:
+
+- Search saved works
+- Filter by category
+- Filter by college
+- Sort by recently saved
+- Collections
+- Work grid
+
+Suggested collections:
+
+- Inspiration
+- Campus Photography
+- UI/UX References
+- Event Entries
+- Spoken Word
+- Watch Later
+
+Saved work card actions:
+
+- Open Work
+- Remove from Saved
+- Add to Collection
+- Share
+
+Include:
+
+- Empty saved state
+- Empty collection state
+- Remove confirmation
+- Create collection modal
+- Rename collection visual state
+
+Mobile:
+
+- Collection chips
+- Two-column work grid
+- Bottom action sheet
+- Compact search and filters
+
+==================================================
+SCREEN 16 — SHARE CREATOR PROFILE
+==================================================
+
+Create a reusable Share Profile modal or mobile bottom sheet.
+
+Include:
+
+- Profile preview
+- Creator name
+- College and program
+- Creative fields
+- Public profile URL
+- Copy Link
+- Share to Facebook
+- Share to Messenger
+- Share to Instagram
+- Share using Device
+- Download Profile QR placeholder
+- Copy confirmation state
+
+Sample profile URL:
+
+“campuscreatives.pup.edu.ph/creators/rafael-mendoza”
+
+This is a visual prototype URL only.
+
+==================================================
+PORTFOLIO VISIBILITY CONTROLS
+==================================================
+
+Create reusable controls for:
+
+- Public
+- Unlisted
+- Hidden from Portfolio
+- Archived
+
+Explain each option briefly.
+
+Public:
+“Visible on your profile and discovery pages.”
+
+Unlisted:
+“Accessible through a direct link but not shown in discovery.”
+
+Hidden from Portfolio:
+“Published but not displayed on your profile.”
+
+Archived:
+“Removed from public view and stored in your archive.”
+
+Use both icons and labels.
+
+==================================================
+REQUIRED VISUAL STATES
+==================================================
+
+Create interface examples for:
+
+- Default creator profile
+- Owner profile
+- Public viewer profile
+- Empty portfolio
+- No featured works
+- Edit mode
+- Unsaved changes
+- Save success
+- Upload progress
+- File error
+- Draft
+- Pending Review
+- Approved
+- Needs Revision
+- Rejected
+- Featured
+- Archived
+- Submission success
+- Revision requested
+- Revision completed
+- Empty saved works
+- Collection created
+- Link copied
+- Share sheet
+- Delete confirmation
+- Withdraw confirmation
+
+==================================================
+HCI AND ACCESSIBILITY
+==================================================
+
+Follow these principles:
+
+- Clearly show progress in multi-step forms.
+- Keep one main task per step.
+- Show required and optional fields.
+- Place validation near the affected field.
+- Allow users to save drafts.
+- Warn users before leaving with unsaved changes.
+- Clearly explain moderation status.
+- Do not use hostile or punitive feedback language.
+- Keep moderator feedback actionable.
+- Use icons and labels for all statuses.
+- Use visible keyboard focus states.
+- Maintain minimum 44px mobile touch targets.
+- Use descriptive image alt text.
+- Provide caption and transcript fields where relevant.
+- Use clear confirmation before destructive actions.
+- Keep repeated actions in consistent locations.
+- Preserve entered values when moving between prototype steps.
+- Keep portfolio organization understandable.
+- Avoid overemphasizing follower or appreciation counts.
+
+==================================================
+RESPONSIVE RULES
+==================================================
+
+Desktop target:
+
+- 1440px
+- Maximum content width: 1200–1280px
+
+Tablet target:
+
+- 768px
+
+Mobile target:
+
+- 390px
+- Side margins around 16px
+
+Desktop:
+
+- Three- or four-column portfolio grids
+- Multi-column profile editing
+- Persistent progress indicators
+- Side preview panels
+- Drag-and-drop portfolio organization
+
+Mobile:
+
+- One focused form step at a time
+- One- or two-column work grids
+- Sticky bottom actions where appropriate
+- Bottom sheets for menus and confirmations
+- Horizontal tabs
+- Full-width media previews
+- No horizontal overflow
+
+==================================================
+PROTOTYPE INTERACTIONS
+==================================================
+
+Connect these flows:
+
+Creator Profile:
+
+Home or Work Detail → Creator Profile
+
+Creator Editing:
+
+Creator Profile → Edit Profile → Preview → Save → Creator Profile
+
+Portfolio Management:
+
+Creator Profile → Manage Portfolio → Reorder or Feature Work → Preview Profile
+
+Submit Work:
+
+Submit → Basic Information → Media → Classification → Ownership → Review → Confirmation → My Submissions
+
+Draft Flow:
+
+Submit Work → Save as Draft → My Submissions → Continue Editing
+
+Submission Tracking:
+
+My Submissions → Submission Detail
+
+Revision Flow:
+
+My Submissions → Needs Revision → View Feedback → Revise Submission → Resubmit Confirmation
+
+Event Entry:
+
+Event Detail → Submit Entry → Select Existing Work or New Work → Review → Entry Confirmation placeholder
+
+Saved Works:
+
+Profile Menu → Saved Works → Open Work Detail
+
+Share Profile:
+
+Creator Profile → Share Profile → Copy Link confirmation
+
+Do not leave primary buttons without either:
+
+- A front-end prototype interaction, or
+- A clearly labeled future-phase placeholder
+
+==================================================
+FILE NAMING
+==================================================
+
+Use lowercase kebab-case.
+
+Pages:
+
+- creator-profile-page.tsx
+- edit-profile-page.tsx
+- portfolio-management-page.tsx
+- submit-work-page.tsx
+- submission-confirmation-page.tsx
+- my-submissions-page.tsx
+- submission-detail-page.tsx
+- revise-submission-page.tsx
+- event-entry-page.tsx
+- saved-works-page.tsx
+
+Components:
+
+- creator-profile-header.tsx
+- creator-statistics.tsx
+- portfolio-grid.tsx
+- portfolio-management-card.tsx
+- profile-edit-form.tsx
+- profile-preview-card.tsx
+- submission-stepper.tsx
+- submission-basic-info-step.tsx
+- submission-media-step.tsx
+- submission-classification-step.tsx
+- submission-ownership-step.tsx
+- submission-review-step.tsx
+- media-upload-zone.tsx
+- media-preview-card.tsx
+- ownership-confirmation-panel.tsx
+- submission-status-card.tsx
+- submission-status-timeline.tsx
+- moderator-feedback-panel.tsx
+- revision-checklist.tsx
+- event-work-selector.tsx
+- saved-collection-card.tsx
+- share-profile-modal.tsx
+- visibility-control.tsx
+
+Asset examples:
+
+- rafael-mendoza-profile.webp
+- rafael-mendoza-cover.webp
+- digital-sinta-cover.webp
+- digital-sinta-process-01.webp
+- digital-sinta-process-02.webp
+- railway-sketches-cover.webp
+- campus-frequencies-cover.webp
+- ccis-portfolio-banner.webp
+
+Do not use spaces or uppercase letters in file names.
+
+==================================================
+FINAL REQUIREMENTS
+==================================================
+
+Before finishing Phase 3:
+
+- Ensure all screens use the exact design system from Phases 1 and 2.
+- Ensure both desktop and mobile versions are complete.
+- Ensure Creator Profile feels like a portfolio rather than social media.
+- Ensure the submission process is clear and not overwhelming.
+- Ensure ownership confirmation and copyright reminders are visible.
+- Ensure all moderation statuses are understandable.
+- Ensure Needs Revision feedback is actionable and supportive.
+- Ensure event-entry submission connects correctly from Event Detail.
+- Ensure portfolio management includes visibility and organization controls.
+- Ensure Saved Works is separate from the public portfolio.
+- Ensure future moderator and admin features use placeholders only.
+- Ensure no backend, database, API, authentication logic, or persistence is added.
+- Do not redesign completed Phase 1 or Phase 2 screens.
+- Do not proceed to Phase 4.
