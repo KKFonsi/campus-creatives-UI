@@ -41,6 +41,29 @@
   --color-sidebar-border: hsl(var(--sidebar-border));
   --color-sidebar-ring: hsl(var(--sidebar-ring));
 
+  /* PUP: Campus Creatives brand tokens */
+  --color-pup-maroon: #800000;
+  --color-deep-maroon: #5B0000;
+  --color-dark-maroon: #3D0000;
+  --color-pup-gold: #FFB81C;
+  --color-warm-gold: #D89B00;
+  --color-soft-gold: #FFF2CC;
+  --color-crimson-accent: #A71930;
+  --color-soft-maroon: #F5E7E7;
+  --color-main-bg: #F8F6F1;
+  --color-warm-white: #FFFDF8;
+  --color-card-bg: #FFFFFF;
+  --color-secondary-surface: #F1EDE6;
+  --color-primary-text: #211B1B;
+  --color-secondary-text: #665D5D;
+  --color-muted-text: #8A8080;
+  --color-dark-surface: #251717;
+  --color-status-approved: #2F7D57;
+  --color-status-pending: #B7791F;
+  --color-status-needs-revision: #C76A24;
+  --color-status-rejected: #B63737;
+  --color-status-info: #356B9C;
+
   --text-xs: 0.75rem;
   --text-xs--line-height: calc(1 / 0.75);
   --text-sm: 0.875rem;
