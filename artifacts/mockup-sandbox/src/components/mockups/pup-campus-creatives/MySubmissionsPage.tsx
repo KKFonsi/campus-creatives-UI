@@ -3,7 +3,19 @@ import { Search, Plus, Filter, MoreVertical, Clock, CheckCircle2, AlertCircle, X
 import { DesktopNav } from './_shared/DesktopNav';
 import './_group.css';
 
-export default function MySubmissionsPage() {
+interface MySubmissionsPageProps {
+  onBack?: () => void;
+  onNewSubmission?: () => void;
+  onSubmissionDetail?: () => void;
+  onNeedsRevision?: () => void;
+}
+
+export default function MySubmissionsPage({
+  onBack,
+  onNewSubmission,
+  onSubmissionDetail,
+  onNeedsRevision,
+}: MySubmissionsPageProps = {}) {
   const [activeTab, setActiveTab] = useState("All");
 
   const tabs = [
@@ -103,10 +115,15 @@ export default function MySubmissionsPage() {
       <main className="max-w-[1280px] mx-auto px-8 py-10">
         <header className="flex justify-between items-end mb-10">
           <div>
+            {onBack && (
+              <button onClick={onBack} className="mb-4 text-sm font-bold text-pup-maroon hover:underline">
+                Back to Creator Profile
+              </button>
+            )}
             <h1 className="text-3xl font-bold text-primary-text mb-2">My Submissions</h1>
             <p className="text-secondary-text">Track, manage, and revise your creative contributions to Campus Creatives.</p>
           </div>
-          <button className="px-6 py-3 bg-pup-maroon text-white font-bold rounded-xl flex items-center gap-2 hover:bg-deep-maroon transition-all shadow-lg shadow-pup-maroon/20">
+          <button onClick={onNewSubmission} className="px-6 py-3 bg-pup-maroon text-white font-bold rounded-xl flex items-center gap-2 hover:bg-deep-maroon transition-all shadow-lg shadow-pup-maroon/20">
             <Plus size={20} strokeWidth={2.5} />
             New Submission
           </button>
@@ -195,9 +212,12 @@ export default function MySubmissionsPage() {
                   {work.status}
                 </div>
                 
-                <button className={`px-5 py-2.5 rounded-xl font-bold text-sm whitespace-nowrap transition-all flex items-center gap-2 ${
+                <button
+                  onClick={work.status === "Needs Revision" ? onNeedsRevision : onSubmissionDetail}
+                  className={`px-5 py-2.5 rounded-xl font-bold text-sm whitespace-nowrap transition-all flex items-center gap-2 ${
                   work.actionColor || "bg-white border border-border text-primary-text hover:bg-secondary-surface"
-                }`}>
+                }`}
+                >
                   {work.action}
                   <ChevronRight size={16} />
                 </button>

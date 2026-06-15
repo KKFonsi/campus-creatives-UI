@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { DesktopNav } from './_shared/DesktopNav';
+import { InitialsAvatar } from './_shared/InitialsAvatar';
 import { Award, Heart, Bookmark, Share, Search, Filter } from 'lucide-react';
+import { navigateTo } from '../../../app/demo';
+import { routePaths } from '../../../app/routes';
 import './_group.css';
 
 export function StudentHomeDesktop() {
@@ -21,11 +24,8 @@ export function StudentHomeDesktop() {
           <p className="text-[16px] text-secondary-text">Discover new student works, creative opportunities, and campus highlights.</p>
         </div>
         <div className="flex gap-3">
-          <button className="px-5 py-2.5 bg-transparent border-2 border-border text-primary-text font-medium rounded-[10px] hover:border-pup-maroon hover:text-pup-maroon transition-colors text-[14px]">
+          <button onClick={() => navigateTo(routePaths.student.profile)} className="px-5 py-2.5 bg-transparent border-2 border-border text-primary-text font-medium rounded-[10px] hover:border-pup-maroon hover:text-pup-maroon transition-colors text-[14px]">
             View My Portfolio
-          </button>
-          <button className="px-5 py-2.5 bg-pup-maroon text-white font-medium rounded-[10px] hover:bg-deep-maroon transition-colors text-[14px] shadow-sm">
-            Submit Work
           </button>
         </div>
       </section>
@@ -46,9 +46,7 @@ export function StudentHomeDesktop() {
           <div className="w-[40%] p-8 flex flex-col justify-center">
             <h3 className="text-[28px] font-bold mb-2 tracking-tight">Sta. Mesa After the Rain</h3>
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-8 h-8 rounded-full bg-secondary-surface overflow-hidden border border-border">
-                <img src="/__mockup/images/creator-portrait.jpg" alt="Bianca Reyes" className="w-full h-full object-cover" />
-              </div>
+              <InitialsAvatar name="Bianca Reyes" className="w-8 h-8 border border-border" textClassName="text-[11px]" />
               <div>
                 <div className="text-[14px] font-semibold text-primary-text leading-tight">Bianca Reyes</div>
                 <div className="text-[13px] text-secondary-text leading-tight">COC • Photography</div>
@@ -72,7 +70,7 @@ export function StudentHomeDesktop() {
                   <Bookmark size={18} fill={saved['featured'] ? 'currentColor' : 'none'} />
                 </button>
               </div>
-              <button className="px-5 py-2 border-2 border-border font-medium rounded-lg hover:border-pup-maroon hover:text-pup-maroon transition-colors text-[14px]">
+              <button onClick={() => navigateTo('/student/work/sta-mesa-after-the-rain')} className="px-5 py-2 border-2 border-border font-medium rounded-lg hover:border-pup-maroon hover:text-pup-maroon transition-colors text-[14px]">
                 View Full Work
               </button>
             </div>

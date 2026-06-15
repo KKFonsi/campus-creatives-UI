@@ -23,9 +23,19 @@ import {
   MessageSquare,
   Layout
 } from 'lucide-react';
+import { InitialsAvatar } from './_shared/InitialsAvatar';
 import './_group.css';
 
-const ModeratorSidebar = ({ active }: { active: string }) => (
+interface ModeratorNavigationProps {
+  onDashboard?: () => void;
+  onPending?: () => void;
+  onReports?: () => void;
+  onFeatured?: () => void;
+  onOfficialContent?: () => void;
+  onHistory?: () => void;
+}
+
+const ModeratorSidebar = ({ active, navigation }: { active: string; navigation?: ModeratorNavigationProps }) => (
   <aside className="w-[240px] bg-dark-surface text-white flex flex-col flex-shrink-0 min-h-screen">
     <div className="p-6">
       <div className="text-pup-gold font-bold text-xl tracking-tight leading-tight mb-1">
@@ -38,15 +48,16 @@ const ModeratorSidebar = ({ active }: { active: string }) => (
     
     <nav className="flex-1 px-3 space-y-1">
       {[
-        { id: 'Dashboard', icon: LayoutDashboard, label: 'Dashboard' },
-        { id: 'Pending Reviews', icon: ClipboardList, label: 'Pending Reviews', badge: '24' },
-        { id: 'Reports', icon: Flag, label: 'Reports', badge: '6' },
-        { id: 'Featured Works', icon: Star, label: 'Featured Works' },
-        { id: 'Official Content', icon: Shield, label: 'Official Content' },
-        { id: 'Moderation History', icon: History, label: 'Moderation History' },
+        { id: 'Dashboard', icon: LayoutDashboard, label: 'Dashboard', onClick: navigation?.onDashboard },
+        { id: 'Pending Reviews', icon: ClipboardList, label: 'Pending Reviews', badge: '24', onClick: navigation?.onPending },
+        { id: 'Reports', icon: Flag, label: 'Reports', badge: '6', onClick: navigation?.onReports },
+        { id: 'Featured Works', icon: Star, label: 'Featured Works', onClick: navigation?.onFeatured },
+        { id: 'Official Content', icon: Shield, label: 'Official Content', onClick: navigation?.onOfficialContent },
+        { id: 'Moderation History', icon: History, label: 'Moderation History', onClick: navigation?.onHistory },
       ].map((item) => (
         <button
           key={item.id}
+          onClick={item.onClick}
           className={`w-full flex items-center justify-between px-3 py-2 rounded-lg transition-colors ${
             active === item.id 
               ? 'bg-white/10 text-white border-l-4 border-pup-maroon' 
@@ -97,15 +108,13 @@ const TopBar = ({ role = "Moderator" }) => (
           <div className="text-sm font-semibold text-primary-text leading-tight text-right">Maria Moderator</div>
           <div className="text-[11px] font-bold text-pup-maroon uppercase tracking-wider">{role}</div>
         </div>
-        <div className="w-10 h-10 rounded-full bg-soft-maroon border border-pup-maroon/20 overflow-hidden">
-          <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Maria" alt="Avatar" className="w-full h-full object-cover" />
-        </div>
+        <InitialsAvatar name="Maria Moderator" className="w-10 h-10 border border-pup-maroon/20" textClassName="text-xs" />
       </div>
     </div>
   </header>
 );
 
-export default function OfficialContentReviewPage() {
+export default function OfficialContentReviewPage(props: ModeratorNavigationProps = {}) {
   const [activeTab, setActiveTab] = useState('Pending');
   const [expandedId, setExpandedId] = useState<number | null>(1);
 
@@ -168,7 +177,7 @@ export default function OfficialContentReviewPage() {
 
   return (
     <div className="flex min-h-screen bg-main-bg font-inter">
-      <ModeratorSidebar active="Official Content" />
+      <ModeratorSidebar active="Official Content" navigation={props} />
       
       <main className="flex-1 flex flex-col overflow-hidden">
         <TopBar />

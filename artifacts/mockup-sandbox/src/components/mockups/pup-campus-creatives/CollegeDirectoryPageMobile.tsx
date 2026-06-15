@@ -22,7 +22,11 @@ const colleges = [
   { abbr: 'GS', name: 'Graduate School', creators: 85, works: 310 },
 ];
 
-export function CollegeDirectoryPageMobile() {
+interface CollegeDirectoryPageMobileProps {
+  onCollege?: () => void;
+}
+
+export function CollegeDirectoryPageMobile({ onCollege }: CollegeDirectoryPageMobileProps = {}) {
   return (
     <div className="w-[390px] min-h-screen bg-main-bg font-inter overflow-y-auto pb-24">
       <header className="px-5 pt-8 pb-4 bg-warm-white border-b border-border sticky top-0 z-40">
@@ -52,7 +56,7 @@ export function CollegeDirectoryPageMobile() {
 
       <div className="grid grid-cols-2 gap-3 px-5">
         {colleges.map((college) => (
-          <div key={college.abbr} className="bg-card-bg p-4 rounded-2xl border border-border active:scale-[0.98] transition-transform">
+          <button key={college.abbr} type="button" onClick={onCollege} className="bg-card-bg p-4 rounded-2xl border border-border active:scale-[0.98] transition-transform text-left focus:outline-none focus:ring-4 focus:ring-pup-maroon/20">
             <div className="w-10 h-10 rounded-xl bg-pup-maroon text-white flex items-center justify-center font-bold text-xs mb-3">
               {college.abbr}
             </div>
@@ -66,7 +70,7 @@ export function CollegeDirectoryPageMobile() {
             <div className="mt-4 pt-3 border-t border-border flex justify-end">
               <div className="text-pup-maroon font-bold text-[11px] uppercase tracking-wide">View →</div>
             </div>
-          </div>
+          </button>
         ))}
       </div>
 

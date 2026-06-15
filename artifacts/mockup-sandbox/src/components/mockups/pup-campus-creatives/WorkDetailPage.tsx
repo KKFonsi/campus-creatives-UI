@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { DesktopNav } from './_shared/DesktopNav';
+import { InitialsAvatar } from './_shared/InitialsAvatar';
 import { 
   Heart, 
   Bookmark, 
@@ -16,14 +17,33 @@ import {
   Link as LinkIcon,
   ExternalLink
 } from 'lucide-react';
+import { ReportModal } from './ReportModal';
+import { ShareModal } from './ShareModal';
 import './_group.css';
 
-export function WorkDetailPage() {
+interface WorkDetailPageProps {
+  onBack?: () => void;
+  onCreatorProfile?: () => void;
+}
+
+const initialComments = [
+  { id: 1, name: 'Ana dela Cruz', text: 'This perfectly captures the mood of Sta. Mesa! The reflection on the pavement is stunning.', time: '2 hours ago' },
+  { id: 2, name: 'Marco Santos', text: 'PUP pride! Great shot, Bianca.', time: '5 hours ago' },
+  { id: 3, name: 'Lea Reyes', text: 'What camera settings did you use for this?', time: '1 day ago' },
+  { id: 4, name: 'Joven Bautista', text: 'The composition is amazing. It feels so nostalgic.', time: '2 days ago' },
+  { id: 5, name: 'Sofia Lim', text: 'I love how you handled the lighting despite the gloomy weather.', time: '3 days ago' },
+];
+
+export function WorkDetailPage({ onBack, onCreatorProfile }: WorkDetailPageProps = {}) {
   const [isAppreciated, setIsAppreciated] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
   const [isFollowing, setIsFollowing] = useState(false);
   const [activeImageIdx, setActiveImageIdx] = useState(0);
   const [showFullStatement, setShowFullStatement] = useState(false);
+  const [showShare, setShowShare] = useState(false);
+  const [showReport, setShowReport] = useState(false);
+  const [commentDraft, setCommentDraft] = useState('');
+  const [localComments, setLocalComments] = useState(initialComments);
 
   const images = [
     '/__mockup/images/thumbnail_1.jpg',
@@ -33,19 +53,14 @@ export function WorkDetailPage() {
     '/__mockup/images/college_4.jpg',
   ];
 
-  const comments = [
-    { id: 1, name: 'Ana dela Cruz', avatar: '/__mockup/images/creator-portrait.jpg', text: 'This perfectly captures the mood of Sta. Mesa! The reflection on the pavement is stunning.', time: '2 hours ago' },
-    { id: 2, name: 'Marco Santos', avatar: '/__mockup/images/creator-portrait.jpg', text: 'PUP pride! Great shot, Bianca.', time: '5 hours ago' },
-    { id: 3, name: 'Lea Reyes', avatar: '/__mockup/images/creator-portrait.jpg', text: 'What camera settings did you use for this?', time: '1 day ago' },
-    { id: 4, name: 'Joven Bautista', avatar: '/__mockup/images/creator-portrait.jpg', text: 'The composition is amazing. It feels so nostalgic.', time: '2 days ago' },
-    { id: 5, name: 'Sofia Lim', avatar: '/__mockup/images/creator-portrait.jpg', text: 'I love how you handled the lighting despite the gloomy weather.', time: '3 days ago' },
-  ];
-
   return (
     <div className="min-h-screen bg-main-bg text-primary-text font-inter pb-20">
       <DesktopNav authenticated={true} />
       
       <main className="max-w-[1200px] mx-auto px-8 py-10">
+        <button type="button" onClick={onBack} className="mb-8 text-pup-maroon font-bold hover:underline">
+          ← Back to Explore
+        </button>
         <div className="flex gap-10">
           {/* Left Content Area */}
           <div className="flex-1">
@@ -88,9 +103,7 @@ export function WorkDetailPage() {
               <h1 className="text-4xl font-black mb-6 leading-tight">Sta. Mesa After the Rain</h1>
               
               <div className="flex items-center gap-4 p-5 bg-card-bg border border-border rounded-2xl shadow-sm">
-                <div className="w-14 h-14 rounded-full bg-secondary-surface border-2 border-border overflow-hidden">
-                  <img src="/__mockup/images/creator-portrait.jpg" alt="Bianca Reyes" className="w-full h-full object-cover" />
-                </div>
+                <InitialsAvatar name="Bianca Reyes" className="w-14 h-14 border-2 border-border" textClassName="text-base" />
                 <div>
                   <h3 className="font-bold text-lg">Bianca Reyes</h3>
                   <p className="text-secondary-text">College of Communication • Broadcasting</p>
@@ -167,33 +180,48 @@ export function WorkDetailPage() {
             </div>
 
             {/* Comments Section */}
-            <section className="mb-20">
+            <section id="work-comments" className="mb-20">
               <div className="flex items-center justify-between mb-8">
                 <h3 className="text-2xl font-bold">14 Comments</h3>
                 <div className="h-px flex-1 bg-border mx-6"></div>
               </div>
 
               <div className="flex gap-4 mb-10">
-                <div className="w-10 h-10 rounded-full bg-secondary-surface border border-border overflow-hidden shrink-0">
-                  <img src="/__mockup/images/creator-portrait.jpg" alt="User" className="w-full h-full object-cover" />
-                </div>
+                <InitialsAvatar name="Rafael Mendoza" className="w-10 h-10 border border-border" textClassName="text-sm" />
                 <div className="flex-1">
                   <textarea 
+                    value={commentDraft}
+                    onChange={(event) => setCommentDraft(event.target.value)}
                     placeholder="Add a comment..." 
                     className="w-full p-4 bg-card-bg border border-border rounded-xl focus:border-pup-maroon outline-none min-h-[100px] transition-colors"
                   />
                   <div className="flex justify-end mt-2">
-                    <button className="px-6 py-2 bg-pup-maroon text-white font-bold rounded-xl hover:bg-deep-maroon transition-colors">Post Comment</button>
+                    <button
+                      onClick={() => {
+                        if (!commentDraft.trim()) return;
+                        setLocalComments([
+                          {
+                            id: Date.now(),
+                            name: 'You',
+                            text: commentDraft.trim(),
+                            time: 'Just now',
+                          },
+                          ...localComments,
+                        ]);
+                        setCommentDraft('');
+                      }}
+                      className="px-6 py-2 bg-pup-maroon text-white font-bold rounded-xl hover:bg-deep-maroon transition-colors"
+                    >
+                      Post Comment
+                    </button>
                   </div>
                 </div>
               </div>
 
               <div className="space-y-8">
-                {comments.map(comment => (
+                {localComments.map(comment => (
                   <div key={comment.id} className="flex gap-4 group">
-                    <div className="w-10 h-10 rounded-full bg-secondary-surface border border-border overflow-hidden shrink-0">
-                      <img src={comment.avatar} alt={comment.name} className="w-full h-full object-cover" />
-                    </div>
+                    <InitialsAvatar name={comment.name} className="w-10 h-10 border border-border" textClassName="text-sm" />
                     <div className="flex-1">
                       <div className="flex items-center justify-between mb-1">
                         <div className="flex items-center gap-2">
@@ -207,7 +235,7 @@ export function WorkDetailPage() {
                       <p className="text-secondary-text mb-2 leading-relaxed">{comment.text}</p>
                       <div className="flex items-center gap-4 text-xs font-bold">
                         <button className="text-muted-text hover:text-pup-maroon">REPLY</button>
-                        <button className="text-muted-text hover:text-status-rejected">REPORT</button>
+                        <button onClick={() => setShowReport(true)} className="text-muted-text hover:text-status-rejected">REPORT</button>
                       </div>
                     </div>
                   </div>
@@ -243,15 +271,15 @@ export function WorkDetailPage() {
               </div>
 
               <div className="bg-card-bg border border-border rounded-2xl overflow-hidden shadow-sm">
-                <button className="w-full flex items-center gap-3 p-4 hover:bg-secondary-surface transition-colors text-sm font-semibold border-b border-border">
+                <button onClick={() => document.getElementById('work-comments')?.scrollIntoView({ behavior: 'smooth' })} className="w-full flex items-center gap-3 p-4 hover:bg-secondary-surface transition-colors text-sm font-semibold border-b border-border">
                   <MessageCircle size={20} className="text-secondary-text" />
                   Jump to Comments
                 </button>
-                <button className="w-full flex items-center gap-3 p-4 hover:bg-secondary-surface transition-colors text-sm font-semibold border-b border-border">
+                <button onClick={() => setShowShare(true)} className="w-full flex items-center gap-3 p-4 hover:bg-secondary-surface transition-colors text-sm font-semibold border-b border-border">
                   <Share2 size={20} className="text-secondary-text" />
                   Share Project
                 </button>
-                <button className="w-full flex items-center gap-3 p-4 hover:bg-status-rejected/10 text-status-rejected transition-colors text-sm font-semibold">
+                <button onClick={() => setShowReport(true)} className="w-full flex items-center gap-3 p-4 hover:bg-status-rejected/10 text-status-rejected transition-colors text-sm font-semibold">
                   <Flag size={20} />
                   Report Work
                 </button>
@@ -261,9 +289,7 @@ export function WorkDetailPage() {
               <div className="bg-card-bg border border-border rounded-2xl p-6 shadow-sm">
                 <h4 className="text-xs font-bold text-muted-text uppercase tracking-widest mb-4">About the Creator</h4>
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="w-12 h-12 rounded-full bg-secondary-surface border border-border overflow-hidden">
-                    <img src="/__mockup/images/creator-portrait.jpg" alt="Bianca" className="w-full h-full object-cover" />
-                  </div>
+                  <InitialsAvatar name="Bianca Reyes" className="w-12 h-12 border border-border" textClassName="text-sm" />
                   <div>
                     <p className="font-bold leading-none mb-1">Bianca Reyes</p>
                     <p className="text-xs text-muted-text">COC • Broadcasting</p>
@@ -273,7 +299,7 @@ export function WorkDetailPage() {
                   Passionate storyteller through lens and light. Exploring the hidden corners of the Polytechnic University of the Philippines.
                 </p>
                 <button className="w-full py-2 bg-pup-maroon text-white font-bold rounded-lg text-sm mb-3">Follow</button>
-                <button className="w-full py-2 bg-transparent text-pup-maroon border border-pup-maroon font-bold rounded-lg text-sm flex items-center justify-center gap-1">
+                <button type="button" onClick={onCreatorProfile} className="w-full py-2 bg-transparent text-pup-maroon border border-pup-maroon font-bold rounded-lg text-sm flex items-center justify-center gap-1">
                   View Portfolio <ChevronRight size={16} />
                 </button>
 
@@ -331,6 +357,8 @@ export function WorkDetailPage() {
           </div>
         </section>
       </main>
+      {showShare && <ShareModal onClose={() => setShowShare(false)} />}
+      {showReport && <ReportModal isOpen={showReport} onClose={() => setShowReport(false)} />}
     </div>
   );
 }

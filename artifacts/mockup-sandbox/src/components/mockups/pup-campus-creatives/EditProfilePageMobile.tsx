@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { MobileBottomNav } from './_shared/MobileBottomNav';
+import { InitialsAvatar } from './_shared/InitialsAvatar';
 import { 
   Camera, 
   Image as ImageIcon, 
@@ -18,7 +19,12 @@ import {
 } from 'lucide-react';
 import './_group.css';
 
-export function EditProfilePageMobile() {
+interface EditProfilePageMobileProps {
+  onBack?: () => void;
+  onDone?: () => void;
+}
+
+export function EditProfilePageMobile({ onBack, onDone }: EditProfilePageMobileProps = {}) {
   const [isTouched, setIsTouched] = useState(false);
   const [showToast, setShowToast] = useState(false);
   
@@ -43,13 +49,16 @@ export function EditProfilePageMobile() {
       {/* Sticky Top Bar */}
       <div className="sticky top-0 z-30 bg-card-bg border-b border-border px-4 py-3 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <button className="p-1 hover:bg-secondary-surface rounded-full transition-colors">
+          <button onClick={onBack} className="p-1 hover:bg-secondary-surface rounded-full transition-colors">
             <ChevronLeft size={24} />
           </button>
           <h1 className="text-[17px] font-bold">Edit Profile</h1>
         </div>
         <button 
-          onClick={handleSave}
+          onClick={() => {
+            handleSave();
+            onDone?.();
+          }}
           className={`text-sm font-bold px-4 py-1.5 rounded-full transition-all ${
             isTouched 
             ? 'bg-pup-maroon text-white shadow-md' 
@@ -82,9 +91,7 @@ export function EditProfilePageMobile() {
 
           <div className="flex items-center gap-6">
             <div className="relative group">
-              <div className="w-20 h-20 rounded-full bg-secondary-surface border-2 border-border overflow-hidden">
-                <img src="/__mockup/images/creator-portrait.jpg" alt="Profile" className="w-full h-full object-cover" />
-              </div>
+              <InitialsAvatar name="Rafael Mendoza" className="w-20 h-20 border-2 border-border" textClassName="text-2xl" />
               <div className="absolute inset-0 bg-black/30 rounded-full flex items-center justify-center text-white pointer-events-none">
                 <Camera size={18} />
               </div>
@@ -251,9 +258,12 @@ export function EditProfilePageMobile() {
 
       {/* Sticky Bottom Actions */}
       <div className="fixed bottom-0 left-0 w-[390px] bg-card-bg border-t border-border px-5 py-4 flex gap-3 z-30">
-        <button className="flex-1 py-3 border border-border rounded-xl font-bold text-sm">Cancel</button>
+        <button onClick={onBack} className="flex-1 py-3 border border-border rounded-xl font-bold text-sm">Cancel</button>
         <button 
-          onClick={handleSave}
+          onClick={() => {
+            handleSave();
+            onDone?.();
+          }}
           disabled={!isTouched}
           className={`flex-1 py-3 rounded-xl font-bold text-sm transition-all ${
             isTouched ? 'bg-pup-maroon text-white shadow-lg' : 'bg-gray-100 text-gray-400'

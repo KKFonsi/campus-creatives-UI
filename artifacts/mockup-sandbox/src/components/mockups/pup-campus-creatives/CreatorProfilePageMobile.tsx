@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { MobileBottomNav } from './_shared/MobileBottomNav';
+import { InitialsAvatar } from './_shared/InitialsAvatar';
+import { ShareProfileModalMobile } from './ShareProfileModal';
 import { 
   Heart, 
   Share2, 
@@ -14,9 +16,30 @@ import {
 } from 'lucide-react';
 import './_group.css';
 
-export function CreatorProfilePageMobile() {
+interface CreatorProfilePageMobileProps {
+  onBack?: () => void;
+  onEditProfile?: () => void;
+  onPortfolio?: () => void;
+  onSubmissions?: () => void;
+  onSavedWorks?: () => void;
+  onShareProfile?: () => void;
+  onCloseShare?: () => void;
+  initialShareOpen?: boolean;
+}
+
+export function CreatorProfilePageMobile({
+  onBack,
+  onEditProfile,
+  onPortfolio,
+  onSubmissions,
+  onSavedWorks,
+  onShareProfile,
+  onCloseShare,
+  initialShareOpen = false,
+}: CreatorProfilePageMobileProps = {}) {
   const [activeTab, setActiveTab] = useState('Portfolio');
   const [isBioExpanded, setIsBioExpanded] = useState(false);
+  const [showShareProfile, setShowShareProfile] = useState(initialShareOpen);
 
   const portfolioWorks = [
     { id: 1, title: 'Digital Sinta', category: 'Digital Art', status: 'Featured', appreciation: 124, img: '/__mockup/images/thumbnail_1.jpg' },
@@ -38,6 +61,11 @@ export function CreatorProfilePageMobile() {
 
   return (
     <div className="w-[390px] min-h-screen bg-main-bg font-inter overflow-y-auto pb-24">
+      {onBack && (
+        <button type="button" onClick={onBack} className="mx-4 mt-4 text-pup-maroon font-bold text-[13px]">
+          Explore
+        </button>
+      )}
       {/* Compact Cover */}
       <div className="w-full h-[160px] relative">
         <img 
@@ -51,20 +79,20 @@ export function CreatorProfilePageMobile() {
       {/* Profile Section */}
       <div className="px-5 -mt-10 relative mb-6">
         <div className="flex flex-col items-center">
-          <div className="w-20 h-20 rounded-full border-4 border-card-bg bg-secondary-surface overflow-hidden shadow-lg mb-3">
-            <img 
-              src="/__mockup/images/creator-portrait.jpg" 
-              alt="Rafael Mendoza" 
-              className="w-full h-full object-cover"
-            />
-          </div>
+          <InitialsAvatar
+            name="Rafael Mendoza"
+            className="w-20 h-20 border-4 border-card-bg shadow-lg mb-3"
+            textClassName="text-2xl"
+          />
           <h1 className="text-xl font-bold mb-1">Rafael Mendoza</h1>
-          <div className="flex items-center gap-2 mb-1">
-            <span className="px-2 py-0.5 bg-soft-maroon text-pup-maroon text-[10px] font-bold rounded-md">CCIS</span>
+          <div className="flex flex-col items-center gap-1 mb-2 text-center">
+            <span className="px-2 py-0.5 bg-soft-maroon text-pup-maroon text-[10px] font-bold rounded-md">College of Computer and Information Sciences</span>
+            <p className="text-secondary-text text-[12px] px-4">Bachelor of Science in Information Technology</p>
+          </div>
+          <div className="flex items-center gap-2 mb-3">
             <div className="w-1.5 h-1.5 rounded-full bg-status-approved" />
             <span className="text-[11px] text-status-approved font-medium">Available for Collab</span>
           </div>
-          <p className="text-secondary-text text-[12px] mb-4 text-center px-4">Bachelor of Science in Information Technology</p>
           
           {/* Scrollable Chips */}
           <div className="w-full overflow-x-auto flex gap-2 no-scrollbar mb-4 px-2">
@@ -100,12 +128,26 @@ export function CreatorProfilePageMobile() {
 
           {/* Actions */}
           <div className="w-full flex gap-2">
-            <button className="flex-1 py-2.5 border border-border rounded-lg font-bold text-[13px] hover:border-pup-maroon hover:text-pup-maroon transition-colors flex items-center justify-center gap-2">
+            <button onClick={onEditProfile} className="flex-1 py-2.5 border border-border rounded-lg font-bold text-[13px] hover:border-pup-maroon hover:text-pup-maroon transition-colors flex items-center justify-center gap-2">
               <Edit3 size={16} /> Edit Profile
             </button>
-            <button className="w-12 h-10 border border-border rounded-lg flex items-center justify-center hover:bg-secondary-surface transition-colors">
+            <button
+              onClick={() => {
+                if (onShareProfile) {
+                  onShareProfile();
+                  return;
+                }
+                setShowShareProfile(true);
+              }}
+              className="w-12 h-10 border border-border rounded-lg flex items-center justify-center hover:bg-secondary-surface transition-colors"
+            >
               <Share2 size={18} />
             </button>
+          </div>
+          <div className="w-full grid grid-cols-3 gap-2 mt-3">
+            <button onClick={onPortfolio} className="py-2 bg-soft-maroon text-pup-maroon rounded-lg text-[11px] font-bold">Portfolio</button>
+            <button onClick={onSubmissions} className="py-2 bg-soft-maroon text-pup-maroon rounded-lg text-[11px] font-bold">Submissions</button>
+            <button onClick={onSavedWorks} className="py-2 bg-soft-maroon text-pup-maroon rounded-lg text-[11px] font-bold">Saved</button>
           </div>
         </div>
       </div>
@@ -163,6 +205,13 @@ export function CreatorProfilePageMobile() {
       </div>
 
       <MobileBottomNav />
+      <ShareProfileModalMobile
+        isOpen={showShareProfile}
+        onClose={() => {
+          setShowShareProfile(false);
+          onCloseShare?.();
+        }}
+      />
     </div>
   );
 }

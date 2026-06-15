@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { MobileHeader } from './_shared/MobileHeader';
 import { MobileBottomNav } from './_shared/MobileBottomNav';
 import { Award, Heart, Bookmark, Search } from 'lucide-react';
+import { navigateTo } from '../../../app/demo';
 import './_group.css';
 
 export function StudentHomeMobile() {
@@ -52,7 +53,7 @@ export function StudentHomeMobile() {
                   <Bookmark size={14} />
                 </button>
               </div>
-              <button className="px-3 py-1.5 bg-pup-maroon text-white font-medium rounded-md text-[12px]">
+              <button onClick={() => navigateTo('/student/work/sta-mesa-after-the-rain')} className="px-3 py-1.5 bg-pup-maroon text-white font-medium rounded-md text-[12px]">
                 View Work
               </button>
             </div>
@@ -81,10 +82,10 @@ export function StudentHomeMobile() {
             { id: '3', title: 'Concrete Life', creator: 'D. Cruz', img: '/__mockup/images/thumbnail_4.jpg' },
             { id: '4', title: 'Digital Sinta', creator: 'M. Torres', img: '/__mockup/images/thumbnail_1.jpg' }
           ].map(work => (
-            <div key={work.id} className="bg-card-bg rounded-[10px] border border-border overflow-hidden">
+            <button key={work.id} type="button" onClick={() => navigateTo(`/student/work/${work.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}`)} className="bg-card-bg rounded-[10px] border border-border overflow-hidden text-left">
               <div className="aspect-square bg-secondary-surface relative">
                 <img src={work.img} alt={work.title} className="w-full h-full object-cover" />
-                <button onClick={() => toggleLike(work.id)} className="absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-card-bg/80 flex items-center justify-center">
+                <button onClick={(event) => { event.stopPropagation(); toggleLike(work.id); }} className="absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-card-bg/80 flex items-center justify-center">
                   <Heart size={12} className={liked[work.id] ? "fill-pup-maroon text-pup-maroon" : "text-primary-text"} />
                 </button>
               </div>
@@ -92,7 +93,7 @@ export function StudentHomeMobile() {
                 <h3 className="text-[13px] font-semibold mb-0.5 line-clamp-1">{work.title}</h3>
                 <div className="text-[11px] text-secondary-text">{work.creator}</div>
               </div>
-            </div>
+            </button>
           ))}
         </div>
       </section>

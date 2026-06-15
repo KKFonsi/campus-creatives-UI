@@ -21,15 +21,24 @@ const COLLEGES = [
   "Graduate School"
 ];
 
-export function SignUpPage() {
+interface SignUpPageProps {
+  onRegisterSuccess?: () => void;
+  onLogin?: () => void;
+}
+
+export function SignUpPage({ onRegisterSuccess, onLogin }: SignUpPageProps = {}) {
   const [showPassword, setShowPassword] = useState(false);
   const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [emailError, setEmailError] = useState('');
 
   const hasLength = password.length >= 8;
   const hasUpper = /[A-Z]/.test(password);
   const hasLower = /[a-z]/.test(password);
   const hasNumber = /[0-9]/.test(password);
   const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+  const requiredDomain = '@iskolarngbayan.pup.edu.ph';
 
   return (
     <div className="min-h-screen bg-main-bg py-12 px-4 font-inter">
@@ -43,31 +52,56 @@ export function SignUpPage() {
           <p className="text-[15px] text-secondary-text">Set up your university portfolio profile.</p>
         </div>
         
-        <form className="p-8 md:p-10 space-y-6">
+        <form
+          onSubmit={(event) => {
+            event.preventDefault();
+            const normalizedEmail = email.trim().toLowerCase();
+            if (!normalizedEmail.endsWith(requiredDomain)) {
+              setEmailError(`Use your PUP email ending in ${requiredDomain}.`);
+              return;
+            }
+            setEmailError('');
+            onRegisterSuccess?.();
+          }}
+          className="p-8 md:p-10 space-y-6"
+        >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div className="space-y-1.5">
               <label className="text-[14px] font-semibold text-primary-text block">First Name</label>
-              <input type="text" className="w-full px-4 py-3 rounded-xl border border-border focus:border-pup-maroon focus:ring-4 focus:ring-pup-maroon/20 bg-main-bg text-primary-text outline-none transition-all" />
+              <input type="text" required className="w-full px-4 py-3 rounded-xl border border-border focus:border-pup-maroon focus:ring-4 focus:ring-pup-maroon/20 bg-main-bg text-primary-text outline-none transition-all" />
             </div>
             <div className="space-y-1.5">
               <label className="text-[14px] font-semibold text-primary-text block">Last Name</label>
-              <input type="text" className="w-full px-4 py-3 rounded-xl border border-border focus:border-pup-maroon focus:ring-4 focus:ring-pup-maroon/20 bg-main-bg text-primary-text outline-none transition-all" />
+              <input type="text" required className="w-full px-4 py-3 rounded-xl border border-border focus:border-pup-maroon focus:ring-4 focus:ring-pup-maroon/20 bg-main-bg text-primary-text outline-none transition-all" />
             </div>
           </div>
           
           <div className="space-y-1.5">
             <label className="text-[14px] font-semibold text-primary-text block">PUP Email</label>
-            <input type="email" placeholder="yourname@pup.edu.ph" className="w-full px-4 py-3 rounded-xl border border-border focus:border-pup-maroon focus:ring-4 focus:ring-pup-maroon/20 bg-main-bg text-primary-text outline-none transition-all" />
+            <input
+              type="email"
+              required
+              value={email}
+              onChange={(event) => {
+                setEmail(event.target.value);
+                setEmailError('');
+              }}
+              placeholder="juan.delacruz@iskolarngbayan.pup.edu.ph"
+              className={`w-full px-4 py-3 rounded-xl border focus:border-pup-maroon focus:ring-4 focus:ring-pup-maroon/20 bg-main-bg text-primary-text outline-none transition-all ${
+                emailError ? 'border-status-rejected' : 'border-border'
+              }`}
+            />
+            {emailError && <p className="text-[13px] font-semibold text-status-rejected">{emailError}</p>}
           </div>
           
           <div className="space-y-1.5">
             <label className="text-[14px] font-semibold text-primary-text block">Student Number</label>
-            <input type="text" placeholder="e.g. 2024-00000-MN-0" className="w-full px-4 py-3 rounded-xl border border-border focus:border-pup-maroon focus:ring-4 focus:ring-pup-maroon/20 bg-main-bg text-primary-text outline-none transition-all" />
+            <input type="text" required placeholder="e.g. 2024-00000-MN-0" className="w-full px-4 py-3 rounded-xl border border-border focus:border-pup-maroon focus:ring-4 focus:ring-pup-maroon/20 bg-main-bg text-primary-text outline-none transition-all" />
           </div>
           
           <div className="space-y-1.5">
             <label className="text-[14px] font-semibold text-primary-text block">College</label>
-            <select className="w-full px-4 py-3 rounded-xl border border-border focus:border-pup-maroon focus:ring-4 focus:ring-pup-maroon/20 bg-main-bg text-primary-text outline-none transition-all appearance-none cursor-pointer">
+            <select required className="w-full px-4 py-3 rounded-xl border border-border focus:border-pup-maroon focus:ring-4 focus:ring-pup-maroon/20 bg-main-bg text-primary-text outline-none transition-all appearance-none cursor-pointer">
               <option value="" disabled selected>Select your college</option>
               {COLLEGES.map(college => (
                 <option key={college} value={college}>{college}</option>
@@ -77,7 +111,7 @@ export function SignUpPage() {
           
           <div className="space-y-1.5">
             <label className="text-[14px] font-semibold text-primary-text block">Program / Course</label>
-            <input type="text" placeholder="e.g. BS Information Technology" className="w-full px-4 py-3 rounded-xl border border-border focus:border-pup-maroon focus:ring-4 focus:ring-pup-maroon/20 bg-main-bg text-primary-text outline-none transition-all" />
+            <input type="text" required placeholder="e.g. BS Information Technology" className="w-full px-4 py-3 rounded-xl border border-border focus:border-pup-maroon focus:ring-4 focus:ring-pup-maroon/20 bg-main-bg text-primary-text outline-none transition-all" />
           </div>
           
           <div className="pt-2 pb-1 border-t border-border"></div>
@@ -87,6 +121,7 @@ export function SignUpPage() {
             <div className="relative">
               <input 
                 type={showPassword ? "text" : "password"} 
+                required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full px-4 py-3 rounded-xl border border-border focus:border-pup-maroon focus:ring-4 focus:ring-pup-maroon/20 bg-main-bg text-primary-text outline-none transition-all pr-12"
@@ -121,18 +156,18 @@ export function SignUpPage() {
           
           <div className="space-y-1.5">
             <label className="text-[14px] font-semibold text-primary-text block">Confirm Password</label>
-            <input type={showPassword ? "text" : "password"} className="w-full px-4 py-3 rounded-xl border border-border focus:border-pup-maroon focus:ring-4 focus:ring-pup-maroon/20 bg-main-bg text-primary-text outline-none transition-all" />
+            <input type={showPassword ? "text" : "password"} required className="w-full px-4 py-3 rounded-xl border border-border focus:border-pup-maroon focus:ring-4 focus:ring-pup-maroon/20 bg-main-bg text-primary-text outline-none transition-all" />
           </div>
           
           <div className="pt-4 space-y-3">
             <div className="flex items-start gap-3">
-              <input type="checkbox" id="guidelines" className="mt-1 w-4 h-4 rounded border-border text-pup-maroon focus:ring-pup-maroon/30 accent-pup-maroon cursor-pointer" />
+              <input type="checkbox" id="guidelines" required className="mt-1 w-4 h-4 rounded border-border text-pup-maroon focus:ring-pup-maroon/30 accent-pup-maroon cursor-pointer" />
               <label htmlFor="guidelines" className="text-[13px] text-secondary-text leading-tight cursor-pointer select-none">
                 I agree to the <a href="#" className="text-pup-maroon hover:underline font-medium">Community Guidelines</a> and will only upload works that are my own creation.
               </label>
             </div>
             <div className="flex items-start gap-3">
-              <input type="checkbox" id="ownership" className="mt-1 w-4 h-4 rounded border-border text-pup-maroon focus:ring-pup-maroon/30 accent-pup-maroon cursor-pointer" />
+              <input type="checkbox" id="ownership" required className="mt-1 w-4 h-4 rounded border-border text-pup-maroon focus:ring-pup-maroon/30 accent-pup-maroon cursor-pointer" />
               <label htmlFor="ownership" className="text-[13px] text-secondary-text leading-tight cursor-pointer select-none">
                 I understand the <a href="#" className="text-pup-maroon hover:underline font-medium">Copyright & Ownership Policy</a> regarding works showcased on this academic platform.
               </label>
@@ -140,7 +175,7 @@ export function SignUpPage() {
           </div>
           
           <button 
-            type="button" 
+            type="submit" 
             className="w-full py-4 bg-pup-maroon text-white font-medium rounded-xl hover:bg-deep-maroon transition-colors text-[16px] shadow-sm mt-8 sticky bottom-4 z-10"
           >
             Create Account
@@ -148,7 +183,7 @@ export function SignUpPage() {
           
           <div className="text-center pt-2">
             <p className="text-[14px] text-secondary-text">
-              Already have an account? <a href="#" className="font-semibold text-pup-maroon hover:underline">Log in</a>
+              Already have an account? <a href="#" onClick={(event) => { event.preventDefault(); onLogin?.(); }} className="font-semibold text-pup-maroon hover:underline">Log in</a>
             </p>
           </div>
         </form>

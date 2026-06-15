@@ -4,10 +4,16 @@ import { MobileBottomNav } from './_shared/MobileBottomNav';
 import { Image as ImageIcon, Search, Calendar, Award } from 'lucide-react';
 import './_group.css';
 
-export function LandingMobile() {
+interface LandingMobileProps {
+  onExplore?: () => void;
+  onRegister?: () => void;
+  onLogin?: () => void;
+}
+
+export function LandingMobile({ onExplore, onRegister }: LandingMobileProps = {}) {
   return (
     <div className="min-h-screen bg-main-bg text-primary-text font-inter overflow-y-auto pb-[68px]">
-      <MobileHeader />
+      <MobileHeader publicMode />
       
       {/* Hero Section */}
       <section className="px-4 pt-10 pb-12 text-center border-b border-border bg-warm-white">
@@ -20,10 +26,18 @@ export function LandingMobile() {
         <p className="text-[15px] text-secondary-text mb-8 leading-relaxed px-2">
           Build your campus creative portfolio, discover student talent, and join showcases.
         </p>
-        <button className="w-full py-3.5 bg-pup-maroon text-white font-medium rounded-xl hover:bg-deep-maroon transition-colors text-[16px] shadow-sm mb-4">
+        <button
+          type="button"
+          onClick={onExplore}
+          className="w-full py-3.5 bg-pup-maroon text-white font-medium rounded-xl hover:bg-deep-maroon transition-colors text-[16px] shadow-sm mb-4"
+        >
           Explore Campus Creatives
         </button>
-        <button className="w-full py-3.5 bg-transparent border-2 border-border text-primary-text font-medium rounded-xl hover:border-pup-maroon hover:text-pup-maroon transition-colors text-[16px]">
+        <button
+          type="button"
+          onClick={onRegister}
+          className="w-full py-3.5 bg-transparent border-2 border-border text-primary-text font-medium rounded-xl hover:border-pup-maroon hover:text-pup-maroon transition-colors text-[16px]"
+        >
           Create Your Portfolio
         </button>
       </section>
@@ -81,12 +95,16 @@ export function LandingMobile() {
       {/* CTA */}
       <section className="bg-dark-surface py-16 px-4 text-center relative border-t-4 border-pup-gold">
         <h2 className="text-[28px] font-bold text-warm-white mb-6 tracking-tight">Join the campus portfolio.</h2>
-        <button className="w-full py-4 bg-pup-gold text-dark-surface font-bold rounded-xl text-[16px]">
+        <button
+          type="button"
+          onClick={onRegister}
+          className="w-full py-4 bg-pup-gold text-dark-surface font-bold rounded-xl text-[16px]"
+        >
           Create Account
         </button>
       </section>
 
-      <MobileBottomNav />
+      <MobileBottomNav guest />
     </div>
   );
 }

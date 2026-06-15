@@ -14,7 +14,12 @@ import {
 } from 'lucide-react';
 import './_group.css';
 
-export function NeedsRevisionPage() {
+interface NeedsRevisionPageProps {
+  onBack?: () => void;
+  onRevise?: () => void;
+}
+
+export function NeedsRevisionPage({ onBack, onRevise }: NeedsRevisionPageProps = {}) {
   return (
     <div className="min-h-screen bg-main-bg text-primary-text font-inter pb-20">
       <DesktopNav authenticated={true} active="Gallery" />
@@ -22,7 +27,7 @@ export function NeedsRevisionPage() {
       <main className="max-w-[1200px] mx-auto px-8 py-8">
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 text-sm text-secondary-text mb-8">
-          <a href="#" className="hover:text-pup-maroon transition-colors">My Submissions</a>
+          <button onClick={onBack} className="hover:text-pup-maroon transition-colors">My Submissions</button>
           <ChevronRight size={14} />
           <span className="font-medium text-primary-text">Railway Sketches</span>
         </div>
@@ -46,7 +51,7 @@ export function NeedsRevisionPage() {
                 July 1, 2026
               </p>
             </div>
-            <button className="px-6 py-3 bg-pup-maroon text-white font-bold rounded-xl hover:bg-deep-maroon transition-colors shadow-sm flex items-center gap-2">
+            <button onClick={onRevise} className="px-6 py-3 bg-pup-maroon text-white font-bold rounded-xl hover:bg-deep-maroon transition-colors shadow-sm flex items-center gap-2">
               Start Revision
               <ArrowRight size={18} />
             </button>
@@ -161,7 +166,7 @@ export function NeedsRevisionPage() {
              </button>
              <div className="flex items-center gap-6">
                 <a href="#" className="text-pup-maroon font-bold text-sm hover:underline">Contact Support</a>
-                <button className="px-10 py-3 bg-pup-maroon text-white font-bold rounded-xl hover:bg-deep-maroon transition-colors shadow-sm">
+                <button onClick={onRevise} className="px-10 py-3 bg-pup-maroon text-white font-bold rounded-xl hover:bg-deep-maroon transition-colors shadow-sm">
                   Start Revision
                 </button>
              </div>

@@ -16,10 +16,34 @@ import {
   ChevronRight,
   MoreHorizontal
 } from 'lucide-react';
+import { InitialsAvatar } from './_shared/InitialsAvatar';
 import './_group.css';
 
-export default function ModeratorDashboardPage() {
+interface ModeratorNavigationProps {
+  onDashboard?: () => void;
+  onPending?: () => void;
+  onReview?: () => void;
+  onReports?: () => void;
+  onFeatured?: () => void;
+  onOfficialContent?: () => void;
+  onHistory?: () => void;
+}
+
+export default function ModeratorDashboardPage({
+  onDashboard,
+  onPending,
+  onReview,
+  onReports,
+  onFeatured,
+  onOfficialContent,
+  onHistory,
+}: ModeratorNavigationProps = {}) {
   const [activeTab, setActiveTab] = useState('Dashboard');
+
+  const handleNav = (tab: string, callback?: () => void) => {
+    setActiveTab(tab);
+    callback?.();
+  };
 
   return (
     <div className="flex min-h-screen bg-main-bg font-inter">
@@ -31,12 +55,12 @@ export default function ModeratorDashboardPage() {
         </div>
 
         <nav className="flex-1 px-3 py-4 space-y-1">
-          <NavItem icon={<LayoutDashboard size={20} />} label="Dashboard" active={activeTab === 'Dashboard'} onClick={() => setActiveTab('Dashboard')} />
-          <NavItem icon={<ClipboardList size={20} />} label="Pending Reviews" badge="24" active={activeTab === 'Pending Reviews'} onClick={() => setActiveTab('Pending Reviews')} />
-          <NavItem icon={<Flag size={20} />} label="Reports" badge="6" active={activeTab === 'Reports'} onClick={() => setActiveTab('Reports')} />
-          <NavItem icon={<Star size={20} />} label="Featured Works" active={activeTab === 'Featured Works'} onClick={() => setActiveTab('Featured Works')} />
-          <NavItem icon={<Shield size={20} />} label="Official Content" active={activeTab === 'Official Content'} onClick={() => setActiveTab('Official Content')} />
-          <NavItem icon={<History size={20} />} label="Moderation History" active={activeTab === 'History'} onClick={() => setActiveTab('History')} />
+          <NavItem icon={<LayoutDashboard size={20} />} label="Dashboard" active={activeTab === 'Dashboard'} onClick={() => handleNav('Dashboard', onDashboard)} />
+          <NavItem icon={<ClipboardList size={20} />} label="Pending Reviews" badge="24" active={activeTab === 'Pending Reviews'} onClick={() => handleNav('Pending Reviews', onPending)} />
+          <NavItem icon={<Flag size={20} />} label="Reports" badge="6" active={activeTab === 'Reports'} onClick={() => handleNav('Reports', onReports)} />
+          <NavItem icon={<Star size={20} />} label="Featured Works" active={activeTab === 'Featured Works'} onClick={() => handleNav('Featured Works', onFeatured)} />
+          <NavItem icon={<Shield size={20} />} label="Official Content" active={activeTab === 'Official Content'} onClick={() => handleNav('Official Content', onOfficialContent)} />
+          <NavItem icon={<History size={20} />} label="Moderation History" active={activeTab === 'History'} onClick={() => handleNav('History', onHistory)} />
         </nav>
 
         <div className="p-4 border-t border-white/10">
@@ -70,9 +94,7 @@ export default function ModeratorDashboardPage() {
                 <div className="text-[14px] font-semibold text-primary-text leading-tight">Maria Moderator</div>
                 <div className="text-[12px] text-secondary-text leading-tight">Senior Moderator</div>
               </div>
-              <div className="w-10 h-10 rounded-full bg-secondary-surface border border-border overflow-hidden">
-                <img src="/__mockup/images/creator-portrait.jpg" alt="Avatar" className="w-full h-full object-cover" />
-              </div>
+              <InitialsAvatar name="Maria Moderator" className="w-10 h-10 border border-border" textClassName="text-xs" />
             </div>
           </div>
         </header>
@@ -106,7 +128,7 @@ export default function ModeratorDashboardPage() {
                   Review Queue
                   <span className="px-2 py-0.5 bg-soft-maroon text-pup-maroon text-[12px] rounded-full">24 New</span>
                 </h2>
-                <button className="text-[13px] text-pup-maroon font-semibold hover:underline">View All</button>
+                <button onClick={onPending} className="text-[13px] text-pup-maroon font-semibold hover:underline">View All</button>
               </div>
 
               <div className="space-y-3">
@@ -119,6 +141,7 @@ export default function ModeratorDashboardPage() {
                   date="June 12"
                   waitingTime="3 days waiting"
                   waitingUrgent={true}
+                  onOpenReview={onReview}
                 />
                 <ReviewCard 
                   thumbnail="/__mockup/images/thumbnail_2.jpg"
@@ -131,6 +154,7 @@ export default function ModeratorDashboardPage() {
                   waitingUrgent={true}
                   label="Reported"
                   labelColor="text-status-rejected bg-red-50 border-red-100"
+                  onOpenReview={onReview}
                 />
                 <ReviewCard 
                   thumbnail="/__mockup/images/thumbnail_3.jpg"
@@ -141,6 +165,7 @@ export default function ModeratorDashboardPage() {
                   date="June 7"
                   waitingTime="8 days waiting"
                   waitingUrgent={true}
+                  onOpenReview={onReview}
                 />
                 <ReviewCard 
                   thumbnail="/__mockup/images/thumbnail_4.jpg"
@@ -153,6 +178,7 @@ export default function ModeratorDashboardPage() {
                   waitingUrgent={true}
                   label="Event Deadline"
                   labelColor="text-status-needs-revision bg-orange-50 border-orange-100"
+                  onOpenReview={onReview}
                 />
               </div>
             </div>
@@ -182,7 +208,7 @@ export default function ModeratorDashboardPage() {
                     severity="Medium"
                   />
                 </div>
-                <button className="w-full py-2 text-[13px] font-semibold text-secondary-text border border-border rounded-lg hover:bg-secondary-surface transition-colors">
+                <button onClick={onReports} className="w-full py-2 text-[13px] font-semibold text-secondary-text border border-border rounded-lg hover:bg-secondary-surface transition-colors">
                   View All Reports
                 </button>
               </div>
@@ -282,7 +308,7 @@ function StatCard({ icon, label, value, subValue, color }: { icon: any, label: s
   );
 }
 
-function ReviewCard({ thumbnail, title, creator, college, category, date, waitingTime, waitingUrgent, label, labelColor }: any) {
+function ReviewCard({ thumbnail, title, creator, college, category, date, waitingTime, waitingUrgent, label, labelColor, onOpenReview }: any) {
   return (
     <div className="bg-card-bg p-4 rounded-xl border border-border shadow-sm hover:border-pup-maroon transition-colors flex items-center gap-4 group">
       <div className="w-[60px] h-[48px] rounded overflow-hidden bg-secondary-surface shrink-0">
@@ -307,7 +333,7 @@ function ReviewCard({ thumbnail, title, creator, college, category, date, waitin
         </div>
         <div className="text-[11px] text-muted-text">Pending Review</div>
       </div>
-      <button className="px-4 py-1.5 border border-pup-maroon text-pup-maroon text-[13px] font-bold rounded-lg hover:bg-soft-maroon transition-colors shrink-0">
+      <button onClick={onOpenReview} className="px-4 py-1.5 border border-pup-maroon text-pup-maroon text-[13px] font-bold rounded-lg hover:bg-soft-maroon transition-colors shrink-0">
         Open Review →
       </button>
     </div>

@@ -3,7 +3,19 @@ import { Plus, Clock, CheckCircle2, AlertCircle, XCircle, FileText, ChevronRight
 import { MobileBottomNav } from './_shared/MobileBottomNav';
 import './_group.css';
 
-export default function MySubmissionsPageMobile() {
+interface MySubmissionsPageMobileProps {
+  onBack?: () => void;
+  onNewSubmission?: () => void;
+  onSubmissionDetail?: () => void;
+  onNeedsRevision?: () => void;
+}
+
+export default function MySubmissionsPageMobile({
+  onBack,
+  onNewSubmission,
+  onSubmissionDetail,
+  onNeedsRevision,
+}: MySubmissionsPageMobileProps = {}) {
   const [activeTab, setActiveTab] = useState("All");
 
   const tabs = [
@@ -88,8 +100,15 @@ export default function MySubmissionsPageMobile() {
     <div className="w-[390px] min-h-screen bg-main-bg font-inter pb-[100px] overflow-y-auto">
       {/* Header */}
       <header className="sticky top-0 z-50 bg-white border-b border-border px-4 py-4 flex items-center justify-between">
-        <h1 className="text-xl font-bold text-primary-text uppercase tracking-tight">My Submissions</h1>
-        <button className="w-10 h-10 rounded-full bg-pup-maroon text-white flex items-center justify-center shadow-md active:scale-95 transition-transform">
+        <div>
+          {onBack && (
+            <button onClick={onBack} className="mb-1 text-[11px] font-bold text-pup-maroon">
+              Creator Profile
+            </button>
+          )}
+          <h1 className="text-xl font-bold text-primary-text uppercase tracking-tight">My Submissions</h1>
+        </div>
+        <button onClick={onNewSubmission} className="w-10 h-10 rounded-full bg-pup-maroon text-white flex items-center justify-center shadow-md active:scale-95 transition-transform">
           <Plus size={20} strokeWidth={3} />
         </button>
       </header>
@@ -144,7 +163,10 @@ export default function MySubmissionsPageMobile() {
 
                 <div className="flex items-center justify-between mt-2">
                    <code className="text-[9px] font-mono font-medium text-muted-text bg-secondary-surface px-1.5 py-0.5 rounded">{work.id}</code>
-                   <button className="text-xs font-bold text-pup-maroon flex items-center gap-1">
+                   <button
+                     onClick={work.status === "Revision" ? onNeedsRevision : onSubmissionDetail}
+                     className="text-xs font-bold text-pup-maroon flex items-center gap-1"
+                   >
                      Action <ChevronRight size={14} />
                    </button>
                 </div>

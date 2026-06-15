@@ -1,21 +1,55 @@
 import React from 'react';
 import { Search, Bell, Menu } from 'lucide-react';
+import { navigateTo } from '../../../../app/demo';
+import { routePaths } from '../../../../app/routes';
+import { InitialsAvatar } from './InitialsAvatar';
 import '../_group.css';
 
-export function DesktopNav({ authenticated = false, active = "Home" }: { authenticated?: boolean; active?: string }) {
+interface DesktopNavProps {
+  authenticated?: boolean;
+  active?: string;
+  onLogin?: () => void;
+  onRegister?: () => void;
+}
+
+export function DesktopNav({ authenticated = false, active = "Home", onLogin, onRegister }: DesktopNavProps = {}) {
+  const currentPath =
+    typeof window !== "undefined" ? window.location.pathname : "";
   const navLinks = [
-    { name: "Home", href: "#" },
-    { name: "Explore", href: "#" },
-    { name: "Gallery", href: "#" },
-    { name: "Events", href: "#" },
-    { name: "Spotlight", href: "#" },
+    { name: "Home", href: routePaths.student.home },
+    { name: "Explore", href: routePaths.student.explore },
+    { name: "Gallery", href: routePaths.student.gallery },
+    { name: "Events", href: routePaths.student.events },
+    { name: "Spotlight", href: routePaths.student.spotlight },
   ];
+
+  const activeByPath: Record<string, string> = {
+    [routePaths.student.home]: "Home",
+    [routePaths.student.explore]: "Explore",
+    [routePaths.student.gallery]: "Gallery",
+    [routePaths.student.events]: "Events",
+    [routePaths.student.spotlight]: "Spotlight",
+    [routePaths.student.submit]: "Submit Work",
+    [routePaths.student.notifications]: "Notifications",
+    [routePaths.student.profile]: "Profile",
+  };
+  const activeName = activeByPath[currentPath] ?? active;
+
+  function handleNavigate(event: React.MouseEvent<HTMLAnchorElement>, href: string) {
+    event.preventDefault();
+    navigateTo(href);
+  }
 
   return (
     <nav className="w-full h-20 bg-warm-white border-b border-border flex items-center justify-center px-8 sticky top-0 z-50">
       <div className="w-full max-w-[1200px] flex items-center justify-between">
         {/* Logo */}
-        <a href="#" className="flex items-center gap-2 text-pup-maroon text-xl tracking-tight">
+        <a
+          href={routePaths.student.home}
+          onClick={(event) => handleNavigate(event, routePaths.student.home)}
+          className="flex items-center gap-2 text-pup-maroon text-xl tracking-tight"
+          aria-label="Go to Student Home"
+        >
           <span className="font-bold font-inter">PUP:</span>
           <span className="font-medium font-inter">Campus Creatives</span>
         </a>
@@ -26,8 +60,10 @@ export function DesktopNav({ authenticated = false, active = "Home" }: { authent
             <a
               key={link.name}
               href={link.href}
+              onClick={(event) => handleNavigate(event, link.href)}
+              aria-current={activeName === link.name ? "page" : undefined}
               className={`${
-                active === link.name
+                activeName === link.name
                   ? "text-pup-maroon font-semibold border-b-2 border-pup-gold pb-1"
                   : "hover:text-pup-maroon transition-colors"
               }`}
@@ -41,26 +77,63 @@ export function DesktopNav({ authenticated = false, active = "Home" }: { authent
         <div className="flex items-center gap-4">
           {authenticated ? (
             <>
-              <button className="p-2 text-secondary-text hover:text-pup-maroon transition-colors rounded-full hover:bg-soft-maroon">
+              <button className="p-2 text-secondary-text hover:text-pup-maroon transition-colors rounded-full hover:bg-soft-maroon" aria-label="Search">
                 <Search size={20} />
               </button>
-              <button className="p-2 text-secondary-text hover:text-pup-maroon transition-colors rounded-full hover:bg-soft-maroon relative">
+              <a
+                href={routePaths.student.notifications}
+                onClick={(event) => handleNavigate(event, routePaths.student.notifications)}
+                className={`p-2 transition-colors rounded-full hover:bg-soft-maroon relative ${
+                  activeName === "Notifications" ? "text-pup-maroon bg-soft-maroon" : "text-secondary-text hover:text-pup-maroon"
+                }`}
+                aria-label="Notifications"
+                aria-current={activeName === "Notifications" ? "page" : undefined}
+              >
                 <Bell size={20} />
                 <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-pup-maroon rounded-full"></span>
-              </button>
-              <button className="px-5 py-2.5 bg-pup-maroon text-white font-medium rounded-[10px] hover:bg-deep-maroon transition-colors text-[15px]">
+              </a>
+              <a
+                href={routePaths.student.submit}
+                onClick={(event) => handleNavigate(event, routePaths.student.submit)}
+                className={`px-5 py-2.5 text-white font-medium rounded-[10px] hover:bg-deep-maroon transition-colors text-[15px] ${
+                  activeName === "Submit Work" ? "bg-deep-maroon ring-2 ring-pup-gold/70" : "bg-pup-maroon"
+                }`}
+                aria-current={activeName === "Submit Work" ? "page" : undefined}
+              >
                 Submit Work
-              </button>
-              <div className="w-10 h-10 rounded-full bg-secondary-surface border border-border overflow-hidden ml-2 cursor-pointer">
-                <img src="/__mockup/images/creator-portrait.png" alt="User avatar" className="w-full h-full object-cover" />
-              </div>
+              </a>
+              <a
+                href={routePaths.student.profile}
+                onClick={(event) => handleNavigate(event, routePaths.student.profile)}
+                className={`w-10 h-10 rounded-full bg-secondary-surface border overflow-hidden ml-2 cursor-pointer ${
+                  activeName === "Profile" ? "border-pup-maroon ring-2 ring-pup-gold/70" : "border-border"
+                }`}
+                aria-label="Creator Profile"
+                aria-current={activeName === "Profile" ? "page" : undefined}
+              >
+                <InitialsAvatar name="Rafael Mendoza" className="w-full h-full" textClassName="text-sm" />
+              </a>
             </>
           ) : (
             <>
-              <a href="#" className="text-[15px] font-medium text-primary-text hover:text-pup-maroon transition-colors px-4 py-2">
+              <a
+                href={routePaths.public.login}
+                onClick={(event) => {
+                  event.preventDefault();
+                  onLogin ? onLogin() : navigateTo(routePaths.public.login);
+                }}
+                className="text-[15px] font-medium text-primary-text hover:text-pup-maroon transition-colors px-4 py-2"
+              >
                 Log In
               </a>
-              <a href="#" className="px-5 py-2.5 bg-pup-maroon text-white font-medium rounded-[10px] hover:bg-deep-maroon transition-colors text-[15px]">
+              <a
+                href={routePaths.public.register}
+                onClick={(event) => {
+                  event.preventDefault();
+                  onRegister ? onRegister() : navigateTo(routePaths.public.register);
+                }}
+                className="px-5 py-2.5 bg-pup-maroon text-white font-medium rounded-[10px] hover:bg-deep-maroon transition-colors text-[15px]"
+              >
                 Join Campus Creatives
               </a>
             </>

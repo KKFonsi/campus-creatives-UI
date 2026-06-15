@@ -1,4 +1,10 @@
-import { mkdirSync, writeFileSync } from "fs";
+import {
+  createReadStream,
+  existsSync,
+  mkdirSync,
+  statSync,
+  writeFileSync,
+} from "fs";
 import path from "path";
 import glob from "fast-glob";
 import chokidar from "chokidar";
@@ -74,6 +80,17 @@ export function mockupPreviewPlugin(): Plugin {
       pathname.includes("/components/mockups/") ||
       pathname.includes("/.generated/mockup-components")
     );
+  }
+
+  function getImageContentType(filePath: string): string {
+    const extension = path.extname(filePath).toLowerCase();
+
+    if (extension === ".jpg" || extension === ".jpeg") return "image/jpeg";
+    if (extension === ".png") return "image/png";
+    if (extension === ".webp") return "image/webp";
+    if (extension === ".svg") return "image/svg+xml";
+
+    return "application/octet-stream";
   }
 
   let refreshInFlight = false;
@@ -159,6 +176,18 @@ export function mockupPreviewPlugin(): Plugin {
         const requestUrl = new URL(req.url ?? "/", "http://127.0.0.1");
         const pathname = requestUrl.pathname;
         const originalEnd = res.end.bind(res);
+
+        if (pathname.startsWith("/__mockup/images/")) {
+          const fileName = path.basename(decodeURIComponent(pathname));
+          const localImagePath = path.join(root, "public", "images", fileName);
+
+          if (existsSync(localImagePath) && statSync(localImagePath).isFile()) {
+            res.statusCode = 200;
+            res.setHeader("Content-Type", getImageContentType(localImagePath));
+            createReadStream(localImagePath).pipe(res);
+            return;
+          }
+        }
 
         res.end = ((...args: Parameters<typeof originalEnd>) => {
           if (res.statusCode === 404 && shouldAutoRescan(pathname)) {

@@ -16,7 +16,12 @@ import {
 } from 'lucide-react';
 import './_group.css';
 
-export function ReviseSubmissionPage() {
+interface ReviseSubmissionPageProps {
+  onBack?: () => void;
+  onDone?: () => void;
+}
+
+export function ReviseSubmissionPage({ onBack, onDone }: ReviseSubmissionPageProps = {}) {
   const [isFeedbackOpen, setIsFeedbackOpen] = useState(true);
   const [issuesResolved, setIssuesResolved] = useState({
     media: false,
@@ -39,9 +44,9 @@ export function ReviseSubmissionPage() {
       <main className="max-w-[1200px] mx-auto px-8 py-8">
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 text-sm text-secondary-text mb-6">
-          <a href="#" className="hover:text-pup-maroon transition-colors">My Submissions</a>
+          <button onClick={onDone} className="hover:text-pup-maroon transition-colors">My Submissions</button>
           <ChevronRight size={14} />
-          <a href="#" className="hover:text-pup-maroon transition-colors">Railway Sketches</a>
+          <button onClick={onBack} className="hover:text-pup-maroon transition-colors">Railway Sketches</button>
           <ChevronRight size={14} />
           <span className="font-medium text-primary-text">Revise</span>
         </div>
@@ -324,6 +329,10 @@ export function ReviseSubmissionPage() {
                   Cancel
                 </button>
                 <button 
+                  onClick={() => {
+                    setShowResubmitModal(false);
+                    onDone?.();
+                  }}
                   className="flex-1 py-3.5 px-4 rounded-xl bg-pup-maroon text-white font-bold hover:bg-deep-maroon transition-colors shadow-sm"
                 >
                   Resubmit

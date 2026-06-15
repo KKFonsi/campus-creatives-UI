@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { X, AlertTriangle, ShieldCheck, Info, CheckCircle2 } from 'lucide-react';
 import './_group.css';
 
@@ -12,9 +12,30 @@ const reportReasons = [
   'Other'
 ];
 
-export function ReportModal() {
+interface ReportModalProps {
+  isOpen?: boolean;
+  onClose?: () => void;
+  onSubmitted?: () => void;
+}
+
+export function ReportModal({ isOpen = true, onClose, onSubmitted }: ReportModalProps = {}) {
   const [selectedReason, setSelectedReason] = useState('');
   const [submitted, setSubmitted] = useState(false);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        onClose?.();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
+
+  if (!isOpen) return null;
 
   if (submitted) {
     return (
@@ -26,7 +47,11 @@ export function ReportModal() {
           <h2 className="text-2xl font-black mb-2">Report Submitted</h2>
           <p className="text-secondary-text mb-8">Thank you for helping keep our campus creative community safe. Our moderators will review this report shortly.</p>
           <button 
-            onClick={() => setSubmitted(false)}
+            onClick={() => {
+              setSubmitted(false);
+              onSubmitted?.();
+              onClose?.();
+            }}
             className="w-full h-14 bg-pup-maroon text-white rounded-2xl font-bold hover:bg-deep-maroon transition-colors"
           >
             Close
@@ -37,8 +62,8 @@ export function ReportModal() {
   }
 
   return (
-    <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[110] flex items-center justify-center p-6">
-      <div className="w-full max-w-[480px] bg-card-bg rounded-[32px] overflow-hidden shadow-2xl">
+    <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[110] flex items-center justify-center p-6" onClick={onClose}>
+      <div className="w-full max-w-[480px] bg-card-bg rounded-[32px] overflow-hidden shadow-2xl" onClick={(event) => event.stopPropagation()}>
         <div className="p-8 border-b border-border flex justify-between items-center">
           <div>
             <h2 className="text-2xl font-black mb-1 flex items-center gap-2">
@@ -46,7 +71,7 @@ export function ReportModal() {
             </h2>
             <p className="text-secondary-text text-sm">Help us maintain community standards.</p>
           </div>
-          <button className="w-10 h-10 rounded-full hover:bg-secondary-surface flex items-center justify-center">
+          <button onClick={onClose} aria-label="Close report modal" className="w-10 h-10 rounded-full hover:bg-secondary-surface flex items-center justify-center">
             <X size={20} />
           </button>
         </div>
@@ -82,7 +107,7 @@ export function ReportModal() {
           </div>
 
           <div className="flex gap-4">
-            <button className="flex-1 h-14 bg-secondary-surface text-primary-text rounded-2xl font-bold hover:bg-border transition-colors">
+            <button onClick={onClose} className="flex-1 h-14 bg-secondary-surface text-primary-text rounded-2xl font-bold hover:bg-border transition-colors">
               Cancel
             </button>
             <button 
@@ -99,13 +124,28 @@ export function ReportModal() {
   );
 }
 
-export function ReportModalMobile() {
+export function ReportModalMobile({ isOpen = true, onClose, onSubmitted }: ReportModalProps = {}) {
   const [selectedReason, setSelectedReason] = useState('');
   const [submitted, setSubmitted] = useState(false);
 
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        onClose?.();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
+
+  if (!isOpen) return null;
+
   return (
-    <div className="fixed inset-0 bg-black/60 z-[110] flex items-end">
-      <div className="w-full bg-white rounded-t-[32px] overflow-hidden">
+    <div className="fixed inset-0 bg-black/60 z-[110] flex items-end" onClick={onClose}>
+      <div className="w-full bg-white rounded-t-[32px] overflow-hidden" onClick={(event) => event.stopPropagation()}>
         <div className="w-12 h-1.5 bg-border rounded-full mx-auto my-4"></div>
         
         <div className="px-6 pb-10">
@@ -128,7 +168,7 @@ export function ReportModalMobile() {
               </div>
 
               <div className="flex gap-3">
-                <button className="flex-1 h-14 bg-secondary-surface rounded-2xl font-bold">Cancel</button>
+                <button onClick={onClose} className="flex-1 h-14 bg-secondary-surface rounded-2xl font-bold">Cancel</button>
                 <button 
                   onClick={() => selectedReason && setSubmitted(true)}
                   disabled={!selectedReason}
@@ -146,7 +186,11 @@ export function ReportModalMobile() {
               <h2 className="text-xl font-black mb-2">Report Submitted</h2>
               <p className="text-[13px] text-secondary-text mb-8 px-4">Thank you for reporting. Our moderators will review this shortly.</p>
               <button 
-                onClick={() => setSubmitted(false)}
+                onClick={() => {
+                  setSubmitted(false);
+                  onSubmitted?.();
+                  onClose?.();
+                }}
                 className="w-full h-14 bg-pup-maroon text-white rounded-2xl font-bold"
               >
                 Close

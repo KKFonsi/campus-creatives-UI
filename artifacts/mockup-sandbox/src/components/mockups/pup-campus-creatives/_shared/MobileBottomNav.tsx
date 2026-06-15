@@ -1,38 +1,102 @@
 import React from 'react';
-import { Home, Compass, PlusSquare, Calendar, User } from 'lucide-react';
+import { Home, Compass, Image as ImageIcon, PlusSquare, Calendar } from 'lucide-react';
+import { navigateTo } from '../../../../app/demo';
+import { routePaths } from '../../../../app/routes';
+import { InitialsAvatar } from './InitialsAvatar';
 import '../_group.css';
 
-export function MobileBottomNav() {
+interface MobileBottomNavProps {
+  guest?: boolean;
+}
+
+export function MobileBottomNav({ guest = false }: MobileBottomNavProps = {}) {
+  const currentPath =
+    typeof window !== "undefined" ? window.location.pathname : "";
+  const homePath = guest ? routePaths.public.landing : routePaths.student.home;
+  const explorePath = guest ? routePaths.public.explore : routePaths.student.explore;
+  const galleryPath = guest ? routePaths.public.explore : routePaths.student.gallery;
+  const submitPath = guest ? routePaths.public.login : routePaths.student.submit;
+  const eventsPath = guest ? routePaths.public.explore : routePaths.student.events;
+  const profilePath = guest ? routePaths.public.login : routePaths.student.profile;
+  const itemClass = (path: string) =>
+    `flex flex-col items-center justify-center flex-1 min-w-0 h-full gap-0.5 ${
+      currentPath === path
+        ? "text-pup-maroon"
+        : "text-secondary-text hover:text-pup-maroon"
+    }`;
+
+  function handleNavigate(event: React.MouseEvent<HTMLAnchorElement>, href: string) {
+    event.preventDefault();
+    navigateTo(href);
+  }
+
   return (
-    <nav className="w-full h-[68px] bg-warm-white border-t border-border fixed bottom-0 left-0 z-50 flex items-center justify-around px-2 pb-safe">
-      <a href="#" className="flex flex-col items-center justify-center w-16 h-full text-pup-maroon gap-1">
+    <nav className="mobile-bottom-nav w-full h-[68px] bg-warm-white border-t border-border shrink-0 z-50 flex items-center justify-around px-1 pb-safe">
+      <a
+        href={homePath}
+        onClick={(event) => handleNavigate(event, homePath)}
+        className={itemClass(homePath)}
+        aria-current={currentPath === homePath ? "page" : undefined}
+      >
         <Home size={24} className="stroke-[2.5px]" />
         <span className="text-[10px] font-medium">Home</span>
       </a>
       
-      <a href="#" className="flex flex-col items-center justify-center w-16 h-full text-secondary-text hover:text-pup-maroon gap-1">
+      <a
+        href={explorePath}
+        onClick={(event) => handleNavigate(event, explorePath)}
+        className={itemClass(explorePath)}
+        aria-current={currentPath === explorePath ? "page" : undefined}
+      >
         <Compass size={24} />
         <span className="text-[10px] font-medium">Explore</span>
       </a>
-      
-      <div className="flex flex-col items-center justify-center w-16 h-full -mt-5">
-        <a href="#" className="w-12 h-12 rounded-full bg-pup-maroon text-white flex items-center justify-center shadow-sm hover:bg-deep-maroon transition-colors">
-          <PlusSquare size={24} />
-        </a>
-        <span className="text-[10px] font-medium text-pup-maroon mt-1">Submit</span>
-      </div>
-      
-      <a href="#" className="flex flex-col items-center justify-center w-16 h-full text-secondary-text hover:text-pup-maroon gap-1">
+
+      <a
+        href={galleryPath}
+        onClick={(event) => handleNavigate(event, galleryPath)}
+        className={itemClass(galleryPath)}
+        aria-current={currentPath === galleryPath ? "page" : undefined}
+      >
+        <ImageIcon size={22} />
+        <span className="text-[10px] font-medium">Gallery</span>
+      </a>
+
+      <a
+        href={eventsPath}
+        onClick={(event) => handleNavigate(event, eventsPath)}
+        className={itemClass(eventsPath)}
+        aria-current={currentPath === eventsPath ? "page" : undefined}
+      >
         <Calendar size={24} />
         <span className="text-[10px] font-medium">Events</span>
       </a>
       
-      <a href="#" className="flex flex-col items-center justify-center w-16 h-full text-secondary-text hover:text-pup-maroon gap-1">
-        <div className="w-6 h-6 rounded-full bg-secondary-surface border border-border overflow-hidden">
-          <img src="/__mockup/images/creator-portrait.png" alt="Profile" className="w-full h-full object-cover" />
-        </div>
+      <a
+        href={profilePath}
+        onClick={(event) => handleNavigate(event, profilePath)}
+        className={itemClass(profilePath)}
+        aria-current={currentPath === profilePath ? "page" : undefined}
+        aria-label={guest ? "Log in to view profile" : "Creator Profile"}
+      >
+        <InitialsAvatar name="Rafael Mendoza" className="w-6 h-6 border border-border" textClassName="text-[10px]" />
         <span className="text-[10px] font-medium">Profile</span>
       </a>
+
+      <div className="flex flex-col items-center justify-center flex-[1.45] min-w-0 h-full -mt-7">
+        <a
+          href={submitPath}
+          onClick={(event) => handleNavigate(event, submitPath)}
+          className={`w-16 h-16 rounded-full text-white flex items-center justify-center shadow-xl shadow-pup-maroon/30 hover:bg-deep-maroon transition-colors border-4 border-warm-white ${
+            currentPath === submitPath ? "bg-deep-maroon ring-2 ring-pup-gold" : "bg-pup-maroon"
+          }`}
+          aria-label={guest ? "Log in to submit work" : "Submit Work"}
+          aria-current={currentPath === submitPath ? "page" : undefined}
+        >
+          <PlusSquare size={34} strokeWidth={2.5} />
+        </a>
+        <span className="text-[11px] font-bold text-pup-maroon mt-0.5">Submit</span>
+      </div>
     </nav>
   );
 }

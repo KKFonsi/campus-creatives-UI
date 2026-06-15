@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { DesktopNav } from './_shared/DesktopNav';
+import { InitialsAvatar } from './_shared/InitialsAvatar';
 import { 
   Camera, 
   Image as ImageIcon, 
@@ -19,7 +20,12 @@ import {
 } from 'lucide-react';
 import './_group.css';
 
-export function EditProfilePage() {
+interface EditProfilePageProps {
+  onBack?: () => void;
+  onDone?: () => void;
+}
+
+export function EditProfilePage({ onBack, onDone }: EditProfilePageProps = {}) {
   const [activeSection, setActiveSection] = useState('Profile Identity');
   const [isTouched, setIsTouched] = useState(false);
   const [showToast, setShowToast] = useState(false);
@@ -72,14 +78,22 @@ export function EditProfilePage() {
       <div className="bg-card-bg border-b border-border sticky top-16 z-20">
         <div className="max-w-[1200px] mx-auto px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-4">
+            {onBack && (
+              <button onClick={onBack} className="text-sm font-bold text-pup-maroon hover:underline">
+                Back to Profile
+              </button>
+            )}
             <h1 className="text-xl font-bold">Edit Profile</h1>
           </div>
           <div className="flex items-center gap-3">
-            <button className="px-4 py-2 text-sm font-semibold text-secondary-text hover:text-primary-text transition-colors">
+            <button onClick={onDone} className="px-4 py-2 text-sm font-semibold text-secondary-text hover:text-primary-text transition-colors">
               Preview Profile
             </button>
             <button 
-              onClick={handleSave}
+              onClick={() => {
+                handleSave();
+                onDone?.();
+              }}
               disabled={!isTouched}
               className={`px-5 py-2 rounded-lg text-sm font-bold transition-all ${
                 isTouched 
@@ -142,7 +156,7 @@ export function EditProfilePage() {
                   <div className="flex items-center gap-8 mb-8">
                     <div className="relative group">
                       <div className="w-24 h-24 rounded-full bg-secondary-surface border-2 border-border overflow-hidden">
-                        <img src="/__mockup/images/creator-portrait.jpg" alt="Preview" className="w-full h-full object-cover" />
+                        <InitialsAvatar name="Rafael Mendoza" className="w-full h-full" textClassName="text-3xl" />
                       </div>
                       <button className="absolute inset-0 bg-black/40 rounded-full flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity">
                         <Camera size={20} />
@@ -399,11 +413,14 @@ export function EditProfilePage() {
             
             {/* Bottom Bar Buttons */}
             <div className="flex items-center justify-end gap-3 pt-10 border-t border-border mt-10">
-              <button className="px-6 py-2.5 text-sm font-bold text-secondary-text hover:text-primary-text transition-colors">
+              <button onClick={onBack} className="px-6 py-2.5 text-sm font-bold text-secondary-text hover:text-primary-text transition-colors">
                 Cancel
               </button>
               <button 
-                onClick={handleSave}
+                onClick={() => {
+                  handleSave();
+                  onDone?.();
+                }}
                 disabled={!isTouched}
                 className={`px-8 py-2.5 rounded-lg text-sm font-bold transition-all ${
                   isTouched 
@@ -424,7 +441,7 @@ export function EditProfilePage() {
                 <div className="h-16 bg-soft-maroon relative">
                   <div className="absolute -bottom-6 left-4">
                     <div className="w-12 h-12 rounded-full border-2 border-card-bg bg-secondary-surface overflow-hidden">
-                      <img src="/__mockup/images/creator-portrait.jpg" alt="Preview" className="w-full h-full object-cover" />
+                      <InitialsAvatar name="Rafael Mendoza" className="w-full h-full" textClassName="text-3xl" />
                     </div>
                   </div>
                 </div>

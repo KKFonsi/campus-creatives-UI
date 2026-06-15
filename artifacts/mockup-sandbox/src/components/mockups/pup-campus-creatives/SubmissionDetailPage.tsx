@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { DesktopNav } from './_shared/DesktopNav';
+import { InitialsAvatar } from './_shared/InitialsAvatar';
 import { 
   ChevronRight, 
   Copy, 
@@ -19,7 +20,11 @@ import {
 } from 'lucide-react';
 import './_group.css';
 
-export function SubmissionDetailPage() {
+interface SubmissionDetailPageProps {
+  onBack?: () => void;
+}
+
+export function SubmissionDetailPage({ onBack }: SubmissionDetailPageProps = {}) {
   const [showWithdrawConfirm, setShowWithdrawConfirm] = useState(false);
   const [copied, setCopied] = useState(false);
 
@@ -35,7 +40,7 @@ export function SubmissionDetailPage() {
       <main className="max-w-[1200px] mx-auto px-8 py-8">
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 text-sm text-secondary-text mb-8">
-          <a href="#" className="hover:text-pup-maroon transition-colors">My Submissions</a>
+          <button onClick={onBack} className="hover:text-pup-maroon transition-colors">My Submissions</button>
           <ChevronRight size={14} />
           <span className="font-medium text-primary-text">Digital Sinta</span>
         </div>
@@ -146,9 +151,7 @@ export function SubmissionDetailPage() {
                         Collaborators
                       </h2>
                       <div className="p-4 rounded-xl border border-border bg-warm-white flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-secondary-surface flex items-center justify-center border border-border overflow-hidden">
-                           <img src="/__mockup/images/creator-portrait.jpg" alt="Marco Santos" className="w-full h-full object-cover" />
-                        </div>
+                        <InitialsAvatar name="Marco Santos" className="w-10 h-10 border border-border" textClassName="text-sm" />
                         <div>
                           <p className="text-sm font-bold">Marco Santos</p>
                           <p className="text-xs text-muted-text">CCIS • BSIT</p>

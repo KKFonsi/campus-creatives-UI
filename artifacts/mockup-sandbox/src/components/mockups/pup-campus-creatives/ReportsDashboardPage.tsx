@@ -19,7 +19,23 @@ import {
 } from 'lucide-react';
 import './_group.css';
 
-export function ReportsDashboardPage() {
+interface ReportsDashboardPageProps {
+  onDashboard?: () => void;
+  onPending?: () => void;
+  onReports?: () => void;
+  onFeatured?: () => void;
+  onOfficialContent?: () => void;
+  onHistory?: () => void;
+}
+
+export function ReportsDashboardPage({
+  onDashboard,
+  onPending,
+  onReports,
+  onFeatured,
+  onOfficialContent,
+  onHistory,
+}: ReportsDashboardPageProps = {}) {
   const [activeTab, setActiveTab] = useState('All');
   const [selectedReports, setSelectedReports] = useState<string[]>([]);
 
@@ -162,15 +178,16 @@ export function ReportsDashboardPage() {
 
           <nav className="space-y-1">
             {[
-              { icon: LayoutDashboard, label: 'Dashboard', active: false },
-              { icon: ClipboardList, label: 'Pending Reviews', count: '24', active: false },
-              { icon: Flag, label: 'Reports', count: '6', active: true },
-              { icon: Star, label: 'Featured Works', active: false },
-              { icon: Shield, label: 'Official Content', active: false },
-              { icon: History, label: 'Moderation History', active: false },
+              { icon: LayoutDashboard, label: 'Dashboard', active: false, onClick: onDashboard },
+              { icon: ClipboardList, label: 'Pending Reviews', count: '24', active: false, onClick: onPending },
+              { icon: Flag, label: 'Reports', count: '6', active: true, onClick: onReports },
+              { icon: Star, label: 'Featured Works', active: false, onClick: onFeatured },
+              { icon: Shield, label: 'Official Content', active: false, onClick: onOfficialContent },
+              { icon: History, label: 'Moderation History', active: false, onClick: onHistory },
             ].map((item) => (
               <button
                 key={item.label}
+                onClick={item.onClick}
                 className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg transition-colors ${
                   item.active 
                     ? 'bg-white/10 text-white border-l-4 border-pup-maroon' 

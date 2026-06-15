@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { DesktopNav } from './_shared/DesktopNav';
+import { InitialsAvatar } from './_shared/InitialsAvatar';
 import { 
   Search, 
   Filter, 
@@ -17,7 +18,12 @@ import {
 } from 'lucide-react';
 import './_group.css';
 
-export function SavedWorksPage() {
+interface SavedWorksPageProps {
+  onBack?: () => void;
+  onWorkDetail?: () => void;
+}
+
+export function SavedWorksPage({ onBack, onWorkDetail }: SavedWorksPageProps = {}) {
   const [activeCollection, setActiveCollection] = useState('All Saved');
   const [showCreateModal, setShowCreateModal] = useState(false);
 
@@ -50,6 +56,11 @@ export function SavedWorksPage() {
       <main className="max-w-[1200px] mx-auto px-8 py-10">
         <div className="flex items-end justify-between mb-10">
           <div>
+            {onBack && (
+              <button onClick={onBack} className="mb-4 text-sm font-bold text-pup-maroon hover:underline">
+                Back to Creator Profile
+              </button>
+            )}
             <h1 className="text-3xl font-bold mb-2">Saved Works</h1>
             <p className="text-secondary-text">Keep creative works you want to revisit, study, or support.</p>
           </div>
@@ -134,9 +145,7 @@ export function SavedWorksPage() {
                        <div>
                           <h3 className="font-bold text-primary-text mb-1 group-hover:text-pup-maroon transition-colors line-clamp-1">{work.title}</h3>
                           <div className="flex items-center gap-2">
-                             <div className="w-5 h-5 rounded-full bg-secondary-surface border border-border overflow-hidden shrink-0">
-                                <img src="/__mockup/images/creator-portrait.jpg" className="w-full h-full object-cover" />
-                             </div>
+                             <InitialsAvatar name={work.creator} className="w-5 h-5 border border-border" textClassName="text-[8px]" />
                              <span className="text-[12px] text-secondary-text font-medium line-clamp-1">
                                {work.creator} • {work.college}
                              </span>
@@ -148,7 +157,7 @@ export function SavedWorksPage() {
                           </button>
                           {/* Hover Menu */}
                           <div className="absolute right-0 top-full mt-1 w-48 bg-white rounded-xl shadow-xl border border-border py-2 opacity-0 pointer-events-none group-hover/menu:opacity-100 group-hover/menu:pointer-events-auto transition-all z-20">
-                             <button className="w-full text-left px-4 py-2 text-xs font-bold text-primary-text hover:bg-secondary-surface flex items-center gap-2">
+                             <button onClick={onWorkDetail} className="w-full text-left px-4 py-2 text-xs font-bold text-primary-text hover:bg-secondary-surface flex items-center gap-2">
                                 <ExternalLink size={14} /> Open Work
                              </button>
                              <button className="w-full text-left px-4 py-2 text-xs font-bold text-primary-text hover:bg-secondary-surface flex items-center gap-2">
@@ -165,7 +174,7 @@ export function SavedWorksPage() {
                           <Heart size={14} className="text-status-rejected" />
                           {work.likes}
                        </div>
-                       <button className="text-[11px] font-bold text-pup-maroon hover:underline flex items-center gap-1">
+                       <button onClick={onWorkDetail} className="text-[11px] font-bold text-pup-maroon hover:underline flex items-center gap-1">
                          View Details <ChevronRight size={10} />
                        </button>
                     </div>

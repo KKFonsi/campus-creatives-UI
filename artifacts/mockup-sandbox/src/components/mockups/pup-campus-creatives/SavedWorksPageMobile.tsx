@@ -14,7 +14,12 @@ import {
 } from 'lucide-react';
 import './_group.css';
 
-export function SavedWorksPageMobile() {
+interface SavedWorksPageMobileProps {
+  onBack?: () => void;
+  onWorkDetail?: () => void;
+}
+
+export function SavedWorksPageMobile({ onBack, onWorkDetail }: SavedWorksPageMobileProps = {}) {
   const [activeCollection, setActiveCollection] = useState('All Saved');
   const [showActionSheet, setShowActionSheet] = useState(false);
   const [selectedWork, setSelectedWork] = useState<any>(null);
@@ -46,6 +51,11 @@ export function SavedWorksPageMobile() {
     <div className="w-[390px] min-h-screen bg-main-bg font-inter overflow-y-auto pb-[80px]">
       {/* Header */}
       <header className="sticky top-0 z-40 bg-warm-white border-b border-border px-4 py-4">
+        {onBack && (
+          <button onClick={onBack} className="mb-2 text-[12px] font-bold text-pup-maroon">
+            Creator Profile
+          </button>
+        )}
         <h1 className="text-xl font-bold text-primary-text">Saved Works</h1>
       </header>
 
@@ -146,7 +156,13 @@ export function SavedWorksPageMobile() {
                )}
 
                <div className="space-y-1">
-                 <button className="w-full flex items-center gap-4 px-4 py-4 rounded-xl text-primary-text font-bold text-sm hover:bg-secondary-surface transition-colors">
+                 <button
+                    onClick={() => {
+                      setShowActionSheet(false);
+                      onWorkDetail?.();
+                    }}
+                    className="w-full flex items-center gap-4 px-4 py-4 rounded-xl text-primary-text font-bold text-sm hover:bg-secondary-surface transition-colors"
+                 >
                     <ExternalLink size={20} className="text-pup-maroon" />
                     Open Work Details
                  </button>

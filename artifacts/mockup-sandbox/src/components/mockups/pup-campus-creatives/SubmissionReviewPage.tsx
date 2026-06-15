@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { 
   LayoutDashboard, 
   ClipboardList, 
@@ -23,11 +23,40 @@ import {
   Image as ImageIcon,
   Check
 } from 'lucide-react';
+import { InitialsAvatar } from './_shared/InitialsAvatar';
 import './_group.css';
 
-export default function SubmissionReviewPage() {
+type ReviewDecision = "approve" | "revision" | "reject";
+
+interface SubmissionReviewPageProps {
+  onBack?: () => void;
+  onDecisionComplete?: () => void;
+  onDashboard?: () => void;
+  onPending?: () => void;
+  onReports?: () => void;
+  onFeatured?: () => void;
+  onOfficialContent?: () => void;
+  onHistory?: () => void;
+}
+
+export default function SubmissionReviewPage({
+  onBack,
+  onDecisionComplete,
+  onDashboard,
+  onPending,
+  onReports,
+  onFeatured,
+  onOfficialContent,
+  onHistory,
+}: SubmissionReviewPageProps = {}) {
   const [activeTab, setActiveTab] = useState('Pending Reviews');
   const [checklist, setChecklist] = useState<Record<number, boolean>>({});
+  const [decisionModal, setDecisionModal] = useState<ReviewDecision | null>(null);
+
+  const handleNav = (tab: string, callback?: () => void) => {
+    setActiveTab(tab);
+    callback?.();
+  };
 
   const toggleCheck = (index: number) => {
     setChecklist(prev => ({ ...prev, [index]: !prev[index] }));
@@ -54,12 +83,12 @@ export default function SubmissionReviewPage() {
         </div>
 
         <nav className="flex-1 px-3 py-4 space-y-1">
-          <NavItem icon={<LayoutDashboard size={20} />} label="Dashboard" active={activeTab === 'Dashboard'} onClick={() => setActiveTab('Dashboard')} />
-          <NavItem icon={<ClipboardList size={20} />} label="Pending Reviews" badge="24" active={activeTab === 'Pending Reviews'} onClick={() => setActiveTab('Pending Reviews')} />
-          <NavItem icon={<Flag size={20} />} label="Reports" badge="6" active={activeTab === 'Reports'} onClick={() => setActiveTab('Reports')} />
-          <NavItem icon={<Star size={20} />} label="Featured Works" active={activeTab === 'Featured Works'} onClick={() => setActiveTab('Featured Works')} />
-          <NavItem icon={<Shield size={20} />} label="Official Content" active={activeTab === 'Official Content'} onClick={() => setActiveTab('Official Content')} />
-          <NavItem icon={<History size={20} />} label="Moderation History" active={activeTab === 'History'} onClick={() => setActiveTab('History')} />
+          <NavItem icon={<LayoutDashboard size={20} />} label="Dashboard" active={activeTab === 'Dashboard'} onClick={() => handleNav('Dashboard', onDashboard)} />
+          <NavItem icon={<ClipboardList size={20} />} label="Pending Reviews" badge="24" active={activeTab === 'Pending Reviews'} onClick={() => handleNav('Pending Reviews', onPending)} />
+          <NavItem icon={<Flag size={20} />} label="Reports" badge="6" active={activeTab === 'Reports'} onClick={() => handleNav('Reports', onReports)} />
+          <NavItem icon={<Star size={20} />} label="Featured Works" active={activeTab === 'Featured Works'} onClick={() => handleNav('Featured Works', onFeatured)} />
+          <NavItem icon={<Shield size={20} />} label="Official Content" active={activeTab === 'Official Content'} onClick={() => handleNav('Official Content', onOfficialContent)} />
+          <NavItem icon={<History size={20} />} label="Moderation History" active={activeTab === 'History'} onClick={() => handleNav('History', onHistory)} />
         </nav>
 
         <div className="p-4 border-t border-white/10">
@@ -75,7 +104,7 @@ export default function SubmissionReviewPage() {
         {/* Top Bar */}
         <header className="h-[64px] bg-card-bg border-b border-border flex items-center justify-between px-8 shrink-0">
           <div className="flex items-center gap-2 text-[13px] text-secondary-text">
-            <span className="hover:text-pup-maroon cursor-pointer font-medium">Pending Reviews</span>
+            <button onClick={onBack} className="hover:text-pup-maroon cursor-pointer font-medium">Pending Reviews</button>
             <ChevronRight size={14} />
             <span className="font-bold text-primary-text">Digital Sinta — CC-WORK-2026-0148</span>
           </div>
@@ -85,9 +114,7 @@ export default function SubmissionReviewPage() {
               <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-crimson-accent rounded-full border-2 border-card-bg"></span>
             </button>
             <div className="h-8 w-px bg-border mx-1"></div>
-            <div className="w-10 h-10 rounded-full bg-secondary-surface border border-border overflow-hidden">
-              <img src="/__mockup/images/creator-portrait.jpg" alt="Avatar" className="w-full h-full object-cover" />
-            </div>
+            <InitialsAvatar name="Maria Moderator" className="w-10 h-10 border border-border" textClassName="text-xs" />
           </div>
         </header>
 
@@ -148,9 +175,7 @@ export default function SubmissionReviewPage() {
                     </div>
                     <div className="flex items-center gap-4">
                       <div className="flex items-center gap-2">
-                        <div className="w-6 h-6 rounded-full bg-secondary-surface overflow-hidden border border-border">
-                          <img src="/__mockup/images/creator-portrait.jpg" alt="Creator" className="w-full h-full object-cover" />
-                        </div>
+                        <InitialsAvatar name="Rafael Mendoza" className="w-6 h-6 border border-border" textClassName="text-[10px]" />
                         <span className="text-[14px] font-bold text-primary-text">Rafael Mendoza</span>
                         <span className="text-muted-text">•</span>
                         <span className="text-[13px] text-secondary-text font-medium">CCIS • BSIT</span>
@@ -262,9 +287,7 @@ export default function SubmissionReviewPage() {
                 {/* Creator Summary */}
                 <section className="bg-white p-6 rounded-2xl border border-border shadow-sm flex items-center gap-8">
                   <div className="flex items-center gap-4 border-r border-border pr-8 shrink-0">
-                    <div className="w-14 h-14 rounded-full bg-secondary-surface overflow-hidden border border-border">
-                      <img src="/__mockup/images/creator-portrait.jpg" alt="Creator" className="w-full h-full object-cover" />
-                    </div>
+                    <InitialsAvatar name="Rafael Mendoza" className="w-14 h-14 border border-border" textClassName="text-base" />
                     <div>
                       <h4 className="text-[15px] font-bold text-primary-text">Rafael Mendoza</h4>
                       <div className="text-[12px] text-muted-text">Member since Oct 2024</div>
@@ -317,17 +340,17 @@ export default function SubmissionReviewPage() {
 
                 {/* Actions */}
                 <div className="space-y-3 pt-2">
-                  <button className="w-full py-3 bg-pup-maroon text-white font-bold rounded-xl hover:bg-deep-maroon transition-all shadow-sm">
+                  <button onClick={() => setDecisionModal("approve")} className="w-full py-3 bg-pup-maroon text-white font-bold rounded-xl hover:bg-deep-maroon transition-all shadow-sm">
                     Approve Work
                   </button>
-                  <button className="w-full py-3 bg-pup-gold text-dark-surface font-bold rounded-xl hover:bg-warm-gold transition-all shadow-sm flex items-center justify-center gap-2">
+                  <button onClick={() => setDecisionModal("approve")} className="w-full py-3 bg-pup-gold text-dark-surface font-bold rounded-xl hover:bg-warm-gold transition-all shadow-sm flex items-center justify-center gap-2">
                     <Star size={18} fill="currentColor" /> Approve & Feature
                   </button>
                   <div className="grid grid-cols-2 gap-3">
-                    <button className="py-2.5 border border-status-needs-revision text-status-needs-revision text-[12px] font-bold rounded-xl hover:bg-orange-50 transition-colors flex items-center justify-center gap-1.5">
+                    <button onClick={() => setDecisionModal("revision")} className="py-2.5 border border-status-needs-revision text-status-needs-revision text-[12px] font-bold rounded-xl hover:bg-orange-50 transition-colors flex items-center justify-center gap-1.5">
                       <RefreshCw size={14} /> Revision
                     </button>
-                    <button className="py-2.5 border border-status-rejected text-status-rejected text-[12px] font-bold rounded-xl hover:bg-red-50 transition-colors flex items-center justify-center gap-1.5">
+                    <button onClick={() => setDecisionModal("reject")} className="py-2.5 border border-status-rejected text-status-rejected text-[12px] font-bold rounded-xl hover:bg-red-50 transition-colors flex items-center justify-center gap-1.5">
                       <XCircle size={14} /> Reject
                     </button>
                   </div>
@@ -354,6 +377,84 @@ export default function SubmissionReviewPage() {
           </div>
         </div>
       </main>
+      <ReviewDecisionModal
+        decision={decisionModal}
+        onCancel={() => setDecisionModal(null)}
+        onConfirm={() => {
+          setDecisionModal(null);
+          onDecisionComplete?.();
+        }}
+      />
+    </div>
+  );
+}
+
+function ReviewDecisionModal({
+  decision,
+  onCancel,
+  onConfirm,
+}: {
+  decision: ReviewDecision | null;
+  onCancel: () => void;
+  onConfirm: () => void;
+}) {
+  useEffect(() => {
+    if (!decision) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        onCancel();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [decision, onCancel]);
+
+  if (!decision) return null;
+
+  const copy = {
+    approve: {
+      title: "Approve this work?",
+      body: "This mock action marks Digital Sinta as approved for the classroom demo.",
+      confirm: "Approve",
+      color: "bg-status-approved",
+      icon: <CheckCircle2 size={24} />,
+    },
+    revision: {
+      title: "Request revisions?",
+      body: "This mock action sends a revision request with moderator feedback.",
+      confirm: "Request Revision",
+      color: "bg-status-needs-revision",
+      icon: <RefreshCw size={24} />,
+    },
+    reject: {
+      title: "Reject this submission?",
+      body: "This mock action records a rejection decision without changing persistent data.",
+      confirm: "Reject",
+      color: "bg-status-rejected",
+      icon: <XCircle size={24} />,
+    },
+  }[decision];
+
+  return (
+    <div className="fixed inset-0 z-[100] flex items-center justify-center px-4">
+      <div className="absolute inset-0 bg-dark-surface/60 backdrop-blur-sm" onClick={onCancel}></div>
+      <div className="relative z-10 w-full max-w-[420px] rounded-2xl bg-card-bg border border-border shadow-2xl p-6">
+        <div className={`w-12 h-12 rounded-xl ${copy.color} text-white flex items-center justify-center mb-4`}>
+          {copy.icon}
+        </div>
+        <h3 className="text-xl font-bold text-primary-text mb-2">{copy.title}</h3>
+        <p className="text-sm text-secondary-text leading-relaxed mb-6">{copy.body}</p>
+        <div className="flex gap-3">
+          <button onClick={onCancel} className="flex-1 py-3 rounded-xl border border-border font-bold text-primary-text hover:bg-secondary-surface transition-colors">
+            Cancel
+          </button>
+          <button onClick={onConfirm} className={`flex-1 py-3 rounded-xl ${copy.color} text-white font-bold transition-colors`}>
+            {copy.confirm}
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

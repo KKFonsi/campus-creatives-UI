@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Camera, ChevronLeft, ChevronRight, Check } from 'lucide-react';
+import { InitialsAvatar } from './_shared/InitialsAvatar';
 import './_group.css';
 
 const INTERESTS = [
@@ -14,7 +15,12 @@ const GOALS = [
   "Join events and open calls", "Support classmates", "Find collaborators"
 ];
 
-export function OnboardingPage() {
+interface OnboardingPageProps {
+  onComplete?: () => void;
+  onBackToRegister?: () => void;
+}
+
+export function OnboardingPage({ onComplete, onBackToRegister }: OnboardingPageProps = {}) {
   const [step, setStep] = useState(1);
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
   const [selectedGoals, setSelectedGoals] = useState<string[]>([]);
@@ -171,7 +177,7 @@ export function OnboardingPage() {
 
               <div className="bg-card-bg rounded-[20px] p-8 border border-border shadow-sm text-center">
                 <div className="w-24 h-24 rounded-full bg-secondary-surface mx-auto mb-4 overflow-hidden border border-border">
-                  <img src="/__mockup/images/creator-portrait.jpg" alt="Profile" className="w-full h-full object-cover" />
+                  <InitialsAvatar name="Rafael Mendoza" className="w-full h-full" textClassName="text-2xl" />
                 </div>
                 <h2 className="text-[22px] font-bold text-primary-text mb-1">Andrea Cruz</h2>
                 <p className="text-[14px] text-pup-maroon font-medium mb-4">College of Computer and Information Sciences</p>
@@ -194,7 +200,14 @@ export function OnboardingPage() {
           {/* Navigation Controls */}
           <div className="mt-12 flex items-center justify-between pt-6 border-t border-border">
             <button 
-              onClick={() => setStep(Math.max(1, step - 1))}
+              onClick={() => {
+                if (step === 1) {
+                  onBackToRegister?.();
+                  return;
+                }
+
+                setStep(Math.max(1, step - 1));
+              }}
               className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-medium transition-colors ${
                 step === 1 ? 'opacity-0 pointer-events-none' : 'text-secondary-text hover:bg-secondary-surface hover:text-primary-text'
               }`}
@@ -211,6 +224,7 @@ export function OnboardingPage() {
               </button>
             ) : (
               <button 
+                onClick={onComplete}
                 className="flex items-center gap-2 px-8 py-3 bg-pup-maroon text-white font-medium rounded-xl hover:bg-deep-maroon transition-colors shadow-sm"
               >
                 Enter Campus Creatives

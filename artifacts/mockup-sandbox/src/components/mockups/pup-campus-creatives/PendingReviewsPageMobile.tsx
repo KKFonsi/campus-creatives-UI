@@ -12,9 +12,29 @@ import {
   MoreHorizontal,
   ChevronDown
 } from 'lucide-react';
+import { InitialsAvatar } from './_shared/InitialsAvatar';
+import { ModeratorMobileBottomNav } from './_shared/ModeratorMobileBottomNav';
 import './_group.css';
 
-export default function PendingReviewsPageMobile() {
+interface PendingReviewsPageMobileProps {
+  onDashboard?: () => void;
+  onPending?: () => void;
+  onReview?: () => void;
+  onReports?: () => void;
+  onFeatured?: () => void;
+  onOfficialContent?: () => void;
+  onHistory?: () => void;
+}
+
+export default function PendingReviewsPageMobile({
+  onDashboard,
+  onPending,
+  onReview,
+  onReports,
+  onFeatured,
+  onOfficialContent,
+  onHistory,
+}: PendingReviewsPageMobileProps = {}) {
   const [showFilters, setShowFilters] = useState(false);
 
   return (
@@ -30,9 +50,7 @@ export default function PendingReviewsPageMobile() {
             <Bell size={20} />
             <span className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-crimson-accent rounded-full border border-dark-surface"></span>
           </button>
-          <div className="w-8 h-8 rounded-full bg-white/10 border border-white/20 overflow-hidden">
-            <img src="/__mockup/images/creator-portrait.jpg" alt="Profile" className="w-full h-full object-cover" />
-          </div>
+          <InitialsAvatar name="Maria Moderator" className="w-8 h-8 border border-white/20" textClassName="text-[11px]" />
         </div>
       </header>
 
@@ -65,7 +83,7 @@ export default function PendingReviewsPageMobile() {
       {/* List */}
       <div className="flex-1 p-4 space-y-3 pb-24">
         {submissions.map((item) => (
-          <MobileSubmissionCard key={item.id} item={item} />
+          <MobileSubmissionCard key={item.id} item={item} onReview={onReview} />
         ))}
       </div>
 
@@ -95,18 +113,20 @@ export default function PendingReviewsPageMobile() {
         </div>
       )}
 
-      {/* Mobile Bottom Nav */}
-      <nav className="w-[390px] h-[68px] bg-warm-white border-t border-border fixed bottom-0 z-50 flex items-center justify-around pb-safe">
-        <NavButton icon={<LayoutDashboard size={22} />} label="Dashboard" />
-        <NavButton icon={<ClipboardList size={22} />} label="Reviews" active />
-        <NavButton icon={<Flag size={22} />} label="Reports" />
-        <NavButton icon={<MoreHorizontal size={22} />} label="More" />
-      </nav>
+      <ModeratorMobileBottomNav
+        active="Reviews"
+        onDashboard={onDashboard}
+        onPending={onPending}
+        onReports={onReports}
+        onFeatured={onFeatured}
+        onOfficialContent={onOfficialContent}
+        onHistory={onHistory}
+      />
     </div>
   );
 }
 
-function MobileSubmissionCard({ item }: any) {
+function MobileSubmissionCard({ item, onReview }: any) {
   return (
     <div className="bg-card-bg p-3 rounded-xl border border-border shadow-sm flex items-center gap-3 active:border-pup-maroon transition-colors">
       <div className="w-[60px] h-[48px] rounded-lg bg-secondary-surface shrink-0 overflow-hidden border border-border/50">
@@ -124,7 +144,7 @@ function MobileSubmissionCard({ item }: any) {
         <div className={`text-[10px] font-bold ${item.waitingUrgent ? 'text-status-pending' : 'text-muted-text'} flex items-center justify-end gap-1 mb-1`}>
           <Clock size={10} /> {item.waiting}
         </div>
-        <button className="px-3 py-1.5 bg-pup-maroon text-white text-[11px] font-bold rounded-lg shadow-sm">
+        <button onClick={onReview} className="px-3 py-1.5 bg-pup-maroon text-white text-[11px] font-bold rounded-lg shadow-sm">
           Review
         </button>
       </div>
@@ -144,14 +164,6 @@ function FilterSection({ label, placeholder }: any) {
   );
 }
 
-function NavButton({ icon, label, active }: any) {
-  return (
-    <button className={`flex flex-col items-center justify-center gap-1 min-w-[64px] ${active ? 'text-pup-maroon' : 'text-secondary-text'}`}>
-      <div className={active ? 'stroke-[2.5px]' : ''}>{icon}</div>
-      <span className="text-[10px] font-bold">{label}</span>
-    </button>
-  );
-}
 
 function getPriorityColor(priority: string) {
   switch (priority) {

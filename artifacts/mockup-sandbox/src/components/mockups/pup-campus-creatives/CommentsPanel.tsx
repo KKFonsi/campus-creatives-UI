@@ -1,5 +1,6 @@
 import React from 'react';
 import { Send, MoreHorizontal, CornerDownRight, Heart, X } from 'lucide-react';
+import { InitialsAvatar } from './_shared/InitialsAvatar';
 import './_group.css';
 
 const comments = [
@@ -10,20 +11,29 @@ const comments = [
   { id: 5, name: 'Sofia Lim', role: 'CBA Student', text: 'Proud of you, Bianca! Keep creating!', time: '2d ago', likes: 2 },
 ];
 
-export function CommentsPanel() {
+interface CommentsPanelProps {
+  onClose?: () => void;
+}
+
+export function CommentsPanel({ onClose }: CommentsPanelProps = {}) {
   return (
     <div className="w-full bg-card-bg rounded-[24px] border border-border shadow-sm overflow-hidden">
       <div className="p-6 border-b border-border flex justify-between items-center">
         <h3 className="text-lg font-bold">14 Comments</h3>
-        <button className="text-[13px] font-bold text-pup-maroon hover:underline">Newest First</button>
+        <div className="flex items-center gap-4">
+          <button className="text-[13px] font-bold text-pup-maroon hover:underline">Newest First</button>
+          {onClose && (
+            <button type="button" onClick={onClose} aria-label="Close comments" className="text-muted-text hover:text-primary-text">
+              <X size={18} />
+            </button>
+          )}
+        </div>
       </div>
 
       <div className="p-6">
         {/* Add Comment */}
         <div className="flex gap-4 mb-10">
-          <div className="w-10 h-10 rounded-full bg-secondary-surface overflow-hidden shrink-0 border border-border">
-            <img src="/__mockup/images/creator-portrait.jpg" alt="User" className="w-full h-full object-cover" />
-          </div>
+          <InitialsAvatar name="Rafael Mendoza" className="w-10 h-10 border border-border" textClassName="text-sm" />
           <div className="flex-1">
             <textarea 
               placeholder="Add a comment as an Iskolar..." 
@@ -42,9 +52,7 @@ export function CommentsPanel() {
           {comments.map(comment => (
             <div key={comment.id} className="group">
               <div className="flex gap-4">
-                <div className="w-10 h-10 rounded-full bg-secondary-surface overflow-hidden shrink-0 border border-border">
-                  <img src="/__mockup/images/creator-portrait.jpg" alt={comment.name} className="w-full h-full object-cover" />
-                </div>
+                <InitialsAvatar name={comment.name} className="w-10 h-10 border border-border" textClassName="text-sm" />
                 <div className="flex-1">
                   <div className="flex justify-between items-start mb-1">
                     <div>
@@ -77,7 +85,7 @@ export function CommentsPanel() {
   );
 }
 
-export function CommentsPanelMobile() {
+export function CommentsPanelMobile({ onClose }: CommentsPanelProps = {}) {
   return (
     <div className="fixed inset-0 bg-black/60 z-[110] flex items-end">
       <div className="w-[390px] h-[70vh] bg-white rounded-t-[32px] overflow-hidden flex flex-col animate-in slide-in-from-bottom duration-300">
@@ -85,15 +93,13 @@ export function CommentsPanelMobile() {
         
         <div className="px-5 pb-4 border-b border-border flex justify-between items-center shrink-0">
           <h2 className="text-lg font-black">Comments (14)</h2>
-          <button className="text-muted-text"><X size={20} /></button>
+          <button type="button" onClick={onClose} aria-label="Close comments" className="text-muted-text"><X size={20} /></button>
         </div>
 
         <div className="flex-1 overflow-y-auto p-5 space-y-6">
           {comments.map(comment => (
             <div key={comment.id} className="flex gap-3">
-              <div className="w-9 h-9 rounded-full bg-secondary-surface overflow-hidden shrink-0 border border-border">
-                <img src="/__mockup/images/creator-portrait.jpg" alt={comment.name} className="w-full h-full object-cover" />
-              </div>
+              <InitialsAvatar name={comment.name} className="w-9 h-9 border border-border" textClassName="text-xs" />
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-1">
                   <span className="font-bold text-[13px]">{comment.name}</span>
@@ -114,9 +120,7 @@ export function CommentsPanelMobile() {
 
         <div className="p-5 border-t border-border bg-warm-white shrink-0">
           <div className="flex gap-3">
-            <div className="w-10 h-10 rounded-full bg-secondary-surface overflow-hidden shrink-0">
-              <img src="/__mockup/images/creator-portrait.jpg" alt="User" className="w-full h-full object-cover" />
-            </div>
+            <InitialsAvatar name="Rafael Mendoza" className="w-10 h-10" textClassName="text-sm" />
             <div className="flex-1 relative">
               <input 
                 type="text" 

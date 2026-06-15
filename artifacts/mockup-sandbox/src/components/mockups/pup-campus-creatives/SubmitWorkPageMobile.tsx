@@ -2,7 +2,11 @@ import React, { useState } from 'react';
 import { ArrowLeft, X, Upload, Video, Image as ImageIcon, AlertCircle, CheckCircle2, ChevronRight, FileText } from 'lucide-react';
 import './_group.css';
 
-export default function SubmitWorkPageMobile() {
+interface SubmitWorkPageMobileProps {
+  onSubmitted?: () => void;
+}
+
+export default function SubmitWorkPageMobile({ onSubmitted }: SubmitWorkPageMobileProps = {}) {
   const [step, setStep] = useState(2); // Starting at Step 2 as per details "Step 2 of 5"
   const [showConfirm, setShowConfirm] = useState(false);
 
@@ -329,7 +333,7 @@ export default function SubmitWorkPageMobile() {
   };
 
   return (
-    <div className="w-[390px] min-h-screen bg-main-bg font-inter overflow-y-auto flex flex-col">
+    <div className="submit-work-mobile-screen w-[390px] min-h-screen bg-main-bg font-inter flex flex-col overflow-hidden relative">
       {/* Sticky Header */}
       <header className="sticky top-0 z-50 bg-white border-b border-border shadow-sm">
         <div className="px-4 py-4 flex items-center justify-between">
@@ -359,7 +363,7 @@ export default function SubmitWorkPageMobile() {
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 px-4 py-6">
+      <main className="flex-1 min-h-0 overflow-y-auto px-4 py-6">
         <h2 className="text-lg font-bold text-primary-text mb-6">
           {step === 1 && "Tell us about your work"}
           {step === 2 && "Add your creative media"}
@@ -372,7 +376,7 @@ export default function SubmitWorkPageMobile() {
       </main>
 
       {/* Sticky Bottom Actions */}
-      <div className="sticky bottom-0 bg-white border-t border-border p-4 flex gap-3 z-40">
+      <div className="shrink-0 bg-white border-t border-border p-4 flex gap-3 z-40">
         <button 
           onClick={() => setStep(s => Math.max(1, s - 1))}
           disabled={step === 1}
@@ -397,24 +401,31 @@ export default function SubmitWorkPageMobile() {
         )}
       </div>
 
-      {/* Confirm Bottom Sheet */}
+      {/* Confirm Modal */}
       {showConfirm && (
-        <>
-          <div className="fixed inset-0 bg-black/60 z-[60]" onClick={() => setShowConfirm(false)} />
-          <div className="fixed bottom-0 left-0 w-full bg-white rounded-t-[32px] p-8 z-[70] animate-in slide-in-from-bottom duration-300">
-            <div className="w-12 h-1.5 bg-border rounded-full mx-auto mb-8" />
-            <div className="text-center space-y-4 mb-8">
+        <div className="absolute inset-0 bg-black/60 z-[90] flex items-center justify-center p-5" role="dialog" aria-modal="true">
+          <button
+            type="button"
+            className="absolute inset-0 cursor-default"
+            aria-label="Close confirmation"
+            onClick={() => setShowConfirm(false)}
+          />
+          <div className="relative w-full max-w-[340px] bg-white rounded-[28px] p-6 shadow-2xl animate-in zoom-in-95 fade-in duration-200">
+            <div className="text-center space-y-4 mb-6">
               <div className="w-16 h-16 rounded-full bg-soft-maroon flex items-center justify-center text-pup-maroon mx-auto mb-2">
                 <FileText size={32} />
               </div>
               <h3 className="text-xl font-bold text-primary-text">Submit this work for review?</h3>
-              <p className="text-sm text-secondary-text px-4">
+              <p className="text-sm text-secondary-text">
                 You won't be able to edit your submission while it's being reviewed by our moderators.
               </p>
             </div>
             <div className="space-y-3">
               <button 
-                onClick={() => setShowConfirm(false)}
+                onClick={() => {
+                  setShowConfirm(false);
+                  onSubmitted?.();
+                }}
                 className="w-full py-4 bg-pup-maroon text-white rounded-2xl font-bold text-base active:bg-deep-maroon"
               >
                 Submit Work
@@ -427,7 +438,7 @@ export default function SubmitWorkPageMobile() {
               </button>
             </div>
           </div>
-        </>
+        </div>
       )}
     </div>
   );

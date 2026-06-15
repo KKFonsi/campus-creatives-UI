@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { 
   ChevronLeft, 
   ChevronRight, 
@@ -14,17 +14,39 @@ import {
   ExternalLink,
   ChevronDown,
   ChevronUp,
-  LayoutDashboard,
-  ClipboardList,
   Shield,
   History,
   LogOut,
   Bell,
   Search
 } from 'lucide-react';
+import { InitialsAvatar } from './_shared/InitialsAvatar';
+import { ModeratorMobileBottomNav } from './_shared/ModeratorMobileBottomNav';
 import './_group.css';
 
-export function SubmissionReviewPageMobile() {
+type MobileReviewDecision = "approve" | "revision" | "reject";
+
+interface SubmissionReviewPageMobileProps {
+  onBack?: () => void;
+  onDecisionComplete?: () => void;
+  onDashboard?: () => void;
+  onPending?: () => void;
+  onReports?: () => void;
+  onFeatured?: () => void;
+  onOfficialContent?: () => void;
+  onHistory?: () => void;
+}
+
+export function SubmissionReviewPageMobile({
+  onBack,
+  onDecisionComplete,
+  onDashboard,
+  onPending,
+  onReports,
+  onFeatured,
+  onOfficialContent,
+  onHistory,
+}: SubmissionReviewPageMobileProps = {}) {
   const [activeThumb, setActiveThumb] = useState(0);
   const [sections, setSections] = useState({
     details: true,
@@ -34,6 +56,7 @@ export function SubmissionReviewPageMobile() {
   });
   const [checklist, setChecklist] = useState(Array(8).fill(false));
   const [showMoreActions, setShowMoreActions] = useState(false);
+  const [decisionModal, setDecisionModal] = useState<MobileReviewDecision | null>(null);
   const [notes, setNotes] = useState('');
 
   const toggleSection = (section: keyof typeof sections) => {
@@ -69,7 +92,7 @@ export function SubmissionReviewPageMobile() {
       {/* Mobile Top Header */}
       <header className="h-[56px] bg-dark-surface flex items-center justify-between px-4 sticky top-0 z-50">
         <div className="flex items-center gap-3">
-          <button className="text-white/80">
+          <button onClick={onBack} className="text-white/80">
             <ChevronLeft size={24} />
           </button>
           <div className="flex flex-col">
@@ -129,9 +152,7 @@ export function SubmissionReviewPageMobile() {
         </div>
         
         <div className="flex items-center gap-2 mb-4">
-          <div className="w-6 h-6 rounded-full bg-secondary-surface border border-border overflow-hidden">
-            <img src="/__mockup/images/creator-portrait.jpg" alt="Rafael" className="w-full h-full object-cover" />
-          </div>
+          <InitialsAvatar name="Rafael Mendoza" className="w-6 h-6 border border-border" textClassName="text-[10px]" />
           <span className="text-[13px] font-semibold">Rafael Mendoza</span>
           <span className="text-border">•</span>
           <span className="text-[12px] text-secondary-text">CCIS</span>
@@ -271,14 +292,14 @@ export function SubmissionReviewPageMobile() {
       </section>
 
       {/* Sticky Bottom Action Bar */}
-      <div className="fixed bottom-[68px] left-0 right-0 p-3 bg-white border-t border-border shadow-[0_-4px_12px_rgba(0,0,0,0.05)] flex gap-2 z-40">
-        <button className="flex-1 h-11 bg-status-approved text-white rounded-lg font-bold text-[14px] flex items-center justify-center gap-2">
+      <div className="sticky bottom-[68px] p-3 bg-white border-t border-border shadow-[0_-4px_12px_rgba(0,0,0,0.05)] flex gap-2 z-40">
+        <button onClick={() => setDecisionModal("approve")} className="flex-1 h-11 bg-status-approved text-white rounded-lg font-bold text-[14px] flex items-center justify-center gap-2">
           <CheckCircle2 size={18} /> Approve
         </button>
-        <button className="flex-1 h-11 bg-status-needs-revision text-white rounded-lg font-bold text-[14px] flex items-center justify-center gap-2">
+        <button onClick={() => setDecisionModal("revision")} className="flex-1 h-11 bg-status-needs-revision text-white rounded-lg font-bold text-[14px] flex items-center justify-center gap-2">
           <RefreshCw size={18} /> Revision
         </button>
-        <button className="flex-1 h-11 bg-status-rejected text-white rounded-lg font-bold text-[14px] flex items-center justify-center gap-2">
+        <button onClick={() => setDecisionModal("reject")} className="flex-1 h-11 bg-status-rejected text-white rounded-lg font-bold text-[14px] flex items-center justify-center gap-2">
           <XCircle size={18} /> Reject
         </button>
         <button 
@@ -329,25 +350,92 @@ export function SubmissionReviewPageMobile() {
         </div>
       )}
 
-      {/* Mobile Bottom Nav (Moderator) */}
-      <nav className="fixed bottom-0 left-0 right-0 h-[68px] bg-dark-surface border-t border-white/10 px-6 flex items-center justify-between z-50">
-        <button className="flex flex-col items-center gap-1 text-white/50">
-          <LayoutDashboard size={20} />
-          <span className="text-[10px] font-medium uppercase tracking-wider">Dashboard</span>
-        </button>
-        <button className="flex flex-col items-center gap-1 text-pup-gold">
-          <ClipboardList size={20} />
-          <span className="text-[10px] font-medium uppercase tracking-wider">Reviews</span>
-        </button>
-        <button className="flex flex-col items-center gap-1 text-white/50">
-          <Flag size={20} />
-          <span className="text-[10px] font-medium uppercase tracking-wider">Reports</span>
-        </button>
-        <button className="flex flex-col items-center gap-1 text-white/50">
-          <MoreVertical size={20} />
-          <span className="text-[10px] font-medium uppercase tracking-wider">More</span>
-        </button>
-      </nav>
+      <ModeratorMobileBottomNav
+        active="Reviews"
+        onDashboard={onDashboard}
+        onPending={onPending}
+        onReports={onReports}
+        onFeatured={onFeatured}
+        onOfficialContent={onOfficialContent}
+        onHistory={onHistory}
+      />
+      <MobileReviewDecisionModal
+        decision={decisionModal}
+        onCancel={() => setDecisionModal(null)}
+        onConfirm={() => {
+          setDecisionModal(null);
+          onDecisionComplete?.();
+        }}
+      />
+    </div>
+  );
+}
+
+function MobileReviewDecisionModal({
+  decision,
+  onCancel,
+  onConfirm,
+}: {
+  decision: MobileReviewDecision | null;
+  onCancel: () => void;
+  onConfirm: () => void;
+}) {
+  useEffect(() => {
+    if (!decision) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        onCancel();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [decision, onCancel]);
+
+  if (!decision) return null;
+
+  const copy = {
+    approve: {
+      title: "Approve work?",
+      confirm: "Approve",
+      color: "bg-status-approved",
+      icon: <CheckCircle2 size={28} />,
+    },
+    revision: {
+      title: "Request revision?",
+      confirm: "Request Revision",
+      color: "bg-status-needs-revision",
+      icon: <RefreshCw size={28} />,
+    },
+    reject: {
+      title: "Reject submission?",
+      confirm: "Reject",
+      color: "bg-status-rejected",
+      icon: <XCircle size={28} />,
+    },
+  }[decision];
+
+  return (
+    <div className="fixed inset-0 z-[100] flex items-end justify-center">
+      <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={onCancel} />
+      <div className="relative z-10 w-[390px] rounded-t-3xl bg-card-bg p-6 border-t border-border shadow-2xl">
+        <div className={`w-14 h-14 rounded-2xl ${copy.color} text-white flex items-center justify-center mb-4`}>
+          {copy.icon}
+        </div>
+        <h3 className="text-xl font-bold text-primary-text mb-2">{copy.title}</h3>
+        <p className="text-sm text-secondary-text mb-6">
+          This is a mocked moderation action for the live prototype demo.
+        </p>
+        <div className="space-y-3">
+          <button onClick={onConfirm} className={`w-full py-4 rounded-2xl ${copy.color} text-white font-bold`}>
+            {copy.confirm}
+          </button>
+          <button onClick={onCancel} className="w-full py-4 rounded-2xl border border-border font-bold text-secondary-text">
+            Cancel
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

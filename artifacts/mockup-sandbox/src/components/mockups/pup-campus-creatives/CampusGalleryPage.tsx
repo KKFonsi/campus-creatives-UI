@@ -1,9 +1,16 @@
 import React, { useState } from 'react';
 import { DesktopNav } from './_shared/DesktopNav';
 import { ArrowRight, ImageIcon, Users, BookOpen, Award, ExternalLink } from 'lucide-react';
+import { navigateTo } from '../../../app/demo';
 import './_group.css';
 
-export function CampusGalleryPage() {
+interface CampusGalleryPageProps {
+  onExhibitionDetail?: () => void;
+  onWorkDetail?: () => void;
+  onCollegeShowcase?: () => void;
+}
+
+export function CampusGalleryPage({ onExhibitionDetail, onWorkDetail, onCollegeShowcase }: CampusGalleryPageProps = {}) {
   const [activeMonth, setActiveMonth] = useState('Jun 2026');
 
   const exhibitions = [
@@ -62,7 +69,7 @@ export function CampusGalleryPage() {
             <p className="text-white/80 text-lg max-w-[600px] mb-8 line-clamp-2">
               Theme: Identity, daily life, and creative expression among Iskolar ng Bayan. Exploring the soul of Sinta.
             </p>
-            <button className="px-8 py-3.5 bg-pup-maroon text-white font-bold rounded-xl hover:bg-deep-maroon transition-all flex items-center gap-2 group/btn shadow-lg">
+            <button type="button" onClick={onExhibitionDetail} className="px-8 py-3.5 bg-pup-maroon text-white font-bold rounded-xl hover:bg-deep-maroon transition-all flex items-center gap-2 group/btn shadow-lg">
               View Exhibition <ArrowRight size={18} className="group-hover/btn:translate-x-1 transition-transform" />
             </button>
           </div>
@@ -87,7 +94,7 @@ export function CampusGalleryPage() {
                 <p className="text-secondary-text text-[14px] mb-4 line-clamp-2">Theme: {ex.category} exploration within the campus landscape.</p>
                 <div className="flex items-center justify-between mt-auto pt-4 border-t border-border">
                   <span className="text-[13px] text-secondary-text">{ex.date}</span>
-                  <button className="text-pup-maroon font-bold text-[14px] flex items-center gap-1 hover:underline">
+                  <button type="button" onClick={onExhibitionDetail} className="text-pup-maroon font-bold text-[14px] flex items-center gap-1 hover:underline">
                     View Gallery <ExternalLink size={14} />
                   </button>
                 </div>
@@ -128,7 +135,7 @@ export function CampusGalleryPage() {
         <h3 className="text-[24px] font-bold mb-8">College Galleries</h3>
         <div className="grid grid-cols-4 gap-6">
           {colleges.map((college, i) => (
-            <div key={i} className="bg-card-bg rounded-xl border border-border p-4 hover:shadow-md transition-shadow cursor-pointer group">
+            <button key={i} type="button" onClick={onCollegeShowcase} className="bg-card-bg rounded-xl border border-border p-4 hover:shadow-md transition-shadow group text-left focus:outline-none focus:ring-4 focus:ring-pup-maroon/20">
               <div className="aspect-square rounded-lg overflow-hidden mb-4 bg-secondary-surface">
                 <img src={college.img} alt={college.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
               </div>
@@ -137,7 +144,7 @@ export function CampusGalleryPage() {
               <div className="mt-3 text-center">
                 <span className="text-[13px] font-semibold text-pup-maroon bg-soft-maroon px-3 py-1 rounded-full">{college.works} works</span>
               </div>
-            </div>
+            </button>
           ))}
         </div>
       </section>
@@ -155,13 +162,13 @@ export function CampusGalleryPage() {
             { title: "Concrete and Creativity", creator: "Dave Cruz", img: "/__mockup/images/thumbnail_4.jpg" },
             { title: "Digital Sinta", creator: "Miguel Torres", img: "/__mockup/images/thumbnail_1.jpg" }
           ].map((work, i) => (
-            <div key={i} className="flex-shrink-0 w-[240px] group">
+            <button key={i} type="button" onClick={() => navigateTo(`/student/work/${work.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}`)} className="flex-shrink-0 w-[240px] group text-left">
               <div className="aspect-square rounded-xl overflow-hidden border border-border mb-3 bg-secondary-surface">
                 <img src={work.img} alt={work.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
               </div>
               <h5 className="font-bold text-[15px] mb-0.5 group-hover:text-pup-maroon transition-colors line-clamp-1">{work.title}</h5>
               <p className="text-[13px] text-secondary-text">{work.creator}</p>
-            </div>
+            </button>
           ))}
         </div>
       </section>
@@ -177,7 +184,7 @@ export function CampusGalleryPage() {
             { title: "Sta. Mesa After the Rain", creator: "Bianca Reyes", badge: "Campus Highlight", img: "/__mockup/images/thumbnail_1.jpg" },
             { title: "Polytechnic Dreams", creator: "Dana Cruz", badge: "Best in Digital Art", img: "/__mockup/images/thumbnail_2.jpg" }
           ].map((work, i) => (
-            <div key={i} className="group relative bg-card-bg rounded-2xl border border-border overflow-hidden shadow-sm">
+            <button key={i} type="button" onClick={() => navigateTo(`/student/work/${work.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}`)} className="group relative bg-card-bg rounded-2xl border border-border overflow-hidden shadow-sm text-left">
               <div className="aspect-[4/3] overflow-hidden relative">
                 <img src={work.img} alt={work.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                 <div className="absolute top-4 left-4 px-3 py-1.5 bg-pup-gold/90 backdrop-blur text-dark-surface text-[12px] font-bold rounded-lg flex items-center gap-1.5 shadow-sm">
@@ -187,11 +194,11 @@ export function CampusGalleryPage() {
               <div className="p-6">
                 <h4 className="text-[18px] font-bold mb-1 group-hover:text-pup-maroon transition-colors">{work.title}</h4>
                 <p className="text-[14px] text-secondary-text mb-4">by {work.creator}</p>
-                <button className="w-full py-2 bg-secondary-surface text-primary-text font-medium rounded-lg hover:bg-border transition-colors text-[13px]">
+                <button type="button" onClick={onWorkDetail} className="w-full py-2 bg-secondary-surface text-primary-text font-medium rounded-lg hover:bg-border transition-colors text-[13px]">
                   View Detail
                 </button>
               </div>
-            </div>
+            </button>
           ))}
         </div>
       </section>
@@ -206,7 +213,7 @@ export function CampusGalleryPage() {
             { title: "Manila Student Life 2024", year: 2024, works: 30 },
             { title: "Concrete Echoes", year: 2024, works: 12 }
           ].map((archive, i) => (
-            <div key={i} className="flex items-center justify-between p-4 bg-card-bg border border-border rounded-xl hover:bg-secondary-surface transition-colors cursor-pointer group">
+            <button key={i} type="button" onClick={() => navigateTo(`/student/gallery/${archive.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}`)} className="w-full flex items-center justify-between p-4 bg-card-bg border border-border rounded-xl hover:bg-secondary-surface transition-colors cursor-pointer group text-left">
               <div className="flex items-center gap-4">
                 <div className="w-10 h-10 rounded bg-soft-maroon text-pup-maroon flex items-center justify-center font-bold text-xs">
                   {archive.year}
@@ -217,7 +224,7 @@ export function CampusGalleryPage() {
                 </div>
               </div>
               <ArrowRight size={18} className="text-border group-hover:text-pup-maroon transition-colors" />
-            </div>
+            </button>
           ))}
         </div>
       </section>

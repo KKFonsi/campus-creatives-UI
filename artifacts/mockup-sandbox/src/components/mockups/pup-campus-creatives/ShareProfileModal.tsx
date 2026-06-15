@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { 
   X, 
   Copy, 
@@ -10,11 +10,25 @@ import {
   QrCode,
   Smartphone
 } from 'lucide-react';
+import { InitialsAvatar } from './_shared/InitialsAvatar';
 import './_group.css';
 
 export function ShareProfileModal({ isOpen, onClose }: { isOpen?: boolean; onClose?: () => void }) {
   const [copied, setCopied] = useState(false);
   const profileUrl = "campuscreatives.pup.edu.ph/creators/rafael-mendoza";
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        onClose?.();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
 
   const handleCopy = () => {
     navigator.clipboard.writeText(profileUrl);
@@ -42,9 +56,7 @@ export function ShareProfileModal({ isOpen, onClose }: { isOpen?: boolean; onClo
         <div className="p-8">
           {/* Profile Preview Card */}
           <div className="p-5 bg-secondary-surface/30 border border-border rounded-2xl mb-8 flex items-center gap-4">
-            <div className="w-16 h-16 rounded-full border-2 border-white shadow-sm overflow-hidden shrink-0 bg-white">
-              <img src="/__mockup/images/creator-portrait.jpg" alt="Rafael Mendoza" className="w-full h-full object-cover" />
-            </div>
+            <InitialsAvatar name="Rafael Mendoza" className="w-16 h-16 border-2 border-white shadow-sm" textClassName="text-xl" />
             <div>
               <h4 className="font-bold text-lg">Rafael Mendoza</h4>
               <p className="text-xs text-secondary-text mb-2">CCIS • BS Information Technology</p>
@@ -124,6 +136,19 @@ export function ShareProfileModalMobile({ isOpen, onClose }: { isOpen?: boolean;
   const [copied, setCopied] = useState(false);
   const profileUrl = "campuscreatives.pup.edu.ph/creators/rafael-mendoza";
 
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        onClose?.();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
+
   const handleCopy = () => {
     navigator.clipboard.writeText(profileUrl);
     setCopied(true);
@@ -151,9 +176,7 @@ export function ShareProfileModalMobile({ isOpen, onClose }: { isOpen?: boolean;
           </div>
 
           <div className="flex items-center gap-4 mb-8 p-4 bg-secondary-surface/30 border border-border rounded-2xl">
-            <div className="w-14 h-14 rounded-full border-2 border-white shadow-sm overflow-hidden bg-white shrink-0">
-               <img src="/__mockup/images/creator-portrait.jpg" alt="Rafael" className="w-full h-full object-cover" />
-            </div>
+            <InitialsAvatar name="Rafael Mendoza" className="w-14 h-14 border-2 border-white shadow-sm" textClassName="text-lg" />
             <div>
               <h4 className="font-bold">Rafael Mendoza</h4>
               <p className="text-[11px] text-secondary-text">CCIS • BS Information Technology</p>

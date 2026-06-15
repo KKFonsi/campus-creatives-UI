@@ -5,11 +5,19 @@ import {
   ChevronRight, Clock, CheckCircle2, Trophy, Award,
   Image as ImageIcon, Palette, Camera, Mic2, Film, Music, Sparkles
 } from 'lucide-react';
+import { ShareModal } from './ShareModal';
 import './_group.css';
 
-export function EventDetailPage() {
+interface EventDetailPageProps {
+  onBack?: () => void;
+  onSubmitEntry?: () => void;
+  onWorkDetail?: () => void;
+}
+
+export function EventDetailPage({ onBack, onSubmitEntry, onWorkDetail }: EventDetailPageProps = {}) {
   const [isSaved, setIsSaved] = useState(false);
   const [rulesExpanded, setRulesExpanded] = useState(false);
+  const [showShare, setShowShare] = useState(false);
 
   const categories = [
     { name: 'Visual Art', icon: Palette },
@@ -113,6 +121,9 @@ export function EventDetailPage() {
       </section>
 
       <main className="w-full max-w-[1200px] mx-auto px-8 py-12">
+        <button type="button" onClick={onBack} className="mb-8 text-pup-maroon font-bold hover:underline">
+          ← Back to Events
+        </button>
         <div className="flex gap-12">
           {/* Main Content */}
           <div className="flex-1">
@@ -326,7 +337,7 @@ export function EventDetailPage() {
                     <CheckCircle2 size={14} /> Submissions Open
                   </div>
                 </div>
-                <button className="w-full py-4 bg-pup-maroon text-white font-bold rounded-xl hover:bg-deep-maroon transition-colors shadow-lg shadow-pup-maroon/20 flex items-center justify-center gap-2 text-lg mb-4">
+                <button type="button" onClick={onSubmitEntry} className="w-full py-4 bg-pup-maroon text-white font-bold rounded-xl hover:bg-deep-maroon transition-colors shadow-lg shadow-pup-maroon/20 flex items-center justify-center gap-2 text-lg mb-4">
                   Submit Entry <ArrowRight size={20} />
                 </button>
                 <div className="grid grid-cols-2 gap-3">
@@ -339,7 +350,7 @@ export function EventDetailPage() {
                     <Bookmark size={16} fill={isSaved ? 'currentColor' : 'none'} />
                     {isSaved ? 'Saved' : 'Save Event'}
                   </button>
-                  <button className="flex items-center justify-center gap-2 py-3 rounded-lg border border-border bg-white text-primary-text font-bold text-[14px] hover:bg-secondary-surface transition-colors">
+                  <button onClick={() => setShowShare(true)} className="flex items-center justify-center gap-2 py-3 rounded-lg border border-border bg-white text-primary-text font-bold text-[14px] hover:bg-secondary-surface transition-colors">
                     <Share2 size={16} />
                     Share
                   </button>
@@ -377,7 +388,7 @@ export function EventDetailPage() {
           
           <div className="grid grid-cols-3 gap-6 mb-12">
             {approvedWorks.map((work) => (
-              <div key={work.id} className="group cursor-pointer">
+              <button key={work.id} type="button" onClick={onWorkDetail} className="group text-left focus:outline-none focus:ring-4 focus:ring-pup-maroon/20 rounded-2xl">
                 <div className="relative aspect-[4/3] rounded-[16px] overflow-hidden border border-border mb-4 bg-secondary-surface">
                   <img src={work.image} alt={work.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                   <div className="absolute top-3 left-3 px-2.5 py-1 bg-white/90 backdrop-blur text-pup-maroon text-[11px] font-bold rounded flex items-center gap-1 shadow-sm">
@@ -389,7 +400,7 @@ export function EventDetailPage() {
                 <div className="flex items-center gap-2">
                   <span className="px-2 py-0.5 bg-secondary-surface rounded text-[11px] font-bold text-primary-text">{work.category}</span>
                 </div>
-              </div>
+              </button>
             ))}
           </div>
         </section>
@@ -431,6 +442,7 @@ export function EventDetailPage() {
           </div>
         </section>
       </main>
+      {showShare && <ShareModal onClose={() => setShowShare(false)} />}
     </div>
   );
 }

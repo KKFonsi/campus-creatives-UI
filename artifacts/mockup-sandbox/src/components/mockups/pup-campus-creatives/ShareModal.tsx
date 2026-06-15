@@ -1,9 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Copy, Facebook, Instagram, Send, Link2, X, Check, Smartphone } from 'lucide-react';
 import './_group.css';
 
-export function ShareModal() {
+interface ShareModalProps {
+  onClose?: () => void;
+}
+
+export function ShareModal({ onClose }: ShareModalProps = {}) {
   const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        onClose?.();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [onClose]);
 
   const handleCopy = () => {
     setCopied(true);
@@ -11,10 +26,10 @@ export function ShareModal() {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[110] flex items-center justify-center p-6">
-      <div className="w-full max-w-[480px] bg-card-bg rounded-[32px] overflow-hidden shadow-2xl animate-in zoom-in-95 duration-200">
+    <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[110] flex items-center justify-center p-6" onClick={onClose}>
+      <div className="w-full max-w-[480px] bg-card-bg rounded-[32px] overflow-hidden shadow-2xl animate-in zoom-in-95 duration-200" onClick={(event) => event.stopPropagation()}>
         <div className="p-8 border-b border-border relative">
-          <button className="absolute right-6 top-6 w-10 h-10 rounded-full hover:bg-secondary-surface flex items-center justify-center transition-colors">
+          <button type="button" onClick={onClose} aria-label="Close share modal" className="absolute right-6 top-6 w-10 h-10 rounded-full hover:bg-secondary-surface flex items-center justify-center transition-colors">
             <X size={20} />
           </button>
           <h2 className="text-2xl font-black mb-1">Share Work</h2>
@@ -70,12 +85,28 @@ export function ShareModal() {
   );
 }
 
-export function ShareModalMobile() {
+export function ShareModalMobile({ onClose }: ShareModalProps = {}) {
   const [copied, setCopied] = useState(false);
 
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        onClose?.();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [onClose]);
+
+  const handleCopy = () => {
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
-    <div className="fixed inset-0 bg-black/60 z-[110] flex items-end">
-      <div className="w-full bg-white rounded-t-[32px] overflow-hidden animate-in slide-in-from-bottom duration-300">
+    <div className="fixed inset-0 bg-black/60 z-[110] flex items-end" onClick={onClose}>
+      <div className="w-full bg-white rounded-t-[32px] overflow-hidden animate-in slide-in-from-bottom duration-300" onClick={(event) => event.stopPropagation()}>
         <div className="w-12 h-1.5 bg-border rounded-full mx-auto my-4"></div>
         
         <div className="px-6 pb-4">
@@ -84,14 +115,14 @@ export function ShareModalMobile() {
           
           <div className="flex gap-4 overflow-x-auto no-scrollbar pb-6 mb-6 border-b border-border">
             {[
-              { label: 'Copy Link', icon: <Link2 size={24} />, color: 'bg-secondary-surface' },
+              { label: copied ? 'Copied' : 'Copy Link', icon: copied ? <Check size={24} /> : <Link2 size={24} />, color: copied ? 'bg-status-approved/10 text-status-approved' : 'bg-secondary-surface', onClick: handleCopy },
               { label: 'Facebook', icon: <Facebook size={24} className="text-[#1877F2]" />, color: 'bg-[#1877F2]/10' },
               { label: 'Messenger', icon: <Send size={24} className="text-[#00B2FF]" />, color: 'bg-[#00B2FF]/10' },
               { label: 'Instagram', icon: <Instagram size={24} className="text-[#E4405F]" />, color: 'bg-[#E4405F]/10' },
               { label: 'Twitter', icon: <X size={24} />, color: 'bg-black/5' },
             ].map(option => (
               <div key={option.label} className="flex flex-col items-center gap-2 min-w-[70px]">
-                <button className={`w-14 h-14 rounded-2xl flex items-center justify-center ${option.color}`}>
+                <button onClick={option.onClick} className={`w-14 h-14 rounded-2xl flex items-center justify-center ${option.color}`}>
                   {option.icon}
                 </button>
                 <span className="text-[11px] font-bold text-secondary-text">{option.label}</span>
@@ -103,7 +134,7 @@ export function ShareModalMobile() {
             <button className="w-full h-14 bg-secondary-surface rounded-2xl font-bold flex items-center justify-center gap-2">
               <Smartphone size={20} /> Share via System
             </button>
-            <button className="w-full h-14 bg-pup-maroon text-white rounded-2xl font-bold">
+            <button type="button" onClick={onClose} className="w-full h-14 bg-pup-maroon text-white rounded-2xl font-bold">
               Done
             </button>
           </div>

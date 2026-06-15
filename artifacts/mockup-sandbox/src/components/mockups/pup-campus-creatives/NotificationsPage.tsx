@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { DesktopNav } from './_shared/DesktopNav';
-import { Check, Settings, Image as ImageIcon, Award, AlertCircle, Info, MessageSquare, Heart, Calendar, Bell } from 'lucide-react';
+import { MobileBottomNav } from './_shared/MobileBottomNav';
+import { InitialsAvatar } from './_shared/InitialsAvatar';
+import { Check, Settings, Award, AlertCircle, Info, MessageSquare, Heart, Calendar, Bell, ArrowLeft } from 'lucide-react';
+import { navigateTo } from '../../../app/demo';
+import { routePaths } from '../../../app/routes';
 import './_group.css';
 
 const NOTIFICATIONS = [
@@ -37,10 +41,27 @@ export function NotificationsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-main-bg text-primary-text font-inter overflow-y-auto">
-      <DesktopNav authenticated={true} />
+    <div className="notifications-page min-h-screen bg-main-bg text-primary-text font-inter overflow-y-auto flex flex-col">
+      <div className="notifications-desktop-only">
+        <DesktopNav authenticated={true} />
+      </div>
+
+      <header className="notifications-mobile-only h-[56px] bg-warm-white border-b border-border items-center justify-between px-4 shrink-0">
+        <button
+          type="button"
+          onClick={() => navigateTo(routePaths.student.home)}
+          className="w-10 h-10 rounded-full border border-border bg-white text-pup-maroon flex items-center justify-center"
+          aria-label="Back to Home"
+        >
+          <ArrowLeft size={20} />
+        </button>
+        <div className="text-[14px] font-bold text-primary-text">Notifications</div>
+        <button className="w-10 h-10 rounded-full border border-border bg-white text-secondary-text flex items-center justify-center">
+          <Settings size={18} />
+        </button>
+      </header>
       
-      <main className="w-full max-w-[760px] mx-auto px-6 py-12">
+      <main className="notifications-content w-full max-w-[760px] mx-auto px-6 py-12">
         <div className="flex items-center justify-between mb-8">
           <h1 className="text-[32px] font-bold tracking-tight">Notifications</h1>
           <button className="p-2 text-secondary-text hover:bg-secondary-surface rounded-full transition-colors">
@@ -49,8 +70,8 @@ export function NotificationsPage() {
         </div>
 
         {/* Tabs */}
-        <div className="flex items-center justify-between border-b border-border mb-6">
-          <div className="flex gap-6">
+        <div className="flex items-center justify-between border-b border-border mb-6 gap-4">
+          <div className="flex gap-6 overflow-x-auto no-scrollbar min-w-0">
             {['All', 'Submissions', 'Recognition', 'Events', 'Community'].map(tab => (
               <button 
                 key={tab}
@@ -70,7 +91,7 @@ export function NotificationsPage() {
             ))}
           </div>
           {unreadCount > 0 && activeTab === 'All' && (
-            <button onClick={markAllRead} className="pb-3 text-[13px] font-medium text-pup-maroon hover:underline">
+            <button onClick={markAllRead} className="pb-3 text-[13px] font-medium text-pup-maroon hover:underline shrink-0">
               Mark all as read
             </button>
           )}
@@ -86,9 +107,11 @@ export function NotificationsPage() {
               >
                 <div className="pt-0.5">
                   {notif.type === 'social_like' || notif.type === 'social_post' ? (
-                    <div className="w-10 h-10 rounded-full bg-secondary-surface overflow-hidden border border-border">
-                      <img src="/__mockup/images/creator-portrait.jpg" alt="Avatar" className="w-full h-full object-cover" />
-                    </div>
+                    <InitialsAvatar
+                      name={notif.type === 'social_like' ? 'Mika Santos' : 'Campus Creator'}
+                      className="w-10 h-10 border border-border"
+                      textClassName="text-sm"
+                    />
                   ) : (
                     <div className={`w-10 h-10 rounded-full flex items-center justify-center bg-card-bg border border-border shadow-sm`}>
                       {getIcon(notif.type)}
@@ -135,6 +158,9 @@ export function NotificationsPage() {
           )}
         </div>
       </main>
+      <div className="notifications-mobile-only shrink-0">
+        <MobileBottomNav />
+      </div>
     </div>
   );
 }

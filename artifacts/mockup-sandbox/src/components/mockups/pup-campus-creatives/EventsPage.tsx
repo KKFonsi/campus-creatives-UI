@@ -3,7 +3,11 @@ import { DesktopNav } from './_shared/DesktopNav';
 import { Search, Filter, Calendar, MapPin, Users, ArrowRight, ExternalLink, ChevronDown, Clock } from 'lucide-react';
 import './_group.css';
 
-export function EventsPage() {
+interface EventsPageProps {
+  onEventDetail?: () => void;
+}
+
+export function EventsPage({ onEventDetail }: EventsPageProps = {}) {
   const [activeTab, setActiveTab] = useState('Open');
 
   const tabs = [
@@ -190,7 +194,7 @@ export function EventsPage() {
                     <span>Deadline: June 30, 2026</span>
                   </div>
                 </div>
-                <button className="px-8 py-3.5 bg-pup-maroon text-white font-bold rounded-xl hover:bg-deep-maroon transition-colors shadow-lg flex items-center gap-2">
+                <button type="button" onClick={onEventDetail} className="px-8 py-3.5 bg-pup-maroon text-white font-bold rounded-xl hover:bg-deep-maroon transition-colors shadow-lg flex items-center gap-2">
                   View Event <ArrowRight size={20} />
                 </button>
               </div>
@@ -319,7 +323,7 @@ export function EventsPage() {
                   <div className="text-[13px] text-muted-text">
                     <span className="font-bold text-secondary-text">{event.entries}</span> entries
                   </div>
-                  <button className="text-pup-maroon font-bold text-[14px] flex items-center gap-1 hover:underline underline-offset-4">
+                  <button type="button" onClick={onEventDetail} className="text-pup-maroon font-bold text-[14px] flex items-center gap-1 hover:underline underline-offset-4">
                     View Event <ArrowRight size={16} />
                   </button>
                 </div>

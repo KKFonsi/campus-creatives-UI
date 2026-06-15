@@ -4,7 +4,11 @@ import { MobileBottomNav } from './_shared/MobileBottomNav';
 import { Search, Filter, Calendar, MapPin, Users, ArrowRight, ChevronRight, Clock } from 'lucide-react';
 import './_group.css';
 
-export function EventsPageMobile() {
+interface EventsPageMobileProps {
+  onEventDetail?: () => void;
+}
+
+export function EventsPageMobile({ onEventDetail }: EventsPageMobileProps = {}) {
   const [activeTab, setActiveTab] = useState('Open');
   const [showFilters, setShowFilters] = useState(false);
 
@@ -154,7 +158,7 @@ export function EventsPageMobile() {
                 </div>
               </div>
 
-              <button className="w-full py-2.5 bg-secondary-surface text-primary-text font-bold rounded-lg text-[13px] flex items-center justify-center gap-2">
+              <button type="button" onClick={onEventDetail} className="w-full py-2.5 bg-secondary-surface text-primary-text font-bold rounded-lg text-[13px] flex items-center justify-center gap-2">
                 View Event Details <ChevronRight size={16} />
               </button>
             </div>

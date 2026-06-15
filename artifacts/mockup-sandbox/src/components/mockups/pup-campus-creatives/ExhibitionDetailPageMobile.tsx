@@ -1,15 +1,25 @@
 import React, { useState } from 'react';
 import { MobileHeader } from './_shared/MobileHeader';
 import { MobileBottomNav } from './_shared/MobileBottomNav';
+import { InitialsAvatar } from './_shared/InitialsAvatar';
 import { Award, Users, BookOpen, Calendar, Quote, ChevronDown, ChevronUp } from 'lucide-react';
 import './_group.css';
 
-export function ExhibitionDetailPageMobile() {
+interface ExhibitionDetailPageMobileProps {
+  onBack?: () => void;
+  onWorkDetail?: () => void;
+  onCreatorProfile?: () => void;
+}
+
+export function ExhibitionDetailPageMobile({ onBack, onWorkDetail, onCreatorProfile }: ExhibitionDetailPageMobileProps = {}) {
   const [expandNote, setExpandNote] = useState(false);
 
   return (
     <div className="w-[390px] min-h-screen bg-main-bg font-inter overflow-y-auto pb-[80px]">
       <MobileHeader />
+      <button type="button" onClick={onBack} className="mx-4 mt-4 text-pup-maroon font-bold text-[13px]">
+        ← Gallery
+      </button>
 
       {/* Hero Cover */}
       <section className="relative w-full h-[460px] overflow-hidden bg-dark-surface">
@@ -76,7 +86,7 @@ export function ExhibitionDetailPageMobile() {
             { title: "Sta. Mesa After the Rain", creator: "Bianca Reyes", img: "/__mockup/images/thumbnail_1.jpg" },
             { title: "Sinta sa Riles", creator: "Marco Villanueva", img: "/__mockup/images/thumbnail_2.jpg" }
           ].map((work, i) => (
-            <div key={i} className="bg-card-bg rounded-2xl overflow-hidden shadow-sm border border-border">
+            <button key={i} type="button" onClick={onWorkDetail} className="bg-card-bg rounded-2xl overflow-hidden shadow-sm border border-border text-left focus:outline-none focus:ring-4 focus:ring-pup-maroon/20">
               <div className="aspect-[16/9] bg-secondary-surface">
                 <img src={work.img} alt={work.title} className="w-full h-full object-cover" />
               </div>
@@ -84,7 +94,7 @@ export function ExhibitionDetailPageMobile() {
                 <h4 className="font-bold text-[16px] mb-1">{work.title}</h4>
                 <p className="text-[12px] text-secondary-text">by {work.creator}</p>
               </div>
-            </div>
+            </button>
           ))}
         </div>
       </section>
@@ -94,13 +104,11 @@ export function ExhibitionDetailPageMobile() {
         <h3 className="px-4 text-[18px] font-bold mb-4">The Creators</h3>
         <div className="flex gap-3 overflow-x-auto px-4 pb-2 scrollbar-hide">
           {[1, 2, 3, 4, 5, 6].map((i) => (
-            <div key={i} className="flex-shrink-0 w-[120px] text-center">
-              <div className="w-16 h-16 mx-auto rounded-full overflow-hidden mb-2 border border-border bg-secondary-surface">
-                <img src="/__mockup/images/creator-portrait.jpg" alt="Creator" className="w-full h-full object-cover" />
-              </div>
+            <button key={i} type="button" onClick={onCreatorProfile} className="flex-shrink-0 w-[120px] text-center rounded-xl focus:outline-none focus:ring-4 focus:ring-pup-maroon/20">
+              <InitialsAvatar name={`Creator Name ${i}`} className="w-16 h-16 mx-auto mb-2 border border-border" textClassName="text-sm" />
               <h5 className="font-bold text-[12px] line-clamp-1">Creator Name</h5>
               <p className="text-[10px] text-muted-text">College</p>
-            </div>
+            </button>
           ))}
         </div>
       </section>
@@ -110,7 +118,7 @@ export function ExhibitionDetailPageMobile() {
         <h3 className="text-[18px] font-bold mb-6">Complete Collection</h3>
         <div className="grid grid-cols-2 gap-3 mb-8">
           {[1, 2, 3, 4, 5, 6].map((i) => (
-            <div key={i} className="bg-card-bg rounded-xl overflow-hidden border border-border">
+            <button key={i} type="button" onClick={onWorkDetail} className="bg-card-bg rounded-xl overflow-hidden border border-border text-left focus:outline-none focus:ring-4 focus:ring-pup-maroon/20">
               <div className="aspect-square bg-secondary-surface">
                 <img src={`/__mockup/images/thumbnail_${(i % 4) + 1}.jpg`} alt="Work" className="w-full h-full object-cover" />
               </div>
@@ -118,7 +126,7 @@ export function ExhibitionDetailPageMobile() {
                 <h4 className="font-bold text-[12px] line-clamp-1">Work Title</h4>
                 <p className="text-[10px] text-secondary-text">by Creator</p>
               </div>
-            </div>
+            </button>
           ))}
         </div>
         <button className="w-full py-3 border-2 border-border font-bold rounded-xl text-[14px]">

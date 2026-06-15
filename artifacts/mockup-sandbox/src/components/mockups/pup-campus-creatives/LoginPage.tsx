@@ -2,7 +2,12 @@ import React, { useState } from 'react';
 import { Eye, EyeOff, Loader2 } from 'lucide-react';
 import './_group.css';
 
-export function LoginPage() {
+interface LoginPageProps {
+  onLoginSuccess?: () => void;
+  onRegister?: () => void;
+}
+
+export function LoginPage({ onLoginSuccess, onRegister }: LoginPageProps = {}) {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -13,18 +18,15 @@ export function LoginPage() {
     e.preventDefault();
     setError('');
     
-    if (!email.endsWith('@pup.edu.ph')) {
-      setError('Please use a valid PUP email address');
-      return;
-    }
-    if (!password) {
-      setError('Password is required');
+    if (!email || !password) {
+      setError('Email and password are required');
       return;
     }
 
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
+      onLoginSuccess?.();
     }, 1500);
   };
 
@@ -78,6 +80,7 @@ export function LoginPage() {
               <label className="text-[14px] font-semibold text-primary-text block">PUP Email</label>
               <input 
                 type="email" 
+                required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="yourname@pup.edu.ph"
@@ -94,6 +97,7 @@ export function LoginPage() {
               <div className="relative">
                 <input 
                   type={showPassword ? "text" : "password"} 
+                  required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Enter your password"
@@ -126,7 +130,7 @@ export function LoginPage() {
           
           <div className="mt-8 pt-8 border-t border-border text-center">
             <p className="text-[14px] text-secondary-text">
-              Don't have a portfolio yet? <a href="#" className="font-semibold text-pup-maroon hover:underline">Create Account</a>
+              Don't have a portfolio yet? <a href="#" onClick={(event) => { event.preventDefault(); onRegister?.(); }} className="font-semibold text-pup-maroon hover:underline">Create Account</a>
             </p>
           </div>
         </div>

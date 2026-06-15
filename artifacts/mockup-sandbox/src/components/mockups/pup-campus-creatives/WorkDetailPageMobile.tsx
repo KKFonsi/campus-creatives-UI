@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { MobileHeader } from './_shared/MobileHeader';
 import { MobileBottomNav } from './_shared/MobileBottomNav';
+import { InitialsAvatar } from './_shared/InitialsAvatar';
 import { 
   Heart, 
   Bookmark, 
@@ -15,15 +16,26 @@ import {
   MoreVertical,
   ArrowLeft
 } from 'lucide-react';
+import { CommentsPanelMobile } from './CommentsPanel';
+import { ReportModalMobile } from './ReportModal';
+import { ShareModalMobile } from './ShareModal';
 import './_group.css';
 
-export function WorkDetailPageMobile() {
+interface WorkDetailPageMobileProps {
+  onBack?: () => void;
+  onCreatorProfile?: () => void;
+}
+
+export function WorkDetailPageMobile({ onBack, onCreatorProfile }: WorkDetailPageMobileProps = {}) {
   const [activeImg, setActiveImg] = useState(0);
   const [isAppreciated, setIsAppreciated] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
   const [isFollowing, setIsFollowing] = useState(false);
   const [showFullDesc, setShowFullDesc] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
+  const [showComments, setShowComments] = useState(false);
+  const [showShare, setShowShare] = useState(false);
+  const [showReport, setShowReport] = useState(false);
 
   const images = [
     '/__mockup/images/thumbnail_1.jpg',
@@ -35,7 +47,7 @@ export function WorkDetailPageMobile() {
     <div className="w-[390px] min-h-screen bg-main-bg font-inter overflow-y-auto pb-[100px] relative">
       {/* Custom Header */}
       <div className="sticky top-0 z-50 bg-main-bg/95 backdrop-blur-md px-4 h-[60px] border-b border-border flex items-center justify-between">
-        <button className="p-2 -ml-2 text-primary-text">
+        <button type="button" onClick={onBack} className="p-2 -ml-2 text-primary-text" aria-label="Back to Explore">
           <ArrowLeft size={24} />
         </button>
         <span className="font-bold text-sm truncate px-4">Work Detail</span>
@@ -45,7 +57,13 @@ export function WorkDetailPageMobile() {
           </button>
           {showMenu && (
             <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-xl border border-border py-2 z-50">
-              <button className="w-full px-4 py-2.5 text-left text-sm flex items-center gap-2 text-status-rejected font-medium">
+              <button
+                onClick={() => {
+                  setShowMenu(false);
+                  setShowReport(true);
+                }}
+                className="w-full px-4 py-2.5 text-left text-sm flex items-center gap-2 text-status-rejected font-medium"
+              >
                 <Flag size={16} /> Report Work
               </button>
             </div>
@@ -77,13 +95,11 @@ export function WorkDetailPageMobile() {
         <div className="px-5 py-6">
           {/* Creator Row */}
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-full bg-secondary-surface border border-border overflow-hidden">
-              <img src="/__mockup/images/creator-portrait.jpg" alt="Bianca" className="w-full h-full object-cover" />
-            </div>
-            <div className="flex-1">
+            <InitialsAvatar name="Bianca Reyes" className="w-10 h-10 border border-border" textClassName="text-sm" />
+            <button type="button" onClick={onCreatorProfile} className="flex-1 text-left focus:outline-none focus:ring-4 focus:ring-pup-maroon/20 rounded-lg">
               <h4 className="text-[14px] font-bold leading-none mb-1">Bianca Reyes</h4>
               <span className="text-[11px] px-1.5 py-0.5 bg-soft-maroon text-pup-maroon font-bold rounded">COC</span>
-            </div>
+            </button>
             <button 
               onClick={() => setIsFollowing(!isFollowing)}
               className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${isFollowing ? 'bg-secondary-surface text-primary-text' : 'bg-pup-maroon text-white'}`}
@@ -116,12 +132,12 @@ export function WorkDetailPageMobile() {
                 <Bookmark size={24} className={isSaved ? 'fill-current' : ''} />
                 <span className="text-[10px] font-bold">Save</span>
               </button>
-              <button className="flex flex-col items-center gap-1 text-secondary-text">
+              <button onClick={() => setShowComments(true)} className="flex flex-col items-center gap-1 text-secondary-text">
                 <MessageCircle size={24} />
                 <span className="text-[10px] font-bold">14</span>
               </button>
             </div>
-            <button className="p-3 bg-secondary-surface rounded-full text-secondary-text">
+            <button onClick={() => setShowShare(true)} className="p-3 bg-secondary-surface rounded-full text-secondary-text" aria-label="Share work">
               <Share2 size={20} />
             </button>
           </div>
@@ -153,20 +169,18 @@ export function WorkDetailPageMobile() {
           <div className="mb-10">
             <div className="flex items-center justify-between mb-4">
               <h3 className="font-bold">Comments (14)</h3>
-              <button className="text-xs font-bold text-pup-maroon">View all</button>
+              <button onClick={() => setShowComments(true)} className="text-xs font-bold text-pup-maroon">View all</button>
             </div>
             <div className="space-y-4">
               <div className="flex gap-3">
-                <div className="w-8 h-8 rounded-full bg-secondary-surface border border-border overflow-hidden shrink-0">
-                  <img src="/__mockup/images/creator-portrait.jpg" alt="Ana" className="w-full h-full object-cover" />
-                </div>
+                <InitialsAvatar name="Ana dela Cruz" className="w-8 h-8 border border-border" textClassName="text-[11px]" />
                 <div className="bg-secondary-surface/50 p-3 rounded-2xl flex-1">
                   <p className="text-[13px] font-bold mb-0.5">Ana dela Cruz</p>
                   <p className="text-[13px] text-secondary-text">This perfectly captures the mood of Sta. Mesa!</p>
                 </div>
               </div>
             </div>
-            <button className="w-full mt-4 py-3 bg-white border border-border rounded-xl text-xs font-bold text-muted-text">
+            <button onClick={() => setShowComments(true)} className="w-full mt-4 py-3 bg-white border border-border rounded-xl text-xs font-bold text-muted-text">
               Add a comment...
             </button>
           </div>
@@ -192,6 +206,9 @@ export function WorkDetailPageMobile() {
       </main>
 
       <MobileBottomNav />
+      {showComments && <CommentsPanelMobile onClose={() => setShowComments(false)} />}
+      {showShare && <ShareModalMobile onClose={() => setShowShare(false)} />}
+      {showReport && <ReportModalMobile isOpen={showReport} onClose={() => setShowReport(false)} />}
     </div>
   );
 }

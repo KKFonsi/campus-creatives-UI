@@ -1,0 +1,74 @@
+.student-route-fallback {
+  min-height: 100vh;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f8f6f1;
+  color: #211b1b;
+}
+
+.student-route-fallback section {
+  width: min(100%, 460px);
+  padding: 28px;
+  border: 1px solid rgba(128, 0, 0, 0.16);
+  border-radius: 8px;
+  background: #fffdf8;
+  text-align: center;
+}
+
+.student-route-fallback h1 {
+  margin: 0 0 8px;
+  color: #5b0000;
+  font-size: 1.5rem;
+  font-weight: 850;
+}
+
+.student-route-fallback p {
+  margin: 0 0 18px;
+  color: #665d5d;
+}
+
+.student-route-fallback button {
+  min-height: 44px;
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 8px;
+  background: #800000;
+  color: #ffffff;
+  font-weight: 800;
+}
+
+.student-screen-fallback {
+  width: 100%;
+  min-height: 100%;
+}
+
+.demo-phone-screen .student-screen-fallback {
+  overflow-x: hidden;
+}
+
+.demo-phone-screen .student-screen-fallback > * {
+  width: 100% !important;
+  max-width: 390px !important;
+}
+
+.demo-phone-screen .student-screen-fallback .min-h-screen,
+.demo-phone-screen .student-screen-fallback .w-\[390px\] {
+  width: 100% !important;
+  max-width: 390px !important;
+}
+
+.demo-phone-screen .student-screen-fallback .grid {
+  grid-template-columns: minmax(0, 1fr) !important;
+}
+
+.demo-phone-screen .student-screen-fallback .flex {
+  min-width: 0;
+}
+
+.demo-phone-screen .student-screen-fallback table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+}

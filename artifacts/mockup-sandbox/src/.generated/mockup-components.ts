@@ -33,6 +33,7 @@ export const modules: ModuleMap = {
   "./components/mockups/pup-campus-creatives/ExplorePageMobile.tsx": () => import("../components/mockups/pup-campus-creatives/ExplorePageMobile.tsx"),
   "./components/mockups/pup-campus-creatives/FeaturedWorksPage.tsx": () => import("../components/mockups/pup-campus-creatives/FeaturedWorksPage.tsx"),
   "./components/mockups/pup-campus-creatives/FeaturedWorksPageMobile.tsx": () => import("../components/mockups/pup-campus-creatives/FeaturedWorksPageMobile.tsx"),
+  "./components/mockups/pup-campus-creatives/IdentityVerificationPage.tsx": () => import("../components/mockups/pup-campus-creatives/IdentityVerificationPage.tsx"),
   "./components/mockups/pup-campus-creatives/LandingDesktop.tsx": () => import("../components/mockups/pup-campus-creatives/LandingDesktop.tsx"),
   "./components/mockups/pup-campus-creatives/LandingMobile.tsx": () => import("../components/mockups/pup-campus-creatives/LandingMobile.tsx"),
   "./components/mockups/pup-campus-creatives/LoginPage.tsx": () => import("../components/mockups/pup-campus-creatives/LoginPage.tsx"),

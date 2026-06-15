@@ -24,7 +24,11 @@ import {
 import { DesktopNav } from './_shared/DesktopNav';
 import './_group.css';
 
-export default function SubmitWorkPage() {
+interface SubmitWorkPageProps {
+  onSubmitted?: () => void;
+}
+
+export default function SubmitWorkPage({ onSubmitted }: SubmitWorkPageProps = {}) {
   const [step, setStep] = useState(1);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
 
@@ -708,7 +712,7 @@ export default function SubmitWorkPage() {
                 className="py-3 px-6 bg-pup-maroon text-white font-bold rounded-xl hover:bg-deep-maroon shadow-lg shadow-pup-maroon/20 transition-all"
                 onClick={() => {
                   setShowConfirmModal(false);
-                  alert('Submission successful! (Prototype)');
+                  onSubmitted?.();
                 }}
               >
                 Submit Work

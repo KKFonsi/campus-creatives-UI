@@ -1,12 +1,19 @@
 import React from 'react';
 import { DesktopNav } from './_shared/DesktopNav';
+import { InitialsAvatar } from './_shared/InitialsAvatar';
 import { ArrowRight, Image as ImageIcon, Search, Calendar, Award } from 'lucide-react';
 import './_group.css';
 
-export function LandingDesktop() {
+interface LandingDesktopProps {
+  onExplore?: () => void;
+  onRegister?: () => void;
+  onLogin?: () => void;
+}
+
+export function LandingDesktop({ onExplore, onRegister, onLogin }: LandingDesktopProps = {}) {
   return (
     <div className="min-h-screen bg-main-bg text-primary-text font-inter overflow-y-auto">
-      <DesktopNav />
+      <DesktopNav onLogin={onLogin} onRegister={onRegister} />
       
       {/* Hero Section */}
       <section className="w-full max-w-[1200px] mx-auto px-8 py-20 flex items-center justify-between gap-12">
@@ -21,10 +28,18 @@ export function LandingDesktop() {
             Build your campus creative portfolio, discover student talent, join showcases, and share approved works beyond scattered social media posts.
           </p>
           <div className="flex items-center gap-4">
-            <button className="px-6 py-3.5 bg-pup-maroon text-white font-medium rounded-xl hover:bg-deep-maroon transition-colors text-base shadow-sm">
+            <button
+              type="button"
+              onClick={onExplore}
+              className="px-6 py-3.5 bg-pup-maroon text-white font-medium rounded-xl hover:bg-deep-maroon transition-colors text-base shadow-sm"
+            >
               Explore Campus Creatives
             </button>
-            <button className="px-6 py-3.5 bg-transparent border-2 border-border text-primary-text font-medium rounded-xl hover:border-pup-maroon hover:text-pup-maroon transition-colors text-base">
+            <button
+              type="button"
+              onClick={onRegister}
+              className="px-6 py-3.5 bg-transparent border-2 border-border text-primary-text font-medium rounded-xl hover:border-pup-maroon hover:text-pup-maroon transition-colors text-base"
+            >
               Create Your Portfolio
             </button>
           </div>
@@ -86,7 +101,7 @@ export function LandingDesktop() {
             <h2 className="text-[36px] font-bold tracking-tight mb-2">Featured Student Works</h2>
             <p className="text-secondary-text text-lg">Curated highlights from across the campus.</p>
           </div>
-          <a href="#" className="text-pup-maroon font-medium flex items-center gap-1.5 hover:underline">
+          <a href="#" onClick={(event) => { event.preventDefault(); onExplore?.(); }} className="text-pup-maroon font-medium flex items-center gap-1.5 hover:underline">
             View all works <ArrowRight size={18} />
           </a>
         </div>
@@ -154,7 +169,7 @@ export function LandingDesktop() {
         <div className="bg-card-bg rounded-[20px] p-10 border border-border shadow-sm flex items-center gap-10">
           <div className="w-[280px] shrink-0">
             <div className="aspect-[4/5] rounded-xl overflow-hidden mb-5">
-              <img src="/__mockup/images/creator-portrait.jpg" alt="Elena Mercado" className="w-full h-full object-cover" />
+              <InitialsAvatar name="Elena Mercado" className="w-full h-full" textClassName="text-base" />
             </div>
             <h3 className="text-2xl font-bold mb-1">Elena Mercado</h3>
             <p className="text-pup-maroon font-medium mb-3">College of Arts and Letters</p>
@@ -164,7 +179,11 @@ export function LandingDesktop() {
               <span className="px-2 py-1 bg-soft-maroon text-pup-maroon text-[12px] font-medium rounded">Film</span>
             </div>
             <p className="text-[15px] text-secondary-text mb-6">Exploring the intersection of Filipino identity and urban decay through mixed media and lens-based works.</p>
-            <button className="w-full py-2.5 border-2 border-border text-primary-text font-medium rounded-lg hover:border-pup-maroon hover:text-pup-maroon transition-colors text-[14px]">
+            <button
+              type="button"
+              onClick={onRegister}
+              className="w-full py-2.5 border-2 border-border text-primary-text font-medium rounded-lg hover:border-pup-maroon hover:text-pup-maroon transition-colors text-[14px]"
+            >
               View Portfolio
             </button>
           </div>
@@ -194,10 +213,18 @@ export function LandingDesktop() {
         <div className="max-w-[700px] mx-auto relative z-10">
           <h2 className="text-[40px] font-bold text-warm-white mb-6 tracking-tight">Turn your creative work into a lasting campus portfolio.</h2>
           <div className="flex items-center justify-center gap-4">
-            <button className="px-8 py-4 bg-pup-gold text-dark-surface font-bold rounded-xl hover:bg-warm-gold transition-colors text-[17px]">
+            <button
+              type="button"
+              onClick={onRegister}
+              className="px-8 py-4 bg-pup-gold text-dark-surface font-bold rounded-xl hover:bg-warm-gold transition-colors text-[17px]"
+            >
               Join Campus Creatives
             </button>
-            <button className="px-8 py-4 bg-transparent border border-white/20 text-warm-white font-medium rounded-xl hover:bg-white/10 transition-colors text-[17px]">
+            <button
+              type="button"
+              onClick={onExplore}
+              className="px-8 py-4 bg-transparent border border-white/20 text-warm-white font-medium rounded-xl hover:bg-white/10 transition-colors text-[17px]"
+            >
               Browse Featured Works
             </button>
           </div>
@@ -218,7 +245,7 @@ export function LandingDesktop() {
           
           <div className="flex flex-wrap gap-x-8 gap-y-4 text-[14px]">
             <a href="#" className="hover:text-white transition-colors">About</a>
-            <a href="#" className="hover:text-white transition-colors">Explore</a>
+            <a href="#" onClick={(event) => { event.preventDefault(); onExplore?.(); }} className="hover:text-white transition-colors">Explore</a>
             <a href="#" className="hover:text-white transition-colors">Galleries</a>
             <a href="#" className="hover:text-white transition-colors">Events</a>
             <a href="#" className="hover:text-white transition-colors">Community Guidelines</a>

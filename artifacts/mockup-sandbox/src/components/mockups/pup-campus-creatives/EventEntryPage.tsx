@@ -15,7 +15,11 @@ import {
 } from 'lucide-react';
 import './_group.css';
 
-export function EventEntryPage() {
+interface EventEntryPageProps {
+  onBack?: () => void;
+}
+
+export function EventEntryPage({ onBack }: EventEntryPageProps = {}) {
   const [entryMode, setEntryMode] = useState<'existing' | 'new'>('existing');
   const [selectedWork, setSelectedWork] = useState<string | null>('digital-sinta');
   const [showConfirmModal, setShowConfirmModal] = useState(false);
@@ -25,6 +29,9 @@ export function EventEntryPage() {
       <DesktopNav authenticated={true} active="Events" />
       
       <main className="max-w-[1200px] mx-auto px-8 py-8">
+        <button type="button" onClick={onBack} className="mb-6 text-pup-maroon font-bold hover:underline">
+          ← Back to Event Detail
+        </button>
         {/* Event Header Card */}
         <div className="bg-dark-surface text-white rounded-2xl border border-white/10 overflow-hidden mb-10 shadow-lg relative">
           <div className="absolute top-0 right-0 p-8 opacity-10 pointer-events-none">
@@ -257,7 +264,7 @@ export function EventEntryPage() {
             {/* Actions Bar */}
             <div className="flex items-center justify-between pt-4 border-t border-border">
                <div className="flex items-center gap-6">
-                  <button className="text-secondary-text font-bold text-sm hover:text-pup-maroon">Cancel Entry</button>
+                  <button type="button" onClick={onBack} className="text-secondary-text font-bold text-sm hover:text-pup-maroon">Cancel Entry</button>
                   <button className="px-6 py-3 border-2 border-border text-primary-text font-bold rounded-xl hover:bg-secondary-surface transition-colors">
                     Save as Draft
                   </button>

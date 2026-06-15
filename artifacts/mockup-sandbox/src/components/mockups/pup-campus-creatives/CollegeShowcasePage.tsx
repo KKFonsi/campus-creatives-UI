@@ -1,9 +1,16 @@
 import React from 'react';
 import { Award, Zap, Star, LayoutGrid, Palette, Camera, Film, Music, Type, Cpu, Share2, Bookmark, Heart, MoreHorizontal, Bell, Info } from 'lucide-react';
 import { DesktopNav } from './_shared/DesktopNav';
+import { InitialsAvatar } from './_shared/InitialsAvatar';
 import './_group.css';
 
-export function CollegeShowcasePage() {
+interface CollegeShowcasePageProps {
+  onBack?: () => void;
+  onWorkDetail?: () => void;
+  onCreatorProfile?: () => void;
+}
+
+export function CollegeShowcasePage({ onBack, onWorkDetail, onCreatorProfile }: CollegeShowcasePageProps = {}) {
   return (
     <div className="min-h-screen bg-main-bg font-inter text-primary-text pb-20">
       <DesktopNav authenticated={true} />
@@ -15,6 +22,9 @@ export function CollegeShowcasePage() {
             CCIS
           </div>
           <div className="flex-1">
+            <button type="button" onClick={onBack} className="text-white/80 font-bold mb-4 hover:text-white">
+              ← College Directory
+            </button>
             <h1 className="text-5xl font-bold mb-4 tracking-tight">College of Computer and Information Sciences</h1>
             <p className="text-xl text-white/80 max-w-[800px] mb-8 leading-relaxed">
               Advancing human-centric computing and creative technology solutions through rigorous research and innovative digital expression.
@@ -48,9 +58,7 @@ export function CollegeShowcasePage() {
             </div>
             <div className="w-[40%] p-10 flex flex-col">
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 rounded-full overflow-hidden bg-secondary-surface border border-border">
-                  <img src="/__mockup/images/creator-portrait.jpg" alt="Rafael Mendoza" className="w-full h-full object-cover" />
-                </div>
+                <InitialsAvatar name="Rafael Mendoza" className="w-12 h-12 border border-border" textClassName="text-sm" />
                 <div>
                   <div className="font-bold">Rafael Mendoza</div>
                   <div className="text-[13px] text-secondary-text">BS Computer Science • 4th Year</div>
@@ -65,7 +73,7 @@ export function CollegeShowcasePage() {
                 <span className="px-3 py-1 bg-secondary-surface text-secondary-text text-[12px] font-bold rounded-lg uppercase">Creative Tech</span>
               </div>
               <div className="mt-auto flex items-center gap-4">
-                <button className="flex-1 h-12 bg-pup-maroon text-white font-bold rounded-xl hover:bg-deep-maroon transition-colors">
+                <button type="button" onClick={onWorkDetail} className="flex-1 h-12 bg-pup-maroon text-white font-bold rounded-xl hover:bg-deep-maroon transition-colors">
                   View Project
                 </button>
                 <button className="w-12 h-12 flex items-center justify-center border-2 border-border rounded-xl text-primary-text hover:border-pup-maroon hover:text-pup-maroon transition-colors">
@@ -83,13 +91,13 @@ export function CollegeShowcasePage() {
               <h2 className="text-3xl font-bold mb-1">Featured Creators</h2>
               <p className="text-secondary-text">Top CCIS students pushing technical and creative boundaries.</p>
             </div>
-            <button className="text-pup-maroon font-bold hover:underline">View all creators</button>
+            <button type="button" onClick={onCreatorProfile} className="text-pup-maroon font-bold hover:underline">View all creators</button>
           </div>
           <div className="grid grid-cols-4 gap-6">
             {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="bg-card-bg rounded-2xl p-5 border border-border group">
-                <div className="aspect-[3/4] rounded-xl overflow-hidden mb-4 relative">
-                  <img src="/__mockup/images/creator-portrait.jpg" alt="" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              <button key={i} type="button" onClick={onCreatorProfile} className="bg-card-bg rounded-2xl p-5 border border-border group text-left focus:outline-none focus:ring-4 focus:ring-pup-maroon/20">
+                <div className="aspect-[3/4] rounded-xl overflow-hidden mb-4 relative flex items-center justify-center bg-secondary-surface">
+                  <InitialsAvatar name={`Student Creator ${i + 1}`} className="w-24 h-24" textClassName="text-2xl" />
                   <div className="absolute top-3 left-3 px-2 py-1 bg-white/90 backdrop-blur rounded-lg text-[10px] font-bold text-pup-maroon shadow-sm uppercase">Rising Creator</div>
                 </div>
                 <h3 className="font-bold text-lg mb-0.5 group-hover:text-pup-maroon transition-colors">Creator Name</h3>
@@ -109,7 +117,7 @@ export function CollegeShowcasePage() {
                     <img src="/__mockup/images/thumbnail_3.jpg" alt="" className="w-full h-full object-cover" />
                   </div>
                 </div>
-              </div>
+              </button>
             ))}
           </div>
         </section>
@@ -148,7 +156,7 @@ export function CollegeShowcasePage() {
                 <div className="relative aspect-video rounded-2xl overflow-hidden border border-border mb-4 bg-secondary-surface">
                   <img src={`/__mockup/images/thumbnail_${(i % 4) + 1}.jpg`} alt="" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
-                    <button className="px-6 py-2 bg-white text-pup-maroon font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">View Project</button>
+                    <button type="button" onClick={onWorkDetail} className="px-6 py-2 bg-white text-pup-maroon font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">View Project</button>
                   </div>
                 </div>
                 <div className="flex justify-between items-start">
@@ -177,9 +185,7 @@ export function CollegeShowcasePage() {
               { badge: 'Moderator\'s Pick', color: 'bg-pup-maroon text-white' }
             ].map((r, i) => (
               <div key={i} className="bg-card-bg p-6 rounded-2xl border border-border flex flex-col items-center text-center">
-                <div className="w-20 h-20 rounded-full overflow-hidden mb-4 border-2 border-border">
-                  <img src="/__mockup/images/creator-portrait.jpg" alt="" className="w-full h-full object-cover" />
-                </div>
+                <InitialsAvatar name={`Recognized Creator ${i + 1}`} className="w-20 h-20 mb-4 border-2 border-border" textClassName="text-xl" />
                 <div className={`px-2.5 py-1 rounded-full text-[10px] font-black uppercase mb-3 ${r.color}`}>
                   {r.badge}
                 </div>

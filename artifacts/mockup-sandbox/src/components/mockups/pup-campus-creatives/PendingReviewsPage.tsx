@@ -20,11 +20,35 @@ import {
   MoreVertical,
   User
 } from 'lucide-react';
+import { InitialsAvatar } from './_shared/InitialsAvatar';
 import './_group.css';
 
-export default function PendingReviewsPage() {
+interface PendingReviewsPageProps {
+  onDashboard?: () => void;
+  onPending?: () => void;
+  onReview?: () => void;
+  onReports?: () => void;
+  onFeatured?: () => void;
+  onOfficialContent?: () => void;
+  onHistory?: () => void;
+}
+
+export default function PendingReviewsPage({
+  onDashboard,
+  onPending,
+  onReview,
+  onReports,
+  onFeatured,
+  onOfficialContent,
+  onHistory,
+}: PendingReviewsPageProps = {}) {
   const [activeTab, setActiveTab] = useState('Pending Reviews');
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
+
+  const handleNav = (tab: string, callback?: () => void) => {
+    setActiveTab(tab);
+    callback?.();
+  };
 
   const toggleSelect = (id: string) => {
     setSelectedItems(prev => prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]);
@@ -45,12 +69,12 @@ export default function PendingReviewsPage() {
         </div>
 
         <nav className="flex-1 px-3 py-4 space-y-1">
-          <NavItem icon={<LayoutDashboard size={20} />} label="Dashboard" active={activeTab === 'Dashboard'} onClick={() => setActiveTab('Dashboard')} />
-          <NavItem icon={<ClipboardList size={20} />} label="Pending Reviews" badge="24" active={activeTab === 'Pending Reviews'} onClick={() => setActiveTab('Pending Reviews')} />
-          <NavItem icon={<Flag size={20} />} label="Reports" badge="6" active={activeTab === 'Reports'} onClick={() => setActiveTab('Reports')} />
-          <NavItem icon={<Star size={20} />} label="Featured Works" active={activeTab === 'Featured Works'} onClick={() => setActiveTab('Featured Works')} />
-          <NavItem icon={<Shield size={20} />} label="Official Content" active={activeTab === 'Official Content'} onClick={() => setActiveTab('Official Content')} />
-          <NavItem icon={<History size={20} />} label="Moderation History" active={activeTab === 'History'} onClick={() => setActiveTab('History')} />
+          <NavItem icon={<LayoutDashboard size={20} />} label="Dashboard" active={activeTab === 'Dashboard'} onClick={() => handleNav('Dashboard', onDashboard)} />
+          <NavItem icon={<ClipboardList size={20} />} label="Pending Reviews" badge="24" active={activeTab === 'Pending Reviews'} onClick={() => handleNav('Pending Reviews', onPending)} />
+          <NavItem icon={<Flag size={20} />} label="Reports" badge="6" active={activeTab === 'Reports'} onClick={() => handleNav('Reports', onReports)} />
+          <NavItem icon={<Star size={20} />} label="Featured Works" active={activeTab === 'Featured Works'} onClick={() => handleNav('Featured Works', onFeatured)} />
+          <NavItem icon={<Shield size={20} />} label="Official Content" active={activeTab === 'Official Content'} onClick={() => handleNav('Official Content', onOfficialContent)} />
+          <NavItem icon={<History size={20} />} label="Moderation History" active={activeTab === 'History'} onClick={() => handleNav('History', onHistory)} />
         </nav>
 
         <div className="p-4 border-t border-white/10">
@@ -74,9 +98,7 @@ export default function PendingReviewsPage() {
               <Bell size={20} />
             </button>
             <div className="h-8 w-px bg-border mx-1"></div>
-            <div className="w-10 h-10 rounded-full bg-secondary-surface border border-border overflow-hidden">
-              <img src="/__mockup/images/creator-portrait.jpg" alt="Avatar" className="w-full h-full object-cover" />
-            </div>
+            <InitialsAvatar name="Maria Moderator" className="w-10 h-10 border border-border" textClassName="text-xs" />
           </div>
         </header>
 
@@ -133,6 +155,7 @@ export default function PendingReviewsPage() {
                 item={item} 
                 selected={selectedItems.includes(item.id)}
                 onSelect={() => toggleSelect(item.id)}
+                onReview={onReview}
               />
             ))}
           </div>
@@ -209,7 +232,7 @@ function FilterChip({ label }: { label: string }) {
   );
 }
 
-function SubmissionRow({ item, selected, onSelect }: any) {
+function SubmissionRow({ item, selected, onSelect, onReview }: any) {
   return (
     <div className={`grid grid-cols-12 gap-4 px-6 py-4 bg-card-bg border rounded-xl shadow-sm hover:border-pup-maroon transition-all items-center ${selected ? 'border-pup-maroon ring-1 ring-pup-maroon' : 'border-border'}`}>
       <div className="col-span-1 flex items-center gap-4">
@@ -263,7 +286,7 @@ function SubmissionRow({ item, selected, onSelect }: any) {
       </div>
 
       <div className="col-span-1 flex justify-end">
-        <button className="px-4 py-1.5 bg-pup-maroon text-white text-[12px] font-bold rounded-lg hover:bg-deep-maroon transition-all shadow-sm">
+        <button onClick={onReview} className="px-4 py-1.5 bg-pup-maroon text-white text-[12px] font-bold rounded-lg hover:bg-deep-maroon transition-all shadow-sm">
           Review
         </button>
       </div>

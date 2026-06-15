@@ -14,7 +14,14 @@ import {
 } from 'lucide-react';
 import './_group.css';
 
-export function ExplorePageMobile() {
+interface ExplorePageMobileProps {
+  guest?: boolean;
+  onSearch?: () => void;
+  onSearchResults?: () => void;
+  onWorkDetail?: () => void;
+}
+
+export function ExplorePageMobile({ guest = false, onSearch, onSearchResults, onWorkDetail }: ExplorePageMobileProps = {}) {
   const [showFilters, setShowFilters] = useState(false);
   const [activeCategory, setActiveCategory] = useState('All');
 
@@ -31,7 +38,7 @@ export function ExplorePageMobile() {
 
   return (
     <div className="w-[390px] min-h-screen bg-main-bg font-inter overflow-y-auto pb-[80px] relative">
-      <MobileHeader />
+      <MobileHeader publicMode={guest} />
 
       {/* Sticky Search & Filter Header */}
       <div className="sticky top-[60px] z-30 bg-main-bg/95 backdrop-blur px-4 py-3 border-b border-border shadow-sm">
@@ -41,6 +48,12 @@ export function ExplorePageMobile() {
             <input 
               type="text" 
               placeholder="Search works..." 
+              onFocus={onSearch}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter') {
+                  onSearchResults?.();
+                }
+              }}
               className="w-full h-10 pl-10 pr-4 bg-white border border-border rounded-full text-sm outline-none focus:border-pup-maroon transition-colors"
             />
           </div>
@@ -82,7 +95,12 @@ export function ExplorePageMobile() {
         {/* 2-Column Grid */}
         <div className="grid grid-cols-2 gap-3">
           {works.map((work) => (
-            <div key={work.id} className="bg-card-bg rounded-xl border border-border overflow-hidden flex flex-col shadow-sm">
+            <button
+              key={work.id}
+              type="button"
+              onClick={onWorkDetail}
+              className="bg-card-bg rounded-xl border border-border overflow-hidden flex flex-col shadow-sm text-left focus:outline-none focus:ring-4 focus:ring-pup-maroon/20"
+            >
               <div className="relative aspect-square">
                 <img src={work.image} alt={work.title} className="w-full h-full object-cover" />
                 {work.highlight && (
@@ -90,9 +108,9 @@ export function ExplorePageMobile() {
                     <Award size={12} className="text-dark-maroon" />
                   </div>
                 )}
-                <button className="absolute top-2 right-2 w-7 h-7 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center text-secondary-text">
+                <span className="absolute top-2 right-2 w-7 h-7 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center text-secondary-text" aria-hidden="true">
                   <Bookmark size={14} />
-                </button>
+                </span>
               </div>
               <div className="p-3 flex-1 flex flex-col">
                 <h3 className="text-[13px] font-bold leading-tight mb-1 line-clamp-1">{work.title}</h3>
@@ -105,7 +123,7 @@ export function ExplorePageMobile() {
                   </div>
                 </div>
               </div>
-            </div>
+            </button>
           ))}
         </div>
 
@@ -161,7 +179,7 @@ export function ExplorePageMobile() {
         </div>
       )}
 
-      <MobileBottomNav />
+      <MobileBottomNav guest={guest} />
     </div>
   );
 }

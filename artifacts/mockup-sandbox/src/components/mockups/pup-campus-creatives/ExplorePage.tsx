@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { DesktopNav } from './_shared/DesktopNav';
+import { InitialsAvatar } from './_shared/InitialsAvatar';
 import { 
   Search, 
   Filter, 
@@ -13,7 +14,23 @@ import {
 } from 'lucide-react';
 import './_group.css';
 
-export function ExplorePage() {
+interface ExplorePageProps {
+  guest?: boolean;
+  onSearch?: () => void;
+  onSearchResults?: () => void;
+  onWorkDetail?: () => void;
+  onCollegeDirectory?: () => void;
+  onCreatorProfile?: () => void;
+}
+
+export function ExplorePage({
+  guest = false,
+  onSearch,
+  onSearchResults,
+  onWorkDetail,
+  onCollegeDirectory,
+  onCreatorProfile,
+}: ExplorePageProps = {}) {
   const [activeFilters, setActiveFilters] = useState(['Photography', 'COC']);
   const [sortBy, setSortBy] = useState('Recently Approved');
 
@@ -43,7 +60,7 @@ export function ExplorePage() {
 
   return (
     <div className="min-h-screen bg-main-bg text-primary-text font-inter">
-      <DesktopNav authenticated={true} />
+      <DesktopNav authenticated={!guest} active="Explore" />
       
       <main className="max-w-[1200px] mx-auto px-8 py-10">
         <div className="mb-10">
@@ -57,6 +74,12 @@ export function ExplorePage() {
           <input 
             type="text" 
             placeholder="Search for works, creators, or categories..." 
+            onFocus={onSearch}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter') {
+                onSearchResults?.();
+              }
+            }}
             className="w-full h-16 pl-14 pr-6 bg-card-bg border-2 border-border rounded-2xl text-lg focus:border-pup-maroon outline-none transition-colors shadow-sm"
           />
         </div>
@@ -129,7 +152,10 @@ export function ExplorePage() {
             {/* Grid */}
             <div className="grid grid-cols-3 gap-6">
               {works.map((work) => (
-                <div key={work.id} className="group bg-card-bg rounded-2xl border border-border overflow-hidden hover:shadow-md transition-all duration-300 flex flex-col">
+                <div
+                  key={work.id}
+                  className="group bg-card-bg rounded-2xl border border-border overflow-hidden hover:shadow-md transition-all duration-300 flex flex-col"
+                >
                   {/* Thumbnail */}
                   <div className="relative aspect-[4/3] overflow-hidden bg-secondary-surface">
                     <img 
@@ -139,7 +165,11 @@ export function ExplorePage() {
                     />
                     {/* Hover Overlay */}
                     <div className="absolute inset-0 bg-dark-maroon/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                      <button className="px-6 py-2.5 bg-white text-pup-maroon font-bold rounded-full shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-transform">
+                      <button
+                        type="button"
+                        onClick={onWorkDetail}
+                        className="px-6 py-2.5 bg-white text-pup-maroon font-bold rounded-full shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-transform focus:outline-none focus:ring-4 focus:ring-pup-gold/50"
+                      >
                         View Project
                       </button>
                     </div>
@@ -158,13 +188,34 @@ export function ExplorePage() {
 
                   {/* Info */}
                   <div className="p-5 flex-1 flex flex-col">
-                    <h3 className="text-[17px] font-bold mb-2 group-hover:text-pup-maroon transition-colors line-clamp-1">{work.title}</h3>
+                    <button
+                      type="button"
+                      onClick={onWorkDetail}
+                      className="text-left text-[17px] font-bold mb-2 group-hover:text-pup-maroon transition-colors line-clamp-1 focus:outline-none focus:text-pup-maroon"
+                    >
+                      {work.title}
+                    </button>
                     
                     <div className="flex items-center gap-2 mb-4">
-                      <div className="w-6 h-6 rounded-full bg-secondary-surface border border-border overflow-hidden">
-                        <img src="/__mockup/images/creator-portrait.jpg" alt={work.creator} className="w-full h-full object-cover" />
-                      </div>
-                      <span className="text-[14px] font-medium text-secondary-text">{work.creator}</span>
+                      <InitialsAvatar name={work.creator} className="w-6 h-6 border border-border" textClassName="text-[10px]" />
+                      <span
+                        role="button"
+                        tabIndex={0}
+                        onClick={(event) => {
+                          event.stopPropagation();
+                          onCreatorProfile?.();
+                        }}
+                        onKeyDown={(event) => {
+                          if (event.key === 'Enter' || event.key === ' ') {
+                            event.preventDefault();
+                            event.stopPropagation();
+                            onCreatorProfile?.();
+                          }
+                        }}
+                        className="text-[14px] font-medium text-secondary-text hover:text-pup-maroon"
+                      >
+                        {work.creator}
+                      </span>
                     </div>
 
                     <div className="mt-auto flex items-center justify-between">
@@ -195,6 +246,15 @@ export function ExplorePage() {
             <div className="mt-12 flex justify-center">
               <button className="px-8 py-3 bg-white border-2 border-border text-primary-text font-bold rounded-xl hover:border-pup-maroon hover:text-pup-maroon transition-colors shadow-sm">
                 Load More Works
+              </button>
+            </div>
+            <div className="mt-6 flex justify-center">
+              <button
+                type="button"
+                onClick={onCollegeDirectory}
+                className="text-pup-maroon font-bold hover:underline"
+              >
+                Explore College Directory
               </button>
             </div>
           </section>

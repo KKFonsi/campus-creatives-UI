@@ -23,6 +23,7 @@ import {
   ArrowLeft,
   Info
 } from 'lucide-react';
+import { InitialsAvatar } from './_shared/InitialsAvatar';
 import './_group.css';
 
 const ModeratorSidebar = ({ active }: { active: string }) => (
@@ -99,9 +100,7 @@ const TopBar = ({ role = "Moderator" }) => (
           <div className="text-sm font-semibold text-primary-text leading-tight text-right">Maria Moderator</div>
           <div className="text-[11px] font-bold text-pup-maroon uppercase tracking-wider">{role}</div>
         </div>
-        <div className="w-10 h-10 rounded-full bg-soft-maroon border border-pup-maroon/20 flex items-center justify-center text-pup-maroon font-bold overflow-hidden">
-          <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Maria" alt="Avatar" className="w-full h-full object-cover" />
-        </div>
+        <InitialsAvatar name="Maria Moderator" className="w-10 h-10 border border-pup-maroon/20" textClassName="text-xs" />
       </div>
     </div>
   </header>

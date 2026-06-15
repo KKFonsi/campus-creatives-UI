@@ -1,20 +1,30 @@
 import React, { useState } from 'react';
-import { Play, Volume2, Maximize2, Heart, Bookmark, MessageCircle, Share2, UserPlus, ChevronRight, X, Send } from 'lucide-react';
+import { Play, Volume2, Maximize2, Heart, Bookmark, MessageCircle, Share2, UserPlus, ChevronRight, X, Send, ChevronUp, ChevronDown } from 'lucide-react';
 import { DesktopNav } from './_shared/DesktopNav';
+import { InitialsAvatar } from './_shared/InitialsAvatar';
+import { CommentsPanel } from './CommentsPanel';
+import { ShareModal } from './ShareModal';
 import './_group.css';
 
-export function SpotlightPage() {
+interface SpotlightPageProps {
+  onFullProject?: () => void;
+}
+
+export function SpotlightPage({ onFullProject }: SpotlightPageProps = {}) {
   const [isAppreciated, setIsAppreciated] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
   const [isFollowed, setIsFollowed] = useState(false);
+  const [showComments, setShowComments] = useState(false);
+  const [showShare, setShowShare] = useState(false);
 
   return (
     <div className="min-h-screen bg-main-bg font-inter text-primary-text">
       <DesktopNav authenticated={true} />
       
-      <main className="max-w-[1200px] mx-auto px-8 py-10 flex gap-10">
+      <main className="max-w-[1200px] mx-auto px-8 py-10 flex justify-center gap-8">
         {/* Left: Vertical Media Player */}
-        <div className="w-[480px] h-[720px] bg-dark-surface rounded-3xl overflow-hidden relative shadow-2xl border border-white/5 group">
+        <div className="flex items-center gap-4">
+        <div className="w-[440px] h-[760px] bg-dark-surface rounded-3xl overflow-hidden relative shadow-2xl border border-white/5 group">
           <img src="/__mockup/images/event_3.jpg" alt="Spotlight Content" className="w-full h-full object-cover opacity-80" />
           
           {/* Overlay Controls */}
@@ -46,9 +56,18 @@ export function SpotlightPage() {
             </div>
           </div>
         </div>
+          <div className="flex flex-col gap-4">
+            <button type="button" aria-label="Previous spotlight" className="w-12 h-12 rounded-full bg-card-bg border border-border text-pup-maroon shadow-sm flex items-center justify-center">
+              <ChevronUp size={24} />
+            </button>
+            <button type="button" aria-label="Next spotlight" className="w-12 h-12 rounded-full bg-card-bg border border-border text-pup-maroon shadow-sm flex items-center justify-center">
+              <ChevronDown size={24} />
+            </button>
+          </div>
+        </div>
 
         {/* Right: Info + Related */}
-        <div className="flex-1 flex flex-col h-[720px]">
+        <div className="w-[430px] flex flex-col h-[760px] shrink-0">
           <div className="bg-card-bg rounded-3xl p-8 border border-border shadow-sm mb-6 flex-1 overflow-y-auto no-scrollbar">
             <div className="flex justify-between items-start mb-6">
               <div>
@@ -77,9 +96,7 @@ export function SpotlightPage() {
 
             <div className="flex items-center justify-between bg-secondary-surface/50 p-4 rounded-2xl border border-border mb-8">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-white shadow-sm">
-                  <img src="/__mockup/images/creator-portrait.jpg" alt="Mika Santos" className="w-full h-full object-cover" />
-                </div>
+                <InitialsAvatar name="Mika Santos" className="w-12 h-12 border-2 border-white shadow-sm" textClassName="text-sm" />
                 <div>
                   <div className="font-bold text-lg hover:text-pup-maroon cursor-pointer">Mika Santos</div>
                   <div className="text-[13px] text-secondary-text">College of Arts and Letters</div>
@@ -98,10 +115,10 @@ export function SpotlightPage() {
             </p>
 
             <div className="flex gap-4 mb-10 pt-4 border-t border-border">
-              <button className="flex-1 h-14 bg-dark-surface text-white rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-black transition-colors">
+              <button type="button" onClick={() => setShowShare(true)} className="flex-1 h-14 bg-dark-surface text-white rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-black transition-colors">
                 <Share2 size={20} /> Share
               </button>
-              <button className="flex-1 h-14 bg-secondary-surface text-primary-text rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-border transition-colors">
+              <button type="button" onClick={onFullProject} className="flex-1 h-14 bg-secondary-surface text-primary-text rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-border transition-colors">
                 View Full Project <ChevronRight size={18} />
               </button>
             </div>
@@ -109,20 +126,18 @@ export function SpotlightPage() {
             <div className="space-y-6">
               <div className="flex items-center justify-between">
                 <h3 className="font-bold text-lg">Comments (4)</h3>
-                <button className="text-pup-maroon font-bold text-sm">See all</button>
+                <button type="button" onClick={() => setShowComments(true)} className="text-pup-maroon font-bold text-sm">See all</button>
               </div>
               
               <div className="flex gap-3 mb-6">
-                <div className="w-10 h-10 rounded-full bg-secondary-surface overflow-hidden shrink-0">
-                  <img src="/__mockup/images/creator-portrait.jpg" alt="" className="w-full h-full object-cover" />
-                </div>
+                <InitialsAvatar name="Rafael Mendoza" className="w-10 h-10" textClassName="text-sm" />
                 <div className="flex-1 relative">
                   <input 
                     type="text" 
                     placeholder="Add a comment..." 
                     className="w-full h-11 bg-secondary-surface border-none rounded-xl px-4 pr-12 text-[14px] focus:ring-2 focus:ring-pup-maroon/20 focus:outline-none"
                   />
-                  <button className="absolute right-2 top-1/2 -translate-y-1/2 text-pup-maroon p-1.5 hover:bg-soft-maroon rounded-lg transition-colors">
+                  <button type="button" onClick={() => setShowComments(true)} className="absolute right-2 top-1/2 -translate-y-1/2 text-pup-maroon p-1.5 hover:bg-soft-maroon rounded-lg transition-colors">
                     <Send size={18} />
                   </button>
                 </div>
@@ -130,9 +145,7 @@ export function SpotlightPage() {
 
               {[1, 2, 3].map(i => (
                 <div key={i} className="flex gap-3">
-                  <div className="w-8 h-8 rounded-full bg-secondary-surface overflow-hidden shrink-0">
-                    <img src={`/__mockup/images/creator-portrait.jpg`} alt="" className="w-full h-full object-cover" />
-                  </div>
+                  <InitialsAvatar name={`Commenter ${i}`} className="w-8 h-8" textClassName="text-[11px]" />
                   <div>
                     <div className="flex items-center gap-2 mb-1">
                       <span className="font-bold text-[13px]">User Name</span>
@@ -164,6 +177,14 @@ export function SpotlightPage() {
           </div>
         </div>
       </main>
+      {showComments && (
+        <div className="fixed inset-0 z-[110] bg-black/40 backdrop-blur-sm flex items-center justify-center p-6">
+          <div className="w-full max-w-[720px]">
+            <CommentsPanel onClose={() => setShowComments(false)} />
+          </div>
+        </div>
+      )}
+      {showShare && <ShareModal onClose={() => setShowShare(false)} />}
     </div>
   );
 }

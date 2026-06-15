@@ -1,8 +1,17 @@
 import React from 'react';
 import { Search, X, Clock, ArrowRight, User, Image as ImageIcon, Calendar, GraduationCap, Grid3X3 } from 'lucide-react';
+import { InitialsAvatar } from './_shared/InitialsAvatar';
 import './_group.css';
 
-export function SearchPage() {
+interface SearchPageProps {
+  onBack?: () => void;
+  onResult?: () => void;
+  onSeeAll?: () => void;
+  onCollege?: () => void;
+  onCreator?: () => void;
+}
+
+export function SearchPage({ onBack, onResult, onSeeAll, onCollege, onCreator }: SearchPageProps = {}) {
   return (
     <div className="fixed inset-0 bg-main-bg/95 backdrop-blur-md z-[100] flex flex-col items-center pt-20 overflow-y-auto">
       <div className="w-full max-w-[800px] px-8">
@@ -15,7 +24,12 @@ export function SearchPage() {
             defaultValue="sta. mesa photography"
             className="w-full h-20 pl-16 pr-16 bg-white border-2 border-border rounded-3xl text-2xl font-medium focus:outline-none focus:border-pup-maroon shadow-xl transition-all"
           />
-          <button className="absolute right-6 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-secondary-surface rounded-full text-muted-text hover:text-primary-text">
+          <button
+            type="button"
+            onClick={onBack}
+            aria-label="Close search"
+            className="absolute right-6 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-secondary-surface rounded-full text-muted-text hover:text-primary-text"
+          >
             <X size={24} />
           </button>
         </div>
@@ -38,11 +52,11 @@ export function SearchPage() {
           <section>
             <div className="flex justify-between items-center mb-6">
               <h3 className="text-lg font-bold flex items-center gap-2"><ImageIcon size={20} className="text-pup-maroon" /> Works (12)</h3>
-              <button className="text-pup-maroon font-bold text-sm flex items-center gap-1 hover:underline">See all <ArrowRight size={14} /></button>
+              <button type="button" onClick={onSeeAll} className="text-pup-maroon font-bold text-sm flex items-center gap-1 hover:underline">See all <ArrowRight size={14} /></button>
             </div>
             <div className="space-y-4">
               {[1, 2, 3].map(i => (
-                <div key={i} className="flex items-center gap-4 p-3 bg-white border border-border rounded-2xl hover:shadow-md transition-shadow cursor-pointer">
+                <button key={i} type="button" onClick={onResult} className="w-full flex items-center gap-4 p-3 bg-white border border-border rounded-2xl hover:shadow-md transition-shadow text-left focus:outline-none focus:ring-4 focus:ring-pup-maroon/20">
                   <div className="w-20 h-20 rounded-xl overflow-hidden bg-secondary-surface">
                     <img src={`/__mockup/images/thumbnail_${i}.jpg`} alt="" className="w-full h-full object-cover" />
                   </div>
@@ -53,7 +67,7 @@ export function SearchPage() {
                       <span className="px-2 py-0.5 bg-soft-maroon text-pup-maroon text-[10px] font-black uppercase rounded">Photography</span>
                     </div>
                   </div>
-                </div>
+                </button>
               ))}
             </div>
           </section>
@@ -63,19 +77,17 @@ export function SearchPage() {
             <section>
               <div className="flex justify-between items-center mb-6">
                 <h3 className="text-lg font-bold flex items-center gap-2"><User size={20} className="text-pup-maroon" /> Creators (8)</h3>
-                <button className="text-pup-maroon font-bold text-sm">See all</button>
+                <button type="button" onClick={onCreator} className="text-pup-maroon font-bold text-sm">See all</button>
               </div>
               <div className="space-y-3">
                 {[1, 2].map(i => (
-                  <div key={i} className="flex items-center gap-3 p-3 bg-white border border-border rounded-2xl hover:border-pup-maroon transition-colors cursor-pointer">
-                    <div className="w-12 h-12 rounded-full overflow-hidden bg-secondary-surface border border-border">
-                      <img src="/__mockup/images/creator-portrait.jpg" alt="" className="w-full h-full object-cover" />
-                    </div>
+                  <button key={i} type="button" onClick={onCreator} className="w-full flex items-center gap-3 p-3 bg-white border border-border rounded-2xl hover:border-pup-maroon transition-colors text-left focus:outline-none focus:ring-4 focus:ring-pup-maroon/20">
+                    <InitialsAvatar name={`Creator ${i + 1}`} className="w-12 h-12 border border-border" textClassName="text-sm" />
                     <div>
                       <div className="font-bold text-sm">Creative Name {i}</div>
                       <div className="text-[11px] text-secondary-text">College of Communication</div>
                     </div>
-                  </div>
+                  </button>
                 ))}
               </div>
             </section>
@@ -89,10 +101,10 @@ export function SearchPage() {
                     <div className="w-10 h-10 rounded-xl bg-pup-gold flex items-center justify-center text-dark-maroon"><Calendar size={20} /></div>
                     <div className="font-bold text-sm">PUP Likha 2026</div>
                   </div>
-                  <div className="flex items-center gap-3 p-3 bg-white border border-border rounded-2xl cursor-pointer hover:border-pup-maroon">
+                  <button type="button" onClick={onCollege} className="w-full flex items-center gap-3 p-3 bg-white border border-border rounded-2xl hover:border-pup-maroon text-left focus:outline-none focus:ring-4 focus:ring-pup-maroon/20">
                     <div className="w-10 h-10 rounded-xl bg-pup-maroon text-white flex items-center justify-center font-black text-xs">COC</div>
                     <div className="font-bold text-sm">College of Communication</div>
-                  </div>
+                  </button>
                 </div>
               </section>
             </div>
@@ -118,12 +130,12 @@ export function SearchPage() {
   );
 }
 
-export function SearchPageMobile() {
+export function SearchPageMobile({ onBack, onResult, onSeeAll }: SearchPageProps = {}) {
   return (
     <div className="w-[390px] min-h-screen bg-white font-inter flex flex-col z-[100] relative">
       <div className="px-5 pt-8 pb-4 bg-white border-b border-border sticky top-0">
         <div className="flex items-center gap-3">
-          <button className="w-10 h-10 flex items-center justify-center text-primary-text"><ArrowRight className="rotate-180" size={24} /></button>
+          <button type="button" onClick={onBack} aria-label="Back to Explore" className="w-10 h-10 flex items-center justify-center text-primary-text"><ArrowRight className="rotate-180" size={24} /></button>
           <div className="flex-1 relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-pup-maroon" size={18} />
             <input 
@@ -169,7 +181,7 @@ export function SearchPageMobile() {
           </div>
           <div className="space-y-4">
             {[1, 2, 3, 4].map(i => (
-              <div key={i} className="flex items-center gap-4">
+              <button key={i} type="button" onClick={onResult} className="w-full flex items-center gap-4 text-left rounded-xl focus:outline-none focus:ring-4 focus:ring-pup-maroon/20">
                 <div className="w-14 h-14 rounded-xl overflow-hidden bg-secondary-surface border border-border">
                   <img src={`/__mockup/images/thumbnail_${(i % 4) + 1}.jpg`} alt="" className="w-full h-full object-cover" />
                 </div>
@@ -177,10 +189,10 @@ export function SearchPageMobile() {
                   <h4 className="font-bold text-[14px]">Sta. Mesa Result {i}</h4>
                   <div className="text-[11px] text-secondary-text">Photography • College of Communication</div>
                 </div>
-              </div>
+              </button>
             ))}
           </div>
-          <button className="w-full py-3 mt-6 text-pup-maroon font-black text-sm uppercase tracking-wider">See all results →</button>
+          <button type="button" onClick={onSeeAll} className="w-full py-3 mt-6 text-pup-maroon font-black text-sm uppercase tracking-wider">See all results →</button>
         </section>
       </div>
     </div>

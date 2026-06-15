@@ -6,11 +6,19 @@ import {
   ChevronDown, ChevronRight, CheckCircle2, Clock, Trophy, Award,
   Palette, Camera, Music, Film, Mic2, Sparkles, Image as ImageIcon
 } from 'lucide-react';
+import { ShareModalMobile } from './ShareModal';
 import './_group.css';
 
-export function EventDetailPageMobile() {
+interface EventDetailPageMobileProps {
+  onBack?: () => void;
+  onSubmitEntry?: () => void;
+  onWorkDetail?: () => void;
+}
+
+export function EventDetailPageMobile({ onBack, onSubmitEntry, onWorkDetail }: EventDetailPageMobileProps = {}) {
   const [isSaved, setIsSaved] = useState(false);
   const [rulesExpanded, setRulesExpanded] = useState(false);
+  const [showShare, setShowShare] = useState(false);
 
   const approvedWorks = [
     { id: 1, title: "Sta. Mesa After the Rain", creator: "Bianca Reyes", image: "/__mockup/images/thumbnail_1.jpg", badge: "Featured" },
@@ -19,8 +27,12 @@ export function EventDetailPageMobile() {
   ];
 
   return (
-    <div className="w-[390px] min-h-screen bg-main-bg font-inter overflow-y-auto pb-[100px]">
+    <div className="mobile-app-screen w-[390px] min-h-screen bg-main-bg font-inter">
       <MobileHeader />
+      <main className="mobile-app-scroll pb-6">
+      <button type="button" onClick={onBack} className="mx-4 mt-4 text-pup-maroon font-bold text-[13px]">
+        ← Events
+      </button>
 
       {/* Hero Cover */}
       <section className="relative w-full h-[240px] overflow-hidden">
@@ -62,7 +74,7 @@ export function EventDetailPageMobile() {
               >
                 <Bookmark size={18} fill={isSaved ? 'currentColor' : 'none'} />
               </button>
-              <button className="p-2 rounded-lg border border-border bg-white text-primary-text">
+              <button onClick={() => setShowShare(true)} className="p-2 rounded-lg border border-border bg-white text-primary-text" aria-label="Share event">
                 <Share2 size={18} />
               </button>
             </div>
@@ -88,6 +100,10 @@ export function EventDetailPageMobile() {
               Join us for a bridge between academic excellence and creative expression.
             </p>
           </div>
+
+          <button type="button" onClick={onSubmitEntry} className="w-full py-4 bg-pup-maroon text-white font-bold rounded-xl text-[16px] shadow-lg flex items-center justify-center gap-2">
+            Submit Entry <ArrowRight size={20} />
+          </button>
 
           <div className="grid grid-cols-2 gap-3">
             <div className="bg-secondary-surface p-3 rounded-lg flex items-center gap-3">
@@ -176,7 +192,7 @@ export function EventDetailPageMobile() {
             </div>
             <div className="flex gap-4 overflow-x-auto no-scrollbar -mx-4 px-4">
               {approvedWorks.map(work => (
-                <div key={work.id} className="min-w-[200px] bg-card-bg border border-border rounded-xl overflow-hidden">
+                <button key={work.id} type="button" onClick={onWorkDetail} className="min-w-[200px] bg-card-bg border border-border rounded-xl overflow-hidden text-left focus:outline-none focus:ring-4 focus:ring-pup-maroon/20">
                   <div className="relative h-[120px]">
                     <img src={work.image} alt={work.title} className="w-full h-full object-cover" />
                     <div className="absolute top-2 left-2 px-1.5 py-0.5 bg-white/90 rounded text-[9px] font-bold text-pup-maroon uppercase">{work.badge}</div>
@@ -185,7 +201,7 @@ export function EventDetailPageMobile() {
                     <h4 className="text-[13px] font-bold line-clamp-1 mb-0.5">{work.title}</h4>
                     <div className="text-[11px] text-secondary-text">{work.creator}</div>
                   </div>
-                </div>
+                </button>
               ))}
             </div>
           </div>
@@ -214,14 +230,10 @@ export function EventDetailPageMobile() {
         </div>
       </section>
 
-      {/* Sticky Bottom Submit Button */}
-      <div className="fixed bottom-0 left-0 w-full bg-white border-t border-border p-4 z-40">
-        <button className="w-full py-4 bg-pup-maroon text-white font-bold rounded-xl text-[16px] shadow-lg flex items-center justify-center gap-2">
-          Submit Entry <ArrowRight size={20} />
-        </button>
-      </div>
+      </main>
 
       <MobileBottomNav />
+      {showShare && <ShareModalMobile onClose={() => setShowShare(false)} />}
     </div>
   );
 }

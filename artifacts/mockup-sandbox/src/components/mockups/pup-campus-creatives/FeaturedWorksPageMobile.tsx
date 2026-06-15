@@ -5,14 +5,11 @@ import {
   Filter, 
   Plus, 
   Star, 
-  LayoutDashboard, 
-  ClipboardList, 
-  Flag, 
-  Shield, 
-  History,
   MoreVertical,
   Award
 } from 'lucide-react';
+import { InitialsAvatar } from './_shared/InitialsAvatar';
+import { ModeratorMobileBottomNav } from './_shared/ModeratorMobileBottomNav';
 import './_group.css';
 
 const MobileHeader = () => (
@@ -30,35 +27,21 @@ const MobileHeader = () => (
         <Bell size={20} />
         <span className="absolute top-1 right-1 w-2 h-2 bg-crimson-accent rounded-full border border-dark-surface"></span>
       </button>
-      <div className="w-8 h-8 rounded-full bg-soft-maroon border border-white/20 overflow-hidden">
-        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Maria" alt="Avatar" className="w-full h-full object-cover" />
-      </div>
+      <InitialsAvatar name="Maria Moderator" className="w-8 h-8 border border-white/20" textClassName="text-[11px]" />
     </div>
   </header>
 );
 
-const MobileBottomNav = ({ active }: { active: string }) => (
-  <nav className="h-[64px] bg-white border-t border-border flex items-center justify-around px-2 sticky bottom-0 z-50">
-    {[
-      { id: 'Dashboard', icon: LayoutDashboard, label: 'Dashboard' },
-      { id: 'Reviews', icon: ClipboardList, label: 'Reviews' },
-      { id: 'Reports', icon: Flag, label: 'Reports' },
-      { id: 'Featured', icon: Star, label: 'Featured' },
-    ].map((item) => (
-      <button
-        key={item.id}
-        className={`flex flex-col items-center justify-center gap-1 min-w-[64px] ${
-          active === item.id ? 'text-pup-maroon font-bold' : 'text-muted-text'
-        }`}
-      >
-        <item.icon size={item.id === 'Featured' ? 22 : 20} />
-        <span className="text-[10px] uppercase tracking-tighter font-bold">{item.label}</span>
-      </button>
-    ))}
-  </nav>
-);
+interface FeaturedWorksPageMobileProps {
+  onDashboard?: () => void;
+  onPending?: () => void;
+  onReports?: () => void;
+  onFeatured?: () => void;
+  onOfficialContent?: () => void;
+  onHistory?: () => void;
+}
 
-export default function FeaturedWorksPageMobile() {
+export default function FeaturedWorksPageMobile(props: FeaturedWorksPageMobileProps = {}) {
   const [activeTab, setActiveTab] = useState('All');
 
   const tabs = [
@@ -168,11 +151,19 @@ export default function FeaturedWorksPageMobile() {
       </main>
 
       {/* Floating Action Button */}
-      <button className="fixed bottom-[84px] right-6 w-14 h-14 bg-pup-maroon text-white rounded-full shadow-xl flex items-center justify-center hover:scale-105 active:scale-95 transition-transform z-40 border-4 border-white">
+      <button className="absolute bottom-[84px] right-6 w-14 h-14 bg-pup-maroon text-white rounded-full shadow-xl flex items-center justify-center hover:scale-105 active:scale-95 transition-transform z-40 border-4 border-white">
         <Plus size={24} strokeWidth={3} />
       </button>
 
-      <MobileBottomNav active="Featured" />
+      <ModeratorMobileBottomNav
+        active="Featured"
+        onDashboard={props.onDashboard}
+        onPending={props.onPending}
+        onReports={props.onReports}
+        onFeatured={props.onFeatured}
+        onOfficialContent={props.onOfficialContent}
+        onHistory={props.onHistory}
+      />
     </div>
   );
 }

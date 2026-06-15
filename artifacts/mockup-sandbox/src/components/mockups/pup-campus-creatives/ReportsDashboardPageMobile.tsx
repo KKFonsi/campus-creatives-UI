@@ -11,13 +11,28 @@ import {
   ChevronLeft,
   Filter,
   ArrowRight,
-  LayoutDashboard,
-  ClipboardList,
   MoreHorizontal
 } from 'lucide-react';
+import { ModeratorMobileBottomNav } from './_shared/ModeratorMobileBottomNav';
 import './_group.css';
 
-export function ReportsDashboardPageMobile() {
+interface ReportsDashboardPageMobileProps {
+  onDashboard?: () => void;
+  onPending?: () => void;
+  onReports?: () => void;
+  onFeatured?: () => void;
+  onOfficialContent?: () => void;
+  onHistory?: () => void;
+}
+
+export function ReportsDashboardPageMobile({
+  onDashboard,
+  onPending,
+  onReports,
+  onFeatured,
+  onOfficialContent,
+  onHistory,
+}: ReportsDashboardPageMobileProps = {}) {
   const [activeTab, setActiveTab] = useState('All');
   const [showFilters, setShowFilters] = useState(false);
 
@@ -232,25 +247,15 @@ export function ReportsDashboardPageMobile() {
         </div>
       )}
 
-      {/* Mobile Bottom Nav (Moderator) */}
-      <nav className="fixed bottom-0 left-0 right-0 h-[68px] bg-dark-surface border-t border-white/10 px-6 flex items-center justify-between z-50">
-        <button className="flex flex-col items-center gap-1 text-white/50">
-          <LayoutDashboard size={20} />
-          <span className="text-[10px] font-medium uppercase tracking-wider">Dashboard</span>
-        </button>
-        <button className="flex flex-col items-center gap-1 text-white/50">
-          <ClipboardList size={20} />
-          <span className="text-[10px] font-medium uppercase tracking-wider">Reviews</span>
-        </button>
-        <button className="flex flex-col items-center gap-1 text-pup-gold">
-          <Flag size={20} />
-          <span className="text-[10px] font-medium uppercase tracking-wider">Reports</span>
-        </button>
-        <button className="flex flex-col items-center gap-1 text-white/50">
-          <MoreHorizontal size={20} />
-          <span className="text-[10px] font-medium uppercase tracking-wider">More</span>
-        </button>
-      </nav>
+      <ModeratorMobileBottomNav
+        active="Reports"
+        onDashboard={onDashboard}
+        onPending={onPending}
+        onReports={onReports}
+        onFeatured={onFeatured}
+        onOfficialContent={onOfficialContent}
+        onHistory={onHistory}
+      />
     </div>
   );
 }

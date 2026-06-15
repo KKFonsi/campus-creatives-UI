@@ -1,0 +1,84 @@
+.public-shell {
+  min-height: 100vh;
+  background: #f8f3ec;
+}
+
+.public-mode-bar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 8px 18px;
+  background: #4b1113;
+  color: #fff8eb;
+  box-shadow: 0 2px 10px rgb(34 10 11 / 18%);
+}
+
+.public-mode-label {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.public-mode-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.public-mode-link,
+.public-change-button {
+  border: 1px solid rgb(255 255 255 / 24%);
+  border-radius: 999px;
+  padding: 6px 12px;
+  color: #fff8eb;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  transition:
+    background-color 140ms ease,
+    border-color 140ms ease;
+}
+
+.public-mode-link:hover,
+.public-change-button:hover {
+  border-color: rgb(255 255 255 / 52%);
+  background: rgb(255 255 255 / 10%);
+}
+
+.public-route-fallback {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 32px;
+  background: #f8f3ec;
+  color: #281414;
+  font-family:
+    Inter,
+    system-ui,
+    sans-serif;
+  text-align: center;
+}
+
+.public-route-fallback h1 {
+  margin: 0 0 8px;
+  color: #4b1113;
+  font-size: 28px;
+}
+
+.public-route-fallback p {
+  margin: 0;
+  color: #6f5c5c;
+}
+
+@media (max-width: 520px) {
+  .public-mode-bar {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
+}

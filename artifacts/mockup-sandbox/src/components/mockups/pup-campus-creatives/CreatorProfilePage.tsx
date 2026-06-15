@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { DesktopNav } from './_shared/DesktopNav';
+import { InitialsAvatar } from './_shared/InitialsAvatar';
+import { ShareProfileModal } from './ShareProfileModal';
 import { 
   Heart, 
   Share2, 
@@ -19,8 +21,29 @@ import {
 } from 'lucide-react';
 import './_group.css';
 
-export function CreatorProfilePage() {
+interface CreatorProfilePageProps {
+  onBack?: () => void;
+  onEditProfile?: () => void;
+  onPortfolio?: () => void;
+  onSubmissions?: () => void;
+  onSavedWorks?: () => void;
+  onShareProfile?: () => void;
+  onCloseShare?: () => void;
+  initialShareOpen?: boolean;
+}
+
+export function CreatorProfilePage({
+  onBack,
+  onEditProfile,
+  onPortfolio,
+  onSubmissions,
+  onSavedWorks,
+  onShareProfile,
+  onCloseShare,
+  initialShareOpen = false,
+}: CreatorProfilePageProps = {}) {
   const [activeTab, setActiveTab] = useState('Portfolio');
+  const [showShareProfile, setShowShareProfile] = useState(initialShareOpen);
 
   const portfolioWorks = [
     { id: 1, title: 'Digital Sinta', category: 'Digital Art', status: 'Featured', appreciation: 124, visibility: 'Public', img: '/__mockup/images/thumbnail_1.jpg' },
@@ -32,14 +55,21 @@ export function CreatorProfilePage() {
   ];
 
   const suggestedCreators = [
-    { name: 'Marco Santos', college: 'CCIS', img: '/__mockup/images/creator-portrait.jpg' },
-    { name: 'Liza de Leon', college: 'CAL', img: '/__mockup/images/creator-portrait.jpg' },
-    { name: 'Miguel Torres', college: 'CADBE', img: '/__mockup/images/creator-portrait.jpg' },
+    { name: 'Marco Santos', college: 'CCIS' },
+    { name: 'Liza de Leon', college: 'CAL' },
+    { name: 'Miguel Torres', college: 'CADBE' },
   ];
 
   return (
     <div className="min-h-screen bg-main-bg text-primary-text font-inter">
       <DesktopNav authenticated={true} active="Profile" />
+      {onBack && (
+        <div className="max-w-[1200px] mx-auto px-8 pt-8">
+          <button type="button" onClick={onBack} className="text-pup-maroon font-bold hover:underline">
+            Back to Explore
+          </button>
+        </div>
+      )}
 
       {/* Cover Image */}
       <div className="w-full h-[280px] relative">
@@ -53,20 +83,18 @@ export function CreatorProfilePage() {
 
       <div className="max-w-[1200px] mx-auto px-8 relative">
         {/* Profile Header Section */}
-        <div className="flex justify-between items-start -mt-12 mb-8">
-          <div className="flex gap-6 items-end">
+        <div className="flex flex-wrap justify-between items-start gap-6 -mt-12 mb-8">
+          <div className="flex flex-wrap sm:flex-nowrap gap-6 items-start min-w-0">
             <div className="relative">
-              <div className="w-32 h-32 rounded-full border-4 border-card-bg bg-secondary-surface overflow-hidden shadow-lg">
-                <img 
-                  src="/__mockup/images/creator-portrait.jpg" 
-                  alt="Rafael Mendoza" 
-                  className="w-full h-full object-cover"
-                />
-              </div>
+              <InitialsAvatar
+                name="Rafael Mendoza"
+                className="w-32 h-32 border-4 border-card-bg shadow-lg"
+                textClassName="text-4xl"
+              />
               <div className="absolute bottom-1 right-1 w-6 h-6 bg-status-approved rounded-full border-2 border-card-bg" title="Online" />
             </div>
-            <div className="pb-2">
-              <h1 className="text-3xl font-bold mb-1">Rafael Mendoza</h1>
+            <div className="pt-16 sm:pt-14 pb-2 min-w-[280px] max-w-[620px] flex-1">
+              <h1 className="text-3xl font-bold mb-1 leading-tight">Rafael Mendoza</h1>
               <div className="text-secondary-text flex flex-col gap-0.5 mb-3">
                 <span className="font-medium text-primary-text">College of Computer and Information Sciences</span>
                 <span className="text-sm">Bachelor of Science in Information Technology</span>
@@ -85,12 +113,21 @@ export function CreatorProfilePage() {
             </div>
           </div>
 
-          <div className="flex flex-col items-end gap-3 pt-16">
+          <div className="flex flex-col items-end gap-3 pt-16 ml-auto">
             <div className="flex gap-2">
-              <button className="px-4 py-2 border border-border rounded-lg font-medium text-sm hover:border-pup-maroon hover:text-pup-maroon transition-colors flex items-center gap-2">
+              <button onClick={onEditProfile} className="px-4 py-2 border border-border rounded-lg font-medium text-sm hover:border-pup-maroon hover:text-pup-maroon transition-colors flex items-center gap-2">
                 <Edit3 size={16} /> Edit Profile
               </button>
-              <button className="p-2 border border-border rounded-lg hover:bg-secondary-surface transition-colors">
+              <button
+                onClick={() => {
+                  if (onShareProfile) {
+                    onShareProfile();
+                    return;
+                  }
+                  setShowShareProfile(true);
+                }}
+                className="p-2 border border-border rounded-lg hover:bg-secondary-surface transition-colors"
+              >
                 <Share2 size={18} />
               </button>
             </div>
@@ -120,6 +157,18 @@ export function CreatorProfilePage() {
                   <div className="text-xs text-muted-text uppercase tracking-wider font-medium">{stat.label}</div>
                 </div>
               ))}
+            </div>
+
+            <div className="flex flex-wrap gap-3 pt-6">
+              <button onClick={onPortfolio} className="px-4 py-2 bg-pup-maroon text-white text-sm font-bold rounded-lg hover:bg-deep-maroon transition-colors">
+                Manage Portfolio
+              </button>
+              <button onClick={onSubmissions} className="px-4 py-2 bg-white border border-border text-sm font-bold rounded-lg hover:border-pup-maroon hover:text-pup-maroon transition-colors">
+                My Submissions
+              </button>
+              <button onClick={onSavedWorks} className="px-4 py-2 bg-white border border-border text-sm font-bold rounded-lg hover:border-pup-maroon hover:text-pup-maroon transition-colors">
+                Saved Works
+              </button>
             </div>
           </div>
           
@@ -227,7 +276,7 @@ export function CreatorProfilePage() {
                       {work.visibility}
                     </div>
                     <div className="flex gap-2">
-                      <button className="text-[11px] font-bold text-pup-maroon hover:underline">Manage</button>
+                      <button onClick={onPortfolio} className="text-[11px] font-bold text-pup-maroon hover:underline">Manage</button>
                     </div>
                   </div>
                 </div>
@@ -242,9 +291,7 @@ export function CreatorProfilePage() {
           <div className="grid grid-cols-3 gap-6">
             {suggestedCreators.map(creator => (
               <div key={creator.name} className="bg-card-bg border border-border p-5 rounded-xl flex items-center gap-4 shadow-sm">
-                <div className="w-14 h-14 rounded-full overflow-hidden bg-secondary-surface border border-border">
-                  <img src={creator.img} alt={creator.name} className="w-full h-full object-cover" />
-                </div>
+                <InitialsAvatar name={creator.name} className="w-14 h-14 border border-border" textClassName="text-base" />
                 <div className="flex-1">
                   <div className="font-bold text-sm">{creator.name}</div>
                   <div className="text-xs text-secondary-text mb-2">{creator.college}</div>
@@ -257,6 +304,13 @@ export function CreatorProfilePage() {
           </div>
         </section>
       </div>
+      <ShareProfileModal
+        isOpen={showShareProfile}
+        onClose={() => {
+          setShowShareProfile(false);
+          onCloseShare?.();
+        }}
+      />
     </div>
   );
 }

@@ -1,10 +1,19 @@
 import React, { useState } from 'react';
 import { Heart, Bookmark, MessageCircle, Share2, MoreVertical, X, ChevronDown } from 'lucide-react';
+import { InitialsAvatar } from './_shared/InitialsAvatar';
+import { CommentsPanelMobile } from './CommentsPanel';
+import { ShareModalMobile } from './ShareModal';
 import './_group.css';
 
-export function SpotlightPageMobile() {
+interface SpotlightPageMobileProps {
+  onFullProject?: () => void;
+}
+
+export function SpotlightPageMobile({ onFullProject }: SpotlightPageMobileProps = {}) {
   const [isFollowed, setIsFollowed] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [showComments, setShowComments] = useState(false);
+  const [showShare, setShowShare] = useState(false);
 
   return (
     <div className="w-[390px] h-[844px] bg-dark-surface font-inter overflow-hidden relative text-white">
@@ -46,12 +55,12 @@ export function SpotlightPageMobile() {
           <span className="text-[12px] font-bold">Save</span>
         </div>
         <div className="flex flex-col items-center gap-1">
-          <button className="w-14 h-14 rounded-full bg-black/40 backdrop-blur-md border border-white/10 flex items-center justify-center active:scale-90 transition-transform">
+          <button type="button" onClick={() => setShowComments(true)} aria-label="Open comments" className="w-14 h-14 rounded-full bg-black/40 backdrop-blur-md border border-white/10 flex items-center justify-center active:scale-90 transition-transform">
             <MessageCircle size={26} />
           </button>
           <span className="text-[12px] font-bold">14</span>
         </div>
-        <button className="w-14 h-14 rounded-full bg-black/40 backdrop-blur-md border border-white/10 flex items-center justify-center active:scale-90 transition-transform">
+        <button type="button" onClick={() => setShowShare(true)} aria-label="Share spotlight" className="w-14 h-14 rounded-full bg-black/40 backdrop-blur-md border border-white/10 flex items-center justify-center active:scale-90 transition-transform">
           <Share2 size={26} />
         </button>
         <button className="w-14 h-14 rounded-full bg-black/40 backdrop-blur-md border border-white/10 flex items-center justify-center active:scale-90 transition-transform">
@@ -63,9 +72,7 @@ export function SpotlightPageMobile() {
       <div className="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black via-black/60 to-transparent z-10 pt-20">
         <div className="flex items-center gap-3 mb-4">
           <div className="relative">
-            <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-pup-gold shadow-lg">
-              <img src="/__mockup/images/creator-portrait.jpg" alt="" className="w-full h-full object-cover" />
-            </div>
+            <InitialsAvatar name="Mika Santos" className="w-12 h-12 border-2 border-pup-gold shadow-lg" textClassName="text-sm" />
             <button 
               onClick={() => setIsFollowed(!isFollowed)}
               className="absolute -bottom-1 -right-1 w-5 h-5 bg-pup-gold rounded-full flex items-center justify-center text-dark-surface border-2 border-black font-black text-sm"
@@ -95,7 +102,7 @@ export function SpotlightPageMobile() {
           </button>
         </div>
 
-        <button className="w-full h-14 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl flex items-center justify-center gap-2 font-black text-sm uppercase tracking-wider active:bg-white/20 transition-colors">
+        <button type="button" onClick={onFullProject} className="w-full h-14 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl flex items-center justify-center gap-2 font-black text-sm uppercase tracking-wider active:bg-white/20 transition-colors">
           View Full Project <ChevronDown size={18} />
         </button>
       </div>
@@ -104,6 +111,8 @@ export function SpotlightPageMobile() {
       <div className="absolute bottom-0 left-0 w-full h-1 bg-white/10 z-30">
         <div className="w-[45%] h-full bg-pup-gold shadow-[0_0_8px_#FFB81C]"></div>
       </div>
+      {showComments && <CommentsPanelMobile onClose={() => setShowComments(false)} />}
+      {showShare && <ShareModalMobile onClose={() => setShowShare(false)} />}
     </div>
   );
 }

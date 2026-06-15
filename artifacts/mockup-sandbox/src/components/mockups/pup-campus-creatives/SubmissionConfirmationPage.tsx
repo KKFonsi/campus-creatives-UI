@@ -1,9 +1,15 @@
 import React from 'react';
 import { CheckCircle2, Clock, Copy, ArrowRight, Home } from 'lucide-react';
 import { DesktopNav } from './_shared/DesktopNav';
+import { navigateTo } from '../../../app/demo';
+import { routePaths } from '../../../app/routes';
 import './_group.css';
 
-export default function SubmissionConfirmationPage() {
+interface SubmissionConfirmationPageProps {
+  onMySubmissions?: () => void;
+}
+
+export default function SubmissionConfirmationPage({ onMySubmissions }: SubmissionConfirmationPageProps = {}) {
   return (
     <div className="min-h-screen bg-main-bg font-inter">
       <DesktopNav authenticated={true} />
@@ -92,7 +98,7 @@ export default function SubmissionConfirmationPage() {
 
           {/* Action Buttons */}
           <div className="flex flex-col gap-3 pt-6">
-            <button className="w-full py-4 bg-pup-maroon text-white rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-deep-maroon transition-colors group">
+            <button onClick={() => navigateTo(routePaths.student.home)} className="w-full py-4 bg-pup-maroon text-white rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-deep-maroon transition-colors group">
               Return Home
               <Home size={18} className="transition-transform group-hover:-translate-y-0.5" />
             </button>
@@ -101,8 +107,8 @@ export default function SubmissionConfirmationPage() {
                 View Submission
                 <ArrowRight size={18} className="transition-transform group-hover:translate-x-0.5" />
               </button>
-              <button className="py-4 border border-border text-primary-text rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-secondary-surface transition-colors group">
-                My Submissions
+              <button onClick={onMySubmissions ?? (() => navigateTo(routePaths.student.submissions))} className="py-4 border border-border text-primary-text rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-secondary-surface transition-colors group">
+                View My Submissions
                 <ArrowRight size={18} className="transition-transform group-hover:translate-x-0.5" />
               </button>
             </div>

@@ -1,16 +1,23 @@
 import React from 'react';
 import { DesktopNav } from './_shared/DesktopNav';
+import { InitialsAvatar } from './_shared/InitialsAvatar';
 import { Award, Users, Calendar, BookOpen, Quote, ArrowRight, ExternalLink } from 'lucide-react';
 import './_group.css';
 
-export function ExhibitionDetailPage() {
+interface ExhibitionDetailPageProps {
+  onBack?: () => void;
+  onWorkDetail?: () => void;
+  onCreatorProfile?: () => void;
+}
+
+export function ExhibitionDetailPage({ onBack, onWorkDetail, onCreatorProfile }: ExhibitionDetailPageProps = {}) {
   const creators = [
-    { name: "Elena Mercado", college: "CAL", avatar: "/__mockup/images/creator-portrait.jpg" },
-    { name: "Bianca Reyes", college: "COC", avatar: "/__mockup/images/creator-portrait.jpg" },
-    { name: "Rafael Mendoza", college: "CCIS", avatar: "/__mockup/images/creator-portrait.jpg" },
-    { name: "Marco Villanueva", college: "CAL", avatar: "/__mockup/images/creator-portrait.jpg" },
-    { name: "Dana Cruz", college: "CCIS", avatar: "/__mockup/images/creator-portrait.jpg" },
-    { name: "Dave Cruz", college: "CE", avatar: "/__mockup/images/creator-portrait.jpg" }
+    { name: "Elena Mercado", college: "CAL" },
+    { name: "Bianca Reyes", college: "COC" },
+    { name: "Rafael Mendoza", college: "CCIS" },
+    { name: "Marco Villanueva", college: "CAL" },
+    { name: "Dana Cruz", college: "CCIS" },
+    { name: "Dave Cruz", college: "CE" }
   ];
 
   const featuredWorks = [
@@ -37,6 +44,9 @@ export function ExhibitionDetailPage() {
 
       {/* Hero Cover */}
       <section className="w-full max-w-[1200px] mx-auto px-8 pt-8 mb-12">
+        <button type="button" onClick={onBack} className="mb-6 text-pup-maroon font-bold hover:underline">
+          ← Back to Gallery
+        </button>
         <div className="relative h-[520px] rounded-[32px] overflow-hidden shadow-xl border border-border bg-dark-surface">
           <img 
             src="/__mockup/images/hero-collage.jpg" 
@@ -118,14 +128,14 @@ export function ExhibitionDetailPage() {
         <h3 className="text-[24px] font-bold mb-8">Featured Pieces</h3>
         <div className="grid grid-cols-3 gap-8">
           {featuredWorks.map((work, i) => (
-            <div key={i} className="group relative aspect-[16/10] rounded-[20px] overflow-hidden shadow-md cursor-pointer">
+            <button key={i} type="button" onClick={onWorkDetail} className="group relative aspect-[16/10] rounded-[20px] overflow-hidden shadow-md text-left focus:outline-none focus:ring-4 focus:ring-pup-maroon/20">
               <img src={work.img} alt={work.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
               <div className="absolute inset-0 bg-gradient-to-t from-dark-surface/90 via-dark-surface/20 to-transparent"></div>
               <div className="absolute bottom-0 left-0 p-6">
                 <h4 className="text-white text-xl font-bold mb-1">{work.title}</h4>
                 <p className="text-white/70 text-sm">by {work.creator}</p>
               </div>
-            </div>
+            </button>
           ))}
         </div>
       </section>
@@ -135,13 +145,11 @@ export function ExhibitionDetailPage() {
         <h3 className="text-[24px] font-bold mb-8">Participating Creators</h3>
         <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
           {creators.map((creator, i) => (
-            <div key={i} className="flex-shrink-0 w-[180px] bg-card-bg border border-border rounded-[16px] p-4 text-center hover:border-pup-maroon transition-colors cursor-pointer group">
-              <div className="w-20 h-20 mx-auto rounded-full overflow-hidden mb-4 border-2 border-border group-hover:border-pup-maroon transition-colors">
-                <img src={creator.avatar} alt={creator.name} className="w-full h-full object-cover" />
-              </div>
+            <button key={i} type="button" onClick={onCreatorProfile} className="flex-shrink-0 w-[180px] bg-card-bg border border-border rounded-[16px] p-4 text-center hover:border-pup-maroon transition-colors group focus:outline-none focus:ring-4 focus:ring-pup-maroon/20">
+              <InitialsAvatar name={creator.name} className="w-20 h-20 mx-auto mb-4 border-2 border-border group-hover:border-pup-maroon transition-colors" textClassName="text-xl" />
               <h5 className="font-bold text-[15px] mb-0.5 group-hover:text-pup-maroon transition-colors">{creator.name}</h5>
               <p className="text-[12px] text-muted-text">{creator.college}</p>
-            </div>
+            </button>
           ))}
         </div>
       </section>
@@ -156,7 +164,7 @@ export function ExhibitionDetailPage() {
         </div>
         <div className="grid grid-cols-3 gap-8 mb-12">
           {collection.map((work, i) => (
-            <div key={i} className="group bg-card-bg border border-border rounded-2xl overflow-hidden hover:shadow-lg transition-all">
+            <button key={i} type="button" onClick={onWorkDetail} className="group bg-card-bg border border-border rounded-2xl overflow-hidden hover:shadow-lg transition-all text-left focus:outline-none focus:ring-4 focus:ring-pup-maroon/20">
               <div className="aspect-[4/3] overflow-hidden bg-secondary-surface">
                 <img src={work.img} alt={work.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
               </div>
@@ -165,7 +173,7 @@ export function ExhibitionDetailPage() {
                 <h4 className="font-bold group-hover:text-pup-maroon transition-colors mb-1">{work.title}</h4>
                 <p className="text-[13px] text-secondary-text">by {work.creator}</p>
               </div>
-            </div>
+            </button>
           ))}
         </div>
         <div className="flex justify-center">

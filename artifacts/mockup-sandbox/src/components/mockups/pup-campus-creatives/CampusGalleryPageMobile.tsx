@@ -2,9 +2,19 @@ import React from 'react';
 import { MobileHeader } from './_shared/MobileHeader';
 import { MobileBottomNav } from './_shared/MobileBottomNav';
 import { Award, ArrowRight, BookOpen, Users } from 'lucide-react';
+import { navigateTo } from '../../../app/demo';
 import './_group.css';
 
-export function CampusGalleryPageMobile() {
+interface CampusGalleryPageMobileProps {
+  onExhibitionDetail?: () => void;
+  onWorkDetail?: () => void;
+  onCollegeShowcase?: () => void;
+}
+
+export function CampusGalleryPageMobile({ onExhibitionDetail, onWorkDetail, onCollegeShowcase }: CampusGalleryPageMobileProps = {}) {
+  const openWork = (id: string) => navigateTo(`/student/work/${id}`);
+  const openExhibition = (id: string) => navigateTo(`/student/gallery/${id}`);
+
   return (
     <div className="w-[390px] min-h-screen bg-main-bg font-inter overflow-y-auto pb-[80px]">
       <MobileHeader />
@@ -21,7 +31,7 @@ export function CampusGalleryPageMobile() {
           <span className="inline-block px-2 py-0.5 bg-pup-gold text-dark-surface text-[10px] font-bold rounded-full uppercase tracking-wider mb-2">Featured</span>
           <h2 className="text-[28px] font-bold text-white mb-2 leading-tight">Sinta: Stories of the PUP Community</h2>
           <p className="text-white/70 text-[13px] mb-4 line-clamp-2">Theme: Identity, daily life, and creative expression among Iskolar ng Bayan.</p>
-          <button className="px-5 py-2.5 bg-pup-maroon text-white font-bold rounded-lg text-[14px] flex items-center gap-2">
+          <button type="button" onClick={onExhibitionDetail} className="px-5 py-2.5 bg-pup-maroon text-white font-bold rounded-lg text-[14px] flex items-center gap-2">
             View Exhibition <ArrowRight size={16} />
           </button>
         </div>
@@ -35,9 +45,9 @@ export function CampusGalleryPageMobile() {
         </div>
         <div className="flex gap-4 overflow-x-auto px-4 pb-2 scrollbar-hide">
           {[
-            { title: "Sta. Mesa in Frames", college: "COC", works: 18, img: "/__mockup/images/college_1.jpg" },
-            { title: "Guhit ng Iskolar", college: "CAL", works: 24, img: "/__mockup/images/college_2.jpg" },
-            { title: "Polytechnic Perspectives", college: "CCIS", works: 15, img: "/__mockup/images/college_3.jpg" }
+            { title: "Sta. Mesa in Frames", college: "COC", works: 18, img: "/__mockup/images/college_1.jpg", id: "sta-mesa-in-frames" },
+            { title: "Guhit ng Iskolar", college: "CAL", works: 24, img: "/__mockup/images/college_2.jpg", id: "guhit-ng-iskolar" },
+            { title: "Polytechnic Perspectives", college: "CCIS", works: 15, img: "/__mockup/images/college_3.jpg", id: "polytechnic-perspectives" }
           ].map((ex, i) => (
             <div key={i} className="flex-shrink-0 w-[240px] bg-card-bg rounded-xl border border-border overflow-hidden shadow-sm">
               <div className="aspect-[16/10] overflow-hidden">
@@ -49,7 +59,7 @@ export function CampusGalleryPageMobile() {
                   <span className="text-[10px] text-muted-text">{ex.works} Works</span>
                 </div>
                 <h4 className="text-[15px] font-bold mb-3 line-clamp-1">{ex.title}</h4>
-                <button className="w-full py-2 border border-border rounded-lg text-[12px] font-semibold text-primary-text hover:bg-secondary-surface">
+                <button type="button" onClick={() => openExhibition(ex.id)} className="w-full py-2 border border-border rounded-lg text-[12px] font-semibold text-primary-text hover:bg-secondary-surface">
                   View Gallery
                 </button>
               </div>
@@ -82,13 +92,13 @@ export function CampusGalleryPageMobile() {
             { name: "CAL", works: 120, img: "/__mockup/images/college_3.jpg" },
             { name: "CADBE", works: 94, img: "/__mockup/images/college_4.jpg" }
           ].map((college, i) => (
-            <div key={i} className="bg-card-bg rounded-xl border border-border p-3 flex flex-col items-center">
+            <button key={i} type="button" onClick={onCollegeShowcase} className="bg-card-bg rounded-xl border border-border p-3 flex flex-col items-center focus:outline-none focus:ring-4 focus:ring-pup-maroon/20">
               <div className="w-full aspect-square rounded-lg overflow-hidden mb-2">
                 <img src={college.img} alt={college.name} className="w-full h-full object-cover" />
               </div>
               <h4 className="font-bold text-[14px]">{college.name}</h4>
               <p className="text-[11px] text-pup-maroon font-semibold">{college.works} works</p>
-            </div>
+            </button>
           ))}
         </div>
       </section>
@@ -100,17 +110,17 @@ export function CampusGalleryPageMobile() {
         </div>
         <div className="flex gap-4 overflow-x-auto px-4 pb-2 scrollbar-hide">
           {[
-            { title: "Sinta sa Riles", creator: "M. Villanueva", img: "/__mockup/images/thumbnail_2.jpg" },
-            { title: "Campus Frequencies", creator: "L. Santos", img: "/__mockup/images/thumbnail_3.jpg" },
-            { title: "Concrete Echoes", creator: "D. Cruz", img: "/__mockup/images/thumbnail_4.jpg" }
+            { title: "Sinta sa Riles", creator: "M. Villanueva", img: "/__mockup/images/thumbnail_2.jpg", id: "sinta-sa-riles" },
+            { title: "Campus Frequencies", creator: "L. Santos", img: "/__mockup/images/thumbnail_3.jpg", id: "campus-frequencies" },
+            { title: "Concrete Echoes", creator: "D. Cruz", img: "/__mockup/images/thumbnail_4.jpg", id: "concrete-echoes" }
           ].map((work, i) => (
-            <div key={i} className="flex-shrink-0 w-[140px]">
+            <button key={i} type="button" onClick={() => openWork(work.id)} className="flex-shrink-0 w-[140px] text-left focus:outline-none focus:ring-4 focus:ring-pup-maroon/20 rounded-xl">
               <div className="aspect-square rounded-xl overflow-hidden border border-border mb-2">
                 <img src={work.img} alt={work.title} className="w-full h-full object-cover" />
               </div>
               <h5 className="font-bold text-[13px] line-clamp-1">{work.title}</h5>
               <p className="text-[11px] text-secondary-text">{work.creator}</p>
-            </div>
+            </button>
           ))}
         </div>
       </section>
@@ -122,10 +132,10 @@ export function CampusGalleryPageMobile() {
         </h3>
         <div className="grid grid-cols-2 gap-4">
           {[
-            { title: "Voices Lagoon", creator: "E. Mercado", img: "/__mockup/images/thumbnail_3.jpg" },
-            { title: "Sta. Mesa Rain", creator: "B. Reyes", img: "/__mockup/images/thumbnail_1.jpg" }
+            { title: "Voices Lagoon", creator: "E. Mercado", img: "/__mockup/images/thumbnail_3.jpg", id: "voices-lagoon" },
+            { title: "Sta. Mesa Rain", creator: "B. Reyes", img: "/__mockup/images/thumbnail_1.jpg", id: "sta-mesa-rain" }
           ].map((work, i) => (
-            <div key={i} className="bg-card-bg rounded-xl border border-border overflow-hidden">
+            <button key={i} type="button" onClick={() => openWork(work.id)} className="bg-card-bg rounded-xl border border-border overflow-hidden text-left focus:outline-none focus:ring-4 focus:ring-pup-maroon/20">
               <div className="aspect-[4/3] relative">
                 <img src={work.img} alt={work.title} className="w-full h-full object-cover" />
                 <div className="absolute top-2 left-2 p-1 bg-pup-gold/90 rounded shadow-sm">
@@ -135,9 +145,9 @@ export function CampusGalleryPageMobile() {
               <div className="p-3">
                 <h4 className="text-[13px] font-bold line-clamp-1">{work.title}</h4>
                 <p className="text-[11px] text-secondary-text mb-2">{work.creator}</p>
-                <button className="w-full py-1.5 bg-secondary-surface text-[11px] font-bold rounded">View</button>
+                <span className="block w-full py-1.5 bg-secondary-surface text-[11px] font-bold rounded text-center">View</span>
               </div>
-            </div>
+            </button>
           ))}
         </div>
       </section>

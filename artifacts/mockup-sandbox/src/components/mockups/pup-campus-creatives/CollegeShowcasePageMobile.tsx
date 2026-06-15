@@ -1,13 +1,23 @@
 import React from 'react';
 import { MobileBottomNav } from './_shared/MobileBottomNav';
+import { InitialsAvatar } from './_shared/InitialsAvatar';
 import { Star, Heart, Bookmark, ChevronRight } from 'lucide-react';
 import './_group.css';
 
-export function CollegeShowcasePageMobile() {
+interface CollegeShowcasePageMobileProps {
+  onBack?: () => void;
+  onWorkDetail?: () => void;
+  onCreatorProfile?: () => void;
+}
+
+export function CollegeShowcasePageMobile({ onBack, onWorkDetail, onCreatorProfile }: CollegeShowcasePageMobileProps = {}) {
   return (
     <div className="w-[390px] min-h-screen bg-main-bg font-inter overflow-y-auto pb-24">
       {/* Compact Maroon Header */}
       <section className="bg-pup-maroon text-white px-5 pt-12 pb-8">
+        <button type="button" onClick={onBack} className="text-white/80 font-bold text-[12px] mb-4">
+          ← Colleges
+        </button>
         <div className="flex items-center gap-4 mb-6">
           <div className="w-16 h-16 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center text-2xl font-black border border-white/20">
             CCIS
@@ -41,9 +51,9 @@ export function CollegeShowcasePageMobile() {
             <h2 className="text-[13px] font-black uppercase tracking-widest text-pup-maroon flex items-center gap-1.5">
               <Star size={14} fill="currentColor" /> Featured Work
             </h2>
-            <button className="text-[12px] font-bold text-muted-text flex items-center">See all <ChevronRight size={14} /></button>
+            <button type="button" onClick={onWorkDetail} className="text-[12px] font-bold text-muted-text flex items-center">See all <ChevronRight size={14} /></button>
           </div>
-          <div className="bg-card-bg rounded-2xl overflow-hidden border border-border shadow-sm">
+          <button type="button" onClick={onWorkDetail} className="w-full bg-card-bg rounded-2xl overflow-hidden border border-border shadow-sm text-left focus:outline-none focus:ring-4 focus:ring-pup-maroon/20">
             <div className="aspect-video relative">
               <img src="/__mockup/images/event_2.jpg" alt="Digital Sinta" className="w-full h-full object-cover" />
             </div>
@@ -54,9 +64,7 @@ export function CollegeShowcasePageMobile() {
               </p>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <div className="w-6 h-6 rounded-full overflow-hidden bg-secondary-surface border border-border">
-                    <img src="/__mockup/images/creator-portrait.jpg" alt="" className="w-full h-full object-cover" />
-                  </div>
+                  <InitialsAvatar name="Rafael Mendoza" className="w-6 h-6 border border-border" textClassName="text-[10px]" />
                   <span className="text-[12px] font-bold">Rafael Mendoza</span>
                 </div>
                 <div className="flex gap-4 text-muted-text">
@@ -65,24 +73,24 @@ export function CollegeShowcasePageMobile() {
                 </div>
               </div>
             </div>
-          </div>
+          </button>
         </section>
 
         {/* Creator Scroll */}
         <section className="mb-10">
           <div className="px-5 flex justify-between items-center mb-4">
             <h2 className="text-[15px] font-bold">Featured Creators</h2>
-            <button className="text-[13px] font-bold text-pup-maroon">View all</button>
+            <button type="button" onClick={onCreatorProfile} className="text-[13px] font-bold text-pup-maroon">View all</button>
           </div>
           <div className="flex overflow-x-auto px-5 gap-4 no-scrollbar">
             {[1, 2, 3, 4].map((i) => (
               <div key={i} className="min-w-[140px] bg-card-bg p-3 rounded-2xl border border-border">
-                <div className="aspect-square rounded-xl overflow-hidden mb-3">
-                  <img src="/__mockup/images/creator-portrait.jpg" alt="" className="w-full h-full object-cover" />
+                <div className="aspect-square rounded-xl overflow-hidden mb-3 flex items-center justify-center bg-secondary-surface">
+                  <InitialsAvatar name={`Student Name ${i + 1}`} className="w-16 h-16" textClassName="text-base" />
                 </div>
                 <h4 className="font-bold text-[13px] mb-0.5 truncate">Student Name</h4>
                 <p className="text-[11px] text-muted-text mb-2">BSCS Student</p>
-                <button className="w-full py-1.5 bg-secondary-surface text-[11px] font-bold rounded-lg uppercase tracking-tight">Profile</button>
+                <button type="button" onClick={onCreatorProfile} className="w-full py-1.5 bg-secondary-surface text-[11px] font-bold rounded-lg uppercase tracking-tight">Profile</button>
               </div>
             ))}
           </div>
@@ -102,7 +110,7 @@ export function CollegeShowcasePageMobile() {
           <h2 className="text-[15px] font-bold mb-4">Recent Submissions</h2>
           <div className="grid grid-cols-2 gap-4">
             {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="group">
+              <button key={i} type="button" onClick={onWorkDetail} className="group text-left focus:outline-none focus:ring-4 focus:ring-pup-maroon/20 rounded-2xl">
                 <div className="aspect-square rounded-2xl overflow-hidden border border-border mb-2 bg-secondary-surface">
                   <img src={`/__mockup/images/thumbnail_${(i % 4) + 1}.jpg`} alt="" className="w-full h-full object-cover" />
                 </div>
@@ -113,7 +121,7 @@ export function CollegeShowcasePageMobile() {
                     <Heart size={10} /> 42
                   </div>
                 </div>
-              </div>
+              </button>
             ))}
           </div>
           <button className="w-full py-3 mt-6 bg-card-bg border-2 border-border text-[14px] font-bold rounded-xl text-primary-text">
