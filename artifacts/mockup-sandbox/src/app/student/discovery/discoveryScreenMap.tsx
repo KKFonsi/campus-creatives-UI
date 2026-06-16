@@ -9,6 +9,7 @@ import { CreatorProfilePageMobile } from "../../../components/mockups/pup-campus
 import { EventDetailPage } from "../../../components/mockups/pup-campus-creatives/EventDetailPage";
 import { EventDetailPageMobile } from "../../../components/mockups/pup-campus-creatives/EventDetailPageMobile";
 import { EventEntryPage } from "../../../components/mockups/pup-campus-creatives/EventEntryPage";
+import { EventEntryPageMobile } from "../../../components/mockups/pup-campus-creatives/EventEntryPageMobile";
 import { ExhibitionDetailPage } from "../../../components/mockups/pup-campus-creatives/ExhibitionDetailPage";
 import { ExhibitionDetailPageMobile } from "../../../components/mockups/pup-campus-creatives/ExhibitionDetailPageMobile";
 import { SearchPage, SearchPageMobile } from "../../../components/mockups/pup-campus-creatives/SearchPage";
@@ -125,9 +126,9 @@ export function getDiscoveryScreen(
     };
   }
 
+  const Entry = mode === "mobile" ? EventEntryPageMobile : EventEntryPage;
   return {
-    fallback: "Desktop EventEntryPage rendered inside the mobile viewport",
-    node: <EventEntryPage onBack={go(studentDiscoveryRoutes.event)} />,
+    node: <Entry onBack={go(studentDiscoveryRoutes.event)} />,
   };
 }
 

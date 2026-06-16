@@ -19,9 +19,11 @@ interface ExplorePageMobileProps {
   onSearch?: () => void;
   onSearchResults?: () => void;
   onWorkDetail?: () => void;
+  onCollegeDirectory?: () => void;
+  onCollegeShowcase?: () => void;
 }
 
-export function ExplorePageMobile({ guest = false, onSearch, onSearchResults, onWorkDetail }: ExplorePageMobileProps = {}) {
+export function ExplorePageMobile({ guest = false, onSearch, onSearchResults, onWorkDetail, onCollegeDirectory, onCollegeShowcase }: ExplorePageMobileProps = {}) {
   const [showFilters, setShowFilters] = useState(false);
   const [activeCategory, setActiveCategory] = useState('All');
 
@@ -87,6 +89,37 @@ export function ExplorePageMobile({ guest = false, onSearch, onSearchResults, on
       </div>
 
       <main className="px-4 py-6">
+        <section className="mb-6 rounded-2xl border border-border bg-card-bg p-4 shadow-sm">
+          <div className="flex items-start justify-between gap-3">
+            <div className="min-w-0">
+              <p className="text-[11px] font-black uppercase tracking-wide text-pup-maroon">Explore by college</p>
+              <h2 className="mt-1 text-base font-black leading-tight">College Directory</h2>
+              <p className="mt-1 text-xs leading-relaxed text-secondary-text">
+                Browse showcases, creators, and works from every PUP college.
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={onCollegeDirectory}
+              className="shrink-0 rounded-full bg-pup-maroon px-3 py-2 text-[11px] font-black text-white"
+            >
+              Open
+            </button>
+          </div>
+          <div className="mt-4 grid grid-cols-3 gap-2">
+            {["CCIS", "COC", "CADBE"].map((college) => (
+              <button
+                key={college}
+                type="button"
+                onClick={onCollegeShowcase}
+                className="rounded-xl border border-border bg-secondary-surface py-2 text-xs font-black text-pup-maroon"
+              >
+                {college}
+              </button>
+            ))}
+          </div>
+        </section>
+
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-bold">Recommended for You</h2>
           <span className="text-[12px] text-muted-text">12 works</span>

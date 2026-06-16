@@ -20,6 +20,7 @@ interface ReportsDashboardPageMobileProps {
   onDashboard?: () => void;
   onPending?: () => void;
   onReports?: () => void;
+  onReportDetail?: () => void;
   onFeatured?: () => void;
   onOfficialContent?: () => void;
   onHistory?: () => void;
@@ -29,6 +30,7 @@ export function ReportsDashboardPageMobile({
   onDashboard,
   onPending,
   onReports,
+  onReportDetail,
   onFeatured,
   onOfficialContent,
   onHistory,
@@ -159,7 +161,12 @@ export function ReportsDashboardPageMobile({
       {/* Report List */}
       <section className="px-4 space-y-3">
         {reports.map((report) => (
-          <div key={report.id} className="bg-card-bg rounded-xl border border-border shadow-sm overflow-hidden p-4">
+          <button
+            key={report.id}
+            type="button"
+            onClick={onReportDetail}
+            className="w-full text-left bg-card-bg rounded-xl border border-border shadow-sm overflow-hidden p-4"
+          >
             <div className="flex gap-4 mb-4">
               <div className="w-12 h-12 rounded-lg bg-secondary-surface overflow-hidden shrink-0 border border-border">
                 <img src={report.thumbnail} alt="" className="w-full h-full object-cover" />
@@ -186,11 +193,11 @@ export function ReportsDashboardPageMobile({
                   {report.status}
                 </span>
               </div>
-              <button className="text-pup-maroon text-[13px] font-bold flex items-center gap-1">
+              <span className="text-pup-maroon text-[13px] font-bold flex items-center gap-1">
                 Open Report <ArrowRight size={14} />
-              </button>
+              </span>
             </div>
-          </div>
+          </button>
         ))}
       </section>
 

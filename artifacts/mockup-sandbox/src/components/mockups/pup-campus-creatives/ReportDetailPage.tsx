@@ -106,7 +106,11 @@ const TopBar = ({ role = "Moderator" }) => (
   </header>
 );
 
-export default function ReportDetailPage() {
+interface ReportDetailPageProps {
+  onReports?: () => void;
+}
+
+export default function ReportDetailPage({ onReports }: ReportDetailPageProps = {}) {
   const [showConfirmModal, setShowConfirmModal] = useState<string | null>(null);
 
   const breadcrumbs = [
@@ -126,9 +130,13 @@ export default function ReportDetailPage() {
           <nav className="flex items-center gap-2 text-sm text-secondary-text mb-4">
             {breadcrumbs.map((bc, idx) => (
               <React.Fragment key={idx}>
-                <span className={bc.active ? "text-primary-text font-semibold" : "hover:text-pup-maroon cursor-pointer"}>
+                <button
+                  type="button"
+                  onClick={!bc.active ? onReports : undefined}
+                  className={bc.active ? "text-primary-text font-semibold" : "hover:text-pup-maroon cursor-pointer"}
+                >
                   {bc.label}
-                </span>
+                </button>
                 {idx < breadcrumbs.length - 1 && <span>/</span>}
               </React.Fragment>
             ))}

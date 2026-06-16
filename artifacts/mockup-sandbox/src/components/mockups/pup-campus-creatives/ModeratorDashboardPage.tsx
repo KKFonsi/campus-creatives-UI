@@ -14,7 +14,8 @@ import {
   RefreshCw, 
   AlertTriangle,
   ChevronRight,
-  MoreHorizontal
+  MoreHorizontal,
+  Calendar,
 } from 'lucide-react';
 import { InitialsAvatar } from './_shared/InitialsAvatar';
 import './_group.css';
@@ -27,6 +28,7 @@ interface ModeratorNavigationProps {
   onFeatured?: () => void;
   onOfficialContent?: () => void;
   onHistory?: () => void;
+  onEvents?: () => void;
 }
 
 export default function ModeratorDashboardPage({
@@ -37,6 +39,7 @@ export default function ModeratorDashboardPage({
   onFeatured,
   onOfficialContent,
   onHistory,
+  onEvents,
 }: ModeratorNavigationProps = {}) {
   const [activeTab, setActiveTab] = useState('Dashboard');
 
@@ -60,6 +63,7 @@ export default function ModeratorDashboardPage({
           <NavItem icon={<Flag size={20} />} label="Reports" badge="6" active={activeTab === 'Reports'} onClick={() => handleNav('Reports', onReports)} />
           <NavItem icon={<Star size={20} />} label="Featured Works" active={activeTab === 'Featured Works'} onClick={() => handleNav('Featured Works', onFeatured)} />
           <NavItem icon={<Shield size={20} />} label="Official Content" active={activeTab === 'Official Content'} onClick={() => handleNav('Official Content', onOfficialContent)} />
+          <NavItem icon={<Calendar size={20} />} label="Events" active={activeTab === 'Events'} onClick={() => handleNav('Events', onEvents)} />
           <NavItem icon={<History size={20} />} label="Moderation History" active={activeTab === 'History'} onClick={() => handleNav('History', onHistory)} />
         </nav>
 

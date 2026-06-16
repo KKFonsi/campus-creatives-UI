@@ -7,9 +7,12 @@ export const moderatorRoutePaths = {
   pending: routePaths.moderator.pending,
   review: `/moderator/review/${sampleReviewId}`,
   reports: routePaths.moderator.reports,
+  reportDetail: "/moderator/reports/CC-RPT-2026-0031",
   featured: routePaths.moderator.featured,
   officialContent: routePaths.moderator.officialContent,
   history: routePaths.moderator.history,
+  events: routePaths.moderator.events,
+  newEvent: routePaths.moderator.newEvent,
 } as const;
 
 export type ModeratorDestination =
@@ -17,9 +20,12 @@ export type ModeratorDestination =
   | "pending"
   | "review"
   | "reports"
+  | "reportDetail"
   | "featured"
   | "officialContent"
-  | "history";
+  | "history"
+  | "events"
+  | "newEvent";
 
 export function getModeratorDestinationFromPath(
   pathname: string,
@@ -28,9 +34,12 @@ export function getModeratorDestinationFromPath(
   if (pathname === moderatorRoutePaths.pending) return "pending";
   if (/^\/moderator\/review\/[^/]+$/.test(pathname)) return "review";
   if (pathname === moderatorRoutePaths.reports) return "reports";
+  if (/^\/moderator\/reports\/[^/]+$/.test(pathname)) return "reportDetail";
   if (pathname === moderatorRoutePaths.featured) return "featured";
   if (pathname === moderatorRoutePaths.officialContent) return "officialContent";
   if (pathname === moderatorRoutePaths.history) return "history";
+  if (pathname === moderatorRoutePaths.events) return "events";
+  if (pathname === moderatorRoutePaths.newEvent) return "newEvent";
 
   return null;
 }

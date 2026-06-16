@@ -18,6 +18,7 @@ import {
   Save, 
   ExternalLink,
   ChevronDown,
+  Calendar,
   Clock,
   Video,
   Image as ImageIcon,
@@ -37,6 +38,7 @@ interface SubmissionReviewPageProps {
   onFeatured?: () => void;
   onOfficialContent?: () => void;
   onHistory?: () => void;
+  onEvents?: () => void;
 }
 
 export default function SubmissionReviewPage({
@@ -48,6 +50,7 @@ export default function SubmissionReviewPage({
   onFeatured,
   onOfficialContent,
   onHistory,
+  onEvents,
 }: SubmissionReviewPageProps = {}) {
   const [activeTab, setActiveTab] = useState('Pending Reviews');
   const [checklist, setChecklist] = useState<Record<number, boolean>>({});
@@ -88,6 +91,7 @@ export default function SubmissionReviewPage({
           <NavItem icon={<Flag size={20} />} label="Reports" badge="6" active={activeTab === 'Reports'} onClick={() => handleNav('Reports', onReports)} />
           <NavItem icon={<Star size={20} />} label="Featured Works" active={activeTab === 'Featured Works'} onClick={() => handleNav('Featured Works', onFeatured)} />
           <NavItem icon={<Shield size={20} />} label="Official Content" active={activeTab === 'Official Content'} onClick={() => handleNav('Official Content', onOfficialContent)} />
+          <NavItem icon={<Calendar size={20} />} label="Events" active={activeTab === 'Events'} onClick={() => handleNav('Events', onEvents)} />
           <NavItem icon={<History size={20} />} label="Moderation History" active={activeTab === 'History'} onClick={() => handleNav('History', onHistory)} />
         </nav>
 

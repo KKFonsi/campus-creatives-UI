@@ -32,6 +32,7 @@ interface ModeratorNavigationProps {
   onFeatured?: () => void;
   onOfficialContent?: () => void;
   onHistory?: () => void;
+  onEvents?: () => void;
 }
 
 const ModeratorSidebar = ({ active, navigation }: { active: string; navigation?: ModeratorNavigationProps }) => (
@@ -52,6 +53,7 @@ const ModeratorSidebar = ({ active, navigation }: { active: string; navigation?:
         { id: 'Reports', icon: Flag, label: 'Reports', badge: '6', onClick: navigation?.onReports },
         { id: 'Featured Works', icon: Star, label: 'Featured Works', onClick: navigation?.onFeatured },
         { id: 'Official Content', icon: Shield, label: 'Official Content', onClick: navigation?.onOfficialContent },
+        { id: 'Events', icon: Calendar, label: 'Events', onClick: navigation?.onEvents },
         { id: 'Moderation History', icon: History, label: 'Moderation History', onClick: navigation?.onHistory },
       ].map((item) => (
         <button

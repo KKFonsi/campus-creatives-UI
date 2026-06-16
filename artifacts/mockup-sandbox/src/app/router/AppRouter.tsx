@@ -7,6 +7,7 @@ import {
   appRouteChangeEvent,
   storeDemoSelection,
 } from "../demo";
+import { AdminRouteRenderer, isAdminRoute } from "../admin";
 import { isDemoDisplayMode } from "../demo/demoTypes";
 import { isModeratorRoute, ModeratorRouteRenderer } from "../moderator";
 import { isPublicRoute, PublicRouteRenderer } from "../public";
@@ -196,6 +197,7 @@ export function AppRouter() {
   const demoRoute = parseDemoRoute(pathname);
   if (demoRoute) {
     if (demoRoute.role === "student" && (demoRoute.mode === "desktop" || demoRoute.mode === "mobile")) {
+      storeDemoSelection({ mode: demoRoute.mode, role: "student" });
       window.setTimeout(() => {
         window.history.replaceState({}, "", routePaths.student.home);
         window.dispatchEvent(new Event(appRouteChangeEvent));
@@ -213,6 +215,17 @@ export function AppRouter() {
       }, 0);
     }
 
+    if (
+      demoRoute.role === "admin" &&
+      isDemoDisplayMode(demoRoute.mode)
+    ) {
+      storeDemoSelection({ mode: demoRoute.mode, role: "admin" });
+      window.setTimeout(() => {
+        window.history.replaceState({}, "", routePaths.admin.dashboard);
+        window.dispatchEvent(new Event(appRouteChangeEvent));
+      }, 0);
+    }
+
     return <DemoShell mode={demoRoute.mode} role={demoRoute.role} />;
   }
 
@@ -222,6 +235,10 @@ export function AppRouter() {
 
   if (isModeratorRoute(pathname)) {
     return <ModeratorRouteRenderer pathname={pathname} />;
+  }
+
+  if (isAdminRoute(pathname)) {
+    return <AdminRouteRenderer pathname={pathname} />;
   }
 
   return (

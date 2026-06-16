@@ -5,6 +5,7 @@ export type RouteGroup =
   | "demo"
   | "student"
   | "moderator"
+  | "admin"
   | "preview";
 
 export interface AppRouteDefinition {
@@ -62,6 +63,16 @@ export const demoRoutes = [
     id: "demo.mobileModerator",
     path: routePaths.demo.mobileModerator,
     label: "Mobile Moderator Demo",
+  },
+  {
+    id: "demo.desktopAdmin",
+    path: routePaths.demo.desktopAdmin,
+    label: "Desktop Super Admin Demo",
+  },
+  {
+    id: "demo.mobileAdmin",
+    path: routePaths.demo.mobileAdmin,
+    label: "Mobile Super Admin Demo",
   },
 ] as const satisfies ReadonlyArray<Omit<AppRouteDefinition, "group">>;
 
@@ -226,6 +237,11 @@ export const moderatorRoutes = [
     label: "Reports",
   },
   {
+    id: "moderator.reportDetail",
+    path: routePaths.moderator.reportDetail,
+    label: "Report Detail",
+  },
+  {
     id: "moderator.featured",
     path: routePaths.moderator.featured,
     label: "Featured Works",
@@ -240,6 +256,30 @@ export const moderatorRoutes = [
     path: routePaths.moderator.history,
     label: "Moderation History",
   },
+  {
+    id: "moderator.events",
+    path: routePaths.moderator.events,
+    label: "Event Management",
+  },
+  {
+    id: "moderator.newEvent",
+    path: routePaths.moderator.newEvent,
+    label: "Add Event",
+  },
+] as const satisfies ReadonlyArray<Omit<AppRouteDefinition, "group">>;
+
+export const adminRoutes = [
+  { id: "admin.dashboard", path: routePaths.admin.dashboard, label: "Dashboard" },
+  { id: "admin.users", path: routePaths.admin.users, label: "User Management" },
+  { id: "admin.moderators", path: routePaths.admin.moderators, label: "Moderator Management" },
+  { id: "admin.colleges", path: routePaths.admin.colleges, label: "College Management" },
+  { id: "admin.categories", path: routePaths.admin.categories, label: "Category Management" },
+  { id: "admin.events", path: routePaths.admin.events, label: "Event Management" },
+  { id: "admin.newEvent", path: routePaths.admin.newEvent, label: "Create Event" },
+  { id: "admin.reports", path: routePaths.admin.reports, label: "Reports Oversight" },
+  { id: "admin.featured", path: routePaths.admin.featured, label: "Featured Content" },
+  { id: "admin.settings", path: routePaths.admin.settings, label: "Settings" },
+  { id: "admin.auditLog", path: routePaths.admin.auditLog, label: "Audit Log" },
 ] as const satisfies ReadonlyArray<Omit<AppRouteDefinition, "group">>;
 
 export const previewRoutes = [
@@ -262,6 +302,7 @@ export const routeGroups = {
   demo: withGroup("demo", demoRoutes),
   student: withGroup("student", studentRoutes),
   moderator: withGroup("moderator", moderatorRoutes),
+  admin: withGroup("admin", adminRoutes),
   preview: withGroup("preview", previewRoutes),
 } as const;
 
@@ -270,5 +311,6 @@ export const appRoutes = [
   ...routeGroups.demo,
   ...routeGroups.student,
   ...routeGroups.moderator,
+  ...routeGroups.admin,
   ...routeGroups.preview,
 ] as const;

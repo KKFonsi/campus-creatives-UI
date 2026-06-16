@@ -70,7 +70,7 @@ export function NotificationsPage() {
         </div>
 
         {/* Tabs */}
-        <div className="flex items-center justify-between border-b border-border mb-6 gap-4">
+        <div className="border-b border-border mb-3">
           <div className="flex gap-6 overflow-x-auto no-scrollbar min-w-0">
             {['All', 'Submissions', 'Recognition', 'Events', 'Community'].map(tab => (
               <button 
@@ -90,12 +90,14 @@ export function NotificationsPage() {
               </button>
             ))}
           </div>
-          {unreadCount > 0 && activeTab === 'All' && (
-            <button onClick={markAllRead} className="pb-3 text-[13px] font-medium text-pup-maroon hover:underline shrink-0">
+        </div>
+        {unreadCount > 0 && activeTab === 'All' && (
+          <div className="mb-6 flex justify-end notifications-mark-read-row">
+            <button onClick={markAllRead} className="rounded-full border border-pup-maroon/20 bg-soft-maroon px-3 py-2 text-[13px] font-bold text-pup-maroon">
               Mark all as read
             </button>
-          )}
-        </div>
+          </div>
+        )}
 
         {/* List */}
         <div className="bg-card-bg border border-border rounded-xl shadow-sm overflow-hidden flex flex-col">

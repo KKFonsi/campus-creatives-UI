@@ -57,7 +57,8 @@ export function DemoShell({ children, mode, role }: DemoShellProps) {
 
   const StartComponent = children ? null : getDemoStartComponent(mode, role);
   const modeLabel = mode === "desktop" ? "Desktop" : "Mobile";
-  const roleLabel = role === "student" ? "Student" : "Moderator";
+  const roleLabel =
+    role === "student" ? "Student" : role === "moderator" ? "Moderator" : "Super Admin";
 
   return (
     <div className={`demo-shell demo-shell--${mode}`}>

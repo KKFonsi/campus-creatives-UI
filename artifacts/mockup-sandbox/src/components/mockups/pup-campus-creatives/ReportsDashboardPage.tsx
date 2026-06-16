@@ -15,7 +15,8 @@ import {
   ExternalLink,
   ShieldAlert,
   Clock,
-  ArrowRight
+  ArrowRight,
+  Calendar,
 } from 'lucide-react';
 import './_group.css';
 
@@ -23,18 +24,22 @@ interface ReportsDashboardPageProps {
   onDashboard?: () => void;
   onPending?: () => void;
   onReports?: () => void;
+  onReportDetail?: () => void;
   onFeatured?: () => void;
   onOfficialContent?: () => void;
   onHistory?: () => void;
+  onEvents?: () => void;
 }
 
 export function ReportsDashboardPage({
   onDashboard,
   onPending,
   onReports,
+  onReportDetail,
   onFeatured,
   onOfficialContent,
   onHistory,
+  onEvents,
 }: ReportsDashboardPageProps = {}) {
   const [activeTab, setActiveTab] = useState('All');
   const [selectedReports, setSelectedReports] = useState<string[]>([]);
@@ -183,6 +188,7 @@ export function ReportsDashboardPage({
               { icon: Flag, label: 'Reports', count: '6', active: true, onClick: onReports },
               { icon: Star, label: 'Featured Works', active: false, onClick: onFeatured },
               { icon: Shield, label: 'Official Content', active: false, onClick: onOfficialContent },
+              { icon: Calendar, label: 'Events', active: false, onClick: onEvents },
               { icon: History, label: 'Moderation History', active: false, onClick: onHistory },
             ].map((item) => (
               <button
@@ -310,9 +316,11 @@ export function ReportsDashboardPage({
           {/* Report List */}
           <div className="space-y-4">
             {reports.map((report) => (
-              <div 
+              <button
+                type="button"
+                onClick={onReportDetail}
                 key={report.id} 
-                className={`bg-card-bg rounded-xl border border-border shadow-sm overflow-hidden flex transition-all hover:shadow-md ${
+                className={`w-full text-left bg-card-bg rounded-xl border border-border shadow-sm overflow-hidden flex transition-all hover:shadow-md ${
                   report.severity === 'High' ? 'border-l-4 border-l-status-rejected' : 
                   report.severity === 'Medium' ? 'border-l-4 border-l-status-needs-revision' : 'border-l-4 border-l-secondary-text'
                 }`}
@@ -358,12 +366,12 @@ export function ReportsDashboardPage({
                       </div>
                     </div>
 
-                    <button className="flex items-center gap-2 px-4 py-2 text-pup-maroon font-bold text-[13px] hover:bg-soft-maroon rounded-lg transition-colors">
+                    <span className="flex items-center gap-2 px-4 py-2 text-pup-maroon font-bold text-[13px] hover:bg-soft-maroon rounded-lg transition-colors">
                       Open Report <ArrowRight size={16} />
-                    </button>
+                    </span>
                   </div>
                 </div>
-              </div>
+              </button>
             ))}
           </div>
 

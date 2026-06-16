@@ -1,5 +1,5 @@
 export const demoDisplayModes = ["desktop", "mobile"] as const;
-export const demoRoles = ["student", "moderator"] as const;
+export const demoRoles = ["student", "moderator", "admin"] as const;
 
 export type DemoDisplayMode = (typeof demoDisplayModes)[number];
 export type DemoRole = (typeof demoRoles)[number];

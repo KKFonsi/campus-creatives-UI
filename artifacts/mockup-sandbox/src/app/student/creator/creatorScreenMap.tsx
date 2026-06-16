@@ -7,6 +7,12 @@ import { EditProfilePageMobile } from "../../../components/mockups/pup-campus-cr
 import MySubmissionsPage from "../../../components/mockups/pup-campus-creatives/MySubmissionsPage";
 import MySubmissionsPageMobile from "../../../components/mockups/pup-campus-creatives/MySubmissionsPageMobile";
 import { NeedsRevisionPage } from "../../../components/mockups/pup-campus-creatives/NeedsRevisionPage";
+import {
+  NeedsRevisionPageMobile,
+  ReviseSubmissionPageMobile,
+  SubmissionConfirmationPageMobile,
+  SubmissionDetailPageMobile,
+} from "../../../components/mockups/pup-campus-creatives/MobileSubmissionStatusPages";
 import PortfolioManagementPage from "../../../components/mockups/pup-campus-creatives/PortfolioManagementPage";
 import PortfolioManagementPageMobile from "../../../components/mockups/pup-campus-creatives/PortfolioManagementPageMobile";
 import { ReviseSubmissionPage } from "../../../components/mockups/pup-campus-creatives/ReviseSubmissionPage";
@@ -99,8 +105,17 @@ export function getCreatorSpaceScreen(
   }
 
   if (route === "submissionDetail") {
+    if (mode === "mobile") {
+      return {
+        node: (
+          <SubmissionDetailPageMobile
+            onBack={go(creatorSpaceRoutes.submissions)}
+          />
+        ),
+      };
+    }
+
     return {
-      fallback: mode === "mobile" ? "Desktop SubmissionDetailPage rendered inside the mobile viewport" : undefined,
       node: (
         <SubmissionDetailPage
           onBack={go(creatorSpaceRoutes.submissions)}
@@ -110,8 +125,18 @@ export function getCreatorSpaceScreen(
   }
 
   if (route === "needsRevision") {
+    if (mode === "mobile") {
+      return {
+        node: (
+          <NeedsRevisionPageMobile
+            onBack={go(creatorSpaceRoutes.submissions)}
+            onRevise={go(creatorSpaceRoutes.reviseSubmission)}
+          />
+        ),
+      };
+    }
+
     return {
-      fallback: mode === "mobile" ? "Desktop NeedsRevisionPage rendered inside the mobile viewport" : undefined,
       node: (
         <NeedsRevisionPage
           onBack={go(creatorSpaceRoutes.submissions)}
@@ -122,8 +147,18 @@ export function getCreatorSpaceScreen(
   }
 
   if (route === "reviseSubmission") {
+    if (mode === "mobile") {
+      return {
+        node: (
+          <ReviseSubmissionPageMobile
+            onBack={go(creatorSpaceRoutes.needsRevision)}
+            onDone={go(creatorSpaceRoutes.submissions)}
+          />
+        ),
+      };
+    }
+
     return {
-      fallback: mode === "mobile" ? "Desktop ReviseSubmissionPage rendered inside the mobile viewport" : undefined,
       node: (
         <ReviseSubmissionPage
           onBack={go(creatorSpaceRoutes.needsRevision)}
@@ -133,8 +168,17 @@ export function getCreatorSpaceScreen(
     };
   }
 
+  if (mode === "mobile") {
+    return {
+      node: (
+        <SubmissionConfirmationPageMobile
+          onMySubmissions={go(creatorSpaceRoutes.submissions)}
+        />
+      ),
+    };
+  }
+
   return {
-    fallback: mode === "mobile" ? "Desktop SubmissionConfirmationPage rendered inside the mobile viewport" : undefined,
     node: (
       <SubmissionConfirmationPage
         onMySubmissions={go(creatorSpaceRoutes.submissions)}

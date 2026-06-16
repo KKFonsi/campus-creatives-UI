@@ -1,4 +1,4 @@
-import { Monitor, Smartphone, ShieldCheck, UserRound } from "lucide-react";
+import { Monitor, Smartphone, ShieldCheck, UserCog, UserRound } from "lucide-react";
 import type { ComponentType } from "react";
 import { useMemo, useState } from "react";
 
@@ -82,7 +82,12 @@ export function DemoLauncher() {
       return;
     }
 
-    navigateTo(routePaths.moderator.dashboard);
+    if (role === "moderator") {
+      navigateTo(routePaths.moderator.dashboard);
+      return;
+    }
+
+    navigateTo(routePaths.admin.dashboard);
   }
 
   return (
@@ -144,6 +149,14 @@ export function DemoLauncher() {
                 label="Moderator"
                 selected={role === "moderator"}
                 value="moderator"
+                onSelect={handleRoleSelect}
+              />
+              <OptionCard
+                description="Manage platform users, reports, events, and settings"
+                icon={UserCog}
+                label="Super Admin"
+                selected={role === "admin"}
+                value="admin"
                 onSelect={handleRoleSelect}
               />
             </div>

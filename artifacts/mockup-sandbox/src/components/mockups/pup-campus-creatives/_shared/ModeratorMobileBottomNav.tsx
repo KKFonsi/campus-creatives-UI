@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
-import { ClipboardList, Flag, LayoutDashboard, MoreHorizontal, Shield, Star, History } from 'lucide-react';
+import { CalendarPlus, ClipboardList, Flag, LayoutDashboard, MoreHorizontal, Shield, Star, History } from 'lucide-react';
 
 interface ModeratorMobileNavigationProps {
-  active?: 'Dashboard' | 'Reviews' | 'Reports' | 'Featured' | 'Official' | 'History';
+  active?: 'Dashboard' | 'Reviews' | 'Reports' | 'Featured' | 'Official' | 'History' | 'More';
   onDashboard?: () => void;
   onPending?: () => void;
   onReports?: () => void;
   onFeatured?: () => void;
   onOfficialContent?: () => void;
   onHistory?: () => void;
+  onEvents?: () => void;
+  onNewEvent?: () => void;
 }
 
 export function ModeratorMobileBottomNav({
@@ -19,6 +21,8 @@ export function ModeratorMobileBottomNav({
   onFeatured,
   onOfficialContent,
   onHistory,
+  onEvents,
+  onNewEvent,
 }: ModeratorMobileNavigationProps) {
   const [showMore, setShowMore] = useState(false);
   const itemClass = (id: string) =>
@@ -35,6 +39,12 @@ export function ModeratorMobileBottomNav({
           </button>
           <button onClick={() => { setShowMore(false); onHistory?.(); }} className="w-full px-4 py-3 flex items-center gap-3 text-left text-sm font-bold text-primary-text border-t border-border">
             <History size={18} className="text-pup-maroon" /> Moderation History
+          </button>
+          <button onClick={() => { setShowMore(false); onEvents?.(); }} className="w-full px-4 py-3 flex items-center gap-3 text-left text-sm font-bold text-primary-text border-t border-border">
+            <CalendarPlus size={18} className="text-pup-maroon" /> Event Management
+          </button>
+          <button onClick={() => { setShowMore(false); onNewEvent?.(); }} className="w-full px-4 py-3 flex items-center gap-3 text-left text-sm font-bold text-primary-text border-t border-border">
+            <CalendarPlus size={18} className="text-pup-maroon" /> Add Event
           </button>
         </div>
       )}
