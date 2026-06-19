@@ -23,6 +23,7 @@ import {
   Award
 } from 'lucide-react';
 import { InitialsAvatar } from './_shared/InitialsAvatar';
+import { ModeratorDesktopSidebar } from './_shared/ModeratorDesktopSidebar';
 import './_group.css';
 
 interface ModeratorNavigationProps {
@@ -59,10 +60,10 @@ const ModeratorSidebar = ({ active, navigation }: { active: string; navigation?:
         <button
           key={item.id}
           onClick={item.onClick}
-          className={`w-full flex items-center justify-between px-3 py-2 rounded-lg transition-colors ${
+          className={`w-full flex items-center justify-between border-l-4 px-3 py-2 rounded-lg transition-colors ${
             active === item.id 
-              ? 'bg-white/10 text-white border-l-4 border-pup-maroon' 
-              : 'text-white/70 hover:bg-white/5 hover:text-white'
+              ? 'bg-white/10 text-white border-pup-gold' 
+              : 'border-transparent text-white/70 hover:bg-white/5 hover:text-white'
           }`}
         >
           <div className="flex items-center gap-3">
@@ -129,7 +130,7 @@ export default function FeaturedWorksPage(props: ModeratorNavigationProps = {}) 
       badgeColor: "bg-pup-gold",
       dates: "June 12 - June 19",
       recognition: "Work of the Week — June 2026",
-      image: "bg-gradient-to-br from-soft-maroon to-soft-gold"
+      image: "/__mockup/images/thumbnail_1.jpg"
     },
     {
       id: 2,
@@ -140,7 +141,7 @@ export default function FeaturedWorksPage(props: ModeratorNavigationProps = {}) 
       badgeColor: "bg-pup-maroon text-white",
       dates: "June 1 - June 30",
       recognition: "Creator of the Month — June",
-      image: "bg-gradient-to-br from-blue-100 to-soft-maroon"
+      image: "/__mockup/images/thumbnail_2.jpg"
     },
     {
       id: 3,
@@ -151,7 +152,7 @@ export default function FeaturedWorksPage(props: ModeratorNavigationProps = {}) 
       badgeColor: "bg-secondary-surface text-primary-text",
       dates: "June 10 - June 17",
       recognition: "Staff Favorite June '26",
-      image: "bg-gradient-to-br from-soft-gold to-orange-50"
+      image: "/__mockup/images/thumbnail_3.jpg"
     },
     {
       id: 4,
@@ -162,23 +163,33 @@ export default function FeaturedWorksPage(props: ModeratorNavigationProps = {}) 
       badgeColor: "bg-crimson-accent text-white",
       dates: "June 8 - June 15",
       recognition: "COC College Highlight",
-      image: "bg-gradient-to-br from-soft-maroon to-deep-maroon"
+      image: "/__mockup/images/thumbnail_4.jpg"
     }
   ];
 
   const collegeHighlights = [
-    { id: 'CCIS', name: 'CCIS' },
-    { id: 'CAL', name: 'CAL' },
-    { id: 'CADBE', name: 'CADBE' },
-    { id: 'CE', name: 'CE' },
-    { id: 'COC', name: 'COC' },
-    { id: 'CBA', name: 'CBA' }
+    { id: 'CAF', name: 'College of Accountancy and Finance', img: '/__mockup/images/colleges/caf-pup-main-building.jpg' },
+    { id: 'CADBE', name: 'College of Architecture and the Built Environment', img: '/__mockup/images/colleges/cadbe-pup-campus-landmark.jpg' },
+    { id: 'CAL', name: 'College of Arts and Letters', img: '/__mockup/images/colleges/cal-pup-campus-artwork.jpg' },
+    { id: 'CBA', name: 'College of Business Administration', img: '/__mockup/images/colleges/cba-pup-campus-plaza.jpg' },
+    { id: 'COC', name: 'College of Communication', img: '/__mockup/images/colleges/coc-pup-ndc-campus.jpg' },
+    { id: 'CCIS', name: 'College of Computer and Information Sciences', img: '/__mockup/images/colleges/ccis-pup-main-building.jpg' },
+    { id: 'COED', name: 'College of Education', img: '/__mockup/images/colleges/coed-pup-campus-learning.jpg' },
+    { id: 'CE', name: 'College of Engineering', img: '/__mockup/images/colleges/ce-pup-engineering-campus.jpg' },
+    { id: 'CHK', name: 'College of Human Kinetics', img: '/__mockup/images/colleges/chk-pup-campus-life.jpg' },
+    { id: 'CL', name: 'College of Law', img: '/__mockup/images/colleges/cl-pup-law-campus.jpg' },
+    { id: 'CPSPA', name: 'College of Political Science and Public Administration', img: '/__mockup/images/colleges/cpspa-pup-public-service.jpg' },
+    { id: 'CS', name: 'College of Science', img: '/__mockup/images/colleges/cs-pup-science-campus.jpg' },
+    { id: 'CSSD', name: 'College of Social Sciences and Development', img: '/__mockup/images/colleges/cssd-pup-community-campus.jpg' },
+    { id: 'CTHTM', name: 'College of Tourism, Hospitality and Transportation Management', img: '/__mockup/images/colleges/cthtm-pup-hasmin-campus.jpg' },
+    { id: 'ITECH', name: 'Institute of Technology', img: '/__mockup/images/colleges/itech-pup-technology-campus.jpg' },
+    { id: 'GS', name: 'Graduate School', img: '/__mockup/images/colleges/gs-pup-graduate-school.jpg' },
   ];
 
   const candidates = [
-    { id: 1, title: "Railway Sketches", creator: "Rafael Mendoza", college: "CCIS", type: "Visual Art" },
-    { id: 2, title: "Sta. Mesa After Rain", creator: "Bianca Reyes", college: "COC", type: "Photography" },
-    { id: 3, title: "Tinig ng Bayan", creator: "Maria Santos", college: "CAL", type: "Music" }
+    { id: 1, title: "Railway Sketches", creator: "Rafael Mendoza", college: "CCIS", type: "Visual Art", image: "/__mockup/images/thumbnail_2.jpg" },
+    { id: 2, title: "Sta. Mesa After Rain", creator: "Bianca Reyes", college: "COC", type: "Photography", image: "/__mockup/images/thumbnail_3.jpg" },
+    { id: 3, title: "Tinig ng Bayan", creator: "Maria Santos", college: "CAL", type: "Music", image: "/__mockup/images/thumbnail_4.jpg" }
   ];
 
   const scheduled = [
@@ -187,7 +198,7 @@ export default function FeaturedWorksPage(props: ModeratorNavigationProps = {}) 
 
   return (
     <div className="flex min-h-screen bg-main-bg font-inter">
-      <ModeratorSidebar active="Featured Works" navigation={props} />
+      <ModeratorDesktopSidebar {...props} />
       
       <main className="flex-1 flex flex-col overflow-hidden">
         <TopBar />
@@ -213,7 +224,9 @@ export default function FeaturedWorksPage(props: ModeratorNavigationProps = {}) 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 {currentFeatures.map((item) => (
                   <div key={item.id} className="bg-white border border-border rounded-xl overflow-hidden group relative shadow-sm">
-                    <div className={`aspect-[3/2] ${item.image} relative`}>
+                    <div className="aspect-[3/2] bg-secondary-surface relative overflow-hidden">
+                      <img src={item.image} alt={`${item.title} preview`} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent" />
                       <div className="absolute top-2 right-2 flex flex-col gap-1">
                         <button className="p-1.5 bg-white/90 backdrop-blur-sm text-red-600 rounded-full hover:bg-white shadow-sm">
                           <Trash2 size={14} />
@@ -249,15 +262,16 @@ export default function FeaturedWorksPage(props: ModeratorNavigationProps = {}) 
           {/* College Highlights */}
           <section>
             <h2 className="text-sm font-bold text-primary-text uppercase tracking-widest px-1 mb-4">College Highlights</h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4">
               {collegeHighlights.map((item) => (
-                <div key={item.id} className="bg-card-bg border border-border rounded-xl p-3 flex flex-col items-center gap-3 hover:border-pup-maroon/40 transition-colors shadow-sm group">
-                  <div className="w-full aspect-square bg-secondary-surface rounded-lg flex items-center justify-center text-pup-maroon font-bold text-xl group-hover:scale-105 transition-transform duration-300 italic opacity-40">
-                    [{item.id}]
+                <div key={item.id} className="bg-card-bg border border-border rounded-xl p-3 flex flex-col gap-3 hover:border-pup-maroon/40 transition-colors shadow-sm group">
+                  <div className="w-full aspect-[4/3] bg-secondary-surface rounded-lg overflow-hidden relative">
+                    <img src={item.img} alt={`${item.name} highlight preview`} className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                    <div className="absolute left-2 top-2 rounded bg-pup-gold px-2 py-0.5 text-[10px] font-black text-pup-maroon">{item.id}</div>
                   </div>
                   <div className="text-center">
                     <div className="px-2 py-0.5 bg-soft-maroon text-pup-maroon text-[9px] font-bold rounded uppercase tracking-wider mb-1">College Highlight</div>
-                    <div className="text-xs font-bold text-primary-text uppercase">{item.name}</div>
+                    <div className="text-xs font-bold text-primary-text leading-tight line-clamp-2">{item.name}</div>
                   </div>
                 </div>
               ))}
@@ -274,8 +288,8 @@ export default function FeaturedWorksPage(props: ModeratorNavigationProps = {}) 
               <div className="space-y-3">
                 {candidates.map((item) => (
                   <div key={item.id} className="bg-card-bg border border-border rounded-xl p-3 flex items-center gap-4 hover:border-pup-maroon/20 transition-colors group">
-                    <div className="w-16 h-16 bg-secondary-surface rounded-lg flex-shrink-0 flex items-center justify-center text-pup-maroon/20 italic text-[10px]">
-                      IMG
+                    <div className="w-16 h-16 bg-secondary-surface rounded-lg flex-shrink-0 overflow-hidden">
+                      <img src={item.image} alt={`${item.title} feature candidate`} className="h-full w-full object-cover" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-0.5">
@@ -355,7 +369,9 @@ export default function FeaturedWorksPage(props: ModeratorNavigationProps = {}) 
                   {searchQuery.toLowerCase().includes('digital') && (
                     <div className="mt-2 p-2 bg-soft-maroon border border-pup-maroon/20 rounded-lg flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 bg-white/50 rounded text-[8px] flex items-center justify-center">IMG</div>
+                        <div className="w-8 h-8 bg-white/50 rounded overflow-hidden">
+                          <img src="/__mockup/images/thumbnail_1.jpg" alt="Digital Sinta search result" className="h-full w-full object-cover" />
+                        </div>
                         <div>
                           <div className="text-xs font-bold text-pup-maroon">Digital Sinta</div>
                           <div className="text-[10px] text-secondary-text">Rafael Mendoza</div>
@@ -419,7 +435,9 @@ export default function FeaturedWorksPage(props: ModeratorNavigationProps = {}) 
                 <label className="text-[10px] font-bold text-muted-text uppercase tracking-widest">Preview Preview</label>
                 <div className="bg-secondary-surface rounded-xl p-4 border border-border space-y-4">
                   <div className="bg-white border border-border rounded-xl overflow-hidden shadow-sm max-w-[240px] mx-auto">
-                    <div className="aspect-[3/2] bg-gradient-to-br from-soft-maroon to-soft-gold relative">
+                    <div className="aspect-[3/2] bg-secondary-surface relative">
+                      <img src="/__mockup/images/thumbnail_1.jpg" alt="Feature card preview" className="h-full w-full object-cover" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
                       <div className="absolute bottom-2 left-2 px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider bg-pup-gold">
                         Work of the Week
                       </div>

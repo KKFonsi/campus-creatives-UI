@@ -311,7 +311,7 @@
   flex: 1;
   min-height: 0;
   border-radius: 24px;
-  overflow-y: auto;
+  overflow-y: hidden;
   overflow-x: hidden;
   background: #ffffff;
   position: relative;
@@ -346,14 +346,64 @@
 }
 
 .demo-phone-screen .mobile-bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  position: relative;
   width: 100%;
   max-width: none;
   margin: 0 auto;
   z-index: 100;
+}
+
+.demo-phone-screen .mobile-role-shell {
+  width: 100%;
+  max-width: 390px;
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  background: var(--color-main-bg, #f8f6f1);
+}
+
+.demo-phone-screen .mobile-role-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.demo-phone-screen .mobile-role-shell > .mobile-bottom-nav {
+  flex: 0 0 68px;
+  height: 68px;
+  position: relative;
+  inset: auto;
+  width: 100%;
+  max-width: 390px;
+  z-index: 80;
+}
+
+.demo-phone-screen .mobile-role-scroll .mobile-bottom-nav {
+  display: none !important;
+}
+
+.demo-phone-screen .mobile-role-scroll > .w-\[390px\],
+.demo-phone-screen .mobile-role-scroll > div[class*="w-[390px]"] {
+  width: 100%;
+  max-width: 390px;
+  min-height: 100%;
+  padding-bottom: 0 !important;
+}
+
+.demo-phone-screen .mobile-role-scroll > .mobile-app-screen,
+.demo-phone-screen .mobile-role-scroll > .submit-work-mobile-screen {
+  height: 100%;
+  min-height: 100%;
+  overflow: hidden;
+}
+
+.demo-phone-screen .mobile-role-scroll > .mobile-app-screen .absolute.bottom-\[68px\] {
+  bottom: 0;
 }
 
 .demo-phone-screen .mobile-app-screen {

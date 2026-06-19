@@ -8,9 +8,10 @@ interface CampusGalleryPageProps {
   onExhibitionDetail?: () => void;
   onWorkDetail?: () => void;
   onCollegeShowcase?: () => void;
+  onCollegeDirectory?: () => void;
 }
 
-export function CampusGalleryPage({ onExhibitionDetail, onWorkDetail, onCollegeShowcase }: CampusGalleryPageProps = {}) {
+export function CampusGalleryPage({ onExhibitionDetail, onWorkDetail, onCollegeShowcase, onCollegeDirectory }: CampusGalleryPageProps = {}) {
   const [activeMonth, setActiveMonth] = useState('Jun 2026');
 
   const exhibitions = [
@@ -132,7 +133,16 @@ export function CampusGalleryPage({ onExhibitionDetail, onWorkDetail, onCollegeS
 
       {/* College Galleries */}
       <section className="w-full max-w-[1200px] mx-auto px-8 mb-20">
-        <h3 className="text-[24px] font-bold mb-8">College Galleries</h3>
+        <div className="mb-8 flex items-center justify-between">
+          <h3 className="text-[24px] font-bold">College Galleries</h3>
+          <button
+            type="button"
+            onClick={onCollegeDirectory}
+            className="inline-flex items-center gap-2 rounded-xl border border-border bg-card-bg px-4 py-2 text-[14px] font-bold text-pup-maroon hover:border-pup-maroon"
+          >
+            View All Colleges <ArrowRight size={16} />
+          </button>
+        </div>
         <div className="grid grid-cols-4 gap-6">
           {colleges.map((college, i) => (
             <button key={i} type="button" onClick={onCollegeShowcase} className="bg-card-bg rounded-xl border border-border p-4 hover:shadow-md transition-shadow group text-left focus:outline-none focus:ring-4 focus:ring-pup-maroon/20">

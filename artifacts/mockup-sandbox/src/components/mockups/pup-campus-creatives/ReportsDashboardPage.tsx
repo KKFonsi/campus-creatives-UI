@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { 
+import {
   LayoutDashboard, 
   ClipboardList, 
   Flag, 
@@ -18,6 +18,7 @@ import {
   ArrowRight,
   Calendar,
 } from 'lucide-react';
+import { ModeratorDesktopSidebar } from './_shared/ModeratorDesktopSidebar';
 import './_group.css';
 
 interface ReportsDashboardPageProps {
@@ -170,57 +171,15 @@ export function ReportsDashboardPage({
 
   return (
     <div className="flex min-h-screen bg-main-bg font-inter">
-      {/* Moderator Sidebar */}
-      <aside className="w-[240px] bg-dark-surface text-white flex flex-col sticky top-0 h-screen">
-        <div className="p-6">
-          <div className="flex items-center gap-3 mb-8">
-            <div className="w-8 h-8 bg-pup-gold rounded flex items-center justify-center text-dark-surface font-bold">CC</div>
-            <div className="flex flex-col">
-              <span className="text-pup-gold font-bold text-[14px] leading-none uppercase tracking-tighter">Campus Creatives</span>
-              <span className="text-[10px] text-white/50 font-bold tracking-widest mt-1">MODERATOR</span>
-            </div>
-          </div>
-
-          <nav className="space-y-1">
-            {[
-              { icon: LayoutDashboard, label: 'Dashboard', active: false, onClick: onDashboard },
-              { icon: ClipboardList, label: 'Pending Reviews', count: '24', active: false, onClick: onPending },
-              { icon: Flag, label: 'Reports', count: '6', active: true, onClick: onReports },
-              { icon: Star, label: 'Featured Works', active: false, onClick: onFeatured },
-              { icon: Shield, label: 'Official Content', active: false, onClick: onOfficialContent },
-              { icon: Calendar, label: 'Events', active: false, onClick: onEvents },
-              { icon: History, label: 'Moderation History', active: false, onClick: onHistory },
-            ].map((item) => (
-              <button
-                key={item.label}
-                onClick={item.onClick}
-                className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg transition-colors ${
-                  item.active 
-                    ? 'bg-white/10 text-white border-l-4 border-pup-maroon' 
-                    : 'text-white/60 hover:text-white hover:bg-white/5'
-                }`}
-              >
-                <div className="flex items-center gap-3">
-                  <item.icon size={18} />
-                  <span className="text-[14px] font-medium">{item.label}</span>
-                </div>
-                {item.count && (
-                  <span className={`text-[11px] font-bold px-1.5 py-0.5 rounded-full ${item.active ? 'bg-pup-maroon text-white' : 'bg-white/10 text-white/50'}`}>
-                    {item.count}
-                  </span>
-                )}
-              </button>
-            ))}
-          </nav>
-        </div>
-
-        <div className="mt-auto p-6 border-t border-white/10">
-          <button className="flex items-center gap-2 text-white/60 hover:text-pup-gold transition-colors text-[13px] font-medium">
-            <span>Switch to Student View</span>
-            <ArrowRight size={14} />
-          </button>
-        </div>
-      </aside>
+      <ModeratorDesktopSidebar
+        onDashboard={onDashboard}
+        onPending={onPending}
+        onReports={onReports}
+        onFeatured={onFeatured}
+        onOfficialContent={onOfficialContent}
+        onEvents={onEvents}
+        onHistory={onHistory}
+      />
 
       {/* Main Content */}
       <main className="flex-1 flex flex-col overflow-hidden">

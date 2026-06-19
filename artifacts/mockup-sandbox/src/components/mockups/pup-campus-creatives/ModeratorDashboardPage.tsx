@@ -18,6 +18,8 @@ import {
   Calendar,
 } from 'lucide-react';
 import { InitialsAvatar } from './_shared/InitialsAvatar';
+import { ModeratorDesktopSidebar } from './_shared/ModeratorDesktopSidebar';
+import { navigateTo } from '../../../app/demo';
 import './_group.css';
 
 interface ModeratorNavigationProps {
@@ -42,6 +44,7 @@ export default function ModeratorDashboardPage({
   onEvents,
 }: ModeratorNavigationProps = {}) {
   const [activeTab, setActiveTab] = useState('Dashboard');
+  const openReport = (reportId: string) => navigateTo(`/moderator/reports/${reportId}`);
 
   const handleNav = (tab: string, callback?: () => void) => {
     setActiveTab(tab);
@@ -50,30 +53,15 @@ export default function ModeratorDashboardPage({
 
   return (
     <div className="flex min-h-screen bg-main-bg font-inter">
-      {/* Sidebar */}
-      <aside className="w-[240px] bg-dark-surface text-white flex flex-col shrink-0 sticky top-0 h-screen">
-        <div className="p-6">
-          <div className="text-pup-gold font-bold text-xl tracking-tight mb-1">Campus Creatives</div>
-          <div className="inline-block px-2 py-0.5 bg-pup-gold text-dark-surface text-[10px] font-bold rounded uppercase tracking-wider">MODERATOR</div>
-        </div>
-
-        <nav className="flex-1 px-3 py-4 space-y-1">
-          <NavItem icon={<LayoutDashboard size={20} />} label="Dashboard" active={activeTab === 'Dashboard'} onClick={() => handleNav('Dashboard', onDashboard)} />
-          <NavItem icon={<ClipboardList size={20} />} label="Pending Reviews" badge="24" active={activeTab === 'Pending Reviews'} onClick={() => handleNav('Pending Reviews', onPending)} />
-          <NavItem icon={<Flag size={20} />} label="Reports" badge="6" active={activeTab === 'Reports'} onClick={() => handleNav('Reports', onReports)} />
-          <NavItem icon={<Star size={20} />} label="Featured Works" active={activeTab === 'Featured Works'} onClick={() => handleNav('Featured Works', onFeatured)} />
-          <NavItem icon={<Shield size={20} />} label="Official Content" active={activeTab === 'Official Content'} onClick={() => handleNav('Official Content', onOfficialContent)} />
-          <NavItem icon={<Calendar size={20} />} label="Events" active={activeTab === 'Events'} onClick={() => handleNav('Events', onEvents)} />
-          <NavItem icon={<History size={20} />} label="Moderation History" active={activeTab === 'History'} onClick={() => handleNav('History', onHistory)} />
-        </nav>
-
-        <div className="p-4 border-t border-white/10">
-          <button className="flex items-center gap-2 text-[14px] text-gray-400 hover:text-white transition-colors w-full px-3 py-2">
-            <span>Switch to Student View</span>
-            <ExternalLink size={14} />
-          </button>
-        </div>
-      </aside>
+      <ModeratorDesktopSidebar
+        onDashboard={onDashboard}
+        onPending={onPending}
+        onReports={onReports}
+        onFeatured={onFeatured}
+        onOfficialContent={onOfficialContent}
+        onEvents={onEvents}
+        onHistory={onHistory}
+      />
 
       {/* Main Content */}
       <main className="flex-1 flex flex-col overflow-hidden">
@@ -115,12 +103,12 @@ export default function ModeratorDashboardPage({
 
           {/* Stat Cards */}
           <section className="grid grid-cols-3 gap-6">
-            <StatCard icon={<ClipboardList className="text-status-pending" />} label="Pending Reviews" value="24" subValue="4 urgent" color="bg-status-pending" />
-            <StatCard icon={<RefreshCw className="text-status-needs-revision" />} label="Needs Revision" value="8" subValue="2 resubmitted" color="bg-status-needs-revision" />
-            <StatCard icon={<Flag className="text-status-rejected" />} label="Reported Content" value="6" subValue="3 high priority" color="bg-status-rejected" />
-            <StatCard icon={<CheckCircle className="text-status-approved" />} label="Approved Today" value="12" subValue="+20% from yesterday" color="bg-status-approved" />
-            <StatCard icon={<Star className="text-pup-gold" />} label="Featured Works" value="18" subValue="4 current highlights" color="bg-pup-gold" />
-            <StatCard icon={<AlertTriangle className="text-crimson-accent" />} label="Open Reports" value="4" subValue="Action required" color="bg-crimson-accent" />
+            <StatCard icon={<ClipboardList size={22} className="text-status-pending" />} label="Pending Reviews" value="24" subValue="4 urgent" chipClass="bg-amber-50 border-amber-100" />
+            <StatCard icon={<RefreshCw size={22} className="text-status-needs-revision" />} label="Needs Revision" value="8" subValue="2 resubmitted" chipClass="bg-orange-50 border-orange-100" />
+            <StatCard icon={<Flag size={22} className="text-status-rejected" />} label="Reported Content" value="6" subValue="3 high priority" chipClass="bg-red-50 border-red-100" />
+            <StatCard icon={<CheckCircle size={22} className="text-status-approved" />} label="Approved Today" value="12" subValue="+20% from yesterday" chipClass="bg-emerald-50 border-emerald-100" />
+            <StatCard icon={<Star size={22} className="text-pup-maroon" />} label="Featured Works" value="18" subValue="4 current highlights" chipClass="bg-soft-gold border-pup-gold/30" />
+            <StatCard icon={<AlertTriangle size={22} className="text-crimson-accent" />} label="Open Reports" value="4" subValue="Action required" chipClass="bg-soft-maroon border-crimson-accent/10" />
           </section>
 
           {/* Two-Column Layout */}
@@ -194,22 +182,28 @@ export default function ModeratorDashboardPage({
                 <h2 className="text-lg font-bold text-primary-text">Priority Reports</h2>
                 <div className="space-y-3">
                   <ReportCard 
+                    reportId="CC-RPT-2026-0031"
                     reason="Suspected stolen work"
                     title="Pasig at Dusk"
                     date="June 11"
                     severity="High"
+                    onOpenReport={openReport}
                   />
                   <ReportCard 
+                    reportId="CC-RPT-2026-0028"
                     reason="Copyright concern"
                     title="Engineering in Motion"
                     date="June 10"
                     severity="High"
+                    onOpenReport={openReport}
                   />
                   <ReportCard 
+                    reportId="CC-RPT-2026-0026"
                     reason="Inappropriate content"
                     title="Abstract Forms 3"
                     date="June 12"
                     severity="Medium"
+                    onOpenReport={openReport}
                   />
                 </div>
                 <button onClick={onReports} className="w-full py-2 text-[13px] font-semibold text-secondary-text border border-border rounded-lg hover:bg-secondary-surface transition-colors">
@@ -276,10 +270,10 @@ function NavItem({ icon, label, badge, active, onClick }: { icon: any, label: st
   return (
     <button 
       onClick={onClick}
-      className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg transition-all ${
+      className={`w-full flex items-center justify-between border-l-4 px-3 py-2.5 rounded-lg transition-all ${
         active 
-          ? 'bg-white/10 border-l-4 border-pup-gold text-white' 
-          : 'text-gray-400 hover:bg-white/5 hover:text-white'
+          ? 'bg-white/10 border-pup-gold text-white' 
+          : 'border-transparent text-gray-400 hover:bg-white/5 hover:text-white'
       }`}
     >
       <div className="flex items-center gap-3">
@@ -295,11 +289,11 @@ function NavItem({ icon, label, badge, active, onClick }: { icon: any, label: st
   );
 }
 
-function StatCard({ icon, label, value, subValue, color }: { icon: any, label: string, value: string, subValue: string, color: string }) {
+function StatCard({ icon, label, value, subValue, chipClass }: { icon: any, label: string, value: string, subValue: string, chipClass: string }) {
   return (
     <div className="bg-card-bg p-5 rounded-xl border border-border shadow-sm hover:shadow-md transition-shadow">
       <div className="flex items-start justify-between mb-4">
-        <div className={`p-2 rounded-lg bg-opacity-10 ${color.replace('bg-', 'bg-')}`}>
+        <div className={`flex h-11 w-11 items-center justify-center rounded-xl border ${chipClass}`}>
           {icon}
         </div>
         <div className="text-[12px] text-secondary-text font-medium">{subValue}</div>
@@ -344,7 +338,7 @@ function ReviewCard({ thumbnail, title, creator, college, category, date, waitin
   );
 }
 
-function ReportCard({ reason, title, date, severity }: any) {
+function ReportCard({ reportId, reason, title, date, severity, onOpenReport }: any) {
   return (
     <div className="p-4 bg-warm-white rounded-xl border border-border space-y-3">
       <div className="flex items-center justify-between">
@@ -361,7 +355,7 @@ function ReportCard({ reason, title, date, severity }: any) {
           Reported by anonymous • {date}
         </div>
       </div>
-      <button className="text-[13px] text-pup-maroon font-bold flex items-center gap-1 hover:underline">
+      <button onClick={() => onOpenReport?.(reportId)} className="text-[13px] text-pup-maroon font-bold flex items-center gap-1 hover:underline">
         Open Report <ChevronRight size={14} />
       </button>
     </div>

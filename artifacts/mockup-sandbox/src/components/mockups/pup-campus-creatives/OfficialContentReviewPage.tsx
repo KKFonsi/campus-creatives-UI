@@ -24,6 +24,7 @@ import {
   Layout
 } from 'lucide-react';
 import { InitialsAvatar } from './_shared/InitialsAvatar';
+import { ModeratorDesktopSidebar } from './_shared/ModeratorDesktopSidebar';
 import './_group.css';
 
 interface ModeratorNavigationProps {
@@ -60,10 +61,10 @@ const ModeratorSidebar = ({ active, navigation }: { active: string; navigation?:
         <button
           key={item.id}
           onClick={item.onClick}
-          className={`w-full flex items-center justify-between px-3 py-2 rounded-lg transition-colors ${
+          className={`w-full flex items-center justify-between border-l-4 px-3 py-2 rounded-lg transition-colors ${
             active === item.id 
-              ? 'bg-white/10 text-white border-l-4 border-pup-maroon' 
-              : 'text-white/70 hover:bg-white/5 hover:text-white'
+              ? 'bg-white/10 text-white border-pup-gold' 
+              : 'border-transparent text-white/70 hover:bg-white/5 hover:text-white'
           }`}
         >
           <div className="flex items-center gap-3">
@@ -132,7 +133,9 @@ export default function OfficialContentReviewPage(props: ModeratorNavigationProp
       status: "Pending",
       statusColor: "text-amber-700 bg-amber-50 border-amber-200",
       event: "PUP Likha 2026",
-      verified: true
+      verified: true,
+      image: "/__mockup/images/event_1.jpg",
+      excerpt: "Official winners card set for the university-wide creative showcase."
     },
     {
       id: 2,
@@ -145,7 +148,9 @@ export default function OfficialContentReviewPage(props: ModeratorNavigationProp
       status: "Pending",
       statusColor: "text-amber-700 bg-amber-50 border-amber-200",
       event: "College Showcase",
-      verified: true
+      verified: true,
+      image: "/__mockup/images/colleges/ccis-pup-main-building.jpg",
+      excerpt: "A college feature announcing the next CCIS student creative showcase."
     },
     {
       id: 3,
@@ -158,7 +163,9 @@ export default function OfficialContentReviewPage(props: ModeratorNavigationProp
       status: "Approved",
       statusColor: "text-status-approved bg-status-approved/10 border-status-approved/20",
       event: "Foundation Week",
-      verified: true
+      verified: true,
+      image: "/__mockup/images/event_2.jpg",
+      excerpt: "Poster-making winners prepared for Foundation Week publication."
     },
     {
       id: 4,
@@ -171,7 +178,9 @@ export default function OfficialContentReviewPage(props: ModeratorNavigationProp
       status: "Needs Revision",
       statusColor: "text-status-needs-revision bg-status-needs-revision/10 border-status-needs-revision/20",
       event: "Tinig ng PUP 2026",
-      verified: true
+      verified: true,
+      image: "/__mockup/images/event_3.jpg",
+      excerpt: "Open-call results need clearer captioning before scheduling."
     }
   ];
 
@@ -179,7 +188,7 @@ export default function OfficialContentReviewPage(props: ModeratorNavigationProp
 
   return (
     <div className="flex min-h-screen bg-main-bg font-inter">
-      <ModeratorSidebar active="Official Content" navigation={props} />
+      <ModeratorDesktopSidebar {...props} />
       
       <main className="flex-1 flex flex-col overflow-hidden">
         <TopBar />
@@ -224,8 +233,8 @@ export default function OfficialContentReviewPage(props: ModeratorNavigationProp
                     <Shield size={12} className="text-pup-gold" />
                   </div>
 
-                  <div className="w-14 h-14 bg-soft-maroon rounded-lg flex items-center justify-center text-pup-maroon font-bold flex-shrink-0 shadow-sm border border-pup-maroon/10">
-                    <Building2 size={24} />
+                  <div className="w-20 h-14 bg-soft-maroon rounded-lg flex-shrink-0 shadow-sm border border-pup-maroon/10 overflow-hidden">
+                    <img src={sub.image} alt={`${sub.title} preview`} className="h-full w-full object-cover" />
                   </div>
                   
                   <div className="flex-1 min-w-0">
@@ -237,6 +246,7 @@ export default function OfficialContentReviewPage(props: ModeratorNavigationProp
                       {sub.verified && <CheckCircle2 size={12} className="text-status-approved" />}
                     </div>
                     <h3 className="text-base font-bold text-primary-text truncate uppercase tracking-tight">{sub.title}</h3>
+                    <p className="mt-1 text-[12px] text-secondary-text line-clamp-1">{sub.excerpt}</p>
                     <div className="flex items-center gap-4 mt-1 text-[11px] text-secondary-text font-medium uppercase tracking-tight">
                       <span className="flex items-center gap-1.5"><User size={12} /> {sub.rep}</span>
                       <span className="flex items-center gap-1.5"><Calendar size={12} /> {sub.date}</span>
@@ -287,13 +297,11 @@ export default function OfficialContentReviewPage(props: ModeratorNavigationProp
                               </p>
                             </div>
                             <div className="grid grid-cols-2 gap-4">
-                              <div className="aspect-video bg-secondary-surface rounded-xl border border-border flex flex-col items-center justify-center text-muted-text italic text-xs gap-2">
-                                <Shield size={24} className="opacity-20" />
-                                [Official Asset Preview 1]
+                              <div className="aspect-video bg-secondary-surface rounded-xl border border-border overflow-hidden">
+                                <img src={sub.image} alt={`${sub.title} official asset`} className="h-full w-full object-cover" />
                               </div>
-                              <div className="aspect-video bg-secondary-surface rounded-xl border border-border flex flex-col items-center justify-center text-muted-text italic text-xs gap-2">
-                                <Shield size={24} className="opacity-20" />
-                                [Official Asset Preview 2]
+                              <div className="aspect-video bg-secondary-surface rounded-xl border border-border overflow-hidden">
+                                <img src="/__mockup/images/hero-collage.jpg" alt="Official content supporting collage" className="h-full w-full object-cover" />
                               </div>
                             </div>
                             <div className="grid grid-cols-3 gap-4">

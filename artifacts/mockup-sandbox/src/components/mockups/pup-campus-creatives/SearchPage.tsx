@@ -1,6 +1,7 @@
 import React from 'react';
 import { Search, X, Clock, ArrowRight, User, Image as ImageIcon, Calendar, GraduationCap, Grid3X3 } from 'lucide-react';
 import { InitialsAvatar } from './_shared/InitialsAvatar';
+import { CREATIVE_CATEGORY_LABELS } from '../../../app/data/creativeCategories';
 import './_group.css';
 
 interface SearchPageProps {
@@ -38,7 +39,7 @@ export function SearchPage({ onBack, onResult, onSeeAll, onCollege, onCreator }:
         <div className="mb-12">
           <h3 className="text-xs font-black uppercase tracking-widest text-muted-text mb-4">Suggested Categories</h3>
           <div className="flex flex-wrap gap-2">
-            {['Photography', 'Digital Art', 'Spoken Word', 'Film', 'Music', 'Dance', 'Visual Art', 'UI/UX'].map(cat => (
+            {CREATIVE_CATEGORY_LABELS.slice(0, 8).map(cat => (
               <button key={cat} className="px-5 py-2.5 bg-white border border-border rounded-xl text-[14px] font-bold hover:border-pup-maroon hover:text-pup-maroon transition-all shadow-sm">
                 {cat}
               </button>
@@ -168,7 +169,7 @@ export function SearchPageMobile({ onBack, onResult, onSeeAll }: SearchPageProps
         <section className="mb-8">
           <h3 className="text-[11px] font-black uppercase tracking-widest text-muted-text mb-4">Suggested</h3>
           <div className="flex flex-wrap gap-2">
-            {['Photography', 'Digital Art', 'Design', 'Film', 'Music'].map(cat => (
+            {CREATIVE_CATEGORY_LABELS.slice(0, 5).map(cat => (
               <span key={cat} className="px-4 py-2 bg-secondary-surface rounded-full text-[13px] font-bold">{cat}</span>
             ))}
           </div>

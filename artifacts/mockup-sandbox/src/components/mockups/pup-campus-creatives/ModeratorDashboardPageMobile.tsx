@@ -4,7 +4,6 @@ import {
   ClipboardList, 
   Flag, 
   MoreHorizontal, 
-  Bell, 
   Star,
   RefreshCw,
   CheckCircle,
@@ -13,6 +12,7 @@ import {
 } from 'lucide-react';
 import { InitialsAvatar } from './_shared/InitialsAvatar';
 import { ModeratorMobileBottomNav } from './_shared/ModeratorMobileBottomNav';
+import { navigateTo } from '../../../app/demo';
 import './_group.css';
 
 interface ModeratorDashboardPageMobileProps {
@@ -23,6 +23,7 @@ interface ModeratorDashboardPageMobileProps {
   onFeatured?: () => void;
   onOfficialContent?: () => void;
   onHistory?: () => void;
+  onEvents?: () => void;
 }
 
 export default function ModeratorDashboardPageMobile({
@@ -33,7 +34,10 @@ export default function ModeratorDashboardPageMobile({
   onFeatured,
   onOfficialContent,
   onHistory,
+  onEvents,
 }: ModeratorDashboardPageMobileProps = {}) {
+  const openReport = (reportId: string) => navigateTo(`/moderator/reports/${reportId}`);
+
   return (
     <div className="w-[390px] min-h-screen bg-main-bg font-inter overflow-y-auto flex flex-col relative">
       {/* Mobile Top Header */}
@@ -43,10 +47,6 @@ export default function ModeratorDashboardPageMobile({
           <div className="px-1.5 py-0.5 bg-pup-gold text-dark-surface text-[8px] font-extrabold rounded uppercase tracking-wider">MODERATOR</div>
         </div>
         <div className="flex items-center gap-3">
-          <button className="relative text-white/80">
-            <Bell size={20} />
-            <span className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-crimson-accent rounded-full border border-dark-surface"></span>
-          </button>
           <InitialsAvatar name="Maria Moderator" className="w-8 h-8 border border-white/20" textClassName="text-[11px]" />
         </div>
       </header>
@@ -105,14 +105,18 @@ export default function ModeratorDashboardPageMobile({
           </div>
           <div className="space-y-3">
             <MobileReportCard 
+              reportId="CC-RPT-2026-0031"
               reason="Stolen work"
               title="Pasig at Dusk"
               severity="High"
+              onOpenReport={openReport}
             />
             <MobileReportCard 
+              reportId="CC-RPT-2026-0026"
               reason="Inappropriate"
               title="Abstract Forms 3"
               severity="Med"
+              onOpenReport={openReport}
             />
           </div>
         </section>
@@ -126,16 +130,24 @@ export default function ModeratorDashboardPageMobile({
         onFeatured={onFeatured}
         onOfficialContent={onOfficialContent}
         onHistory={onHistory}
+        onEvents={onEvents}
       />
     </div>
   );
 }
 
 function CompactStatCard({ icon, label, value, color }: any) {
+  const iconClass = color === 'bg-pup-gold' ? 'text-dark-surface' : 'text-white';
+  const visibleIcon = React.isValidElement(icon)
+    ? React.cloneElement(icon as React.ReactElement<{ className?: string }>, {
+        className: iconClass,
+      })
+    : icon;
+
   return (
     <div className="bg-card-bg p-3 rounded-xl border border-border shadow-sm flex items-center gap-3">
-      <div className={`p-1.5 rounded-lg bg-opacity-10 ${color}`}>
-        {icon}
+      <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ${color}`}>
+        {visibleIcon}
       </div>
       <div>
         <div className="text-[16px] font-bold text-primary-text leading-none mb-0.5">{value}</div>
@@ -165,9 +177,9 @@ function MobileReviewCard({ thumbnail, title, creator, waiting, urgent, onOpenRe
   );
 }
 
-function MobileReportCard({ reason, title, severity }: any) {
+function MobileReportCard({ reportId, reason, title, severity, onOpenReport }: any) {
   return (
-    <div className="bg-card-bg p-3 rounded-xl border border-border shadow-sm flex items-center justify-between gap-3">
+    <button type="button" onClick={() => onOpenReport?.(reportId)} className="w-full bg-card-bg p-3 rounded-xl border border-border shadow-sm flex items-center justify-between gap-3 text-left">
       <div className="min-w-0">
         <div className="flex items-center gap-2 mb-0.5">
           <span className="px-1.5 py-0.5 bg-red-50 text-status-rejected text-[9px] font-bold rounded uppercase">
@@ -179,10 +191,10 @@ function MobileReportCard({ reason, title, severity }: any) {
         </div>
         <h4 className="text-[13px] font-bold text-primary-text truncate">{title}</h4>
       </div>
-      <button className="p-1.5 text-secondary-text hover:text-pup-maroon">
+      <span className="p-1.5 text-secondary-text">
         <ChevronRight size={20} />
-      </button>
-    </div>
+      </span>
+    </button>
   );
 }
 

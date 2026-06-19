@@ -3,6 +3,7 @@ import { DesktopNav } from './_shared/DesktopNav';
 import { InitialsAvatar } from './_shared/InitialsAvatar';
 import { Award, Heart, Bookmark, Share, Search, Filter } from 'lucide-react';
 import { navigateTo } from '../../../app/demo';
+import { CREATIVE_CATEGORY_LABELS, normalizeCreativeCategory } from '../../../app/data/creativeCategories';
 import { routePaths } from '../../../app/routes';
 import './_group.css';
 
@@ -95,7 +96,7 @@ export function StudentHomeDesktop() {
             { id: '1', title: 'Sinta sa Riles', creator: 'Marco Villanueva', college: 'CAL', cat: 'Illustration', likes: 182, img: '/__mockup/images/thumbnail_2.jpg' },
             { id: '2', title: 'Campus Frequencies', creator: 'Liza Santos', college: 'COC', cat: 'Digital Art', likes: 95, img: '/__mockup/images/thumbnail_3.jpg' },
             { id: '3', title: 'Concrete and Creativity', creator: 'Dave Cruz', college: 'CE', cat: 'Photography', likes: 210, img: '/__mockup/images/thumbnail_4.jpg' },
-            { id: '4', title: 'Digital Sinta', creator: 'Miguel Torres', college: 'CCIS', cat: 'UI/UX', likes: 144, img: '/__mockup/images/thumbnail_1.jpg' }
+            { id: '4', title: 'Digital Sinta', creator: 'Miguel Torres', college: 'CCIS', cat: normalizeCreativeCategory('UI/UX'), likes: 144, img: '/__mockup/images/thumbnail_1.jpg' }
           ].map(work => (
             <div key={work.id} className="group bg-card-bg rounded-xl border border-border overflow-hidden shadow-sm hover:shadow-md transition-shadow">
               <div className="relative aspect-[4/3] bg-secondary-surface overflow-hidden">
@@ -125,7 +126,7 @@ export function StudentHomeDesktop() {
         <div className="col-span-2">
           <h2 className="text-[20px] font-bold mb-5">Browse by Category</h2>
           <div className="flex flex-wrap gap-2.5">
-            {['Visual Art', 'Photography', 'Graphic Design', 'Music', 'Film and Video', 'Spoken Word', 'UI/UX', 'Performance'].map(cat => (
+            {CREATIVE_CATEGORY_LABELS.map(cat => (
               <button key={cat} className="px-4 py-2 bg-card-bg border border-border rounded-lg text-[14px] font-medium hover:border-pup-maroon hover:text-pup-maroon transition-colors shadow-sm">
                 {cat}
               </button>

@@ -77,7 +77,12 @@ export function DesktopNav({ authenticated = false, active = "Home", onLogin, on
         <div className="flex items-center gap-4">
           {authenticated ? (
             <>
-              <button className="p-2 text-secondary-text hover:text-pup-maroon transition-colors rounded-full hover:bg-soft-maroon" aria-label="Search">
+              <button
+                type="button"
+                onClick={() => navigateTo(routePaths.student.search)}
+                className="p-2 text-secondary-text hover:text-pup-maroon transition-colors rounded-full hover:bg-soft-maroon"
+                aria-label="Search"
+              >
                 <Search size={20} />
               </button>
               <a

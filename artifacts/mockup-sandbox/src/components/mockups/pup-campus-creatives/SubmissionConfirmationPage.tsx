@@ -7,9 +7,10 @@ import './_group.css';
 
 interface SubmissionConfirmationPageProps {
   onMySubmissions?: () => void;
+  onSubmissionDetail?: () => void;
 }
 
-export default function SubmissionConfirmationPage({ onMySubmissions }: SubmissionConfirmationPageProps = {}) {
+export default function SubmissionConfirmationPage({ onMySubmissions, onSubmissionDetail }: SubmissionConfirmationPageProps = {}) {
   return (
     <div className="min-h-screen bg-main-bg font-inter">
       <DesktopNav authenticated={true} />
@@ -103,7 +104,11 @@ export default function SubmissionConfirmationPage({ onMySubmissions }: Submissi
               <Home size={18} className="transition-transform group-hover:-translate-y-0.5" />
             </button>
             <div className="grid grid-cols-2 gap-3">
-              <button className="py-4 border border-border text-primary-text rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-secondary-surface transition-colors group">
+              <button
+                type="button"
+                onClick={onSubmissionDetail ?? (() => navigateTo('/student/submissions/CC-WORK-2026-0148'))}
+                className="py-4 border border-border text-primary-text rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-secondary-surface transition-colors group"
+              >
                 View Submission
                 <ArrowRight size={18} className="transition-transform group-hover:translate-x-0.5" />
               </button>

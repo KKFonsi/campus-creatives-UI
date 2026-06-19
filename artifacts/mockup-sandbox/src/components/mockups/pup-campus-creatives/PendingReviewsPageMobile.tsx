@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { 
-  Bell, 
   Search, 
   Filter, 
   ChevronRight, 
@@ -24,6 +23,7 @@ interface PendingReviewsPageMobileProps {
   onFeatured?: () => void;
   onOfficialContent?: () => void;
   onHistory?: () => void;
+  onEvents?: () => void;
 }
 
 export default function PendingReviewsPageMobile({
@@ -34,6 +34,7 @@ export default function PendingReviewsPageMobile({
   onFeatured,
   onOfficialContent,
   onHistory,
+  onEvents,
 }: PendingReviewsPageMobileProps = {}) {
   const [showFilters, setShowFilters] = useState(false);
 
@@ -46,10 +47,6 @@ export default function PendingReviewsPageMobile({
           <div className="px-1.5 py-0.5 bg-pup-gold text-dark-surface text-[8px] font-extrabold rounded uppercase tracking-wider">MODERATOR</div>
         </div>
         <div className="flex items-center gap-3">
-          <button className="relative text-white/80">
-            <Bell size={20} />
-            <span className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-crimson-accent rounded-full border border-dark-surface"></span>
-          </button>
           <InitialsAvatar name="Maria Moderator" className="w-8 h-8 border border-white/20" textClassName="text-[11px]" />
         </div>
       </header>
@@ -121,6 +118,7 @@ export default function PendingReviewsPageMobile({
         onFeatured={onFeatured}
         onOfficialContent={onOfficialContent}
         onHistory={onHistory}
+        onEvents={onEvents}
       />
     </div>
   );

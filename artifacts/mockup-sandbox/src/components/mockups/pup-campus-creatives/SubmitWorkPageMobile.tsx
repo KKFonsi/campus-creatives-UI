@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowLeft, X, Upload, Video, Image as ImageIcon, AlertCircle, CheckCircle2, ChevronRight, FileText } from 'lucide-react';
+import { CREATIVE_CATEGORY_LABELS } from '../../../app/data/creativeCategories';
+import { MobileBottomNav } from './_shared/MobileBottomNav';
 import './_group.css';
 
 interface SubmitWorkPageMobileProps {
@@ -68,16 +70,16 @@ export default function SubmitWorkPageMobile({ onSubmitted }: SubmitWorkPageMobi
                 <option>Artwork</option>
                 <option>Photography</option>
                 <option>Music/Audio</option>
-                <option>Film/Video</option>
+                <option>Film and Video</option>
               </select>
             </div>
 
             <div className="space-y-2">
               <label className="text-sm font-semibold text-primary-text">Primary Category</label>
               <select className="w-full px-4 py-3 bg-white border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-pup-maroon/20 focus:border-pup-maroon transition-all appearance-none">
-                <option>Digital Art</option>
-                <option>Traditional Art</option>
-                <option>Graphic Design</option>
+                {CREATIVE_CATEGORY_LABELS.map((category) => (
+                  <option key={category}>{category}</option>
+                ))}
               </select>
             </div>
           </div>
@@ -195,7 +197,7 @@ export default function SubmitWorkPageMobile({ onSubmitted }: SubmitWorkPageMobi
                   Graphic Design <X size={14} className="cursor-pointer" />
                 </span>
                 <span className="flex items-center gap-1.5 px-3 py-1.5 bg-soft-maroon text-pup-maroon rounded-full text-xs font-medium border border-pup-maroon/10">
-                  Multimedia <X size={14} className="cursor-pointer" />
+                  UI/UX and Multimedia <X size={14} className="cursor-pointer" />
                 </span>
                 <button className="text-xs text-pup-maroon font-semibold px-3 py-1.5 border border-dashed border-pup-maroon/40 rounded-full">+ Add more</button>
               </div>
@@ -363,7 +365,7 @@ export default function SubmitWorkPageMobile({ onSubmitted }: SubmitWorkPageMobi
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 min-h-0 overflow-y-auto px-4 py-6">
+      <main className="flex-1 min-h-0 overflow-y-auto px-4 py-6 pb-8">
         <h2 className="text-lg font-bold text-primary-text mb-6">
           {step === 1 && "Tell us about your work"}
           {step === 2 && "Add your creative media"}
@@ -400,6 +402,7 @@ export default function SubmitWorkPageMobile({ onSubmitted }: SubmitWorkPageMobi
           </button>
         )}
       </div>
+      <MobileBottomNav />
 
       {/* Confirm Modal */}
       {showConfirm && (

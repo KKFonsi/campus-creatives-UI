@@ -12,6 +12,7 @@ import {
   Award,
   MoreVertical
 } from 'lucide-react';
+import { CREATIVE_CATEGORY_LABELS, normalizeCreativeCategory } from '../../../app/data/creativeCategories';
 import './_group.css';
 
 interface ExplorePageProps {
@@ -37,7 +38,7 @@ export function ExplorePage({
   const filters = [
     { label: 'College', options: ['CAF', 'CADBE', 'CAL', 'CBA', 'COC', 'CCIS', 'COED', 'CE', 'CHK', 'CL', 'CPSPA', 'CS', 'CSSD', 'CTHTM', 'ITECH', 'GS'] },
     { label: 'Program', options: ['Broadcasting', 'Journalism', 'Communication Management', 'Computer Science', 'Information Technology'] },
-    { label: 'Creative Category', options: ['Visual Art', 'Photography', 'Digital Art', 'Music', 'Film and Video', 'Spoken Word', 'Dance', 'Design'] },
+    { label: 'Creative Category', options: CREATIVE_CATEGORY_LABELS },
     { label: 'Content Type', options: ['Project', 'Portfolio', 'Process', 'Case Study'] },
     { label: 'Event', options: ['PUP Likha 2026', 'Sinta Film Fest', 'Guhit Iskolar'] },
     { label: 'Recognition', options: ['Campus Highlight', 'Moderator\'s Pick', 'Rising Creator'] },
@@ -51,11 +52,11 @@ export function ExplorePage({
     { id: 5, title: 'Campus Frequencies', creator: 'Joven Bautista', college: 'COC', category: 'Music', image: '/__mockup/images/event_1.jpg', appreciates: 98 },
     { id: 6, title: 'Polytechnic Dreams', creator: 'Dana Cruz', college: 'CCIS', category: 'Graphic Design', image: '/__mockup/images/thumbnail_3.jpg', appreciates: 120 },
     { id: 7, title: 'Pasig at Dusk', creator: 'Sofia Lim', college: 'CAL', category: 'Photography', image: '/__mockup/images/college_1.jpg', appreciates: 85 },
-    { id: 8, title: 'Voices from the Lagoon', creator: 'Mika Santos', college: 'CAL', category: 'Poetry', highlight: 'Moderator\'s Pick', image: '/__mockup/images/college_2.jpg', appreciates: 134 },
+    { id: 8, title: 'Voices from the Lagoon', creator: 'Mika Santos', college: 'CAL', category: normalizeCreativeCategory('Poetry'), highlight: 'Moderator\'s Pick', image: '/__mockup/images/college_2.jpg', appreciates: 134 },
     { id: 9, title: 'Engineering in Motion', creator: 'Leo Torres', college: 'CE', category: 'Film and Video', image: '/__mockup/images/college_3.jpg', appreciates: 76 },
-    { id: 10, title: 'Manila Student Life', creator: 'Ana dela Cruz', college: 'COC', category: 'Documentary Photography', image: '/__mockup/images/college_4.jpg', appreciates: 112 },
+    { id: 10, title: 'Manila Student Life', creator: 'Ana dela Cruz', college: 'COC', category: 'Photography', image: '/__mockup/images/college_4.jpg', appreciates: 112 },
     { id: 11, title: 'Tinig ng Bayan', creator: 'Rafael Santos', college: 'CAL', category: 'Spoken Word', image: '/__mockup/images/thumbnail_4.jpg', appreciates: 145 },
-    { id: 12, title: 'Concrete and Creativity', creator: 'Mark Rivera', college: 'CADBE', category: 'Architecture', image: '/__mockup/images/college_5.jpg', appreciates: 64 },
+    { id: 12, title: 'Concrete and Creativity', creator: 'Mark Rivera', college: 'CADBE', category: 'Visual Art', image: '/__mockup/images/college_5.jpg', appreciates: 64 },
   ];
 
   return (

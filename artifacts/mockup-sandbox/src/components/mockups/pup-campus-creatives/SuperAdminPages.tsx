@@ -12,6 +12,7 @@ import {
   Plus,
   Search,
   Settings,
+  Shield,
   ShieldCheck,
   Tag,
   UserCog,
@@ -29,11 +30,16 @@ interface SuperAdminPageProps {
 const labels: Record<AdminDestination, string> = {
   dashboard: "Dashboard",
   users: "Users",
+  userDetail: "User Detail",
   moderators: "Moderators",
   colleges: "Colleges",
   categories: "Categories",
   events: "Events",
   newEvent: "Create Event",
+  recognition: "Recognition",
+  analytics: "Analytics",
+  activityLog: "Activity Log",
+  roles: "Roles",
   reports: "Reports",
   featured: "Featured",
   settings: "Settings",
@@ -43,11 +49,16 @@ const labels: Record<AdminDestination, string> = {
 const icons: Record<AdminDestination, React.ComponentType<{ size?: number; className?: string }>> = {
   dashboard: LayoutDashboard,
   users: Users,
+  userDetail: UserCog,
   moderators: ShieldCheck,
   colleges: Building2,
   categories: Tag,
   events: Calendar,
   newEvent: Plus,
+  recognition: Award,
+  analytics: Activity,
+  activityLog: Activity,
+  roles: Shield,
   reports: Flag,
   featured: Award,
   settings: Settings,
@@ -61,8 +72,12 @@ const desktopNav: AdminDestination[] = [
   "colleges",
   "categories",
   "events",
+  "recognition",
   "reports",
   "featured",
+  "analytics",
+  "activityLog",
+  "roles",
   "settings",
   "auditLog",
 ];
@@ -123,14 +138,16 @@ function MobileAdmin({ destination, onNavigate }: Omit<SuperAdminPageProps, "mod
   const [showMore, setShowMore] = useState(false);
 
   return (
-    <div className="w-[390px] min-h-screen bg-main-bg font-inter overflow-x-hidden overflow-y-auto pb-[86px]">
-      <header className="sticky top-0 z-40 bg-dark-surface px-4 py-4 text-white">
+    <div className="mobile-app-screen w-[390px] h-[844px] bg-main-bg font-inter overflow-hidden relative flex flex-col">
+      <header className="shrink-0 z-40 bg-dark-surface px-4 py-4 text-white">
         <p className="text-[10px] font-black uppercase tracking-widest text-pup-gold">Super Admin</p>
         <h1 className="text-xl font-black leading-tight">{labels[destination]}</h1>
       </header>
-      <AdminContent destination={destination} onNavigate={onNavigate} mobile />
+      <main className="flex-1 min-h-0 overflow-y-auto pb-[86px]">
+        <AdminContent destination={destination} onNavigate={onNavigate} mobile />
+      </main>
       {showMore && (
-        <div className="fixed bottom-[72px] left-1/2 z-50 w-[366px] -translate-x-1/2 rounded-2xl border border-border bg-white shadow-2xl overflow-hidden">
+        <div className="absolute bottom-[72px] left-1/2 z-50 w-[366px] -translate-x-1/2 rounded-2xl border border-border bg-white shadow-2xl overflow-hidden">
           {mobileMore.map((item) => {
             const Icon = icons[item];
             return (
@@ -141,7 +158,7 @@ function MobileAdmin({ destination, onNavigate }: Omit<SuperAdminPageProps, "mod
           })}
         </div>
       )}
-      <nav className="fixed bottom-0 left-1/2 z-40 flex h-[68px] w-[390px] -translate-x-1/2 items-center justify-around border-t border-white/10 bg-dark-surface px-2">
+      <nav className="absolute bottom-0 left-0 z-40 flex h-[68px] w-full items-center justify-around border-t border-white/10 bg-dark-surface px-2">
         {mobilePrimary.map((item) => {
           const Icon = icons[item];
           return (
@@ -207,6 +224,11 @@ function AdminContent({
       columns: ["Name", "Role", "Status", "College"],
       rows: [["Rafael Mendoza", "Student", "Active", "CCIS"], ["Maria Santos", "Student", "Active", "CAL"], ["Ana Cruz", "Moderator", "Active", "COC"]],
     },
+    userDetail: {
+      actions: ["Change role", "Restrict account", "View submissions"],
+      columns: ["Record", "Value", "Status", "Scope"],
+      rows: [["Rafael Mendoza", "Creator", "Active", "CCIS"], ["Approved works", "24", "Visible", "Portfolio"], ["Reports received", "0", "Clear", "Safety"]],
+    },
     moderators: {
       cta: "Add Moderator",
       actions: ["Edit assignment", "Deactivate"],
@@ -229,6 +251,27 @@ function AdminContent({
       actions: ["Edit event", "Archive event", "View counts"],
       columns: ["Event", "Status", "Submissions", "Organizer"],
       rows: [["PUP Likha 2026", "Open", "89", "PUP OSA"], ["Guhit Iskolar", "Closing soon", "67", "CCIS"], ["Sinta Short Film Festival", "Draft", "34", "CAL"]],
+    },
+    recognition: {
+      cta: "Add Badge",
+      actions: ["Edit badge", "Disable badge"],
+      columns: ["Badge", "Awarding type", "Awarded", "Status"],
+      rows: [["Artwork of the Week", "Manual", "18", "Active"], ["Creator of the Month", "Manual", "8", "Active"], ["Campus Highlight", "Manual", "12", "Active"]],
+    },
+    analytics: {
+      actions: ["View detail"],
+      columns: ["Metric", "Current value", "Trend", "Period"],
+      rows: [["Approved works", "2,148", "+12%", "Semester"], ["Active creators", "4,392", "+8%", "Semester"], ["Event participation", "836", "+16%", "Academic year"]],
+    },
+    activityLog: {
+      actions: ["Inspect record"],
+      columns: ["Activity", "Actor", "Type", "Date"],
+      rows: [["User role changed", "Admin One", "Users", "June 18"], ["Event published", "Lara Rep", "Events", "June 17"], ["Badge created", "Admin One", "Recognition", "June 15"]],
+    },
+    roles: {
+      actions: ["Edit role"],
+      columns: ["Role", "Access level", "Users", "Risk note"],
+      rows: [["Student", "Limited", "12,203", "Can submit work"], ["Moderator", "Review access", "28", "Can decide submissions"], ["System Admin", "Full access", "4", "Requires approval"]],
     },
     reports: {
       actions: ["Assign to Moderator", "Resolve", "Dismiss", "Remove content", "Suspend user"],

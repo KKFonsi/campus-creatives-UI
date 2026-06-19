@@ -2,14 +2,22 @@ import { SuperAdminPage } from "../../components/mockups/pup-campus-creatives/Su
 import { navigateTo, type DemoDisplayMode } from "../demo";
 import { adminRoutePaths, type AdminDestination } from "./adminRoutes";
 
+function navigateAdmin(destination: AdminDestination): void {
+  navigateTo(adminRoutePaths[destination]);
+}
+
+function compactAdmin(destination: AdminDestination, mode: DemoDisplayMode) {
+  return (
+    <SuperAdminPage
+      destination={destination}
+      mode={mode}
+      onNavigate={navigateAdmin}
+    />
+  );
+}
+
 export function getAdminScreen(destination: AdminDestination, mode: DemoDisplayMode) {
   return {
-    node: (
-      <SuperAdminPage
-        destination={destination}
-        mode={mode}
-        onNavigate={(nextDestination) => navigateTo(adminRoutePaths[nextDestination])}
-      />
-    ),
+    node: compactAdmin(destination, mode),
   };
 }

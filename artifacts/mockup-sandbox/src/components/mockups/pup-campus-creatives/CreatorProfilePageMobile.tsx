@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { MobileBottomNav } from './_shared/MobileBottomNav';
 import { InitialsAvatar } from './_shared/InitialsAvatar';
 import { ShareProfileModalMobile } from './ShareProfileModal';
+import { navigateTo } from '../../../app/demo';
 import { 
   Heart, 
   Share2, 
@@ -60,7 +61,7 @@ export function CreatorProfilePageMobile({
   const tabs = ['Portfolio', 'Featured', 'Recognitions', 'Events', 'About'];
 
   return (
-    <div className="w-[390px] min-h-screen bg-main-bg font-inter overflow-y-auto pb-24">
+    <div className="relative w-[390px] min-h-screen bg-main-bg font-inter overflow-y-auto pb-24">
       {onBack && (
         <button type="button" onClick={onBack} className="mx-4 mt-4 text-pup-maroon font-bold text-[13px]">
           Explore
@@ -176,7 +177,19 @@ export function CreatorProfilePageMobile({
       <div className="px-5 pt-6">
         <div className="grid grid-cols-2 gap-3">
           {portfolioWorks.map(work => (
-            <div key={work.id} className="bg-card-bg border border-border rounded-lg overflow-hidden shadow-sm">
+            <div
+              key={work.id}
+              role="button"
+              tabIndex={0}
+              onClick={() => navigateTo(`/student/work/${work.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}`)}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                  event.preventDefault();
+                  navigateTo(`/student/work/${work.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}`);
+                }
+              }}
+              className="bg-card-bg border border-border rounded-lg overflow-hidden shadow-sm text-left focus:outline-none focus:ring-4 focus:ring-pup-maroon/20"
+            >
               <div className="aspect-square relative">
                 <img src={work.img} alt={work.title} className="w-full h-full object-cover" />
                 <div className="absolute top-1.5 left-1.5">
@@ -194,7 +207,7 @@ export function CreatorProfilePageMobile({
                 <h3 className="font-bold text-[12px] line-clamp-1 mb-1">{work.title}</h3>
                 <div className="flex items-center justify-between">
                   <span className="text-[9px] text-muted-text font-bold uppercase">{work.category}</span>
-                  <button className="text-secondary-text">
+                  <button onClick={(event) => event.stopPropagation()} className="text-secondary-text">
                     <MoreHorizontal size={14} />
                   </button>
                 </div>

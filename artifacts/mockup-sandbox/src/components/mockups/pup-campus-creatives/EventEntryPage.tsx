@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { DesktopNav } from './_shared/DesktopNav';
-import { 
+import {
   Calendar, 
   MapPin, 
   Users, 
@@ -13,16 +13,30 @@ import {
   Info,
   Tag
 } from 'lucide-react';
+import { PUP_LIKHA_ALLOWED_CATEGORY_LABELS } from '../../../app/data/creativeCategories';
 import './_group.css';
 
 interface EventEntryPageProps {
   onBack?: () => void;
+  onCreateSubmission?: () => void;
 }
 
-export function EventEntryPage({ onBack }: EventEntryPageProps = {}) {
+export function EventEntryPage({ onBack, onCreateSubmission }: EventEntryPageProps = {}) {
   const [entryMode, setEntryMode] = useState<'existing' | 'new'>('existing');
   const [selectedWork, setSelectedWork] = useState<string | null>('digital-sinta');
   const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const acceptedCategories = PUP_LIKHA_ALLOWED_CATEGORY_LABELS as readonly string[];
+  const approvedWorks = [
+    { id: 'digital-sinta', title: 'Digital Sinta', cat: 'Digital Art', img: '/__mockup/images/thumbnail_3.jpg' },
+    { id: 'campus-freq', title: 'Campus Frequencies', cat: 'Music', img: '/__mockup/images/thumbnail_1.jpg' },
+    { id: 'poly-dreams', title: 'Polytechnic Dreams', cat: 'Digital Art', img: '/__mockup/images/thumbnail_4.jpg' },
+    { id: 'pasig-dusk', title: 'Pasig at Dusk', cat: 'Photography', img: '/__mockup/images/thumbnail_2.jpg' },
+    { id: 'thread-memory', title: 'Thread Memory', cat: 'Crafts', img: '/__mockup/images/thumbnail_1.jpg' },
+  ].map((work) => ({
+    ...work,
+    eligible: acceptedCategories.includes(work.cat),
+    reason: acceptedCategories.includes(work.cat) ? undefined : 'Category not accepted',
+  }));
 
   return (
     <div className="min-h-screen bg-main-bg text-primary-text font-inter pb-20">
@@ -69,7 +83,7 @@ export function EventEntryPage({ onBack }: EventEntryPageProps = {}) {
           <div className="bg-white/5 px-8 py-3 border-t border-white/5 flex items-center gap-4 text-xs">
             <span className="text-white/60">Allowed Categories:</span>
             <div className="flex flex-wrap gap-2">
-              {['Visual Art', 'Digital Art', 'Photography', 'Music', 'Film', 'Spoken Word', 'Dance'].map(cat => (
+              {PUP_LIKHA_ALLOWED_CATEGORY_LABELS.map(cat => (
                 <span key={cat} className="px-2 py-0.5 bg-white/10 rounded-full border border-white/10 text-white/80">{cat}</span>
               ))}
             </div>
@@ -116,12 +130,7 @@ export function EventEntryPage({ onBack }: EventEntryPageProps = {}) {
               <section className="animate-in fade-in slide-in-from-top-4 duration-500">
                 <h3 className="text-xs font-bold text-muted-text uppercase tracking-wider mb-4">Select from Approved Works</h3>
                 <div className="grid grid-cols-3 gap-6">
-                  {[
-                    { id: 'digital-sinta', title: 'Digital Sinta', cat: 'Digital Art', img: '/__mockup/images/thumbnail_3.jpg', eligible: true },
-                    { id: 'campus-freq', title: 'Campus Frequencies', cat: 'Music', img: '/__mockup/images/thumbnail_1.jpg', eligible: false, reason: 'Category not in event' },
-                    { id: 'poly-dreams', title: 'Polytechnic Dreams', cat: 'Digital Art', img: '/__mockup/images/thumbnail_4.jpg', eligible: true },
-                    { id: 'pasig-dusk', title: 'Pasig at Dusk', cat: 'Photography', img: '/__mockup/images/thumbnail_2.jpg', eligible: true },
-                  ].map((work) => (
+                  {approvedWorks.map((work) => (
                     <button 
                       key={work.id}
                       onClick={() => work.eligible && setSelectedWork(work.id)}
@@ -162,6 +171,21 @@ export function EventEntryPage({ onBack }: EventEntryPageProps = {}) {
                 </div>
               </section>
             )}
+            {entryMode === 'new' && (
+              <section className="animate-in fade-in slide-in-from-top-4 duration-500 rounded-2xl border border-pup-maroon/20 bg-soft-maroon p-6">
+                <h3 className="text-lg font-bold text-pup-maroon mb-2">Create a new event submission</h3>
+                <p className="text-sm text-secondary-text mb-5">
+                  Start the standard Submit Work flow with PUP Likha 2026 selected as the event context.
+                </p>
+                <button
+                  type="button"
+                  onClick={onCreateSubmission}
+                  className="inline-flex items-center gap-2 rounded-xl bg-pup-maroon px-6 py-3 text-sm font-bold text-white hover:bg-deep-maroon"
+                >
+                  Continue to Submit Work <ArrowRight size={18} />
+                </button>
+              </section>
+            )}
 
             {/* Additional Fields */}
             <section className="bg-white rounded-2xl border border-border p-8 shadow-sm">
@@ -184,9 +208,9 @@ export function EventEntryPage({ onBack }: EventEntryPageProps = {}) {
                     <label className="text-xs font-bold text-muted-text uppercase mb-2 block tracking-wider">Event Category</label>
                     <div className="relative">
                       <select className="w-full bg-secondary-surface/50 border border-border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-pup-maroon/20 appearance-none font-medium">
-                        <option>Digital Art</option>
-                        <option>Visual Art</option>
-                        <option>Graphic Design</option>
+                        {PUP_LIKHA_ALLOWED_CATEGORY_LABELS.map((category) => (
+                          <option key={category}>{category}</option>
+                        ))}
                       </select>
                       <ChevronRight className="absolute right-4 top-1/2 -translate-y-1/2 rotate-90 text-muted-text pointer-events-none" size={16} />
                     </div>

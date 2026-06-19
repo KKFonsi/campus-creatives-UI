@@ -13,6 +13,7 @@ import {
   Check
 } from 'lucide-react';
 import { MobileBottomNav } from './_shared/MobileBottomNav';
+import { navigateTo } from '../../../app/demo';
 import './_group.css';
 
 const INITIAL_FEATURED = [
@@ -35,6 +36,7 @@ export default function PortfolioManagementPageMobile() {
   const [selectedWork, setSelectedWork] = useState<string | null>(null);
   const [bulkMode, setBulkMode] = useState(false);
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
+  const openWork = (title: string) => navigateTo(`/student/work/${title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}`);
 
   const toggleSelect = (id: number) => {
     setSelectedIds(prev => prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]);
@@ -118,7 +120,7 @@ export default function PortfolioManagementPageMobile() {
             <div 
               key={work.id} 
               className={`bg-white rounded-xl border border-border overflow-hidden relative group ${bulkMode && selectedIds.includes(work.id) ? 'ring-2 ring-pup-maroon border-transparent' : ''}`}
-              onClick={() => bulkMode && toggleSelect(work.id)}
+              onClick={() => bulkMode ? toggleSelect(work.id) : openWork(work.title)}
             >
               <div className="aspect-[4/3] relative">
                 <img src={work.thumbnail} alt={work.title} className="w-full h-full object-cover" />
@@ -169,7 +171,7 @@ export default function PortfolioManagementPageMobile() {
               <button className="w-full p-4 flex items-center gap-4 bg-secondary-surface rounded-2xl font-bold text-primary-text hover:bg-soft-maroon hover:text-pup-maroon transition-colors">
                 <Archive size={20} /> Archive Work
               </button>
-              <button className="w-full p-4 flex items-center gap-4 bg-secondary-surface rounded-2xl font-bold text-primary-text hover:bg-soft-maroon hover:text-pup-maroon transition-colors">
+              <button onClick={() => { openWork(selectedWork); setSelectedWork(null); }} className="w-full p-4 flex items-center gap-4 bg-secondary-surface rounded-2xl font-bold text-primary-text hover:bg-soft-maroon hover:text-pup-maroon transition-colors">
                 <LayoutGrid size={20} /> Open Work
               </button>
               <button 

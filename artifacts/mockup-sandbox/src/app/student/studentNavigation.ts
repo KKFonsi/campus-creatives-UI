@@ -20,6 +20,10 @@ export function navigateToStudent(destination: StudentDestination): void {
 export function getStudentDestinationFromPath(
   pathname: string,
 ): StudentDestination | null {
+  if (pathname.startsWith(`${routePaths.student.submit}/`)) {
+    return "submit";
+  }
+
   const entry = Object.entries(studentRouteByDestination).find(
     ([, route]) => route === pathname,
   );

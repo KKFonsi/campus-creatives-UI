@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, type ReactNode } from "react";
 
 import {
   DemoShell,
@@ -7,6 +7,7 @@ import {
   navigateTo,
   storeDemoSelection,
 } from "../demo";
+import { ModeratorMobileBottomNav } from "../../components/mockups/pup-campus-creatives/_shared/ModeratorMobileBottomNav";
 import { routePaths } from "../routes";
 import {
   getModeratorDestinationFromPath,
@@ -14,6 +15,7 @@ import {
   moderatorRoutePaths,
 } from "./moderatorRoutes";
 import { getModeratorScreen } from "./moderatorScreenMap";
+import type { ModeratorDestination } from "./moderatorRoutes";
 
 interface ModeratorRouteRendererProps {
   pathname: string;
@@ -23,6 +25,31 @@ function redirect(path: string): void {
   window.setTimeout(() => {
     navigateTo(path, { replace: true });
   }, 0);
+}
+
+function getMobileModeratorActive(destination: ModeratorDestination) {
+  if (destination === "dashboard") return "Dashboard";
+  if (destination === "pending" || destination === "review") return "Reviews";
+  if (destination === "reports" || destination === "reportDetail") return "Reports";
+  if (destination === "featured") return "Featured";
+  return "More";
+}
+
+function MobileModeratorShell({
+  children,
+  destination,
+}: {
+  children: ReactNode;
+  destination: ModeratorDestination;
+}) {
+  return (
+    <div className="mobile-role-shell mobile-role-shell--moderator">
+      <div className="mobile-role-scroll mobile-role-scroll--moderator">
+        {children}
+      </div>
+      <ModeratorMobileBottomNav active={getMobileModeratorActive(destination)} />
+    </div>
+  );
 }
 
 export function ModeratorRouteRenderer({ pathname }: ModeratorRouteRendererProps) {
@@ -83,15 +110,20 @@ export function ModeratorRouteRenderer({ pathname }: ModeratorRouteRendererProps
   }
 
   const screen = getModeratorScreen(destination, selection.mode);
+  const content = screen.fallback ? (
+    <div className="student-screen-fallback" data-fallback={screen.fallback}>
+      {screen.node}
+    </div>
+  ) : (
+    screen.node
+  );
 
   return (
     <DemoShell mode={selection.mode} role="moderator">
-      {screen.fallback ? (
-        <div className="student-screen-fallback" data-fallback={screen.fallback}>
-          {screen.node}
-        </div>
+      {selection.mode === "mobile" ? (
+        <MobileModeratorShell destination={destination}>{content}</MobileModeratorShell>
       ) : (
-        screen.node
+        content
       )}
     </DemoShell>
   );

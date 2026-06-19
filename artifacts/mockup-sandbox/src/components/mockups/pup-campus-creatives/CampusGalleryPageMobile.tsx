@@ -9,9 +9,10 @@ interface CampusGalleryPageMobileProps {
   onExhibitionDetail?: () => void;
   onWorkDetail?: () => void;
   onCollegeShowcase?: () => void;
+  onCollegeDirectory?: () => void;
 }
 
-export function CampusGalleryPageMobile({ onExhibitionDetail, onWorkDetail, onCollegeShowcase }: CampusGalleryPageMobileProps = {}) {
+export function CampusGalleryPageMobile({ onExhibitionDetail, onWorkDetail, onCollegeShowcase, onCollegeDirectory }: CampusGalleryPageMobileProps = {}) {
   const openWork = (id: string) => navigateTo(`/student/work/${id}`);
   const openExhibition = (id: string) => navigateTo(`/student/gallery/${id}`);
 
@@ -84,7 +85,16 @@ export function CampusGalleryPageMobile({ onExhibitionDetail, onWorkDetail, onCo
 
       {/* College Galleries (2-column Grid) */}
       <section className="px-4 py-8">
-        <h3 className="text-[18px] font-bold mb-4">College Galleries</h3>
+        <div className="mb-4 flex items-center justify-between gap-3">
+          <h3 className="text-[18px] font-bold">College Galleries</h3>
+          <button
+            type="button"
+            onClick={onCollegeDirectory}
+            className="inline-flex items-center gap-1 rounded-full bg-soft-maroon px-3 py-1.5 text-[11px] font-black text-pup-maroon"
+          >
+            View All <ArrowRight size={13} />
+          </button>
+        </div>
         <div className="grid grid-cols-2 gap-3">
           {[
             { name: "COC", works: 145, img: "/__mockup/images/college_1.jpg" },

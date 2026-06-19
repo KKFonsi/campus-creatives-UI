@@ -10,6 +10,7 @@ export const moderatorRoutePaths = {
   reportDetail: "/moderator/reports/CC-RPT-2026-0031",
   featured: routePaths.moderator.featured,
   officialContent: routePaths.moderator.officialContent,
+  officialContentDetail: "/moderator/official-content/1",
   history: routePaths.moderator.history,
   events: routePaths.moderator.events,
   newEvent: routePaths.moderator.newEvent,
@@ -23,6 +24,7 @@ export type ModeratorDestination =
   | "reportDetail"
   | "featured"
   | "officialContent"
+  | "officialContentDetail"
   | "history"
   | "events"
   | "newEvent";
@@ -36,6 +38,7 @@ export function getModeratorDestinationFromPath(
   if (pathname === moderatorRoutePaths.reports) return "reports";
   if (/^\/moderator\/reports\/[^/]+$/.test(pathname)) return "reportDetail";
   if (pathname === moderatorRoutePaths.featured) return "featured";
+  if (/^\/moderator\/official-content\/[^/]+$/.test(pathname)) return "officialContentDetail";
   if (pathname === moderatorRoutePaths.officialContent) return "officialContent";
   if (pathname === moderatorRoutePaths.history) return "history";
   if (pathname === moderatorRoutePaths.events) return "events";

@@ -12,6 +12,7 @@ import {
   SlidersHorizontal,
   ChevronRight
 } from 'lucide-react';
+import { CREATIVE_CATEGORY_LABELS } from '../../../app/data/creativeCategories';
 import './_group.css';
 
 interface ExplorePageMobileProps {
@@ -27,7 +28,7 @@ export function ExplorePageMobile({ guest = false, onSearch, onSearchResults, on
   const [showFilters, setShowFilters] = useState(false);
   const [activeCategory, setActiveCategory] = useState('All');
 
-  const categories = ['All', 'Visual Art', 'Photography', 'Digital Art', 'Music', 'Film', 'Spoken Word', 'Dance'];
+  const categories = ['All', ...CREATIVE_CATEGORY_LABELS];
 
   const works = [
     { id: 1, title: 'Sta. Mesa After the Rain', creator: 'Bianca Reyes', college: 'COC', category: 'Photography', highlight: 'Campus Highlight', image: '/__mockup/images/thumbnail_1.jpg', appreciates: 245 },

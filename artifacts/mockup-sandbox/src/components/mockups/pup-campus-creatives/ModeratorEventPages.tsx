@@ -2,14 +2,20 @@ import React, { useState } from "react";
 import {
   Calendar,
   ClipboardList,
+  FileText,
   Flag,
   History,
+  Image as ImageIcon,
   LayoutDashboard,
+  MapPin,
   Plus,
   Save,
   Shield,
   Star,
+  Tag,
+  Users,
 } from "lucide-react";
+import { ModeratorDesktopSidebar } from "./_shared/ModeratorDesktopSidebar";
 import "./_group.css";
 
 interface ModeratorEventProps {
@@ -55,10 +61,10 @@ function Sidebar({
             key={label}
             type="button"
             onClick={onClick}
-            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${
+            className={`w-full flex items-center gap-3 border-l-4 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${
               active === label
-                ? "bg-white/10 border-l-4 border-pup-gold text-white"
-                : "text-gray-400 hover:bg-white/5 hover:text-white"
+                ? "bg-white/10 border-pup-gold text-white"
+                : "border-transparent text-gray-400 hover:bg-white/5 hover:text-white"
             }`}
           >
             <Icon size={18} />
@@ -79,7 +85,7 @@ export function ModeratorEventsPage(props: ModeratorEventProps = {}) {
 
   return (
     <div className="flex min-h-screen bg-main-bg font-inter">
-      <Sidebar {...props} active="Events" />
+      <ModeratorDesktopSidebar {...props} />
       <main className="flex-1 overflow-y-auto p-8">
         <header className="mb-8 flex items-start justify-between gap-6">
           <div>
@@ -129,57 +135,117 @@ export function ModeratorEventsPage(props: ModeratorEventProps = {}) {
 
 export function ModeratorEventFormPage(props: ModeratorEventProps = {}) {
   const [confirm, setConfirm] = useState<string | null>(null);
-  const fields = [
-    ["Event title", "PUP Likha 2027: Student Creative Showcase"],
-    ["Event category", "Showcase"],
-    ["Organizer", "PUP Office of Student Affairs"],
-    ["Start date", "2027-06-01"],
-    ["End date", "2027-07-15"],
-    ["Submission deadline", "2027-06-30"],
-    ["Venue or online location", "PUP Main Building and online gallery"],
-    ["Eligibility", "All enrolled PUP students"],
-    ["Event status", "Draft"],
-  ];
+  const categories = ["Visual Art", "Digital Art", "Photography", "Music", "Film", "Spoken Word"];
 
   return (
     <div className="flex min-h-screen bg-main-bg font-inter">
-      <Sidebar {...props} active="Events" />
+      <ModeratorDesktopSidebar {...props} />
       <main className="flex-1 overflow-y-auto p-8">
         <button onClick={props.onEvents} className="mb-5 text-sm font-bold text-pup-maroon hover:underline">Back to Events</button>
         <header className="mb-8">
           <h1 className="text-3xl font-bold text-primary-text">Add Event</h1>
           <p className="mt-2 text-secondary-text">Mock-only event creation form for moderator demos.</p>
         </header>
-        <section className="max-w-5xl rounded-2xl border border-border bg-card-bg p-8 shadow-sm">
-          <div className="grid grid-cols-2 gap-5">
-            {fields.map(([label, value]) => (
-              <label key={label} className="block">
-                <span className="mb-2 block text-xs font-bold uppercase tracking-wide text-secondary-text">{label}</span>
-                <input defaultValue={value} className="w-full rounded-xl border border-border bg-secondary-surface px-4 py-3 text-sm outline-none focus:border-pup-maroon" />
-              </label>
-            ))}
-            <label className="col-span-2 block">
-              <span className="mb-2 block text-xs font-bold uppercase tracking-wide text-secondary-text">Description</span>
-              <textarea rows={4} defaultValue="The annual flagship creative showcase for student works from across PUP." className="w-full rounded-xl border border-border bg-secondary-surface px-4 py-3 text-sm outline-none focus:border-pup-maroon" />
-            </label>
-            <label className="col-span-2 block">
-              <span className="mb-2 block text-xs font-bold uppercase tracking-wide text-secondary-text">Rules and guidelines</span>
-              <textarea rows={4} defaultValue="Submit original work only. Accepted works must follow Campus Creatives guidelines and include ownership confirmations." className="w-full rounded-xl border border-border bg-secondary-surface px-4 py-3 text-sm outline-none focus:border-pup-maroon" />
-            </label>
-            <div className="col-span-2">
-              <span className="mb-2 block text-xs font-bold uppercase tracking-wide text-secondary-text">Accepted creative categories</span>
-              <div className="flex flex-wrap gap-2">
-                {["Visual Art", "Digital Art", "Photography", "Music", "Film", "Spoken Word"].map((category) => (
-                  <span key={category} className="rounded-full bg-soft-maroon px-3 py-1 text-sm font-bold text-pup-maroon">{category}</span>
-                ))}
-              </div>
+        <section className="w-full max-w-[1320px] space-y-6">
+          <div className="grid grid-cols-12 gap-8">
+            <div className="col-span-8 space-y-6">
+              <FormCard icon={<FileText size={18} />} title="Basic Information" helper="Start with a clear event identity. Fields are intentionally blank for a new mock event.">
+                <div className="grid grid-cols-2 gap-5">
+                  <Field label="Event title">
+                    <input placeholder="Enter event title" className="w-full rounded-xl border border-border bg-secondary-surface px-4 py-3 text-sm outline-none focus:border-pup-maroon" />
+                  </Field>
+                  <Field label="Event category">
+                    <select defaultValue="" className="w-full rounded-xl border border-border bg-secondary-surface px-4 py-3 text-sm outline-none focus:border-pup-maroon">
+                      <option value="" disabled>Select category</option>
+                      <option>Competition</option>
+                      <option>Open Call</option>
+                      <option>Showcase</option>
+                      <option>Workshop</option>
+                    </select>
+                  </Field>
+                  <Field label="Organizer">
+                    <input placeholder="Office, college, or organization" className="w-full rounded-xl border border-border bg-secondary-surface px-4 py-3 text-sm outline-none focus:border-pup-maroon" />
+                  </Field>
+                  <Field label="Event status">
+                    <select defaultValue="Draft" className="w-full rounded-xl border border-border bg-secondary-surface px-4 py-3 text-sm outline-none focus:border-pup-maroon">
+                      <option>Draft</option>
+                      <option>Open</option>
+                      <option>Scheduled</option>
+                    </select>
+                  </Field>
+                  <label className="col-span-2 block">
+                    <span className="mb-2 block text-xs font-bold uppercase tracking-wide text-secondary-text">Description</span>
+                    <textarea rows={4} placeholder="Describe the event purpose, audience, and creative direction." className="w-full rounded-xl border border-border bg-secondary-surface px-4 py-3 text-sm outline-none focus:border-pup-maroon" />
+                  </label>
+                </div>
+              </FormCard>
+
+              <FormCard icon={<Calendar size={18} />} title="Dates and Location" helper="Use date-style inputs for review and publication planning.">
+                <div className="grid grid-cols-3 gap-5">
+                  {["Start date", "End date", "Submission deadline"].map((label) => (
+                    <Field key={label} label={label}>
+                      <input type="date" className="w-full rounded-xl border border-border bg-secondary-surface px-4 py-3 text-sm outline-none focus:border-pup-maroon" />
+                    </Field>
+                  ))}
+                  <Field label="Venue">
+                    <input placeholder="On-campus venue" className="w-full rounded-xl border border-border bg-secondary-surface px-4 py-3 text-sm outline-none focus:border-pup-maroon" />
+                  </Field>
+                  <Field label="Online location">
+                    <input placeholder="Online gallery or meeting link" className="w-full rounded-xl border border-border bg-secondary-surface px-4 py-3 text-sm outline-none focus:border-pup-maroon" />
+                  </Field>
+                  <Field label="Contact information">
+                    <input placeholder="Email or office contact" className="w-full rounded-xl border border-border bg-secondary-surface px-4 py-3 text-sm outline-none focus:border-pup-maroon" />
+                  </Field>
+                </div>
+              </FormCard>
+
+              <FormCard icon={<Users size={18} />} title="Eligibility and Requirements" helper="Show mock criteria clearly without adding backend validation.">
+                <div className="space-y-5">
+                  <label className="block">
+                    <span className="mb-2 block text-xs font-bold uppercase tracking-wide text-secondary-text">Eligibility</span>
+                    <textarea rows={3} placeholder="Who may join? Include colleges, programs, year level, or team rules." className="w-full rounded-xl border border-border bg-secondary-surface px-4 py-3 text-sm outline-none focus:border-pup-maroon" />
+                  </label>
+                  <div>
+                    <span className="mb-2 block text-xs font-bold uppercase tracking-wide text-secondary-text">Accepted creative categories</span>
+                    <div className="flex flex-wrap gap-2">
+                      {categories.map((category) => (
+                        <button key={category} type="button" className="rounded-full border border-pup-maroon/20 bg-soft-maroon px-3 py-1.5 text-xs font-bold text-pup-maroon">
+                          {category}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  <label className="block">
+                    <span className="mb-2 block text-xs font-bold uppercase tracking-wide text-secondary-text">Rules and guidelines</span>
+                    <textarea rows={5} placeholder="Add originality, ownership, file, and community guideline requirements." className="w-full rounded-xl border border-border bg-secondary-surface px-4 py-3 text-sm outline-none focus:border-pup-maroon" />
+                  </label>
+                </div>
+              </FormCard>
             </div>
-            <div className="col-span-2 rounded-2xl border border-dashed border-pup-maroon/30 bg-soft-maroon p-8 text-center">
-              <Calendar className="mx-auto text-pup-maroon" size={32} />
-              <p className="mt-2 text-sm font-bold text-pup-maroon">Cover image mock selection</p>
-            </div>
+
+            <aside className="col-span-4 space-y-6">
+              <FormCard icon={<ImageIcon size={18} />} title="Cover and Media" helper="Presentation preview only.">
+                <div className="rounded-2xl border border-dashed border-pup-maroon/30 bg-soft-maroon p-6 text-center">
+                  <ImageIcon className="mx-auto text-pup-maroon" size={34} />
+                  <p className="mt-2 text-sm font-bold text-pup-maroon">Add cover image</p>
+                  <p className="mt-1 text-xs text-secondary-text">Use a campus, event, or artwork preview.</p>
+                </div>
+              </FormCard>
+              <FormCard icon={<Tag size={18} />} title="Publication Preview" helper="Review how the event will read before publishing.">
+                <div className="rounded-2xl border border-border bg-secondary-surface p-4 space-y-3">
+                  <span className="inline-flex rounded-full bg-soft-gold px-3 py-1 text-[10px] font-black uppercase text-warm-gold">Draft</span>
+                  <h2 className="text-lg font-black text-primary-text">Untitled Event</h2>
+                  <p className="text-sm text-secondary-text">Add event details to build the preview card.</p>
+                  <div className="grid grid-cols-2 gap-2 text-[11px] font-bold uppercase text-secondary-text">
+                    <span className="flex items-center gap-1"><Calendar size={12} /> Date unset</span>
+                    <span className="flex items-center gap-1"><MapPin size={12} /> Venue unset</span>
+                  </div>
+                </div>
+              </FormCard>
+            </aside>
           </div>
-          <div className="mt-8 flex justify-end gap-3 border-t border-border pt-6">
+          <div className="flex justify-end gap-3 border-t border-border pt-6">
+            <button onClick={props.onEvents} className="rounded-xl border border-border px-5 py-3 text-sm font-bold text-secondary-text">Cancel</button>
             <button onClick={() => setConfirm("draft")} className="inline-flex items-center gap-2 rounded-xl border border-border px-5 py-3 text-sm font-bold">
               <Save size={18} /> Save as Draft
             </button>
@@ -200,5 +266,29 @@ export function ModeratorEventFormPage(props: ModeratorEventProps = {}) {
         )}
       </main>
     </div>
+  );
+}
+
+function FormCard({ icon, title, helper, children }: { icon: React.ReactNode; title: string; helper: string; children: React.ReactNode }) {
+  return (
+    <section className="rounded-2xl border border-border bg-card-bg p-6 shadow-sm">
+      <div className="mb-5 flex items-start gap-3">
+        <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-soft-maroon text-pup-maroon">{icon}</div>
+        <div>
+          <h2 className="font-black text-primary-text">{title}</h2>
+          <p className="text-sm text-secondary-text">{helper}</p>
+        </div>
+      </div>
+      {children}
+    </section>
+  );
+}
+
+function Field({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <label className="block">
+      <span className="mb-2 block text-xs font-bold uppercase tracking-wide text-secondary-text">{label}</span>
+      {children}
+    </label>
   );
 }

@@ -252,6 +252,11 @@ export const moderatorRoutes = [
     label: "Official Content Review",
   },
   {
+    id: "moderator.officialContentDetail",
+    path: routePaths.moderator.officialContentDetail,
+    label: "Official Content Detail",
+  },
+  {
     id: "moderator.history",
     path: routePaths.moderator.history,
     label: "Moderation History",
@@ -269,13 +274,18 @@ export const moderatorRoutes = [
 ] as const satisfies ReadonlyArray<Omit<AppRouteDefinition, "group">>;
 
 export const adminRoutes = [
-  { id: "admin.dashboard", path: routePaths.admin.dashboard, label: "Dashboard" },
+  { id: "admin.dashboard", path: routePaths.admin.dashboard, label: "System Administration" },
   { id: "admin.users", path: routePaths.admin.users, label: "User Management" },
+  { id: "admin.userDetail", path: routePaths.admin.userDetail, label: "User Detail" },
   { id: "admin.moderators", path: routePaths.admin.moderators, label: "Moderator Management" },
   { id: "admin.colleges", path: routePaths.admin.colleges, label: "College Management" },
   { id: "admin.categories", path: routePaths.admin.categories, label: "Category Management" },
   { id: "admin.events", path: routePaths.admin.events, label: "Event Management" },
   { id: "admin.newEvent", path: routePaths.admin.newEvent, label: "Create Event" },
+  { id: "admin.recognition", path: routePaths.admin.recognition, label: "Recognition and Badges" },
+  { id: "admin.analytics", path: routePaths.admin.analytics, label: "Platform Analytics" },
+  { id: "admin.activityLog", path: routePaths.admin.activityLog, label: "System Activity Log" },
+  { id: "admin.roles", path: routePaths.admin.roles, label: "Role and Permission Overview" },
   { id: "admin.reports", path: routePaths.admin.reports, label: "Reports Oversight" },
   { id: "admin.featured", path: routePaths.admin.featured, label: "Featured Content" },
   { id: "admin.settings", path: routePaths.admin.settings, label: "Settings" },

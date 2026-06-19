@@ -7,6 +7,7 @@ import {
   Palette, Camera, Music, Film, Mic2, Sparkles, Image as ImageIcon
 } from 'lucide-react';
 import { ShareModalMobile } from './ShareModal';
+import { PUP_LIKHA_ALLOWED_CATEGORY_LABELS } from '../../../app/data/creativeCategories';
 import './_group.css';
 
 interface EventDetailPageMobileProps {
@@ -25,6 +26,18 @@ export function EventDetailPageMobile({ onBack, onSubmitEntry, onWorkDetail }: E
     { id: 2, title: "Sinta sa Riles", creator: "Marco Villanueva", image: "/__mockup/images/thumbnail_2.jpg", badge: "Finalist" },
     { id: 3, title: "Polytechnic Dreams", creator: "Dana Cruz", image: "/__mockup/images/thumbnail_3.jpg", badge: "Featured" }
   ];
+  const categoryIcons = {
+    "Visual Art": Palette,
+    "Digital Art": Sparkles,
+    Photography: Camera,
+    Music,
+    "Film and Video": Film,
+    "Spoken Word": Mic2,
+  } as const;
+  const categories = PUP_LIKHA_ALLOWED_CATEGORY_LABELS.map((name) => ({
+    name,
+    icon: categoryIcons[name as keyof typeof categoryIcons] ?? ImageIcon,
+  }));
 
   return (
     <div className="mobile-app-screen w-[390px] min-h-screen bg-main-bg font-inter">
@@ -120,14 +133,7 @@ export function EventDetailPageMobile({ onBack, onSubmitEntry, onWorkDetail }: E
           <div>
             <h3 className="text-[14px] font-bold mb-3 uppercase tracking-wider text-muted-text">Categories</h3>
             <div className="flex flex-wrap gap-2">
-              {[
-                { name: 'Visual Art', icon: Palette },
-                { name: 'Digital Art', icon: Sparkles },
-                { name: 'Photography', icon: Camera },
-                { name: 'Music', icon: Music },
-                { name: 'Film', icon: Film },
-                { name: 'Spoken Word', icon: Mic2 }
-              ].map(cat => (
+              {categories.map(cat => (
                 <div key={cat.name} className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-border rounded-full text-[12px] font-bold">
                   <cat.icon size={14} className="text-pup-maroon" />
                   {cat.name}

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { 
-  Bell, 
   Search, 
   Flag, 
   Clock, 
@@ -24,6 +23,7 @@ interface ReportsDashboardPageMobileProps {
   onFeatured?: () => void;
   onOfficialContent?: () => void;
   onHistory?: () => void;
+  onEvents?: () => void;
 }
 
 export function ReportsDashboardPageMobile({
@@ -34,6 +34,7 @@ export function ReportsDashboardPageMobile({
   onFeatured,
   onOfficialContent,
   onHistory,
+  onEvents,
 }: ReportsDashboardPageMobileProps = {}) {
   const [activeTab, setActiveTab] = useState('All');
   const [showFilters, setShowFilters] = useState(false);
@@ -96,10 +97,6 @@ export function ReportsDashboardPageMobile({
           <span className="text-pup-gold text-[14px] font-bold tracking-tight uppercase">Reports</span>
         </div>
         <div className="flex items-center gap-3">
-          <button className="text-white/80 relative">
-            <Bell size={20} />
-            <span className="absolute -top-1 -right-1 w-4 h-4 bg-pup-maroon text-white text-[10px] flex items-center justify-center rounded-full border-2 border-dark-surface">6</span>
-          </button>
           <div className="w-8 h-8 rounded-full border border-white/20 overflow-hidden bg-pup-maroon flex items-center justify-center text-white text-[12px] font-bold">
             M
           </div>
@@ -262,6 +259,7 @@ export function ReportsDashboardPageMobile({
         onFeatured={onFeatured}
         onOfficialContent={onOfficialContent}
         onHistory={onHistory}
+        onEvents={onEvents}
       />
     </div>
   );

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, type ReactNode } from "react";
 
 import {
   DemoShell,
@@ -7,6 +7,7 @@ import {
   navigateTo,
   storeDemoSelection,
 } from "../demo";
+import { MobileBottomNav } from "../../components/mockups/pup-campus-creatives/_shared/MobileBottomNav";
 import { routePaths } from "../routes";
 import { getStudentScreen } from "./studentScreenMap";
 import {
@@ -76,6 +77,17 @@ function getSafeStudentParent(pathname: string): string {
   }
 
   return routePaths.student.home;
+}
+
+function MobileStudentShell({ children }: { children: ReactNode }) {
+  return (
+    <div className="mobile-role-shell mobile-role-shell--student">
+      <div className="mobile-role-scroll mobile-role-scroll--student">
+        {children}
+      </div>
+      <MobileBottomNav />
+    </div>
+  );
 }
 
 export function StudentRouteRenderer({ pathname }: StudentRouteRendererProps) {
@@ -159,30 +171,33 @@ export function StudentRouteRenderer({ pathname }: StudentRouteRendererProps) {
       );
 
   if ("node" in screen) {
+    const content = screen.fallback ? (
+      <div className="student-screen-fallback" data-fallback={screen.fallback}>
+        {screen.node}
+      </div>
+    ) : (
+      screen.node
+    );
+
     return (
       <DemoShell mode={selection.mode} role="student">
-        {screen.fallback ? (
-          <div className="student-screen-fallback" data-fallback={screen.fallback}>
-            {screen.node}
-          </div>
-        ) : (
-          screen.node
-        )}
+        {selection.mode === "mobile" ? <MobileStudentShell>{content}</MobileStudentShell> : content}
       </DemoShell>
     );
   }
 
   const StudentScreen = screen.component;
+  const componentContent = screen.fallback ? (
+    <div className="student-screen-fallback" data-fallback={screen.fallback}>
+      <StudentScreen />
+    </div>
+  ) : (
+    <StudentScreen />
+  );
 
   return (
     <DemoShell mode={selection.mode} role="student">
-      {screen.fallback ? (
-        <div className="student-screen-fallback" data-fallback={screen.fallback}>
-          <StudentScreen />
-        </div>
-      ) : (
-        <StudentScreen />
-      )}
+      {selection.mode === "mobile" ? <MobileStudentShell>{componentContent}</MobileStudentShell> : componentContent}
     </DemoShell>
   );
 }

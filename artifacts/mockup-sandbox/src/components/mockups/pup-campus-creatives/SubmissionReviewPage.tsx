@@ -25,6 +25,7 @@ import {
   Check
 } from 'lucide-react';
 import { InitialsAvatar } from './_shared/InitialsAvatar';
+import { ModeratorDesktopSidebar } from './_shared/ModeratorDesktopSidebar';
 import './_group.css';
 
 type ReviewDecision = "approve" | "revision" | "reject";
@@ -78,30 +79,15 @@ export default function SubmissionReviewPage({
 
   return (
     <div className="flex min-h-screen bg-main-bg font-inter">
-      {/* Sidebar */}
-      <aside className="w-[240px] bg-dark-surface text-white flex flex-col shrink-0 sticky top-0 h-screen">
-        <div className="p-6">
-          <div className="text-pup-gold font-bold text-xl tracking-tight mb-1">Campus Creatives</div>
-          <div className="inline-block px-2 py-0.5 bg-pup-gold text-dark-surface text-[10px] font-bold rounded uppercase tracking-wider">MODERATOR</div>
-        </div>
-
-        <nav className="flex-1 px-3 py-4 space-y-1">
-          <NavItem icon={<LayoutDashboard size={20} />} label="Dashboard" active={activeTab === 'Dashboard'} onClick={() => handleNav('Dashboard', onDashboard)} />
-          <NavItem icon={<ClipboardList size={20} />} label="Pending Reviews" badge="24" active={activeTab === 'Pending Reviews'} onClick={() => handleNav('Pending Reviews', onPending)} />
-          <NavItem icon={<Flag size={20} />} label="Reports" badge="6" active={activeTab === 'Reports'} onClick={() => handleNav('Reports', onReports)} />
-          <NavItem icon={<Star size={20} />} label="Featured Works" active={activeTab === 'Featured Works'} onClick={() => handleNav('Featured Works', onFeatured)} />
-          <NavItem icon={<Shield size={20} />} label="Official Content" active={activeTab === 'Official Content'} onClick={() => handleNav('Official Content', onOfficialContent)} />
-          <NavItem icon={<Calendar size={20} />} label="Events" active={activeTab === 'Events'} onClick={() => handleNav('Events', onEvents)} />
-          <NavItem icon={<History size={20} />} label="Moderation History" active={activeTab === 'History'} onClick={() => handleNav('History', onHistory)} />
-        </nav>
-
-        <div className="p-4 border-t border-white/10">
-          <button className="flex items-center gap-2 text-[14px] text-gray-400 hover:text-white transition-colors w-full px-3 py-2">
-            <span>Switch to Student View</span>
-            <ExternalLink size={14} />
-          </button>
-        </div>
-      </aside>
+      <ModeratorDesktopSidebar
+        onDashboard={onDashboard}
+        onPending={onPending}
+        onReports={onReports}
+        onFeatured={onFeatured}
+        onOfficialContent={onOfficialContent}
+        onEvents={onEvents}
+        onHistory={onHistory}
+      />
 
       {/* Main Content */}
       <main className="flex-1 flex flex-col overflow-hidden">
@@ -289,15 +275,16 @@ export default function SubmissionReviewPage({
                 </div>
 
                 {/* Creator Summary */}
-                <section className="bg-white p-6 rounded-2xl border border-border shadow-sm flex items-center gap-8">
-                  <div className="flex items-center gap-4 border-r border-border pr-8 shrink-0">
+                <section className="bg-white p-5 rounded-2xl border border-border shadow-sm">
+                  <div className="grid grid-cols-[minmax(220px,1.2fr)_minmax(260px,1fr)_auto] items-center gap-5">
+                  <div className="flex items-center gap-4 min-w-0">
                     <InitialsAvatar name="Rafael Mendoza" className="w-14 h-14 border border-border" textClassName="text-base" />
-                    <div>
+                    <div className="min-w-0">
                       <h4 className="text-[15px] font-bold text-primary-text">Rafael Mendoza</h4>
                       <div className="text-[12px] text-muted-text">Member since Oct 2024</div>
                     </div>
                   </div>
-                  <div className="flex-1 flex justify-around">
+                  <div className="grid grid-cols-3 gap-2 rounded-xl bg-secondary-surface p-2">
                     <SummaryItem label="Approved" value="24" color="text-status-approved" />
                     <SummaryItem label="Revisions" value="0" color="text-status-needs-revision" />
                     <SummaryItem label="Reports" value="0" color="text-status-rejected" />
@@ -305,6 +292,7 @@ export default function SubmissionReviewPage({
                   <button className="px-4 py-2 bg-secondary-surface hover:bg-border text-primary-text text-[13px] font-bold rounded-xl transition-colors shrink-0">
                     Full History
                   </button>
+                  </div>
                 </section>
               </div>
             </div>
@@ -467,10 +455,10 @@ function NavItem({ icon, label, badge, active, onClick }: any) {
   return (
     <button 
       onClick={onClick}
-      className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg transition-all ${
+      className={`w-full flex items-center justify-between border-l-4 px-3 py-2.5 rounded-lg transition-all ${
         active 
-          ? 'bg-white/10 border-l-4 border-pup-gold text-white' 
-          : 'text-gray-400 hover:bg-white/5 hover:text-white'
+          ? 'bg-white/10 border-pup-gold text-white' 
+          : 'border-transparent text-gray-400 hover:bg-white/5 hover:text-white'
       }`}
     >
       <div className="flex items-center gap-3">

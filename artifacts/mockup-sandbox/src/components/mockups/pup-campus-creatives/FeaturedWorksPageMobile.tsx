@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { 
-  Bell, 
   Search, 
   Filter, 
   Plus, 
   Star, 
   MoreVertical,
-  Award
+  Award,
+  X
 } from 'lucide-react';
 import { InitialsAvatar } from './_shared/InitialsAvatar';
 import { ModeratorMobileBottomNav } from './_shared/ModeratorMobileBottomNav';
@@ -23,10 +23,6 @@ const MobileHeader = () => (
       </div>
     </div>
     <div className="flex items-center gap-3">
-      <button className="relative p-1 text-white/80 hover:text-white">
-        <Bell size={20} />
-        <span className="absolute top-1 right-1 w-2 h-2 bg-crimson-accent rounded-full border border-dark-surface"></span>
-      </button>
       <InitialsAvatar name="Maria Moderator" className="w-8 h-8 border border-white/20" textClassName="text-[11px]" />
     </div>
   </header>
@@ -39,10 +35,12 @@ interface FeaturedWorksPageMobileProps {
   onFeatured?: () => void;
   onOfficialContent?: () => void;
   onHistory?: () => void;
+  onEvents?: () => void;
 }
 
 export default function FeaturedWorksPageMobile(props: FeaturedWorksPageMobileProps = {}) {
   const [activeTab, setActiveTab] = useState('All');
+  const [showAddModal, setShowAddModal] = useState(false);
 
   const tabs = [
     'All', 'Work of the Week', 'Creator of the Month', 'College Highlight', 'Moderator\'s Pick', 'Event Finalist'
@@ -56,7 +54,7 @@ export default function FeaturedWorksPageMobile(props: FeaturedWorksPageMobilePr
       type: "Work of the Week",
       dates: "June 12 - June 19",
       badgeClass: "bg-pup-gold text-pup-maroon",
-      image: "bg-gradient-to-br from-soft-maroon to-soft-gold"
+      image: "/__mockup/images/thumbnail_1.jpg"
     },
     {
       id: 2,
@@ -65,7 +63,7 @@ export default function FeaturedWorksPageMobile(props: FeaturedWorksPageMobilePr
       type: "Creator of the Month",
       dates: "June 1 - June 30",
       badgeClass: "bg-pup-maroon text-white",
-      image: "bg-gradient-to-br from-blue-50 to-soft-maroon"
+      image: "/__mockup/images/thumbnail_2.jpg"
     },
     {
       id: 3,
@@ -74,7 +72,7 @@ export default function FeaturedWorksPageMobile(props: FeaturedWorksPageMobilePr
       type: "Moderator's Pick",
       dates: "June 10 - June 17",
       badgeClass: "bg-secondary-surface text-primary-text border border-border",
-      image: "bg-gradient-to-br from-soft-gold to-orange-50"
+      image: "/__mockup/images/thumbnail_3.jpg"
     }
   ];
 
@@ -83,10 +81,13 @@ export default function FeaturedWorksPageMobile(props: FeaturedWorksPageMobilePr
       <MobileHeader />
 
       <main className="flex-1 p-4 pb-24">
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center justify-between gap-3 mb-4">
           <h1 className="text-xl font-bold text-primary-text uppercase tracking-tight">Featured Works</h1>
-          <button className="p-2 text-pup-maroon bg-soft-maroon rounded-full border border-pup-maroon/10">
-            <Search size={20} />
+          <button
+            onClick={() => setShowAddModal(true)}
+            className="inline-flex items-center gap-2 rounded-xl bg-pup-maroon px-3 py-2 text-xs font-black text-white shadow-sm"
+          >
+            <Plus size={16} /> Add Feature
           </button>
         </div>
 
@@ -111,7 +112,9 @@ export default function FeaturedWorksPageMobile(props: FeaturedWorksPageMobilePr
         <div className="space-y-4">
           {features.map((item) => (
             <div key={item.id} className="bg-white border border-border rounded-2xl overflow-hidden shadow-sm flex flex-col group">
-              <div className={`h-[180px] w-full ${item.image} relative`}>
+              <div className="h-[180px] w-full bg-secondary-surface relative overflow-hidden">
+                <img src={item.image} alt={`${item.title} featured preview`} className="h-full w-full object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
                 <div className="absolute top-3 right-3 flex flex-col gap-2">
                   <button className="p-2 bg-white/90 backdrop-blur-sm rounded-full shadow-lg text-primary-text">
                     <MoreVertical size={16} />
@@ -150,10 +153,59 @@ export default function FeaturedWorksPageMobile(props: FeaturedWorksPageMobilePr
         </div>
       </main>
 
-      {/* Floating Action Button */}
-      <button className="absolute bottom-[84px] right-6 w-14 h-14 bg-pup-maroon text-white rounded-full shadow-xl flex items-center justify-center hover:scale-105 active:scale-95 transition-transform z-40 border-4 border-white">
-        <Plus size={24} strokeWidth={3} />
-      </button>
+      {showAddModal && (
+        <div className="fixed inset-0 z-[120] flex items-end bg-black/45">
+          <div className="w-[390px] rounded-t-3xl border-t border-border bg-card-bg p-5 shadow-2xl">
+            <div className="mb-4 flex items-center justify-between">
+              <div>
+                <h2 className="text-lg font-black text-primary-text">Add Feature</h2>
+                <p className="text-xs text-secondary-text">Mobile feature setup preview</p>
+              </div>
+              <button onClick={() => setShowAddModal(false)} className="rounded-full bg-secondary-surface p-2 text-secondary-text">
+                <X size={18} />
+              </button>
+            </div>
+            <div className="space-y-4">
+              <label className="block">
+                <span className="mb-1 block text-[11px] font-black uppercase tracking-wide text-secondary-text">Select work</span>
+                <div className="flex items-center gap-3 rounded-2xl border border-pup-maroon/20 bg-soft-maroon p-3">
+                  <img src="/__mockup/images/thumbnail_1.jpg" alt="Digital Sinta selection" className="h-12 w-12 rounded-xl object-cover" />
+                  <div className="min-w-0">
+                    <p className="text-sm font-black text-primary-text">Digital Sinta</p>
+                    <p className="text-xs text-secondary-text">Rafael Mendoza • CCIS</p>
+                  </div>
+                </div>
+              </label>
+              <div className="grid grid-cols-2 gap-3">
+                <label className="block">
+                  <span className="mb-1 block text-[11px] font-black uppercase tracking-wide text-secondary-text">Feature type</span>
+                  <select className="w-full rounded-xl border border-border bg-secondary-surface px-3 py-3 text-sm">
+                    <option>Work of the Week</option>
+                    <option>Moderator's Pick</option>
+                    <option>College Highlight</option>
+                  </select>
+                </label>
+                <label className="block">
+                  <span className="mb-1 block text-[11px] font-black uppercase tracking-wide text-secondary-text">Location</span>
+                  <select className="w-full rounded-xl border border-border bg-secondary-surface px-3 py-3 text-sm">
+                    <option>Home</option>
+                    <option>Explore</option>
+                    <option>College page</option>
+                  </select>
+                </label>
+              </div>
+              <label className="block">
+                <span className="mb-1 block text-[11px] font-black uppercase tracking-wide text-secondary-text">Editorial caption</span>
+                <textarea rows={3} placeholder="Add a short reason for featuring this work." className="w-full rounded-xl border border-border bg-secondary-surface px-3 py-3 text-sm" />
+              </label>
+              <div className="grid grid-cols-2 gap-2 pt-2">
+                <button onClick={() => setShowAddModal(false)} className="rounded-xl border border-border py-3 text-sm font-black">Cancel</button>
+                <button onClick={() => setShowAddModal(false)} className="rounded-xl bg-pup-maroon py-3 text-sm font-black text-white">Save Feature</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       <ModeratorMobileBottomNav
         active="Featured"
@@ -163,6 +215,7 @@ export default function FeaturedWorksPageMobile(props: FeaturedWorksPageMobilePr
         onFeatured={props.onFeatured}
         onOfficialContent={props.onOfficialContent}
         onHistory={props.onHistory}
+        onEvents={props.onEvents}
       />
     </div>
   );

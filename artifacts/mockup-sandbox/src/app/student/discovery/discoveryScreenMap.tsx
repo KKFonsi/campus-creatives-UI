@@ -128,7 +128,12 @@ export function getDiscoveryScreen(
 
   const Entry = mode === "mobile" ? EventEntryPageMobile : EventEntryPage;
   return {
-    node: <Entry onBack={go(studentDiscoveryRoutes.event)} />,
+    node: (
+      <Entry
+        onBack={go(studentDiscoveryRoutes.event)}
+        onCreateSubmission={go(routePaths.student.submit)}
+      />
+    ),
   };
 }
 
@@ -142,6 +147,7 @@ export function getPrimaryNavigationProps(pathname: string) {
       onExhibitionDetail: go(studentDiscoveryRoutes.exhibition),
       onWorkDetail: go(studentDiscoveryRoutes.work),
       onCollegeShowcase: go(studentDiscoveryRoutes.college),
+      onCollegeDirectory: go(studentDiscoveryRoutes.colleges),
     };
   }
 
@@ -154,6 +160,7 @@ export function getPrimaryNavigationProps(pathname: string) {
   if (pathname === routePaths.student.spotlight) {
     return {
       onFullProject: go(studentDiscoveryRoutes.work),
+      onCreatorProfile: go(studentDiscoveryRoutes.creator),
     };
   }
 

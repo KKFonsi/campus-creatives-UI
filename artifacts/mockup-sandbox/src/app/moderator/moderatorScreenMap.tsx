@@ -9,6 +9,7 @@ import {
   ModeratorEventFormPageMobile,
   ModeratorEventsPageMobile,
   OfficialContentReviewPageMobile,
+  OfficialContentDetailPageMobile,
   ReportDetailPageMobile,
 } from "../../components/mockups/pup-campus-creatives/ModeratorMobileUtilityPages";
 import ModeratorDashboardPage from "../../components/mockups/pup-campus-creatives/ModeratorDashboardPage";
@@ -45,6 +46,7 @@ export function getModeratorNavigationProps() {
     onReportDetail: go(moderatorRoutePaths.reportDetail),
     onFeatured: go(moderatorRoutePaths.featured),
     onOfficialContent: go(moderatorRoutePaths.officialContent),
+    onOfficialContentDetail: go(moderatorRoutePaths.officialContentDetail),
     onHistory: go(moderatorRoutePaths.history),
     onEvents: go(moderatorRoutePaths.events),
     onNewEvent: go(moderatorRoutePaths.newEvent),
@@ -102,6 +104,16 @@ export function getModeratorScreen(
   if (destination === "officialContent") {
     if (mode === "mobile") {
       return { node: <OfficialContentReviewPageMobile {...navigationProps} /> };
+    }
+
+    return {
+      node: <OfficialContentReviewPage {...navigationProps} />,
+    };
+  }
+
+  if (destination === "officialContentDetail") {
+    if (mode === "mobile") {
+      return { node: <OfficialContentDetailPageMobile {...navigationProps} /> };
     }
 
     return {

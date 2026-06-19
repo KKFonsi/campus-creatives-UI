@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { DesktopNav } from './_shared/DesktopNav';
 import { InitialsAvatar } from './_shared/InitialsAvatar';
 import { ShareProfileModal } from './ShareProfileModal';
+import { navigateTo } from '../../../app/demo';
 import { 
   Heart, 
   Share2, 
@@ -224,7 +225,19 @@ export function CreatorProfilePage({
         <div className="mb-20">
           <div className="grid grid-cols-3 gap-6">
             {portfolioWorks.map(work => (
-              <div key={work.id} className="group relative bg-card-bg border border-border rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all">
+              <div
+                key={work.id}
+                role="button"
+                tabIndex={0}
+                onClick={() => navigateTo(`/student/work/${work.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}`)}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    navigateTo(`/student/work/${work.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}`);
+                  }
+                }}
+                className="group relative bg-card-bg border border-border rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all text-left focus:outline-none focus:ring-4 focus:ring-pup-maroon/20"
+              >
                 <div className="aspect-[16/10] relative overflow-hidden bg-secondary-surface">
                   <img src={work.img} alt={work.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
                   
@@ -254,13 +267,13 @@ export function CreatorProfilePage({
 
                   {/* Owner Controls Overlay */}
                   <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
-                    <button className="p-2 bg-white rounded-full text-pup-maroon hover:bg-pup-maroon hover:text-white transition-colors" title="Edit Work">
+                    <button onClick={(event) => event.stopPropagation()} className="p-2 bg-white rounded-full text-pup-maroon hover:bg-pup-maroon hover:text-white transition-colors" title="Edit Work">
                       <Edit3 size={18} />
                     </button>
-                    <button className="p-2 bg-white rounded-full text-pup-maroon hover:bg-pup-maroon hover:text-white transition-colors" title="Visibility">
+                    <button onClick={(event) => event.stopPropagation()} className="p-2 bg-white rounded-full text-pup-maroon hover:bg-pup-maroon hover:text-white transition-colors" title="Visibility">
                       {work.visibility === 'Public' ? <Eye size={18} /> : <Eye size={18} className="opacity-50" />}
                     </button>
-                    <button className="p-2 bg-white rounded-full text-pup-maroon hover:bg-pup-maroon hover:text-white transition-colors" title="More">
+                    <button onClick={(event) => event.stopPropagation()} className="p-2 bg-white rounded-full text-pup-maroon hover:bg-pup-maroon hover:text-white transition-colors" title="More">
                       <MoreHorizontal size={18} />
                     </button>
                   </div>
@@ -276,7 +289,7 @@ export function CreatorProfilePage({
                       {work.visibility}
                     </div>
                     <div className="flex gap-2">
-                      <button onClick={onPortfolio} className="text-[11px] font-bold text-pup-maroon hover:underline">Manage</button>
+                      <button onClick={(event) => { event.stopPropagation(); onPortfolio?.(); }} className="text-[11px] font-bold text-pup-maroon hover:underline">Manage</button>
                     </div>
                   </div>
                 </div>

@@ -17,6 +17,7 @@ import {
   FileText
 } from 'lucide-react';
 import { DesktopNav } from './_shared/DesktopNav';
+import { navigateTo } from '../../../app/demo';
 import './_group.css';
 
 const FEATURED_LIMIT = 4;
@@ -40,6 +41,7 @@ const ALL_WORKS = [
 export default function PortfolioManagementPage() {
   const [showArchiveModal, setShowArchiveModal] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState('All');
+  const openWork = (title: string) => navigateTo(`/student/work/${title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}`);
 
   const statusColors: Record<string, string> = {
     'Featured': 'bg-pup-gold text-deep-maroon',
@@ -166,6 +168,15 @@ export default function PortfolioManagementPage() {
             {ALL_WORKS.filter(w => w.status !== 'Hidden').map((work) => (
               <div 
                 key={work.id} 
+                role="button"
+                tabIndex={0}
+                onClick={() => openWork(work.title)}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    openWork(work.title);
+                  }
+                }}
                 className={`bg-white rounded-xl border border-border p-3 flex items-center gap-4 hover:shadow-sm transition-shadow group ${work.status === 'Draft' ? 'opacity-60' : ''}`}
               >
                 <div className="cursor-grab active:cursor-grabbing text-muted-text">
@@ -202,7 +213,7 @@ export default function PortfolioManagementPage() {
                   {work.status === 'Hidden' && <EyeOff size={16} className="text-muted-text" />}
                   
                   <div className="relative group/menu">
-                    <button className="p-2 text-secondary-text hover:bg-secondary-surface rounded-lg">
+                    <button onClick={(event) => event.stopPropagation()} className="p-2 text-secondary-text hover:bg-secondary-surface rounded-lg">
                       <MoreVertical size={20} />
                     </button>
                     <div className="absolute right-0 top-full mt-1 w-48 bg-white border border-border rounded-xl shadow-xl py-2 z-10 opacity-0 invisible group-hover/menu:opacity-100 group-hover/menu:visible transition-all">
@@ -213,13 +224,13 @@ export default function PortfolioManagementPage() {
                         <EyeOff size={16} /> Hide from Profile
                       </button>
                       <button 
-                        onClick={() => setShowArchiveModal(work.title)}
+                        onClick={(event) => { event.stopPropagation(); setShowArchiveModal(work.title); }}
                         className="w-full text-left px-4 py-2 text-sm text-primary-text hover:bg-soft-maroon hover:text-pup-maroon transition-colors flex items-center gap-2"
                       >
                         <Archive size={16} /> Archive Work
                       </button>
                       <div className="h-px bg-border my-1"></div>
-                      <button className="w-full text-left px-4 py-2 text-sm text-primary-text hover:bg-soft-maroon hover:text-pup-maroon transition-colors flex items-center gap-2">
+                      <button onClick={(event) => { event.stopPropagation(); openWork(work.title); }} className="w-full text-left px-4 py-2 text-sm text-primary-text hover:bg-soft-maroon hover:text-pup-maroon transition-colors flex items-center gap-2">
                         <ExternalLink size={16} /> Open Work
                       </button>
                     </div>

@@ -7,9 +7,10 @@ import './_group.css';
 
 interface SpotlightPageMobileProps {
   onFullProject?: () => void;
+  onCreatorProfile?: () => void;
 }
 
-export function SpotlightPageMobile({ onFullProject }: SpotlightPageMobileProps = {}) {
+export function SpotlightPageMobile({ onFullProject, onCreatorProfile }: SpotlightPageMobileProps = {}) {
   const [isFollowed, setIsFollowed] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [showComments, setShowComments] = useState(false);
@@ -80,12 +81,12 @@ export function SpotlightPageMobile({ onFullProject }: SpotlightPageMobileProps 
               {isFollowed ? '✓' : '+'}
             </button>
           </div>
-          <div>
+          <button type="button" onClick={onCreatorProfile} className="min-w-0 text-left">
             <div className="font-black text-[15px] flex items-center gap-1.5">
               Mika Santos <span className="text-[10px] bg-white/10 px-2 py-0.5 rounded text-white/60">Follow</span>
             </div>
             <div className="text-[11px] text-white/60 uppercase tracking-widest font-bold">College of Arts and Letters</div>
-          </div>
+          </button>
         </div>
 
         <div className="mb-6">

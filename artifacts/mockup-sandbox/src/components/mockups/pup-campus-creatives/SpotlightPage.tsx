@@ -8,9 +8,10 @@ import './_group.css';
 
 interface SpotlightPageProps {
   onFullProject?: () => void;
+  onCreatorProfile?: () => void;
 }
 
-export function SpotlightPage({ onFullProject }: SpotlightPageProps = {}) {
+export function SpotlightPage({ onFullProject, onCreatorProfile }: SpotlightPageProps = {}) {
   const [isAppreciated, setIsAppreciated] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
   const [isFollowed, setIsFollowed] = useState(false);
@@ -95,13 +96,17 @@ export function SpotlightPage({ onFullProject }: SpotlightPageProps = {}) {
             </div>
 
             <div className="flex items-center justify-between bg-secondary-surface/50 p-4 rounded-2xl border border-border mb-8">
-              <div className="flex items-center gap-3">
+              <button
+                type="button"
+                onClick={onCreatorProfile}
+                className="flex items-center gap-3 rounded-2xl text-left focus:outline-none focus:ring-4 focus:ring-pup-maroon/20"
+              >
                 <InitialsAvatar name="Mika Santos" className="w-12 h-12 border-2 border-white shadow-sm" textClassName="text-sm" />
                 <div>
                   <div className="font-bold text-lg hover:text-pup-maroon cursor-pointer">Mika Santos</div>
                   <div className="text-[13px] text-secondary-text">College of Arts and Letters</div>
                 </div>
-              </div>
+              </button>
               <button 
                 onClick={() => setIsFollowed(!isFollowed)}
                 className={`h-10 px-6 rounded-xl font-bold text-sm transition-all ${isFollowed ? 'bg-border text-primary-text' : 'bg-pup-maroon text-white hover:bg-deep-maroon'}`}

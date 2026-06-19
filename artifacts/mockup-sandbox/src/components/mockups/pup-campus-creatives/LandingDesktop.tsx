@@ -241,6 +241,9 @@ export function LandingDesktop({ onExplore, onRegister, onLogin }: LandingDeskto
             <p className="text-[13px] max-w-[300px] text-white/50">
               A curated campus creative hub for the Polytechnic University of the Philippines.
             </p>
+            <p className="mt-4 text-[12px] leading-relaxed max-w-[420px] text-white/40">
+              Images and artworks in this HCI prototype are local educational demo assets. Ownership remains with the respective creators, source institutions, and rights holders; inclusion does not imply endorsement or transfer of rights.
+            </p>
           </div>
           
           <div className="flex flex-wrap gap-x-8 gap-y-4 text-[14px]">
@@ -254,7 +257,7 @@ export function LandingDesktop({ onExplore, onRegister, onLogin }: LandingDeskto
         </div>
         <div className="max-w-[1200px] mx-auto mt-12 pt-6 border-t border-white/10 flex justify-between items-center text-[12px] text-white/40">
           <p>© 2026 PUP Campus Creatives.</p>
-          <p>Sample academic prototype content.</p>
+          <p>Sample academic prototype content. Asset credits are documented in the repository.</p>
         </div>
       </footer>
     </div>

@@ -22,6 +22,7 @@ import {
   Globe
 } from 'lucide-react';
 import { DesktopNav } from './_shared/DesktopNav';
+import { CREATIVE_CATEGORY_LABELS } from '../../../app/data/creativeCategories';
 import './_group.css';
 
 interface SubmitWorkPageProps {
@@ -45,7 +46,7 @@ export default function SubmitWorkPage({ onSubmitted }: SubmitWorkPageProps = {}
 
   return (
     <div className="min-h-screen bg-main-bg font-inter pb-20">
-      <DesktopNav authenticated={true} active="Home" />
+      <DesktopNav authenticated={true} active="Submit Work" />
 
       <main className="max-w-[1200px] mx-auto px-6 py-10">
         {/* Step Indicator */}
@@ -144,10 +145,9 @@ export default function SubmitWorkPage({ onSubmitted }: SubmitWorkPageProps = {}
                   <div className="space-y-2">
                     <label className="text-sm font-bold text-primary-text">Primary Category</label>
                     <select className="w-full px-4 py-3 bg-white border border-border rounded-xl appearance-none outline-none focus:border-pup-maroon transition-all">
-                      <option selected>Digital Art</option>
-                      <option>Visual Art</option>
-                      <option>Photography</option>
-                      <option>Graphic Design</option>
+                      {CREATIVE_CATEGORY_LABELS.map((category) => (
+                        <option key={category}>{category}</option>
+                      ))}
                     </select>
                   </div>
                 </div>
@@ -294,7 +294,7 @@ export default function SubmitWorkPage({ onSubmitted }: SubmitWorkPageProps = {}
                     <div className="space-y-2">
                       <span className="text-xs font-bold text-secondary-text">Primary: Digital Art</span>
                       <div className="flex flex-wrap gap-2">
-                        {['Graphic Design', 'Multimedia'].map(cat => (
+                        {['Graphic Design', 'UI/UX and Multimedia'].map(cat => (
                           <div key={cat} className="px-3 py-1 bg-secondary-surface text-secondary-text text-xs font-medium rounded-full flex items-center gap-2">
                             {cat} <button><X size={14} /></button>
                           </div>
@@ -350,7 +350,7 @@ export default function SubmitWorkPage({ onSubmitted }: SubmitWorkPageProps = {}
                   <div className="space-y-2">
                     <label className="text-sm font-bold text-primary-text">Portfolio Collection</label>
                     <select className="w-full px-4 py-3 bg-white border border-border rounded-xl appearance-none outline-none focus:border-pup-maroon transition-all">
-                      <option selected>UI/UX Works</option>
+                      <option selected>UI/UX and Multimedia</option>
                       <option>Featured Highlights</option>
                       <option>Academic Projects</option>
                     </select>

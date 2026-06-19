@@ -6,6 +6,7 @@ import {
   Image as ImageIcon, Palette, Camera, Mic2, Film, Music, Sparkles
 } from 'lucide-react';
 import { ShareModal } from './ShareModal';
+import { PUP_LIKHA_ALLOWED_CATEGORY_LABELS } from '../../../app/data/creativeCategories';
 import './_group.css';
 
 interface EventDetailPageProps {
@@ -19,14 +20,18 @@ export function EventDetailPage({ onBack, onSubmitEntry, onWorkDetail }: EventDe
   const [rulesExpanded, setRulesExpanded] = useState(false);
   const [showShare, setShowShare] = useState(false);
 
-  const categories = [
-    { name: 'Visual Art', icon: Palette },
-    { name: 'Digital Art', icon: Sparkles },
-    { name: 'Photography', icon: Camera },
-    { name: 'Music', icon: Music },
-    { name: 'Film', icon: Film },
-    { name: 'Spoken Word', icon: Mic2 },
-  ];
+  const categoryIcons = {
+    "Visual Art": Palette,
+    "Digital Art": Sparkles,
+    Photography: Camera,
+    Music,
+    "Film and Video": Film,
+    "Spoken Word": Mic2,
+  } as const;
+  const categories = PUP_LIKHA_ALLOWED_CATEGORY_LABELS.map((name) => ({
+    name,
+    icon: categoryIcons[name as keyof typeof categoryIcons] ?? ImageIcon,
+  }));
 
   const timeline = [
     { date: 'May 1', event: 'Announcement', status: 'completed' },
@@ -52,7 +57,7 @@ export function EventDetailPage({ onBack, onSubmitEntry, onWorkDetail }: EventDe
       title: "Sinta sa Riles",
       creator: "Marco Villanueva",
       college: "CAL",
-      category: "Illustration",
+      category: "Visual Art",
       image: "/__mockup/images/thumbnail_2.jpg",
       badge: "Finalist"
     },

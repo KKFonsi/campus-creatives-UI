@@ -18,9 +18,44 @@ export function MobileBottomNav({ guest = false }: MobileBottomNavProps = {}) {
   const submitPath = guest ? routePaths.public.login : routePaths.student.submit;
   const eventsPath = guest ? routePaths.public.explore : routePaths.student.events;
   const profilePath = guest ? routePaths.public.login : routePaths.student.profile;
+  const isActive = (path: string) => {
+    if (guest) return currentPath === path;
+    if (path === routePaths.student.submit) {
+      return currentPath.startsWith(routePaths.student.submit);
+    }
+    if (path === routePaths.student.profile) {
+      return (
+        currentPath.startsWith(routePaths.student.profile) ||
+        currentPath.startsWith("/student/submissions")
+      );
+    }
+    if (path === routePaths.student.home) {
+      return (
+        currentPath === routePaths.student.home ||
+        currentPath.startsWith(routePaths.student.spotlight) ||
+        currentPath.startsWith(routePaths.student.notifications)
+      );
+    }
+    if (path === routePaths.student.events) {
+      return currentPath.startsWith(routePaths.student.events);
+    }
+    if (path === routePaths.student.gallery) {
+      return currentPath.startsWith(routePaths.student.gallery);
+    }
+    if (path === routePaths.student.explore) {
+      return (
+        currentPath === routePaths.student.explore ||
+        currentPath.startsWith("/student/search") ||
+        currentPath.startsWith("/student/work") ||
+        currentPath.startsWith("/student/colleges") ||
+        currentPath.startsWith("/student/creator")
+      );
+    }
+    return currentPath === path;
+  };
   const itemClass = (path: string) =>
     `flex flex-col items-center justify-center flex-1 min-w-0 h-full gap-0.5 ${
-      currentPath === path
+      isActive(path)
         ? "text-pup-maroon"
         : "text-secondary-text hover:text-pup-maroon"
     }`;
@@ -36,7 +71,7 @@ export function MobileBottomNav({ guest = false }: MobileBottomNavProps = {}) {
         href={homePath}
         onClick={(event) => handleNavigate(event, homePath)}
         className={itemClass(homePath)}
-        aria-current={currentPath === homePath ? "page" : undefined}
+        aria-current={isActive(homePath) ? "page" : undefined}
       >
         <Home size={24} className="stroke-[2.5px]" />
         <span className="text-[10px] font-medium">Home</span>
@@ -46,7 +81,7 @@ export function MobileBottomNav({ guest = false }: MobileBottomNavProps = {}) {
         href={explorePath}
         onClick={(event) => handleNavigate(event, explorePath)}
         className={itemClass(explorePath)}
-        aria-current={currentPath === explorePath ? "page" : undefined}
+        aria-current={isActive(explorePath) ? "page" : undefined}
       >
         <Compass size={24} />
         <span className="text-[10px] font-medium">Explore</span>
@@ -56,7 +91,7 @@ export function MobileBottomNav({ guest = false }: MobileBottomNavProps = {}) {
         href={galleryPath}
         onClick={(event) => handleNavigate(event, galleryPath)}
         className={itemClass(galleryPath)}
-        aria-current={currentPath === galleryPath ? "page" : undefined}
+        aria-current={isActive(galleryPath) ? "page" : undefined}
       >
         <ImageIcon size={22} />
         <span className="text-[10px] font-medium">Gallery</span>
@@ -66,7 +101,7 @@ export function MobileBottomNav({ guest = false }: MobileBottomNavProps = {}) {
         href={eventsPath}
         onClick={(event) => handleNavigate(event, eventsPath)}
         className={itemClass(eventsPath)}
-        aria-current={currentPath === eventsPath ? "page" : undefined}
+        aria-current={isActive(eventsPath) ? "page" : undefined}
       >
         <Calendar size={24} />
         <span className="text-[10px] font-medium">Events</span>
@@ -76,7 +111,7 @@ export function MobileBottomNav({ guest = false }: MobileBottomNavProps = {}) {
         href={profilePath}
         onClick={(event) => handleNavigate(event, profilePath)}
         className={itemClass(profilePath)}
-        aria-current={currentPath === profilePath ? "page" : undefined}
+        aria-current={isActive(profilePath) ? "page" : undefined}
         aria-label={guest ? "Log in to view profile" : "Creator Profile"}
       >
         <InitialsAvatar name="Rafael Mendoza" className="w-6 h-6 border border-border" textClassName="text-[10px]" />
@@ -88,10 +123,10 @@ export function MobileBottomNav({ guest = false }: MobileBottomNavProps = {}) {
           href={submitPath}
           onClick={(event) => handleNavigate(event, submitPath)}
           className={`w-16 h-16 rounded-full text-white flex items-center justify-center shadow-xl shadow-pup-maroon/30 hover:bg-deep-maroon transition-colors border-4 border-warm-white ${
-            currentPath === submitPath ? "bg-deep-maroon ring-2 ring-pup-gold" : "bg-pup-maroon"
+            isActive(submitPath) ? "bg-deep-maroon ring-2 ring-pup-gold" : "bg-pup-maroon"
           }`}
           aria-label={guest ? "Log in to submit work" : "Submit Work"}
-          aria-current={currentPath === submitPath ? "page" : undefined}
+          aria-current={isActive(submitPath) ? "page" : undefined}
         >
           <PlusSquare size={34} strokeWidth={2.5} />
         </a>

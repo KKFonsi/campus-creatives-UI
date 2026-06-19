@@ -102,6 +102,9 @@ export function LandingMobile({ onExplore, onRegister }: LandingMobileProps = {}
         >
           Create Account
         </button>
+        <p className="mt-6 text-[11px] leading-relaxed text-white/45">
+          Images and artworks in this HCI prototype are local educational demo assets. Ownership remains with the respective creators, source institutions, and rights holders; inclusion does not imply endorsement or transfer of rights.
+        </p>
       </section>
 
       <MobileBottomNav guest />

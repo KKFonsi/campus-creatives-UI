@@ -173,6 +173,7 @@ export function getCreatorSpaceScreen(
       node: (
         <SubmissionConfirmationPageMobile
           onMySubmissions={go(creatorSpaceRoutes.submissions)}
+          onSubmissionDetail={go(creatorSpaceRoutes.submissionDetail)}
         />
       ),
     };
@@ -182,6 +183,7 @@ export function getCreatorSpaceScreen(
     node: (
       <SubmissionConfirmationPage
         onMySubmissions={go(creatorSpaceRoutes.submissions)}
+        onSubmissionDetail={go(creatorSpaceRoutes.submissionDetail)}
       />
     ),
   };

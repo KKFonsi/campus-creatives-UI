@@ -3,12 +3,25 @@ import { MobileHeader } from './_shared/MobileHeader';
 import { MobileBottomNav } from './_shared/MobileBottomNav';
 import { Award, Heart, Bookmark, Search } from 'lucide-react';
 import { navigateTo } from '../../../app/demo';
+import { CREATIVE_CATEGORY_LABELS } from '../../../app/data/creativeCategories';
+import { routePaths } from '../../../app/routes';
 import './_group.css';
 
 export function StudentHomeMobile() {
   const [liked, setLiked] = useState<Record<string, boolean>>({});
+  const [visibleSubmissionCount, setVisibleSubmissionCount] = useState(4);
   
   const toggleLike = (id: string) => setLiked(prev => ({ ...prev, [id]: !prev[id] }));
+  const latestSubmissions = [
+    { id: '1', title: 'Sinta sa Riles', creator: 'M. Villanueva', img: '/__mockup/images/thumbnail_2.jpg' },
+    { id: '2', title: 'Campus Freq.', creator: 'L. Santos', img: '/__mockup/images/thumbnail_3.jpg' },
+    { id: '3', title: 'Concrete Life', creator: 'D. Cruz', img: '/__mockup/images/thumbnail_4.jpg' },
+    { id: '4', title: 'Digital Sinta', creator: 'M. Torres', img: '/__mockup/images/thumbnail_1.jpg' },
+    { id: '5', title: 'Pasig at Dusk', creator: 'S. Lim', img: '/__mockup/images/college_1.jpg' },
+    { id: '6', title: 'Tinig ng Bayan', creator: 'R. Santos', img: '/__mockup/images/thumbnail_4.jpg' },
+    { id: '7', title: 'Polytechnic Dreams', creator: 'D. Cruz', img: '/__mockup/images/thumbnail_3.jpg' },
+    { id: '8', title: 'Railway Sketches', creator: 'E. Mercado', img: '/__mockup/images/thumbnail_2.jpg' },
+  ];
 
   return (
     <div className="min-h-screen bg-main-bg text-primary-text font-inter overflow-y-auto pb-[68px]">
@@ -19,10 +32,14 @@ export function StudentHomeMobile() {
         <h1 className="text-[20px] font-bold tracking-tight mb-1">Good day, Andrea.</h1>
         <p className="text-[13px] text-secondary-text mb-4">Discover new student works.</p>
         
-        <div className="w-full bg-secondary-surface rounded-lg px-3 py-2 border border-border flex items-center gap-2">
+        <button
+          type="button"
+          onClick={() => navigateTo(routePaths.student.search)}
+          className="w-full bg-secondary-surface rounded-lg px-3 py-2 border border-border flex items-center gap-2 text-left"
+        >
           <Search size={16} className="text-secondary-text" />
-          <input type="text" placeholder="Search creatives, works, or colleges..." className="bg-transparent border-none outline-none text-[14px] w-full text-primary-text placeholder:text-muted-text" />
-        </div>
+          <span className="text-[14px] text-muted-text">Search creatives, works, or colleges...</span>
+        </button>
       </div>
 
       {/* Featured Work */}
@@ -64,7 +81,7 @@ export function StudentHomeMobile() {
       {/* Categories Horizontal */}
       <section className="py-2 mb-4">
         <div className="flex gap-2 overflow-x-auto px-4 pb-2 snap-x no-scrollbar">
-          {['Visual Art', 'Photography', 'Digital Art', 'Music', 'Film'].map((cat, i) => (
+          {CREATIVE_CATEGORY_LABELS.slice(0, 8).map((cat, i) => (
             <div key={cat} className={`snap-start shrink-0 px-3 py-1.5 rounded-full text-[13px] font-medium border ${i === 0 ? 'bg-soft-maroon border-pup-maroon text-pup-maroon' : 'bg-card-bg border-border text-primary-text'}`}>
               {cat}
             </div>
@@ -76,12 +93,7 @@ export function StudentHomeMobile() {
       <section className="px-4 pb-8">
         <h2 className="text-[16px] font-bold mb-3">Latest Submissions</h2>
         <div className="grid grid-cols-2 gap-3">
-          {[
-            { id: '1', title: 'Sinta sa Riles', creator: 'M. Villanueva', img: '/__mockup/images/thumbnail_2.jpg' },
-            { id: '2', title: 'Campus Freq.', creator: 'L. Santos', img: '/__mockup/images/thumbnail_3.jpg' },
-            { id: '3', title: 'Concrete Life', creator: 'D. Cruz', img: '/__mockup/images/thumbnail_4.jpg' },
-            { id: '4', title: 'Digital Sinta', creator: 'M. Torres', img: '/__mockup/images/thumbnail_1.jpg' }
-          ].map(work => (
+          {latestSubmissions.slice(0, visibleSubmissionCount).map(work => (
             <button key={work.id} type="button" onClick={() => navigateTo(`/student/work/${work.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}`)} className="bg-card-bg rounded-[10px] border border-border overflow-hidden text-left">
               <div className="aspect-square bg-secondary-surface relative">
                 <img src={work.img} alt={work.title} className="w-full h-full object-cover" />
@@ -96,6 +108,15 @@ export function StudentHomeMobile() {
             </button>
           ))}
         </div>
+        {visibleSubmissionCount < latestSubmissions.length && (
+          <button
+            type="button"
+            onClick={() => setVisibleSubmissionCount((count) => Math.min(count + 4, latestSubmissions.length))}
+            className="mt-5 w-full rounded-xl border border-pup-maroon bg-card-bg py-3 text-[13px] font-black text-pup-maroon"
+          >
+            Load More
+          </button>
+        )}
       </section>
 
       <MobileBottomNav />

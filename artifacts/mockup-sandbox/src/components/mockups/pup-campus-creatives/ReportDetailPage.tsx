@@ -11,6 +11,7 @@ import {
   ChevronRight,
   MoreVertical,
   AlertTriangle,
+  Calendar,
   ExternalLink,
   Image as ImageIcon,
   MessageSquare,
@@ -24,9 +25,10 @@ import {
   Info
 } from 'lucide-react';
 import { InitialsAvatar } from './_shared/InitialsAvatar';
+import { ModeratorDesktopSidebar } from './_shared/ModeratorDesktopSidebar';
 import './_group.css';
 
-const ModeratorSidebar = ({ active }: { active: string }) => (
+const ModeratorSidebar = ({ active, navigation }: { active: string; navigation?: ReportDetailPageProps }) => (
   <aside className="w-[240px] bg-dark-surface text-white flex flex-col flex-shrink-0 min-h-screen">
     <div className="p-6">
       <div className="text-pup-gold font-bold text-xl tracking-tight leading-tight mb-1">
@@ -39,19 +41,21 @@ const ModeratorSidebar = ({ active }: { active: string }) => (
     
     <nav className="flex-1 px-3 space-y-1">
       {[
-        { id: 'Dashboard', icon: LayoutDashboard, label: 'Dashboard' },
-        { id: 'Pending Reviews', icon: ClipboardList, label: 'Pending Reviews', badge: '24' },
-        { id: 'Reports', icon: Flag, label: 'Reports', badge: '6' },
-        { id: 'Featured Works', icon: Star, label: 'Featured Works' },
-        { id: 'Official Content', icon: Shield, label: 'Official Content' },
-        { id: 'Moderation History', icon: History, label: 'Moderation History' },
+        { id: 'Dashboard', icon: LayoutDashboard, label: 'Dashboard', onClick: navigation?.onDashboard },
+        { id: 'Pending Reviews', icon: ClipboardList, label: 'Pending Reviews', badge: '24', onClick: navigation?.onPending },
+        { id: 'Reports', icon: Flag, label: 'Reports', badge: '6', onClick: navigation?.onReports },
+        { id: 'Featured Works', icon: Star, label: 'Featured Works', onClick: navigation?.onFeatured },
+        { id: 'Official Content', icon: Shield, label: 'Official Content', onClick: navigation?.onOfficialContent },
+        { id: 'Events', icon: Calendar, label: 'Events', onClick: navigation?.onEvents },
+        { id: 'Moderation History', icon: History, label: 'Moderation History', onClick: navigation?.onHistory },
       ].map((item) => (
         <button
           key={item.id}
-          className={`w-full flex items-center justify-between px-3 py-2 rounded-lg transition-colors ${
+          onClick={item.onClick}
+          className={`w-full flex items-center justify-between border-l-4 px-3 py-2 rounded-lg transition-colors ${
             active === item.id 
-              ? 'bg-white/10 text-white border-l-4 border-pup-maroon' 
-              : 'text-white/70 hover:bg-white/5 hover:text-white'
+              ? 'bg-white/10 text-white border-pup-gold' 
+              : 'border-transparent text-white/70 hover:bg-white/5 hover:text-white'
           }`}
         >
           <div className="flex items-center gap-3">
@@ -107,10 +111,17 @@ const TopBar = ({ role = "Moderator" }) => (
 );
 
 interface ReportDetailPageProps {
+  onDashboard?: () => void;
+  onPending?: () => void;
   onReports?: () => void;
+  onFeatured?: () => void;
+  onOfficialContent?: () => void;
+  onHistory?: () => void;
+  onEvents?: () => void;
 }
 
-export default function ReportDetailPage({ onReports }: ReportDetailPageProps = {}) {
+export default function ReportDetailPage(props: ReportDetailPageProps = {}) {
+  const { onReports } = props;
   const [showConfirmModal, setShowConfirmModal] = useState<string | null>(null);
 
   const breadcrumbs = [
@@ -120,7 +131,7 @@ export default function ReportDetailPage({ onReports }: ReportDetailPageProps = 
 
   return (
     <div className="flex min-h-screen bg-main-bg font-inter">
-      <ModeratorSidebar active="Reports" />
+      <ModeratorDesktopSidebar {...props} />
       
       <main className="flex-1 flex flex-col overflow-hidden">
         <TopBar />
@@ -172,9 +183,8 @@ export default function ReportDetailPage({ onReports }: ReportDetailPageProps = 
                 </div>
                 <div className="p-6 flex flex-col md:flex-row gap-6">
                   <div className="w-full md:w-[300px] aspect-[4/3] bg-secondary-surface rounded-lg overflow-hidden flex-shrink-0 border border-border relative group">
-                    <div className="w-full h-full bg-gradient-to-br from-soft-maroon to-soft-gold flex items-center justify-center text-pup-maroon/30 italic">
-                      [Digital Sinta Thumbnail]
-                    </div>
+                    <img src="/__mockup/images/thumbnail_1.jpg" alt="Digital Sinta reported content preview" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/25 to-transparent" />
                   </div>
                   <div className="flex-1 space-y-4">
                     <div>
@@ -230,14 +240,17 @@ export default function ReportDetailPage({ onReports }: ReportDetailPageProps = 
               <section className="space-y-4">
                 <h3 className="font-bold text-primary-text px-1">Supporting Evidence</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {[1, 2].map((i) => (
-                    <div key={i} className="bg-card-bg rounded-xl border border-border p-4 flex items-center justify-between">
+                  {[
+                    { id: 1, src: "/__mockup/images/event_1.jpg", name: "screenshot-01.jpg" },
+                    { id: 2, src: "/__mockup/images/thumbnail_2.jpg", name: "screenshot-02.jpg" },
+                  ].map((evidence) => (
+                    <div key={evidence.id} className="bg-card-bg rounded-xl border border-border p-4 flex items-center justify-between">
                       <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 bg-secondary-surface rounded flex items-center justify-center text-muted-text">
-                          <ImageIcon size={20} />
+                        <div className="w-12 h-12 bg-secondary-surface rounded overflow-hidden">
+                          <img src={evidence.src} alt={`${evidence.name} evidence preview`} className="h-full w-full object-cover" />
                         </div>
                         <div>
-                          <div className="text-sm font-bold text-primary-text">screenshot-0{i}.jpg</div>
+                          <div className="text-sm font-bold text-primary-text">{evidence.name}</div>
                           <div className="text-xs text-muted-text uppercase tracking-wider font-medium">1.2 MB • JPG</div>
                         </div>
                       </div>
@@ -278,6 +291,16 @@ export default function ReportDetailPage({ onReports }: ReportDetailPageProps = 
                           <span className="font-medium">{check}</span>
                         </div>
                       ))}
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="rounded-xl border border-border bg-secondary-surface overflow-hidden">
+                      <img src="/__mockup/images/thumbnail_1.jpg" alt="Submitted work comparison preview" className="h-40 w-full object-cover" />
+                      <div className="p-3 text-[11px] font-bold uppercase tracking-widest text-secondary-text">Submitted work</div>
+                    </div>
+                    <div className="rounded-xl border border-border bg-secondary-surface overflow-hidden">
+                      <img src="/__mockup/images/event_1.jpg" alt="Claimed reference comparison preview" className="h-40 w-full object-cover" />
+                      <div className="p-3 text-[11px] font-bold uppercase tracking-widest text-secondary-text">Claimed reference</div>
                     </div>
                   </div>
                   <div className="pt-2">

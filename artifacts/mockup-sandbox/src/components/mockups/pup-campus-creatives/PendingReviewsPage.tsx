@@ -22,6 +22,7 @@ import {
   Calendar,
 } from 'lucide-react';
 import { InitialsAvatar } from './_shared/InitialsAvatar';
+import { ModeratorDesktopSidebar } from './_shared/ModeratorDesktopSidebar';
 import './_group.css';
 
 interface PendingReviewsPageProps {
@@ -64,30 +65,15 @@ export default function PendingReviewsPage({
 
   return (
     <div className="flex min-h-screen bg-main-bg font-inter">
-      {/* Sidebar */}
-      <aside className="w-[240px] bg-dark-surface text-white flex flex-col shrink-0 sticky top-0 h-screen">
-        <div className="p-6">
-          <div className="text-pup-gold font-bold text-xl tracking-tight mb-1">Campus Creatives</div>
-          <div className="inline-block px-2 py-0.5 bg-pup-gold text-dark-surface text-[10px] font-bold rounded uppercase tracking-wider">MODERATOR</div>
-        </div>
-
-        <nav className="flex-1 px-3 py-4 space-y-1">
-          <NavItem icon={<LayoutDashboard size={20} />} label="Dashboard" active={activeTab === 'Dashboard'} onClick={() => handleNav('Dashboard', onDashboard)} />
-          <NavItem icon={<ClipboardList size={20} />} label="Pending Reviews" badge="24" active={activeTab === 'Pending Reviews'} onClick={() => handleNav('Pending Reviews', onPending)} />
-          <NavItem icon={<Flag size={20} />} label="Reports" badge="6" active={activeTab === 'Reports'} onClick={() => handleNav('Reports', onReports)} />
-          <NavItem icon={<Star size={20} />} label="Featured Works" active={activeTab === 'Featured Works'} onClick={() => handleNav('Featured Works', onFeatured)} />
-          <NavItem icon={<Shield size={20} />} label="Official Content" active={activeTab === 'Official Content'} onClick={() => handleNav('Official Content', onOfficialContent)} />
-          <NavItem icon={<Calendar size={20} />} label="Events" active={activeTab === 'Events'} onClick={() => handleNav('Events', onEvents)} />
-          <NavItem icon={<History size={20} />} label="Moderation History" active={activeTab === 'History'} onClick={() => handleNav('History', onHistory)} />
-        </nav>
-
-        <div className="p-4 border-t border-white/10">
-          <button className="flex items-center gap-2 text-[14px] text-gray-400 hover:text-white transition-colors w-full px-3 py-2">
-            <span>Switch to Student View</span>
-            <ExternalLink size={14} />
-          </button>
-        </div>
-      </aside>
+      <ModeratorDesktopSidebar
+        onDashboard={onDashboard}
+        onPending={onPending}
+        onReports={onReports}
+        onFeatured={onFeatured}
+        onOfficialContent={onOfficialContent}
+        onEvents={onEvents}
+        onHistory={onHistory}
+      />
 
       {/* Main Content */}
       <main className="flex-1 flex flex-col overflow-hidden">
@@ -201,10 +187,10 @@ function NavItem({ icon, label, badge, active, onClick }: any) {
   return (
     <button 
       onClick={onClick}
-      className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg transition-all ${
+      className={`w-full flex items-center justify-between border-l-4 px-3 py-2.5 rounded-lg transition-all ${
         active 
-          ? 'bg-white/10 border-l-4 border-pup-gold text-white' 
-          : 'text-gray-400 hover:bg-white/5 hover:text-white'
+          ? 'bg-white/10 border-pup-gold text-white' 
+          : 'border-transparent text-gray-400 hover:bg-white/5 hover:text-white'
       }`}
     >
       <div className="flex items-center gap-3">

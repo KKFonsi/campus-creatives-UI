@@ -17,7 +17,6 @@ import {
   Shield,
   History,
   LogOut,
-  Bell,
   Search
 } from 'lucide-react';
 import { InitialsAvatar } from './_shared/InitialsAvatar';
@@ -35,6 +34,7 @@ interface SubmissionReviewPageMobileProps {
   onFeatured?: () => void;
   onOfficialContent?: () => void;
   onHistory?: () => void;
+  onEvents?: () => void;
 }
 
 export function SubmissionReviewPageMobile({
@@ -46,6 +46,7 @@ export function SubmissionReviewPageMobile({
   onFeatured,
   onOfficialContent,
   onHistory,
+  onEvents,
 }: SubmissionReviewPageMobileProps = {}) {
   const [activeThumb, setActiveThumb] = useState(0);
   const [sections, setSections] = useState({
@@ -69,6 +70,19 @@ export function SubmissionReviewPageMobile({
     setChecklist(newChecklist);
   };
 
+  useEffect(() => {
+    if (!showMoreActions) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setShowMoreActions(false);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [showMoreActions]);
+
   const checklistItems = [
     "Content is appropriate",
     "Ownership confirmation is complete",
@@ -88,7 +102,7 @@ export function SubmissionReviewPageMobile({
   ];
 
   return (
-    <div className="w-[390px] min-h-screen bg-main-bg font-inter overflow-y-auto flex flex-col pb-32">
+    <div className="mobile-app-screen w-[390px] h-[844px] bg-main-bg font-inter overflow-hidden flex flex-col relative">
       {/* Mobile Top Header */}
       <header className="h-[56px] bg-dark-surface flex items-center justify-between px-4 sticky top-0 z-50">
         <div className="flex items-center gap-3">
@@ -101,16 +115,13 @@ export function SubmissionReviewPageMobile({
           </div>
         </div>
         <div className="flex items-center gap-3">
-          <button className="text-white/80 relative">
-            <Bell size={20} />
-            <span className="absolute -top-1 -right-1 w-4 h-4 bg-pup-maroon text-white text-[10px] flex items-center justify-center rounded-full border-2 border-dark-surface">3</span>
-          </button>
           <div className="w-8 h-8 rounded-full border border-white/20 overflow-hidden bg-pup-maroon flex items-center justify-center text-white text-[12px] font-bold">
             M
           </div>
         </div>
       </header>
 
+      <main className="flex-1 min-h-0 overflow-y-auto pb-[96px]">
       {/* Media Cover */}
       <section className="relative w-full aspect-video bg-black">
         <img 
@@ -281,7 +292,7 @@ export function SubmissionReviewPageMobile({
       </div>
 
       {/* Private Notes */}
-      <section className="p-4 bg-card-bg border-t border-border mt-4">
+      <section className="p-4 bg-card-bg border-t border-border mt-4 mb-4">
         <label className="block text-[12px] font-bold text-secondary-text uppercase mb-2 tracking-wide">Private Notes (Internal Only)</label>
         <textarea 
           value={notes}
@@ -290,9 +301,10 @@ export function SubmissionReviewPageMobile({
           className="w-full h-24 p-3 bg-secondary-surface border border-border rounded-lg text-[14px] outline-none focus:border-pup-maroon"
         />
       </section>
+      </main>
 
       {/* Sticky Bottom Action Bar */}
-      <div className="sticky bottom-[68px] p-3 bg-white border-t border-border shadow-[0_-4px_12px_rgba(0,0,0,0.05)] flex gap-2 z-40">
+      <div className="absolute bottom-[68px] left-0 right-0 z-40 flex w-full gap-2 border-t border-border bg-white p-3 shadow-[0_-4px_12px_rgba(0,0,0,0.08)]">
         <button onClick={() => setDecisionModal("approve")} className="flex-1 h-11 bg-status-approved text-white rounded-lg font-bold text-[14px] flex items-center justify-center gap-2">
           <CheckCircle2 size={18} /> Approve
         </button>
@@ -312,9 +324,9 @@ export function SubmissionReviewPageMobile({
 
       {/* More Actions Bottom Sheet */}
       {showMoreActions && (
-        <div className="fixed inset-0 z-[60]">
+        <div className="absolute inset-0 z-[60]">
           <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setShowMoreActions(false)} />
-          <div className="absolute bottom-0 left-0 right-0 bg-card-bg rounded-t-2xl p-4 animate-in slide-in-from-bottom duration-300">
+          <div className="absolute bottom-0 left-0 right-0 max-h-[64%] overflow-y-auto bg-card-bg rounded-t-2xl p-4 pb-6 shadow-2xl animate-in slide-in-from-bottom duration-300">
             <div className="w-12 h-1.5 bg-border rounded-full mx-auto mb-6" />
             <h3 className="text-[18px] font-bold mb-4">Additional Actions</h3>
             <div className="space-y-2">
@@ -358,6 +370,7 @@ export function SubmissionReviewPageMobile({
         onFeatured={onFeatured}
         onOfficialContent={onOfficialContent}
         onHistory={onHistory}
+        onEvents={onEvents}
       />
       <MobileReviewDecisionModal
         decision={decisionModal}
@@ -417,7 +430,7 @@ function MobileReviewDecisionModal({
   }[decision];
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-end justify-center">
+    <div className="absolute inset-0 z-[100] flex items-end justify-center">
       <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={onCancel} />
       <div className="relative z-10 w-[390px] rounded-t-3xl bg-card-bg p-6 border-t border-border shadow-2xl">
         <div className={`w-14 h-14 rounded-2xl ${copy.color} text-white flex items-center justify-center mb-4`}>

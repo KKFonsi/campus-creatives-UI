@@ -25,6 +25,7 @@ import {
   MessageSquare
 } from 'lucide-react';
 import { InitialsAvatar } from './_shared/InitialsAvatar';
+import { ModeratorDesktopSidebar } from './_shared/ModeratorDesktopSidebar';
 import './_group.css';
 
 interface ModeratorNavigationProps {
@@ -61,11 +62,11 @@ const ModeratorSidebar = ({ active, navigation }: { active: string; navigation?:
         <button
           key={item.id}
           onClick={item.onClick}
-          className={`w-full flex items-center justify-between px-3 py-2 rounded-lg transition-colors ${
-            active === item.id 
-              ? 'bg-white/10 text-white border-l-4 border-pup-maroon' 
-              : 'text-white/70 hover:bg-white/5 hover:text-white'
-          }`}
+            className={`w-full flex items-center justify-between border-l-4 px-3 py-2 rounded-lg transition-colors ${
+              active === item.id 
+              ? 'bg-white/10 text-white border-pup-gold' 
+              : 'border-transparent text-white/70 hover:bg-white/5 hover:text-white'
+            }`}
         >
           <div className="flex items-center gap-3">
             <item.icon size={18} />
@@ -216,7 +217,7 @@ export default function ModerationHistoryPage(props: ModeratorNavigationProps = 
 
   return (
     <div className="flex min-h-screen bg-main-bg font-inter">
-      <ModeratorSidebar active="Moderation History" navigation={props} />
+      <ModeratorDesktopSidebar {...props} />
       
       <main className="flex-1 flex flex-col overflow-hidden">
         <TopBar />

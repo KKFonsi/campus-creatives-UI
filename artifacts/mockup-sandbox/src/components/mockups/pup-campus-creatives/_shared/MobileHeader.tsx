@@ -1,5 +1,5 @@
 import React from 'react';
-import { Search, Bell, Menu } from 'lucide-react';
+import { Bell } from 'lucide-react';
 import { navigateTo } from '../../../../app/demo';
 import { routePaths } from '../../../../app/routes';
 import '../_group.css';
@@ -31,9 +31,6 @@ export function MobileHeader({ publicMode = false }: MobileHeaderProps = {}) {
       </a>
 
       <div className="flex items-center gap-1">
-        <button className="p-2 text-secondary-text hover:text-pup-maroon transition-colors rounded-full hover:bg-soft-maroon" aria-label="Search">
-          <Search size={20} />
-        </button>
         <a
           href={notificationPath}
           onClick={(event) => handleNavigate(event, notificationPath)}

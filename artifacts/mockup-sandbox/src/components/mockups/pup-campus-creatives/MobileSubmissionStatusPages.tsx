@@ -19,6 +19,7 @@ interface MobileSubmissionProps {
   onRevise?: () => void;
   onDone?: () => void;
   onMySubmissions?: () => void;
+  onSubmissionDetail?: () => void;
 }
 
 function DetailShell({
@@ -198,7 +199,7 @@ export function ReviseSubmissionPageMobile({ onBack, onDone }: MobileSubmissionP
   );
 }
 
-export function SubmissionConfirmationPageMobile({ onMySubmissions }: MobileSubmissionProps = {}) {
+export function SubmissionConfirmationPageMobile({ onMySubmissions, onSubmissionDetail }: MobileSubmissionProps = {}) {
   return (
     <DetailShell title="Submitted" subtitle="Your work is now in the moderation queue">
       <section className="rounded-3xl border border-status-approved/20 bg-card-bg p-6 text-center">
@@ -208,9 +209,14 @@ export function SubmissionConfirmationPageMobile({ onMySubmissions }: MobileSubm
         <h2 className="mt-4 text-xl font-black">Digital Sinta was submitted</h2>
         <p className="mt-2 text-sm leading-relaxed text-secondary-text">Reference CC-WORK-2026-0148 is pending moderator review.</p>
       </section>
-      <button onClick={onMySubmissions} className="w-full rounded-2xl bg-pup-maroon py-4 text-sm font-black text-white">
-        View My Submissions
-      </button>
+      <div className="space-y-2">
+        <button onClick={onSubmissionDetail} className="w-full rounded-2xl bg-pup-maroon py-4 text-sm font-black text-white">
+          View Submission
+        </button>
+        <button onClick={onMySubmissions} className="w-full rounded-2xl border border-border bg-card-bg py-4 text-sm font-black">
+          View My Submissions
+        </button>
+      </div>
     </DetailShell>
   );
 }

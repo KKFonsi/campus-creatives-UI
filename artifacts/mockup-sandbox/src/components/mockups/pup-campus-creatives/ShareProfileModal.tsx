@@ -157,13 +157,19 @@ export function ShareProfileModalMobile({ isOpen, onClose }: { isOpen?: boolean;
 
   if (!isOpen) return null;
 
+  const previewWorks = [
+    { title: "Digital Sinta", image: "/__mockup/images/thumbnail_1.jpg" },
+    { title: "Campus Frequencies", image: "/__mockup/images/thumbnail_2.jpg" },
+    { title: "Polytechnic Dreams", image: "/__mockup/images/thumbnail_4.jpg" },
+  ];
+
   return (
-    <div className="fixed inset-0 z-[100] flex items-end justify-center">
+    <div className="absolute inset-0 z-[100] flex items-end justify-center overflow-hidden">
       <div 
         className="absolute inset-0 bg-dark-surface/60 backdrop-blur-sm"
         onClick={onClose}
       ></div>
-      <div className="bg-white w-[390px] rounded-t-[32px] relative z-10 animate-in slide-in-from-bottom-full duration-300 pb-safe">
+      <div className="bg-white w-[390px] max-h-[88%] overflow-y-auto rounded-t-[32px] relative z-10 animate-in slide-in-from-bottom duration-300 pb-safe">
         {/* Drag Handle */}
         <div className="w-12 h-1.5 bg-border rounded-full mx-auto my-3"></div>
         
@@ -230,6 +236,18 @@ export function ShareProfileModalMobile({ isOpen, onClose }: { isOpen?: boolean;
                 <QrCode size={20} />
                 Generate QR Code
              </button>
+
+             <div>
+               <label className="mb-3 block text-[10px] font-bold uppercase text-muted-text">Portfolio Preview</label>
+               <div className="grid grid-cols-3 gap-2">
+                 {previewWorks.map((work) => (
+                   <div key={work.title} className="overflow-hidden rounded-xl border border-border bg-secondary-surface">
+                     <img src={work.image} alt={work.title} className="aspect-square w-full object-cover" />
+                     <p className="truncate px-2 py-1.5 text-[10px] font-bold">{work.title}</p>
+                   </div>
+                 ))}
+               </div>
+             </div>
           </div>
         </div>
       </div>
