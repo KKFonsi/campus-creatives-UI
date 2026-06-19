@@ -49,6 +49,7 @@ export const modules: ModuleMap = {
   "./components/mockups/pup-campus-creatives/MySubmissionsPageMobile.tsx": () => import("../components/mockups/pup-campus-creatives/MySubmissionsPageMobile.tsx"),
   "./components/mockups/pup-campus-creatives/NeedsRevisionPage.tsx": () => import("../components/mockups/pup-campus-creatives/NeedsRevisionPage.tsx"),
   "./components/mockups/pup-campus-creatives/NotificationsPage.tsx": () => import("../components/mockups/pup-campus-creatives/NotificationsPage.tsx"),
+  "./components/mockups/pup-campus-creatives/OfficialContentCreatePage.tsx": () => import("../components/mockups/pup-campus-creatives/OfficialContentCreatePage.tsx"),
   "./components/mockups/pup-campus-creatives/OfficialContentReviewPage.tsx": () => import("../components/mockups/pup-campus-creatives/OfficialContentReviewPage.tsx"),
   "./components/mockups/pup-campus-creatives/OnboardingPage.tsx": () => import("../components/mockups/pup-campus-creatives/OnboardingPage.tsx"),
   "./components/mockups/pup-campus-creatives/PendingReviewsPage.tsx": () => import("../components/mockups/pup-campus-creatives/PendingReviewsPage.tsx"),

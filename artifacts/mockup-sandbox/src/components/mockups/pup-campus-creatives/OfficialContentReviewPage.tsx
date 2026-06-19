@@ -17,6 +17,7 @@ import {
   ExternalLink,
   Filter,
   ArrowRight,
+  Plus,
   User,
   Building2,
   Calendar,
@@ -25,6 +26,8 @@ import {
 } from 'lucide-react';
 import { InitialsAvatar } from './_shared/InitialsAvatar';
 import { ModeratorDesktopSidebar } from './_shared/ModeratorDesktopSidebar';
+import { navigateTo } from '../../../app/demo';
+import { moderatorRoutePaths } from '../../../app/moderator/moderatorRoutes';
 import './_group.css';
 
 interface ModeratorNavigationProps {
@@ -120,8 +123,16 @@ const TopBar = ({ role = "Moderator" }) => (
 export default function OfficialContentReviewPage(props: ModeratorNavigationProps = {}) {
   const [activeTab, setActiveTab] = useState('Pending');
   const [expandedId, setExpandedId] = useState<number | null>(1);
+  const createdItem = (() => {
+    try {
+      return JSON.parse(window.sessionStorage.getItem("cc-official-content-created") ?? "null");
+    } catch {
+      return null;
+    }
+  })();
 
   const officialSubmissions = [
+    ...(createdItem ? [{ ...createdItem, id: 99, date: "Now", event: "Mock session", verified: true }] : []),
     {
       id: 1,
       org: "PUP OSA",
@@ -199,6 +210,13 @@ export default function OfficialContentReviewPage(props: ModeratorNavigationProp
               <h1 className="text-2xl font-bold text-primary-text uppercase tracking-tight">Official Content Review</h1>
               <p className="text-sm text-secondary-text mt-1">Review and authorize institutional posts from colleges and offices.</p>
             </div>
+            <button
+              type="button"
+              onClick={() => navigateTo(moderatorRoutePaths.officialContentNew)}
+              className="inline-flex items-center gap-2 rounded-xl bg-pup-maroon px-4 py-3 text-sm font-black text-white shadow-sm"
+            >
+              <Plus size={18} /> Add Official Content
+            </button>
           </div>
 
           {/* Filter Tabs */}

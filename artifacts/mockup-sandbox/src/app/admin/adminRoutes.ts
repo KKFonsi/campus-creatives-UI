@@ -5,14 +5,7 @@ export const adminRoutePaths = {
   users: routePaths.admin.users,
   userDetail: "/admin/users/rafael-mendoza",
   moderators: routePaths.admin.moderators,
-  colleges: routePaths.admin.colleges,
-  categories: routePaths.admin.categories,
-  events: routePaths.admin.events,
-  newEvent: routePaths.admin.newEvent,
   recognition: routePaths.admin.recognition,
-  analytics: routePaths.admin.analytics,
-  activityLog: routePaths.admin.activityLog,
-  roles: routePaths.admin.roles,
   reports: routePaths.admin.reports,
   featured: routePaths.admin.featured,
   settings: routePaths.admin.settings,
@@ -21,7 +14,22 @@ export const adminRoutePaths = {
 
 export type AdminDestination = keyof typeof adminRoutePaths;
 
+const obsoleteAdminPaths = new Set([
+  routePaths.admin.colleges,
+  routePaths.admin.categories,
+  routePaths.admin.events,
+  routePaths.admin.newEvent,
+  routePaths.admin.roles,
+  routePaths.admin.analytics,
+  routePaths.admin.activityLog,
+  "/admin/recognition",
+]);
+
 export function getAdminDestinationFromPath(pathname: string): AdminDestination | null {
+  if (obsoleteAdminPaths.has(pathname)) {
+    return "dashboard";
+  }
+
   if (/^\/admin\/users\/[^/]+$/.test(pathname)) {
     return "userDetail";
   }

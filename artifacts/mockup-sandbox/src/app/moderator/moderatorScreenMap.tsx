@@ -15,6 +15,7 @@ import {
 import ModeratorDashboardPage from "../../components/mockups/pup-campus-creatives/ModeratorDashboardPage";
 import ModeratorDashboardPageMobile from "../../components/mockups/pup-campus-creatives/ModeratorDashboardPageMobile";
 import OfficialContentReviewPage from "../../components/mockups/pup-campus-creatives/OfficialContentReviewPage";
+import { OfficialContentCreatePage } from "../../components/mockups/pup-campus-creatives/OfficialContentCreatePage";
 import PendingReviewsPage from "../../components/mockups/pup-campus-creatives/PendingReviewsPage";
 import PendingReviewsPageMobile from "../../components/mockups/pup-campus-creatives/PendingReviewsPageMobile";
 import { ReportsDashboardPage } from "../../components/mockups/pup-campus-creatives/ReportsDashboardPage";
@@ -46,6 +47,7 @@ export function getModeratorNavigationProps() {
     onReportDetail: go(moderatorRoutePaths.reportDetail),
     onFeatured: go(moderatorRoutePaths.featured),
     onOfficialContent: go(moderatorRoutePaths.officialContent),
+    onOfficialContentNew: go(moderatorRoutePaths.officialContentNew),
     onOfficialContentDetail: go(moderatorRoutePaths.officialContentDetail),
     onHistory: go(moderatorRoutePaths.history),
     onEvents: go(moderatorRoutePaths.events),
@@ -108,6 +110,12 @@ export function getModeratorScreen(
 
     return {
       node: <OfficialContentReviewPage {...navigationProps} />,
+    };
+  }
+
+  if (destination === "officialContentNew") {
+    return {
+      node: <OfficialContentCreatePage {...navigationProps} mode={mode} />,
     };
   }
 

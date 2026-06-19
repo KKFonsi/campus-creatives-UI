@@ -1,64 +1,18 @@
 # PUP: Campus Creatives Asset Sources
 
-Accessed: June 19, 2026
+Accessed: June 15, 2026
 
-This HCI prototype stores all display images locally. It does not hotlink remote images at runtime, does not use AI-generated imagery, and does not represent placeholder images as actual PUP student submissions.
-
-Public-facing disclaimer used in the prototype: Images and artworks in this HCI prototype are local educational demo assets. Ownership remains with the respective creators, source institutions, and rights holders; inclusion does not imply endorsement or transfer of rights.
-
-## Central Asset Map
-
-Prototype image paths are centralized in `src/app/data/demoAssets.ts`. Legacy Replit-compatible paths such as `public/__mockup/images/thumbnail_1.jpg` remain in place so existing screens continue to render without route or component rewrites.
-
-Fallback asset:
-
-| Local filename | Source | Usage note |
-| --- | --- | --- |
-| `public/__mockup/images/fallback-campus-creatives.svg` | Locally authored maroon/gold SVG placeholder | Local fallback for missing prototype preview assets. |
-| `public/images/fallback-campus-creatives.svg` | Copy of local fallback | Public non-mockup fallback copy. |
+These files are local prototype assets. They are not represented as actual student submissions.
 
 ## Institutional PUP Images
 
 | Local filename | Source page | Original image URL | Source | Usage note / license |
 | --- | --- | --- | --- | --- |
-| `src/assets/pup/pup-pylon-sta-mesa.jpg` | https://commons.wikimedia.org/wiki/File:PUP_Pylon,_Sta._Mesa,_Manila,_Jan_2024.jpg | https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/PUP_Pylon%2C_Sta._Mesa%2C_Manila%2C_Jan_2024.jpg/900px-PUP_Pylon%2C_Sta._Mesa%2C_Manila%2C_Jan_2024.jpg | Wikimedia Commons | PUP campus landmark placeholder for campus, event, and work preview cards; use per Commons file license metadata. |
-| `src/assets/pup/pup-main-building-sta-mesa.jpg` | https://commons.wikimedia.org/wiki/File:PUP_main_bldg_-_santa_mesa,_manila.jpg | https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/PUP_main_bldg_-_santa_mesa%2C_manila.jpg/1000px-PUP_main_bldg_-_santa_mesa%2C_manila.jpg | Wikimedia Commons | PUP Main Building placeholder for institutional and preview cards; use per Commons file license metadata. |
-| `src/assets/pup/pup-main-building-wide.jpg` | https://commons.wikimedia.org/wiki/File:PUP_main_bldg_-_santa_mesa,_manila.jpg | https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/PUP_main_bldg_-_santa_mesa%2C_manila.jpg/1200px-PUP_main_bldg_-_santa_mesa%2C_manila.jpg | Wikimedia Commons | Wide cover/banner image for Campus Creatives profile, gallery, event, and official content screens; use per Commons file license metadata. |
-
-## Filipino Artwork / Cultural Preview Images
-
-| Local filename | Source page | Original image URL | Source | Usage note / license |
-| --- | --- | --- | --- | --- |
-| `src/assets/artworks/filipino/spoliarium-juan-luna.jpg` | https://en.wikipedia.org/wiki/Spoliarium | https://commons.wikimedia.org/wiki/Special:FilePath/Spoliarium.jpg | Wikimedia Commons / Wikipedia image file | Replaces generic work thumbnail placeholders for educational prototype previews; use per linked file metadata. |
-| `src/assets/artworks/filipino/una-bulaquena-juan-luna.jpg` | https://en.wikipedia.org/wiki/La_Bulaque%C3%B1a | https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Una_Bulaque%C3%B1a.jpg/250px-Una_Bulaque%C3%B1a.jpg | Wikimedia Commons / Wikipedia image file | Replaces generic portrait/artwork placeholders for educational prototype previews; use per linked file metadata. |
-
-Wikimedia rate-limited several additional candidate downloads during this correction pass. Rather than fabricate sources or retain old Unsplash stock placeholders, remaining runtime thumbnail slots were filled with the verified local PUP campus images above.
-
-Candidate public pages researched but not downloaded because of Wikimedia throttling or thumbnail-size restrictions:
-
-| Candidate artwork | Source page |
-| --- | --- |
-| `España y Filipinas` by Juan Luna | https://en.wikipedia.org/wiki/Espa%C3%B1a_y_Filipinas |
-| `Las Damas Romanas` by Juan Luna | https://en.wikipedia.org/wiki/Las_Damas_Romanas |
-| `The Blood Compact` by Juan Luna | https://en.wikipedia.org/wiki/The_Blood_Compact |
-
-## Runtime Image Copies
-
-| Runtime filename | Source local file | Usage |
-| --- | --- | --- |
-| `public/__mockup/images/thumbnail_1.jpg` | `src/assets/artworks/filipino/spoliarium-juan-luna.jpg` | Student/moderator work cards, review previews, report previews. |
-| `public/__mockup/images/thumbnail_2.jpg` | `src/assets/pup/pup-pylon-sta-mesa.jpg` | Student/moderator work cards and comparison previews. |
-| `public/__mockup/images/thumbnail_3.jpg` | `src/assets/artworks/filipino/una-bulaquena-juan-luna.jpg` | Student/moderator work cards and review thumbnails. |
-| `public/__mockup/images/thumbnail_4.jpg` | `src/assets/pup/pup-main-building-sta-mesa.jpg` | Student/moderator work cards and report previews. |
-| `public/__mockup/images/event_1.jpg` | `src/assets/pup/pup-main-building-wide.jpg` | Event, official content, report evidence, and campus cards. |
-| `public/__mockup/images/event_2.jpg` | `src/assets/pup/pup-pylon-sta-mesa.jpg` | Event, official content, and campus cards. |
-| `public/__mockup/images/event_3.jpg` | `src/assets/pup/pup-main-building-sta-mesa.jpg` | Event, official content, and campus cards. |
-
-The same replacement files are copied to `public/images/thumbnail_*.jpg` and `public/images/event_*.jpg` so both public and generated mockup paths resolve to local assets.
+| `src/assets/pup/pup-pylon-sta-mesa.jpg` | https://commons.wikimedia.org/wiki/File:PUP_Pylon,_Sta._Mesa,_Manila,_Jan_2024.jpg | https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/PUP_Pylon%2C_Sta._Mesa%2C_Manila%2C_Jan_2024.jpg/900px-PUP_Pylon%2C_Sta._Mesa%2C_Manila%2C_Jan_2024.jpg | Wikimedia Commons | PUP campus landmark placeholder for college/campus cards; use per Commons file license metadata. |
+| `src/assets/pup/pup-main-building-sta-mesa.jpg` | https://commons.wikimedia.org/wiki/File:PUP_main_bldg_-_santa_mesa,_manila.jpg | https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/PUP_main_bldg_-_santa_mesa%2C_manila.jpg/1000px-PUP_main_bldg_-_santa_mesa%2C_manila.jpg | Wikimedia Commons | PUP Main Building placeholder for institutional cards; use per Commons file license metadata. |
+| `src/assets/pup/pup-main-building-wide.jpg` | https://commons.wikimedia.org/wiki/File:PUP_main_bldg_-_santa_mesa,_manila.jpg | https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/PUP_main_bldg_-_santa_mesa%2C_manila.jpg/1200px-PUP_main_bldg_-_santa_mesa%2C_manila.jpg | Wikimedia Commons | Wide cover/banner image for Campus Creatives profile and gallery screens; use per Commons file license metadata. |
 
 ## College Representative Images
-
-The College Directory and college showcase flow use representative PUP campus images rather than unique official photographs for every college. These are mock-only visual placeholders, not official college media.
 
 | Local filename | Source page | Original image URL | Source | Usage note / license |
 | --- | --- | --- | --- | --- |
@@ -79,6 +33,18 @@ The College Directory and college showcase flow use representative PUP campus im
 | `src/assets/pup/colleges/itech-pup-technology-campus.jpg` | https://en.wikipedia.org/wiki/Polytechnic_University_of_the_Philippines | https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/PUP_Pylon%2C_Sta._Mesa%2C_Manila%2C_Jan_2024.jpg/900px-PUP_Pylon%2C_Sta._Mesa%2C_Manila%2C_Jan_2024.jpg | Wikimedia Commons via PUP university page | Representative PUP campus image for ITECH discovery card; use per Commons file license metadata. |
 | `src/assets/pup/colleges/gs-pup-graduate-school.jpg` | https://en.wikipedia.org/wiki/Polytechnic_University_of_the_Philippines | https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/PUP_main_bldg_-_santa_mesa%2C_manila.jpg/1000px-PUP_main_bldg_-_santa_mesa%2C_manila.jpg | Wikimedia Commons via PUP university page | Representative PUP campus image for GS discovery card; use per Commons file license metadata. |
 
-## Removed Generic Stock Placeholder Set
+## Work Placeholder Images
 
-The previous `src/assets/placeholders/works/*.jpg` files were Unsplash placeholder images. They have been overwritten with local PUP campus images or the documented Filipino artwork files above so Student and Moderator desktop/mobile screens no longer depend on generic stock-like work thumbnails.
+| Local filename | Source page | Original image URL | Source | Usage note / license |
+| --- | --- | --- | --- | --- |
+| `src/assets/placeholders/works/digital-art-circuit-placeholder.jpg` | https://unsplash.com/ | https://images.unsplash.com/photo-1518770660439-4636190af475?w=1000&q=75&auto=format&fit=crop | Unsplash | Non-AI stock placeholder for digital art or multimedia cards; Unsplash License. |
+| `src/assets/placeholders/works/music-performance-placeholder.jpg` | https://unsplash.com/ | https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=1000&q=75&auto=format&fit=crop | Unsplash | Non-AI stock placeholder for music/performance cards; Unsplash License. |
+| `src/assets/placeholders/works/photography-camera-placeholder.jpg` | https://unsplash.com/ | https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=1000&q=75&auto=format&fit=crop | Unsplash | Non-AI stock placeholder for photography cards; Unsplash License. |
+| `src/assets/placeholders/works/graphic-design-code-placeholder.jpg` | https://unsplash.com/ | https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1000&q=75&auto=format&fit=crop | Unsplash | Non-AI stock placeholder for graphic design or UI/UX cards; Unsplash License. |
+| `src/assets/placeholders/works/illustration-paint-placeholder.jpg` | https://unsplash.com/ | https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=1000&q=75&auto=format&fit=crop | Unsplash | Non-AI stock placeholder for illustration/visual art cards; Unsplash License. |
+| `src/assets/placeholders/works/performance-stage-placeholder.jpg` | https://unsplash.com/ | https://images.unsplash.com/photo-1516280440614-37939bbacd81?w=1000&q=75&auto=format&fit=crop | Unsplash | Non-AI stock placeholder for performance/event cards; Unsplash License. |
+| `src/assets/placeholders/works/film-camera-placeholder.jpg` | https://unsplash.com/ | https://images.unsplash.com/photo-1485846234645-a62644f84728?w=1000&q=75&auto=format&fit=crop | Unsplash | Non-AI stock placeholder for film/multimedia cards; Unsplash License. |
+
+## Public Runtime Copies
+
+The same optimized files are copied to `public/images/`, `public/images/colleges/`, `public/__mockup/images/`, and `public/__mockup/images/colleges/` so generated Replit mockup paths continue to resolve while the College Directory can use descriptive per-college filenames.

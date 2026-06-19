@@ -31,6 +31,11 @@ export function AdminRouteRenderer({ pathname }: AdminRouteRendererProps) {
       return;
     }
 
+    if (destination === "dashboard" && pathname !== adminRoutePaths.dashboard) {
+      redirect(adminRoutePaths.dashboard);
+      return;
+    }
+
     if (!validMode) {
       redirect(routePaths.demo.root);
       return;

@@ -32,6 +32,7 @@ interface ModeratorMobileProps {
   onHistory?: () => void;
   onEvents?: () => void;
   onNewEvent?: () => void;
+  onOfficialContentNew?: () => void;
   onOfficialContentDetail?: () => void;
 }
 
@@ -83,10 +84,24 @@ function Shell({
 }
 
 export function OfficialContentReviewPageMobile(props: ModeratorMobileProps = {}) {
-  const items = OFFICIAL_CONTENT_SUBMISSIONS;
+  const createdItem = (() => {
+    try {
+      return JSON.parse(window.sessionStorage.getItem("cc-official-content-created") ?? "null");
+    } catch {
+      return null;
+    }
+  })();
+  const items = createdItem ? [createdItem, ...OFFICIAL_CONTENT_SUBMISSIONS] : OFFICIAL_CONTENT_SUBMISSIONS;
 
   return (
     <Shell {...props} active="Official" title="Official Content" subtitle="Review university-authored creative posts">
+      <button
+        type="button"
+        onClick={props.onOfficialContentNew}
+        className="flex w-full items-center justify-center gap-2 rounded-2xl bg-pup-maroon py-3 text-sm font-black text-white"
+      >
+        <Plus size={18} /> Add Official Content
+      </button>
       <section className="grid grid-cols-2 gap-3">
         {[
           ["Pending", "5"],
