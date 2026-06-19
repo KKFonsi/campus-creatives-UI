@@ -172,8 +172,15 @@ export function DemoLauncher() {
           >
             Start Demo
           </button>
-          <a className="demo-preview-link" href={routePaths.preview.example}>
-            Open component preview
+          <a
+            className="demo-preview-link"
+            href={routePaths.public.landing}
+            onClick={(event) => {
+              event.preventDefault();
+              navigateTo(routePaths.public.landing);
+            }}
+          >
+            Go to Landing Page
           </a>
         </div>
       </section>

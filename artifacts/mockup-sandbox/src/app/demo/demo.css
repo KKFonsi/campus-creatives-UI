@@ -467,6 +467,72 @@
   min-height: 100%;
 }
 
+.demo-phone-screen .login-page {
+  flex-direction: column;
+}
+
+.demo-phone-screen .login-page > .hidden.md\:flex {
+  display: none !important;
+}
+
+.demo-phone-screen .login-page > .md\:hidden {
+  display: flex !important;
+}
+
+.demo-phone-screen .login-page > .h-2 {
+  display: block !important;
+}
+
+.demo-phone-screen .login-page input,
+.demo-phone-screen .login-page button,
+.demo-phone-screen .login-page a,
+.demo-phone-screen .signup-page input,
+.demo-phone-screen .signup-page select,
+.demo-phone-screen .signup-page button,
+.demo-phone-screen .signup-page a {
+  max-width: 100%;
+}
+
+.demo-phone-screen .login-page,
+.demo-phone-screen .signup-page {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.demo-phone-screen .login-form-panel {
+  flex: 1 0 auto;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 100%;
+  padding: 24px 16px 32px;
+}
+
+.demo-phone-screen .login-form-card,
+.demo-phone-screen .signup-card {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.demo-phone-screen .signup-page {
+  padding: 18px 12px 28px;
+}
+
+.demo-phone-screen .signup-page form {
+  padding: 24px 18px 28px;
+}
+
+.demo-phone-screen .signup-page form > button[type="submit"] {
+  position: static;
+}
+
+.demo-phone-screen .signup-page .grid {
+  min-width: 0;
+}
+
 .demo-phone-screen main,
 .demo-phone-screen section,
 .demo-phone-screen form,

@@ -41,8 +41,8 @@ export function SignUpPage({ onRegisterSuccess, onLogin }: SignUpPageProps = {})
   const requiredDomain = '@iskolarngbayan.pup.edu.ph';
 
   return (
-    <div className="min-h-screen bg-main-bg py-12 px-4 font-inter">
-      <div className="max-w-[560px] mx-auto bg-card-bg border border-border rounded-[20px] shadow-sm overflow-hidden">
+    <div className="signup-page min-h-screen bg-main-bg py-12 px-4 font-inter overflow-x-hidden">
+      <div className="signup-card w-full max-w-[560px] mx-auto bg-card-bg border border-border rounded-[20px] shadow-sm overflow-hidden">
         <div className="p-8 md:p-10 border-b border-border text-center">
           <div className="flex items-center justify-center gap-2 text-pup-maroon text-xl tracking-tight mb-6">
             <span className="font-bold font-inter">PUP:</span>

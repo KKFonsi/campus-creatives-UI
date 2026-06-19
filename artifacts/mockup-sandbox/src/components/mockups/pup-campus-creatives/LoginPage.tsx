@@ -31,7 +31,7 @@ export function LoginPage({ onLoginSuccess, onRegister }: LoginPageProps = {}) {
   };
 
   return (
-    <div className="min-h-screen bg-main-bg flex flex-col md:flex-row font-inter">
+    <div className="login-page min-h-screen bg-main-bg flex flex-col md:flex-row font-inter overflow-x-hidden">
       {/* Left Panel */}
       <div className="hidden md:flex flex-1 relative bg-dark-surface items-center justify-center p-12 overflow-hidden border-r border-pup-maroon/20">
         <div className="absolute inset-0 z-0">
@@ -65,8 +65,8 @@ export function LoginPage({ onLoginSuccess, onRegister }: LoginPageProps = {}) {
       <div className="md:hidden h-2 w-full bg-gradient-to-r from-pup-maroon to-pup-gold"></div>
 
       {/* Right Panel */}
-      <div className="flex-1 flex items-center justify-center p-6 md:p-12 bg-main-bg">
-        <div className="w-full max-w-[400px]">
+      <div className="login-form-panel flex-1 flex items-center justify-center p-6 md:p-12 bg-main-bg">
+        <div className="login-form-card w-full max-w-[400px] min-w-0">
           <div className="hidden md:flex items-center gap-2 text-pup-maroon text-2xl tracking-tight mb-12">
             <span className="font-bold font-inter">PUP:</span>
             <span className="font-medium font-inter">Campus Creatives</span>

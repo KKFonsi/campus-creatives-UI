@@ -10,7 +10,7 @@ interface LandingMobileProps {
   onLogin?: () => void;
 }
 
-export function LandingMobile({ onExplore, onRegister }: LandingMobileProps = {}) {
+export function LandingMobile({ onExplore, onRegister, onLogin }: LandingMobileProps = {}) {
   return (
     <div className="min-h-screen bg-main-bg text-primary-text font-inter overflow-y-auto pb-[68px]">
       <MobileHeader publicMode />
@@ -28,17 +28,17 @@ export function LandingMobile({ onExplore, onRegister }: LandingMobileProps = {}
         </p>
         <button
           type="button"
-          onClick={onExplore}
+          onClick={onRegister}
           className="w-full py-3.5 bg-pup-maroon text-white font-medium rounded-xl hover:bg-deep-maroon transition-colors text-[16px] shadow-sm mb-4"
         >
           Explore Campus Creatives
         </button>
         <button
           type="button"
-          onClick={onRegister}
+          onClick={onLogin}
           className="w-full py-3.5 bg-transparent border-2 border-border text-primary-text font-medium rounded-xl hover:border-pup-maroon hover:text-pup-maroon transition-colors text-[16px]"
         >
-          Create Your Portfolio
+          Log In
         </button>
       </section>
 

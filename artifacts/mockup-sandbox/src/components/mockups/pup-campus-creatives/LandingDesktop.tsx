@@ -30,17 +30,17 @@ export function LandingDesktop({ onExplore, onRegister, onLogin }: LandingDeskto
           <div className="flex items-center gap-4">
             <button
               type="button"
-              onClick={onExplore}
+              onClick={onRegister}
               className="px-6 py-3.5 bg-pup-maroon text-white font-medium rounded-xl hover:bg-deep-maroon transition-colors text-base shadow-sm"
             >
               Explore Campus Creatives
             </button>
             <button
               type="button"
-              onClick={onRegister}
+              onClick={onLogin}
               className="px-6 py-3.5 bg-transparent border-2 border-border text-primary-text font-medium rounded-xl hover:border-pup-maroon hover:text-pup-maroon transition-colors text-base"
             >
-              Create Your Portfolio
+              Log In
             </button>
           </div>
           
