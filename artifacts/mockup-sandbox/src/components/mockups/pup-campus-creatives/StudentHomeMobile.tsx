@@ -93,20 +93,35 @@ export function StudentHomeMobile() {
       <section className="px-4 pb-8">
         <h2 className="text-[16px] font-bold mb-3">Latest Submissions</h2>
         <div className="grid grid-cols-2 gap-3">
-          {latestSubmissions.slice(0, visibleSubmissionCount).map(work => (
-            <button key={work.id} type="button" onClick={() => navigateTo(`/student/work/${work.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}`)} className="bg-card-bg rounded-[10px] border border-border overflow-hidden text-left">
+          {latestSubmissions.slice(0, visibleSubmissionCount).map(work => {
+            const workPath = `/student/work/${work.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}`;
+            return (
+            <article key={work.id} className="bg-card-bg rounded-[10px] border border-border overflow-hidden text-left shadow-sm">
               <div className="aspect-square bg-secondary-surface relative">
                 <img src={work.img} alt={work.title} className="w-full h-full object-cover" />
-                <button onClick={(event) => { event.stopPropagation(); toggleLike(work.id); }} className="absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-card-bg/80 flex items-center justify-center">
+                <button
+                  type="button"
+                  onClick={() => toggleLike(work.id)}
+                  className="absolute top-1.5 right-1.5 min-h-11 min-w-11 rounded-full bg-card-bg/90 flex items-center justify-center shadow-sm"
+                  aria-label={`${liked[work.id] ? "Unlike" : "Like"} ${work.title}`}
+                >
                   <Heart size={12} className={liked[work.id] ? "fill-pup-maroon text-pup-maroon" : "text-primary-text"} />
                 </button>
               </div>
               <div className="p-2.5">
                 <h3 className="text-[13px] font-semibold mb-0.5 line-clamp-1">{work.title}</h3>
                 <div className="text-[11px] text-secondary-text">{work.creator}</div>
+                <button
+                  type="button"
+                  onClick={() => navigateTo(workPath)}
+                  className="mt-2 min-h-11 w-full rounded-lg border border-border bg-secondary-surface px-2 text-[11px] font-black text-pup-maroon"
+                >
+                  View Work
+                </button>
               </div>
-            </button>
-          ))}
+            </article>
+            );
+          })}
         </div>
         {visibleSubmissionCount < latestSubmissions.length && (
           <button

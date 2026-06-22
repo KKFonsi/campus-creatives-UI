@@ -54,10 +54,10 @@ export function MobileBottomNav({ guest = false }: MobileBottomNavProps = {}) {
     return currentPath === path;
   };
   const itemClass = (path: string) =>
-    `flex flex-col items-center justify-center flex-1 min-w-0 h-full gap-0.5 ${
+    `flex flex-col items-center justify-center flex-1 min-w-0 h-full gap-0.5 rounded-lg ${
       isActive(path)
-        ? "text-pup-maroon"
-        : "text-secondary-text hover:text-pup-maroon"
+        ? "text-pup-maroon bg-soft-maroon/70"
+        : "text-secondary-text hover:text-pup-maroon hover:bg-soft-maroon/60"
     }`;
 
   function handleNavigate(event: React.MouseEvent<HTMLAnchorElement>, href: string) {
@@ -122,7 +122,7 @@ export function MobileBottomNav({ guest = false }: MobileBottomNavProps = {}) {
         <a
           href={submitPath}
           onClick={(event) => handleNavigate(event, submitPath)}
-          className={`w-16 h-16 rounded-full text-white flex items-center justify-center shadow-xl shadow-pup-maroon/30 hover:bg-deep-maroon transition-colors border-4 border-warm-white ${
+          className={`cc-primary-action w-16 h-16 rounded-full text-white flex items-center justify-center shadow-xl shadow-pup-maroon/30 hover:bg-deep-maroon transition-colors border-4 border-warm-white ${
             isActive(submitPath) ? "bg-deep-maroon ring-2 ring-pup-gold" : "bg-pup-maroon"
           }`}
           aria-label={guest ? "Log in to submit work" : "Submit Work"}

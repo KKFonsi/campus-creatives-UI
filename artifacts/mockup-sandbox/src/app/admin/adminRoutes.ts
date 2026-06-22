@@ -5,9 +5,9 @@ export const adminRoutePaths = {
   users: routePaths.admin.users,
   userDetail: "/admin/users/rafael-mendoza",
   moderators: routePaths.admin.moderators,
+  featured: routePaths.admin.featured,
   recognition: routePaths.admin.recognition,
   reports: routePaths.admin.reports,
-  featured: routePaths.admin.featured,
   settings: routePaths.admin.settings,
   auditLog: routePaths.admin.auditLog,
 } as const;

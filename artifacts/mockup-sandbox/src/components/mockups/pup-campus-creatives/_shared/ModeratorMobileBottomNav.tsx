@@ -31,8 +31,8 @@ export function ModeratorMobileBottomNav({
     else navigateTo(fallback);
   };
   const itemClass = (id: string) =>
-    `flex flex-col items-center justify-center flex-1 min-w-0 gap-0.5 ${
-      active === id ? 'text-pup-gold' : 'text-white/60'
+    `flex flex-col items-center justify-center flex-1 min-w-0 gap-0.5 rounded-lg py-1 ${
+      active === id ? 'bg-white/10 text-pup-gold shadow-inner' : 'text-white/60 hover:bg-white/5 hover:text-white'
     }`;
 
   return (
@@ -45,14 +45,14 @@ export function ModeratorMobileBottomNav({
             className="absolute bottom-0 left-0 right-0 h-[844px] bg-black/30"
             onClick={() => setShowMore(false)}
           />
-          <div className="absolute bottom-[76px] left-3 right-3 rounded-2xl bg-white border border-border shadow-xl overflow-hidden">
-            <button onClick={() => go(onOfficialContent, routePaths.moderator.officialContent)} className="w-full px-4 py-3 flex items-center gap-3 text-left text-sm font-bold text-primary-text">
+          <div className="absolute bottom-[76px] left-3 right-3 max-h-[330px] rounded-2xl bg-white border border-border shadow-xl overflow-hidden">
+            <button onClick={() => go(onOfficialContent, routePaths.moderator.officialContent)} className="w-full px-4 py-3 flex items-center gap-3 text-left text-sm font-bold text-primary-text hover:bg-soft-maroon">
               <Shield size={18} className="text-pup-maroon" /> Official Content
             </button>
-            <button onClick={() => go(onEvents, routePaths.moderator.events)} className="w-full px-4 py-3 flex items-center gap-3 text-left text-sm font-bold text-primary-text border-t border-border">
+            <button onClick={() => go(onEvents, routePaths.moderator.events)} className="w-full px-4 py-3 flex items-center gap-3 text-left text-sm font-bold text-primary-text border-t border-border hover:bg-soft-maroon">
               <CalendarDays size={18} className="text-pup-maroon" /> Event Management
             </button>
-            <button onClick={() => go(onHistory, routePaths.moderator.history)} className="w-full px-4 py-3 flex items-center gap-3 text-left text-sm font-bold text-primary-text border-t border-border">
+            <button onClick={() => go(onHistory, routePaths.moderator.history)} className="w-full px-4 py-3 flex items-center gap-3 text-left text-sm font-bold text-primary-text border-t border-border hover:bg-soft-maroon">
               <History size={18} className="text-pup-maroon" /> Moderation History
             </button>
           </div>

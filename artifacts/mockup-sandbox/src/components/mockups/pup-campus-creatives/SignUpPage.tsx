@@ -101,8 +101,8 @@ export function SignUpPage({ onRegisterSuccess, onLogin }: SignUpPageProps = {})
           
           <div className="space-y-1.5">
             <label className="text-[14px] font-semibold text-primary-text block">College</label>
-            <select required className="w-full px-4 py-3 rounded-xl border border-border focus:border-pup-maroon focus:ring-4 focus:ring-pup-maroon/20 bg-main-bg text-primary-text outline-none transition-all appearance-none cursor-pointer">
-              <option value="" disabled selected>Select your college</option>
+            <select required defaultValue="" className="w-full px-4 py-3 rounded-xl border border-border focus:border-pup-maroon focus:ring-4 focus:ring-pup-maroon/20 bg-main-bg text-primary-text outline-none transition-all appearance-none cursor-pointer">
+              <option value="" disabled>Select your college</option>
               {COLLEGES.map(college => (
                 <option key={college} value={college}>{college}</option>
               ))}

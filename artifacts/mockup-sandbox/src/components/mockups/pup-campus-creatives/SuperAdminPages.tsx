@@ -1,20 +1,14 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Activity,
   AlertTriangle,
   Award,
   BadgeCheck,
-  Ban,
-  CheckCircle2,
-  ChevronRight,
-  Eye,
   FileText,
   Flag,
   LayoutDashboard,
   MoreHorizontal,
-  Pencil,
   Plus,
-  RotateCcw,
   Search,
   Settings,
   ShieldCheck,
@@ -41,12 +35,13 @@ type ModalState =
   | { type: "moderator-add" }
   | { type: "moderator-edit"; id: string }
   | { type: "moderator-deactivate"; id: string }
+  | { type: "featured-add" }
+  | { type: "featured-remove"; id: string }
   | { type: "badge-add" }
   | { type: "badge-view"; id: string }
   | { type: "badge-edit"; id: string }
   | { type: "badge-archive"; id: string }
   | { type: "report"; id: string }
-  | { type: "featured"; id: string; action: "Edit" | "Remove" | "Feature" }
   | { type: "audit"; id: string }
   | { type: "activity"; title: string; detail: string }
   | null;
@@ -56,9 +51,9 @@ const labels: Record<AdminDestination, string> = {
   users: "Users",
   userDetail: "User Detail",
   moderators: "Moderators",
+  featured: "Featured Content",
   recognition: "Recognitions",
   reports: "Reports",
-  featured: "Featured Content",
   settings: "Settings",
   auditLog: "Audit Log",
 };
@@ -68,16 +63,16 @@ const icons: Record<AdminDestination, React.ComponentType<{ size?: number; class
   users: Users,
   userDetail: UserCog,
   moderators: ShieldCheck,
+  featured: Star,
   recognition: Award,
   reports: Flag,
-  featured: Star,
   settings: Settings,
   auditLog: Activity,
 };
 
 const desktopNav: AdminDestination[] = ["dashboard", "users", "moderators", "reports", "featured", "recognition", "settings", "auditLog"];
-const mobilePrimary: AdminDestination[] = ["dashboard", "users", "reports", "recognition"];
-const mobileMore: AdminDestination[] = ["moderators", "featured", "settings", "auditLog"];
+const mobilePrimary: AdminDestination[] = ["dashboard", "users", "reports", "featured"];
+const mobileMore: AdminDestination[] = ["moderators", "recognition", "settings", "auditLog"];
 
 const seedUsers = [
   ["u01", "Rafael Mendoza", "rmendoza@iskolarngbayan.pup.edu.ph", "CCIS", "BSIT", "Creator", "Active", "Jan 12, 2026", 28, 24, 3, 1, 4],
@@ -133,14 +128,6 @@ const initialReports = Array.from({ length: 12 }, (_, index) => ({
   owner: ["Unassigned", "Maria", "Leo", "Dana"][index % 4],
 }));
 
-const initialFeatured = Array.from({ length: 8 }, (_, index) => ({
-  id: `f${index + 1}`,
-  title: ["Digital Sinta", "Sta. Mesa After Rain", "Tinig ng Bayan", "Polytechnic Dreams"][index % 4],
-  area: ["Featured Works", "Featured Creators", "Official Content", "College Highlights"][index % 4],
-  status: index % 3 === 0 ? "Queued" : "Active",
-  owner: ["Moderator Team", "Super Admin", "OSA", "CAL"][index % 4],
-}));
-
 const initialBadges = [
   "Artwork of the Week", "Creator of the Month", "Campus Highlight", "Event Finalist", "Community Choice",
   "Emerging Creator", "Portfolio Excellence", "Photography Pick", "Official Recognition", "Innovation Badge",
@@ -153,6 +140,20 @@ const initialBadges = [
   color: ["Maroon", "Gold", "Green", "Slate"][index % 4],
   visibility: index % 2 ? "Admin only" : "Public",
   status: index === 8 ? "Inactive" : "Active",
+}));
+
+const initialFeaturedContent = [
+  ["f01", "Digital Sinta", "Artwork", "Homepage Hero", "Rafael Mendoza", "Active"],
+  ["f02", "Creator of the Month: Maria Santos", "Creator", "Spotlight Rail", "Campus Creatives Team", "Scheduled"],
+  ["f03", "PUP Likha Finalists", "Collection", "Event Highlight", "PUP OSA", "Active"],
+  ["f04", "Sta. Mesa Through the Lens", "Photography", "Gallery Highlight", "COC", "Draft"],
+].map(([id, title, type, placement, owner, status]) => ({
+  id,
+  title,
+  type,
+  placement,
+  owner,
+  status,
 }));
 
 const initialAudit = Array.from({ length: 20 }, (_, index) => ({
@@ -168,17 +169,31 @@ export function SuperAdminPage({ destination, mode, onNavigate }: SuperAdminPage
   const [users, setUsers] = useState(initialUsers);
   const [moderators, setModerators] = useState(initialModerators);
   const [badges, setBadges] = useState(initialBadges);
+  const [featured, setFeatured] = useState(initialFeaturedContent);
   const [reports, setReports] = useState(initialReports);
-  const [featured, setFeatured] = useState(initialFeatured);
   const [audit] = useState(initialAudit);
   const [modal, setModal] = useState<ModalState>(null);
   const [query, setQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
   const [saved, setSaved] = useState(false);
   const [alerts, setAlerts] = useState(["3 reports escalated", "2 moderators at high workload", "Email domain policy pending review", "Audit export queued"]);
+  const modalTriggerRef = useRef<HTMLElement | null>(null);
 
   const mobile = mode === "mobile";
-  const closeModal = () => setModal(null);
+  const openModal = (nextModal: Exclude<ModalState, null>) => {
+    modalTriggerRef.current =
+      typeof document !== "undefined" && document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null;
+    setModal(nextModal);
+  };
+  const closeModal = () => {
+    setModal(null);
+    window.setTimeout(() => {
+      modalTriggerRef.current?.focus();
+      modalTriggerRef.current = null;
+    }, 0);
+  };
 
   useEffect(() => {
     if (!modal) return;
@@ -202,7 +217,7 @@ export function SuperAdminPage({ destination, mode, onNavigate }: SuperAdminPage
       statusFilter={statusFilter}
       setStatusFilter={setStatusFilter}
       onNavigate={onNavigate}
-      setModal={setModal}
+      setModal={openModal}
       alerts={alerts}
       setAlerts={setAlerts}
       saved={saved}
@@ -219,7 +234,7 @@ export function SuperAdminPage({ destination, mode, onNavigate }: SuperAdminPage
         </header>
         <main className="flex-1 min-h-0 overflow-y-auto pb-[86px]">{content}</main>
         <MobileAdminNav destination={destination} onNavigate={onNavigate} />
-        <AdminModal modal={modal} setModal={setModal} mobile users={users} moderators={moderators} badges={badges} reports={reports} featured={featured} audit={audit} close={closeModal} setUsers={setUsers} setModerators={setModerators} setBadges={setBadges} setReports={setReports} setFeatured={setFeatured} />
+        <AdminModal modal={modal} setModal={setModal} mobile users={users} moderators={moderators} featured={featured} badges={badges} reports={reports} audit={audit} close={closeModal} setUsers={setUsers} setModerators={setModerators} setFeatured={setFeatured} setBadges={setBadges} setReports={setReports} />
       </div>
     );
   }
@@ -238,6 +253,7 @@ export function SuperAdminPage({ destination, mode, onNavigate }: SuperAdminPage
       <main className="flex-1 overflow-y-auto">
         <header className="sticky top-0 z-20 flex h-16 items-center justify-between border-b border-border bg-card-bg px-8">
           <div>
+            <AdminBreadcrumb destination={destination} onNavigate={onNavigate} />
             <h1 className="text-xl font-black">{labels[destination]}</h1>
             <p className="text-xs font-bold uppercase tracking-wide text-secondary-text">Platform control center</p>
           </div>
@@ -245,7 +261,7 @@ export function SuperAdminPage({ destination, mode, onNavigate }: SuperAdminPage
         </header>
         {content}
       </main>
-      <AdminModal modal={modal} setModal={setModal} users={users} moderators={moderators} badges={badges} reports={reports} featured={featured} audit={audit} close={closeModal} setUsers={setUsers} setModerators={setModerators} setBadges={setBadges} setReports={setReports} setFeatured={setFeatured} />
+      <AdminModal modal={modal} setModal={setModal} users={users} moderators={moderators} featured={featured} badges={badges} reports={reports} audit={audit} close={closeModal} setUsers={setUsers} setModerators={setModerators} setFeatured={setFeatured} setBadges={setBadges} setReports={setReports} />
     </div>
   );
 }
@@ -256,7 +272,7 @@ function AdminContent(props: {
   users: typeof initialUsers;
   moderators: typeof initialModerators;
   reports: typeof initialReports;
-  featured: typeof initialFeatured;
+  featured: typeof initialFeaturedContent;
   badges: typeof initialBadges;
   audit: typeof initialAudit;
   query: string;
@@ -264,7 +280,7 @@ function AdminContent(props: {
   statusFilter: string;
   setStatusFilter: (value: string) => void;
   onNavigate: (destination: AdminDestination) => void;
-  setModal: (modal: ModalState) => void;
+  setModal: (modal: Exclude<ModalState, null>) => void;
   alerts: string[];
   setAlerts: React.Dispatch<React.SetStateAction<string[]>>;
   saved: boolean;
@@ -277,35 +293,44 @@ function AdminContent(props: {
   if (destination === "users") return <UsersSection {...props} className={className} />;
   if (destination === "moderators") return <ModeratorsSection {...props} className={className} />;
   if (destination === "reports") return <ReportsSection {...props} className={className} />;
-  if (destination === "featured") return <FeaturedSection {...props} className={className} />;
+  if (destination === "featured") return <FeaturedContentSection {...props} className={className} />;
   if (destination === "recognition") return <RecognitionSection {...props} className={className} />;
   if (destination === "settings") return <SettingsSection {...props} className={className} />;
   return <AuditSection {...props} className={className} />;
 }
 
-function Dashboard({ className, mobile, onNavigate, alerts, setAlerts, setModal, audit }: any) {
+function Dashboard({ className, mobile, onNavigate, alerts, setAlerts, setModal, audit, users, moderators, reports, featured, badges }: any) {
+  const activeUsers = users.filter((user: any) => user.status === "Active").length;
+  const suspendedUsers = users.filter((user: any) => user.status === "Suspended").length;
+  const activeModerators = moderators.filter((moderator: any) => moderator.status === "Active").length;
+  const openReports = reports.filter((report: any) => report.status !== "Resolved").length;
   const stats = [
-    ["Users", "12,840", "users"],
-    ["Moderators", "28", "moderators"],
-    ["Reports", "16", "reports"],
-    ["Recognitions", "10", "recognition"],
-    ["Featured", "86", "featured"],
-    ["Audit Entries", "20", "auditLog"],
+    ["Total users", users.length, "Sample accounts", "users"],
+    ["Active users", activeUsers, `${suspendedUsers} suspended`, "users"],
+    ["Active moderators", activeModerators, `${moderators.length} assigned`, "moderators"],
+    ["Open reports", openReports, "Needs oversight", "reports"],
+    ["Featured content", featured.length, "Curated placements", "featured"],
+    ["Recognitions", badges.length, "Badge definitions", "recognition"],
   ];
   return (
     <div className={className}>
+      <section>
+        <h2 className="text-2xl font-black text-primary-text">Global overview</h2>
+        <p className="mt-1 text-sm text-secondary-text">Mock platform-wide counts from retained Super Admin modules.</p>
+      </section>
       <section className={mobile ? "grid grid-cols-2 gap-3" : "grid grid-cols-3 xl:grid-cols-6 gap-4"}>
-        {stats.map(([label, value, destination]) => (
-          <button key={label} onClick={() => onNavigate(destination)} className="rounded-2xl border border-border bg-card-bg p-4 text-left shadow-sm">
+        {stats.map(([label, value, helper, destination]) => (
+          <button key={label} onClick={() => onNavigate(destination)} className="cc-control rounded-2xl border border-border bg-card-bg p-4 text-left shadow-sm">
             <p className="text-2xl font-black text-pup-maroon">{value}</p>
             <p className="mt-1 text-[11px] font-black uppercase tracking-wide text-secondary-text">{label}</p>
+            <p className="mt-2 text-xs text-secondary-text">{helper}</p>
           </button>
         ))}
       </section>
       <section className={mobile ? "space-y-4" : "grid grid-cols-2 gap-4"}>
         <Panel title="Recent Activity">
           {audit.slice(0, 8).map((entry: any) => (
-            <button key={entry.id} onClick={() => setModal({ type: "activity", title: entry.activity, detail: entry.detail })} className="w-full rounded-xl bg-secondary-surface p-3 text-left text-sm font-bold">
+            <button key={entry.id} onClick={() => setModal({ type: "activity", title: entry.activity, detail: entry.detail })} className="cc-control w-full rounded-xl bg-secondary-surface p-3 text-left text-sm font-bold">
               {entry.activity} <span className="text-secondary-text">by {entry.actor}</span>
             </button>
           ))}
@@ -315,7 +340,7 @@ function Dashboard({ className, mobile, onNavigate, alerts, setAlerts, setModal,
             <div key={alert} className="flex items-center gap-2 rounded-xl bg-secondary-surface p-3 text-sm">
               <AlertTriangle size={16} className="text-status-pending" />
               <span className="flex-1 font-bold">{alert}</span>
-              <button onClick={() => setAlerts((items: string[]) => items.filter((item) => item !== alert))} className="text-pup-maroon"><X size={16} /></button>
+              <button onClick={() => setAlerts((items: string[]) => items.filter((item) => item !== alert))} className="rounded-lg p-1 text-pup-maroon" aria-label={`Dismiss ${alert}`}><X size={16} /></button>
             </div>
           ))}
         </Panel>
@@ -372,8 +397,8 @@ function ModeratorsSection({ className, mobile, moderators, query, setQuery, sta
             </div>
             <p className="mt-3 text-xs text-secondary-text">Workload: {mod.workload} • Last active {mod.lastActive}</p>
             <div className="mt-4 grid grid-cols-2 gap-2">
-              <button onClick={() => setModal({ type: "moderator-edit", id: mod.id })} className="rounded-xl border border-border py-2 text-xs font-black text-pup-maroon">Edit Assignment</button>
-              <button onClick={() => setModal({ type: "moderator-deactivate", id: mod.id })} className="rounded-xl border border-border py-2 text-xs font-black text-status-rejected">Deactivate</button>
+              <button onClick={() => setModal({ type: "moderator-edit", id: mod.id })} className="cc-control rounded-xl border border-border py-2 text-xs font-black text-pup-maroon">Edit Assignment</button>
+              <button onClick={() => setModal({ type: "moderator-deactivate", id: mod.id })} className="cc-control rounded-xl border border-border py-2 text-xs font-black text-status-rejected">Deactivate</button>
             </div>
           </article>
         ))}
@@ -396,11 +421,32 @@ function ReportsSection({ className, mobile, reports, query, setQuery, statusFil
   );
 }
 
-function FeaturedSection({ className, mobile, featured, setModal }: any) {
+function FeaturedContentSection({ className, mobile, featured, query, setQuery, statusFilter, setStatusFilter, setModal }: any) {
+  const filtered = featured.filter((item: any) =>
+    (statusFilter === "All" || item.status === statusFilter) &&
+    `${item.title} ${item.type} ${item.placement} ${item.owner}`.toLowerCase().includes(query.toLowerCase())
+  );
   return (
     <div className={className}>
-      <SectionHeader title="Featured Content" subtitle={`${featured.length} active or queued features`} action="Add Feature" onAction={() => setModal({ type: "featured", id: featured[0].id, action: "Feature" })} />
-      <RecordGrid mobile={mobile}>{featured.map((item: any) => <FeatureCard key={item.id} item={item} setModal={setModal} />)}</RecordGrid>
+      <SectionHeader title="Featured Content" subtitle={`${featured.length} curated placements`} action="Add Featured Content" onAction={() => setModal({ type: "featured-add" })} />
+      <Filters query={query} setQuery={setQuery} statusFilter={statusFilter} setStatusFilter={setStatusFilter} options={["All", "Active", "Scheduled", "Draft"]} mobile={mobile} />
+      <RecordGrid mobile={mobile}>
+        {filtered.map((item: any) => (
+          <article key={item.id} className="rounded-2xl border border-border bg-card-bg p-4 shadow-sm">
+            <div className="flex items-start justify-between gap-3">
+              <div className="min-w-0">
+                <p className="text-[10px] font-black uppercase tracking-wide text-pup-maroon">{item.placement}</p>
+                <h3 className="mt-1 font-black text-primary-text">{item.title}</h3>
+                <p className="mt-1 text-xs text-secondary-text">{item.type} by {item.owner}</p>
+              </div>
+              <StatusChip status={item.status} />
+            </div>
+            <button onClick={() => setModal({ type: "featured-remove", id: item.id })} className="cc-danger-action mt-4 w-full rounded-xl border border-status-rejected/25 py-2 text-xs font-black text-status-rejected">
+              Remove
+            </button>
+          </article>
+        ))}
+      </RecordGrid>
     </div>
   );
 }
@@ -434,7 +480,7 @@ function SettingsSection({ className, mobile, saved, setSaved }: any) {
             <input type="checkbox" checked={(settings as any)[key]} onChange={(e) => setSettings({ ...settings, [key]: e.target.checked })} className="h-5 w-5 accent-pup-maroon" />
           </label>
         ))}
-        <button onClick={() => { setSaved(true); window.setTimeout(() => setSaved(false), 1800); }} className="w-full rounded-xl bg-pup-maroon py-3 text-sm font-black text-white">Save Settings</button>
+        <button onClick={() => { setSaved(true); window.setTimeout(() => setSaved(false), 1800); }} className="cc-primary-action w-full rounded-xl bg-pup-maroon py-3 text-sm font-black text-white">Save Settings</button>
         {saved && <p className="rounded-xl bg-status-approved/10 p-3 text-sm font-bold text-status-approved">Settings saved for this mock session.</p>}
       </section>
     </div>
@@ -461,10 +507,16 @@ function AdminModal(props: any) {
   const title = modalTitle(modal);
   return (
     <div className={`${mobile ? "absolute" : "fixed"} inset-0 z-[160] flex ${mobile ? "items-end" : "items-center justify-center"} bg-black/45`} onClick={close}>
-      <div className={`${mobile ? "max-h-[78vh] w-[390px] rounded-t-3xl" : "max-h-[86vh] w-full max-w-3xl rounded-3xl"} overflow-y-auto bg-card-bg p-6 shadow-2xl`} onClick={(e) => e.stopPropagation()}>
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="super-admin-modal-title"
+        className={`${mobile ? "max-h-[78vh] w-full rounded-t-3xl" : "max-h-[86vh] w-full max-w-3xl rounded-3xl"} overflow-y-auto bg-card-bg p-6 shadow-2xl`}
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="mb-5 flex items-center justify-between gap-4">
-          <h2 className="text-xl font-black">{title}</h2>
-          <button onClick={close} className="rounded-full bg-secondary-surface p-2"><X size={18} /></button>
+          <h2 id="super-admin-modal-title" className="text-xl font-black">{title}</h2>
+          <button onClick={close} className="rounded-full bg-secondary-surface p-2" aria-label="Close modal"><X size={18} /></button>
         </div>
         <ModalBody {...props} />
       </div>
@@ -473,14 +525,14 @@ function AdminModal(props: any) {
 }
 
 function ModalBody(props: any) {
-  const { modal, close, users, moderators, badges, reports, featured, audit, setUsers, setModerators, setBadges, setReports, setFeatured } = props;
+  const { modal, close, users, moderators, featured, badges, reports, audit, setUsers, setModerators, setFeatured, setBadges, setReports } = props;
   if (modal.type === "user") {
     const user = users.find((item: any) => item.id === modal.id);
     return <UserDetail user={user} setModal={props.setModal} close={close} />;
   }
   if (modal.type === "user-confirm") {
     const user = users.find((item: any) => item.id === modal.id);
-    return <Confirm text={`${modal.action} ${user.name}?`} detail={modal.action === "Suspend" ? "The user will lose publishing access until restored." : "The user will regain normal account access."} reason action={`Confirm ${modal.action}`} onCancel={close} onConfirm={() => { setUsers(users.map((item: any) => item.id === user.id ? { ...item, status: modal.action === "Suspend" ? "Suspended" : "Active" } : item)); close(); }} />;
+    return <Confirm text={`${modal.action} ${user.name}?`} detail={modal.action === "Suspend" ? `${user.name} will lose publishing access until restored.` : `${user.name} will regain normal account access.`} record={user.email} reason destructive={modal.action === "Suspend"} action={`Confirm ${modal.action}`} onCancel={close} onConfirm={() => { setUsers(users.map((item: any) => item.id === user.id ? { ...item, status: modal.action === "Suspend" ? "Suspended" : "Active" } : item)); close(); }} />;
   }
   if (modal.type === "moderator-add") return <ModeratorForm onCancel={close} onSubmit={(record: any) => { setModerators([{ ...record, id: `m${Date.now()}`, approved: 0, revisions: 0, open: 0, workload: "0 reviews", lastActive: "New" }, ...moderators]); close(); }} />;
   if (modal.type === "moderator-edit") {
@@ -489,7 +541,12 @@ function ModalBody(props: any) {
   }
   if (modal.type === "moderator-deactivate") {
     const mod = moderators.find((item: any) => item.id === modal.id);
-    return <Confirm text={`Deactivate ${mod.name}?`} detail={`Review access for ${mod.area} will be disabled.`} action="Confirm Deactivation" onCancel={close} onConfirm={() => { setModerators(moderators.map((item: any) => item.id === mod.id ? { ...item, status: "Inactive" } : item)); close(); }} />;
+    return <Confirm text={`Deactivate ${mod.name}?`} detail={`Review access for ${mod.area} will be disabled.`} record={mod.email} destructive action="Confirm Deactivation" onCancel={close} onConfirm={() => { setModerators(moderators.map((item: any) => item.id === mod.id ? { ...item, status: "Inactive" } : item)); close(); }} />;
+  }
+  if (modal.type === "featured-add") return <FeaturedContentForm onCancel={close} onSubmit={(item: any) => { setFeatured([{ ...item, id: `f${Date.now()}` }, ...featured]); close(); }} />;
+  if (modal.type === "featured-remove") {
+    const item = featured.find((entry: any) => entry.id === modal.id);
+    return <Confirm text={`Remove ${item.title}?`} detail="This will remove the curated placement from Super Admin featured content in this mock session." record={item.placement} destructive action="Remove Featured Content" onCancel={close} onConfirm={() => { setFeatured(featured.filter((entry: any) => entry.id !== item.id)); close(); }} />;
   }
   if (modal.type === "badge-add") return <BadgeForm onCancel={close} onSubmit={(badge: any) => { setBadges([{ ...badge, id: `b${Date.now()}` }, ...badges]); close(); }} />;
   if (modal.type === "badge-view" || modal.type === "badge-edit") {
@@ -498,15 +555,11 @@ function ModalBody(props: any) {
   }
   if (modal.type === "badge-archive") {
     const badge = badges.find((item: any) => item.id === modal.id);
-    return <Confirm text={`Archive ${badge.name}?`} detail="The badge definition will become inactive in this mock session." action="Archive Badge" onCancel={close} onConfirm={() => { setBadges(badges.map((item: any) => item.id === badge.id ? { ...item, status: "Inactive" } : item)); close(); }} />;
+    return <Confirm text={`${badge.status === "Active" ? "Archive" : "Activate"} ${badge.name}?`} detail={badge.status === "Active" ? "The badge definition will become inactive in this mock session." : "The badge definition will return to active recognition options."} record={badge.category} destructive={badge.status === "Active"} action={badge.status === "Active" ? "Archive Badge" : "Activate Badge"} onCancel={close} onConfirm={() => { setBadges(badges.map((item: any) => item.id === badge.id ? { ...item, status: badge.status === "Active" ? "Inactive" : "Active" } : item)); close(); }} />;
   }
   if (modal.type === "report") {
     const report = reports.find((item: any) => item.id === modal.id);
     return <ReportActions report={report} onCancel={close} onAction={(status: string) => { setReports(reports.map((item: any) => item.id === report.id ? { ...item, status } : item)); close(); }} />;
-  }
-  if (modal.type === "featured") {
-    const item = featured.find((entry: any) => entry.id === modal.id);
-    return <Confirm text={`${modal.action} ${item.title}?`} detail="This mock action updates local featured content state." action={modal.action} onCancel={close} onConfirm={() => { setFeatured(featured.map((entry: any) => entry.id === item.id ? { ...entry, status: modal.action === "Remove" ? "Removed" : "Active" } : entry)); close(); }} />;
   }
   if (modal.type === "audit") return <Details data={audit.find((item: any) => item.id === modal.id)} />;
   if (modal.type === "activity") return <Details data={{ Activity: modal.title, Detail: modal.detail }} />;
@@ -516,9 +569,9 @@ function ModalBody(props: any) {
 function modalTitle(modal: Exclude<ModalState, null>) {
   if (modal.type.includes("user")) return "User Details";
   if (modal.type.includes("moderator")) return "Moderator Assignment";
+  if (modal.type.includes("featured")) return "Featured Content";
   if (modal.type.includes("badge")) return "Recognition Badge";
   if (modal.type === "report") return "Report Actions";
-  if (modal.type === "featured") return "Featured Content";
   return "Details";
 }
 
@@ -531,7 +584,7 @@ function UserDetail({ user, setModal }: any) {
       </div>
       <Details data={{ College: user.college, Program: user.program, Role: user.role, Joined: user.joined, "Total submissions": user.submissions, "Approved works": user.approved, "Pending works": user.pending, "Reports received": user.reports, Recognitions: user.recognitions, Notes: user.notes }} />
       <Panel title="Recent Activity">{user.activity.map((item: string) => <p key={item} className="rounded-xl bg-secondary-surface p-3 text-sm font-bold">{item}</p>)}</Panel>
-      <button onClick={() => setModal({ type: "user-confirm", id: user.id, action: user.status === "Suspended" ? "Restore" : "Suspend" })} className={`w-full rounded-xl py-3 text-sm font-black text-white ${user.status === "Suspended" ? "bg-status-approved" : "bg-status-rejected"}`}>
+      <button onClick={() => setModal({ type: "user-confirm", id: user.id, action: user.status === "Suspended" ? "Restore" : "Suspend" })} className={`w-full rounded-xl py-3 text-sm font-black text-white ${user.status === "Suspended" ? "cc-primary-action bg-status-approved" : "cc-danger-action bg-status-rejected"}`}>
         {user.status === "Suspended" ? "Restore User" : "Suspend User"}
       </button>
     </div>
@@ -541,6 +594,11 @@ function UserDetail({ user, setModal }: any) {
 function ModeratorForm({ moderator, onCancel, onSubmit }: any) {
   const [form, setForm] = useState({ name: moderator?.name ?? "", email: moderator?.email ?? "", area: moderator?.area ?? "", contentTypes: moderator?.contentTypes ?? "Works, Reports", workloadLimit: moderator?.workloadLimit ?? "30/week", permissions: moderator?.permissions ?? "Review, Decide", startDate: "", status: moderator?.status ?? "Active" });
   return <FormShell form={form} setForm={setForm} fields={["name", "email", "area", "contentTypes", "workloadLimit", "permissions", "startDate", "status"]} onCancel={onCancel} onSubmit={onSubmit} submitLabel={moderator ? "Save Assignment" : "Add Moderator"} />;
+}
+
+function FeaturedContentForm({ onCancel, onSubmit }: any) {
+  const [form, setForm] = useState({ title: "", type: "Artwork", placement: "Homepage Hero", owner: "", status: "Draft" });
+  return <FormShell form={form} setForm={setForm} fields={["title", "type", "placement", "owner", "status"]} onCancel={onCancel} onSubmit={onSubmit} submitLabel="Add Featured Content" />;
 }
 
 function BadgeForm({ badge, onCancel, onSubmit }: any) {
@@ -555,22 +613,35 @@ function FormShell({ form, setForm, fields, onCancel, onSubmit, submitLabel }: a
         <Input key={field} label={field.replace(/([A-Z])/g, " $1")} value={form[field]} onChange={(value) => setForm({ ...form, [field]: value })} />
       ))}
       <div className="grid grid-cols-2 gap-2 pt-3">
-        <button onClick={onCancel} className="rounded-xl border border-border py-3 font-black">Cancel</button>
-        <button onClick={() => onSubmit(form)} className="rounded-xl bg-pup-maroon py-3 font-black text-white">{submitLabel}</button>
+        <button onClick={onCancel} className="cc-control rounded-xl border border-border py-3 font-black">Cancel</button>
+        <button onClick={() => onSubmit(form)} className="cc-primary-action rounded-xl bg-pup-maroon py-3 font-black text-white">{submitLabel}</button>
       </div>
     </div>
   );
 }
 
-function Confirm({ text, detail, action, reason, onCancel, onConfirm }: any) {
+function Confirm({ text, detail, record, action, reason, destructive, onCancel, onConfirm }: any) {
   return (
     <div className="space-y-4">
+      <div className={`rounded-2xl border p-4 ${destructive ? "border-status-rejected/40 bg-status-rejected/10" : "border-status-pending/40 bg-soft-gold"}`}>
+        <div className="flex items-start gap-3">
+          <div className={`rounded-xl p-2 ${destructive ? "bg-status-rejected text-white" : "bg-status-pending text-white"}`}>
+            {destructive ? <AlertTriangle size={18} /> : <ShieldCheck size={18} />}
+          </div>
+          <div className="min-w-0">
+            <p className={`text-xs font-black uppercase tracking-wide ${destructive ? "text-status-rejected" : "text-warm-gold"}`}>
+              {destructive ? "High-impact action" : "Confirmation required"}
+            </p>
+            {record && <p className="mt-1 break-words text-sm font-black text-primary-text">{record}</p>}
+          </div>
+        </div>
+      </div>
       <p className="text-lg font-black">{text}</p>
       <p className="text-sm text-secondary-text">{detail}</p>
       {reason && <textarea rows={3} className="w-full rounded-xl border border-border bg-secondary-surface px-4 py-3 text-sm" placeholder="Optional mock reason" />}
       <div className="grid grid-cols-2 gap-2">
-        <button onClick={onCancel} className="rounded-xl border border-border py-3 font-black">Cancel</button>
-        <button onClick={onConfirm} className="rounded-xl bg-pup-maroon py-3 font-black text-white">{action}</button>
+        <button onClick={onCancel} className="cc-control rounded-xl border border-border py-3 font-black">Cancel</button>
+        <button onClick={onConfirm} className={`${destructive ? "cc-danger-action bg-status-rejected" : "cc-primary-action bg-pup-maroon"} rounded-xl py-3 font-black text-white`}>{action}</button>
       </div>
     </div>
   );
@@ -581,33 +652,46 @@ function ReportActions({ report, onCancel, onAction }: any) {
     <div className="space-y-4">
       <Details data={report} />
       <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
-        {["Assigned", "Resolved", "Dismissed"].map((action) => <button key={action} onClick={() => onAction(action)} className="rounded-xl bg-pup-maroon py-3 text-sm font-black text-white">{action}</button>)}
+        {["Assigned", "Resolved", "Dismissed"].map((action) => <button key={action} onClick={() => onAction(action)} className="cc-primary-action rounded-xl bg-pup-maroon py-3 text-sm font-black text-white">{action}</button>)}
       </div>
-      <button onClick={onCancel} className="w-full rounded-xl border border-border py-3 font-black">Cancel</button>
+      <button onClick={onCancel} className="cc-control w-full rounded-xl border border-border py-3 font-black">Cancel</button>
     </div>
   );
 }
 
 function NavButton({ item, active, onNavigate }: any) {
   const Icon = icons[item as AdminDestination];
-  return <button onClick={() => onNavigate(item)} className={`w-full flex items-center gap-3 rounded-lg border-l-4 px-3 py-2.5 text-sm font-bold ${active ? "bg-white/10 text-white border-pup-gold" : "border-transparent text-white/65 hover:bg-white/5 hover:text-white"}`}><Icon size={18} />{labels[item as AdminDestination]}</button>;
+  return <button onClick={() => onNavigate(item)} className={`w-full flex items-center gap-3 rounded-lg border-l-4 px-3 py-2.5 text-sm font-bold ${active ? "bg-white/10 text-white border-pup-gold shadow-inner" : "border-transparent text-white/65 hover:bg-white/5 hover:text-white hover:border-white/20"}`}><Icon size={18} />{labels[item as AdminDestination]}</button>;
+}
+
+function AdminBreadcrumb({ destination, onNavigate }: { destination: AdminDestination; onNavigate: (destination: AdminDestination) => void }) {
+  const current = destination === "userDetail" ? "View User" : labels[destination];
+  return (
+    <nav aria-label="Breadcrumb" className="mb-0.5 flex items-center gap-2 text-[11px] font-bold text-secondary-text">
+      <button type="button" onClick={() => onNavigate("dashboard")} className="rounded text-pup-maroon hover:underline">
+        Super Admin
+      </button>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page" className="text-primary-text">{current}</span>
+    </nav>
+  );
 }
 
 function MobileAdminNav({ destination, onNavigate }: { destination: AdminDestination; onNavigate: (destination: AdminDestination) => void }) {
   const [showMore, setShowMore] = useState(false);
   return (
     <>
-      {showMore && <div className="absolute bottom-[72px] left-1/2 z-50 w-[366px] -translate-x-1/2 rounded-2xl border border-border bg-white shadow-2xl overflow-hidden">{mobileMore.map((item) => <button key={item} onClick={() => { setShowMore(false); onNavigate(item); }} className="flex w-full items-center gap-3 border-b border-border px-4 py-3 text-left text-sm font-black last:border-0">{React.createElement(icons[item], { size: 18, className: "text-pup-maroon" })}{labels[item]}</button>)}</div>}
+      {showMore && <div className="absolute bottom-[72px] left-1/2 z-50 max-h-[330px] w-[366px] -translate-x-1/2 rounded-2xl border border-border bg-white shadow-2xl overflow-hidden">{mobileMore.map((item) => <button key={item} onClick={() => { setShowMore(false); onNavigate(item); }} className="flex w-full items-center gap-3 border-b border-border px-4 py-3 text-left text-sm font-black last:border-0 hover:bg-soft-maroon">{React.createElement(icons[item], { size: 18, className: "text-pup-maroon" })}{labels[item]}</button>)}</div>}
       <nav className="absolute bottom-0 left-0 z-40 flex h-[68px] w-full items-center justify-around border-t border-white/10 bg-dark-surface px-2">
-        {mobilePrimary.map((item) => <button key={item} onClick={() => onNavigate(item)} className={`flex min-w-0 flex-1 flex-col items-center gap-1 text-[9px] font-black uppercase ${destination === item ? "text-pup-gold" : "text-white/60"}`}>{React.createElement(icons[item], { size: 20 })}<span>{labels[item]}</span></button>)}
-        <button onClick={() => setShowMore((value) => !value)} className={`flex min-w-0 flex-1 flex-col items-center gap-1 text-[9px] font-black uppercase ${mobileMore.includes(destination) ? "text-pup-gold" : "text-white/60"}`}><MoreHorizontal size={20} /><span>More</span></button>
+        {mobilePrimary.map((item) => <button key={item} onClick={() => onNavigate(item)} className={`flex min-w-0 flex-1 flex-col items-center gap-1 rounded-lg py-1 text-[9px] font-black uppercase ${destination === item ? "bg-white/10 text-pup-gold shadow-inner" : "text-white/60 hover:bg-white/5 hover:text-white"}`}>{React.createElement(icons[item], { size: 20 })}<span>{labels[item]}</span></button>)}
+        <button onClick={() => setShowMore((value) => !value)} className={`flex min-w-0 flex-1 flex-col items-center gap-1 rounded-lg py-1 text-[9px] font-black uppercase ${mobileMore.includes(destination) ? "bg-white/10 text-pup-gold shadow-inner" : "text-white/60 hover:bg-white/5 hover:text-white"}`}><MoreHorizontal size={20} /><span>More</span></button>
       </nav>
     </>
   );
 }
 
 function SectionHeader({ title, subtitle, action, onAction }: any) {
-  return <section className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"><div><h2 className="text-2xl font-black">{title}</h2><p className="mt-1 text-sm text-secondary-text">{subtitle}</p></div>{action && <button onClick={onAction} className="inline-flex items-center justify-center gap-2 rounded-xl bg-pup-maroon px-4 py-3 text-sm font-black text-white"><Plus size={18} />{action}</button>}</section>;
+  return <section className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"><div><h2 className="text-2xl font-black">{title}</h2><p className="mt-1 text-sm text-secondary-text">{subtitle}</p></div>{action && <button onClick={onAction} className="cc-primary-action inline-flex items-center justify-center gap-2 rounded-xl bg-pup-maroon px-4 py-3 text-sm font-black text-white"><Plus size={18} />{action}</button>}</section>;
 }
 
 function SearchBox({ query, setQuery }: any) {
@@ -631,7 +715,6 @@ function UserCard({ user, setModal }: any) {
 }
 
 function ReportCard({ report, setModal }: any) { return <RecordCard title={report.id} meta={`${report.target} • ${report.reason}`} chip={report.status} actions={[["View Report", () => setModal({ type: "report", id: report.id })], ["Assign/Resolve", () => setModal({ type: "report", id: report.id })]]} />; }
-function FeatureCard({ item, setModal }: any) { return <RecordCard title={item.title} meta={`${item.area} • ${item.owner}`} chip={item.status} actions={[["Edit", () => setModal({ type: "featured", id: item.id, action: "Edit" })], ["Remove", () => setModal({ type: "featured", id: item.id, action: "Remove" })]]} />; }
 function BadgeCard({ badge, setModal }: any) { return <RecordCard title={badge.name} meta={`${badge.category} • ${badge.visibility}`} chip={badge.status} icon={<BadgeCheck size={18} />} actions={[["View", () => setModal({ type: "badge-view", id: badge.id })], ["Edit", () => setModal({ type: "badge-edit", id: badge.id })], [badge.status === "Active" ? "Archive" : "Activate", () => setModal({ type: "badge-archive", id: badge.id })]]} />; }
 function AuditCard({ entry, setModal }: any) { return <RecordCard title={entry.activity} meta={`${entry.actor} • ${entry.type} • ${entry.date}`} chip={entry.type} actions={[["View Details", () => setModal({ type: "audit", id: entry.id })]]} />; }
 
@@ -640,7 +723,7 @@ function RecordCard({ title, meta, chip, actions, icon }: any) {
 }
 
 function ActionButtons({ actions, block }: any) {
-  return <div className={`mt-4 flex flex-wrap gap-2 ${block ? "" : "mt-0"}`}>{actions.map(([label, action]: any) => <button key={label} onClick={action} className="rounded-lg border border-border px-3 py-1.5 text-xs font-black text-pup-maroon">{label}</button>)}</div>;
+  return <div className={`mt-4 flex flex-wrap gap-2 ${block ? "" : "mt-0"}`}>{actions.map(([label, action]: any) => <button key={label} onClick={action} className={`cc-control rounded-lg border border-border px-3 py-1.5 text-xs font-black ${["Suspend", "Remove", "Archive"].includes(label) ? "text-status-rejected" : "text-pup-maroon"}`}>{label}</button>)}</div>;
 }
 
 function RecordGrid({ mobile, children }: any) { return <section className={mobile ? "space-y-3" : "grid grid-cols-2 xl:grid-cols-3 gap-4"}>{children}</section>; }

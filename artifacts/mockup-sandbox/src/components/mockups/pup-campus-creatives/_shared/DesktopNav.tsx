@@ -47,7 +47,7 @@ export function DesktopNav({ authenticated = false, active = "Home", onLogin, on
         <a
           href={routePaths.student.home}
           onClick={(event) => handleNavigate(event, routePaths.student.home)}
-          className="flex items-center gap-2 text-pup-maroon text-xl tracking-tight"
+          className="flex items-center gap-2 rounded-lg px-2 py-1 text-pup-maroon text-xl tracking-tight"
           aria-label="Go to Student Home"
         >
           <span className="font-bold font-inter">PUP:</span>
@@ -65,7 +65,7 @@ export function DesktopNav({ authenticated = false, active = "Home", onLogin, on
               className={`${
                 activeName === link.name
                   ? "text-pup-maroon font-semibold border-b-2 border-pup-gold pb-1"
-                  : "hover:text-pup-maroon transition-colors"
+                  : "hover:text-pup-maroon hover:bg-soft-maroon/60 rounded-lg px-2 py-1 transition-colors"
               }`}
             >
               {link.name}
@@ -80,7 +80,7 @@ export function DesktopNav({ authenticated = false, active = "Home", onLogin, on
               <button
                 type="button"
                 onClick={() => navigateTo(routePaths.student.search)}
-                className="p-2 text-secondary-text hover:text-pup-maroon transition-colors rounded-full hover:bg-soft-maroon"
+                className="cc-control p-2 text-secondary-text hover:text-pup-maroon transition-colors rounded-full hover:bg-soft-maroon"
                 aria-label="Search"
               >
                 <Search size={20} />
@@ -88,7 +88,7 @@ export function DesktopNav({ authenticated = false, active = "Home", onLogin, on
               <a
                 href={routePaths.student.notifications}
                 onClick={(event) => handleNavigate(event, routePaths.student.notifications)}
-                className={`p-2 transition-colors rounded-full hover:bg-soft-maroon relative ${
+                className={`cc-control p-2 transition-colors rounded-full hover:bg-soft-maroon relative ${
                   activeName === "Notifications" ? "text-pup-maroon bg-soft-maroon" : "text-secondary-text hover:text-pup-maroon"
                 }`}
                 aria-label="Notifications"
@@ -100,7 +100,7 @@ export function DesktopNav({ authenticated = false, active = "Home", onLogin, on
               <a
                 href={routePaths.student.submit}
                 onClick={(event) => handleNavigate(event, routePaths.student.submit)}
-                className={`px-5 py-2.5 text-white font-medium rounded-[10px] hover:bg-deep-maroon transition-colors text-[15px] ${
+                className={`cc-primary-action px-5 py-2.5 text-white font-medium rounded-[10px] hover:bg-deep-maroon transition-colors text-[15px] ${
                   activeName === "Submit Work" ? "bg-deep-maroon ring-2 ring-pup-gold/70" : "bg-pup-maroon"
                 }`}
                 aria-current={activeName === "Submit Work" ? "page" : undefined}
@@ -127,7 +127,7 @@ export function DesktopNav({ authenticated = false, active = "Home", onLogin, on
                   event.preventDefault();
                   onLogin ? onLogin() : navigateTo(routePaths.public.login);
                 }}
-                className="text-[15px] font-medium text-primary-text hover:text-pup-maroon transition-colors px-4 py-2"
+                className="rounded-lg text-[15px] font-medium text-primary-text hover:text-pup-maroon hover:bg-soft-maroon/60 transition-colors px-4 py-2"
               >
                 Log In
               </a>
@@ -137,7 +137,7 @@ export function DesktopNav({ authenticated = false, active = "Home", onLogin, on
                   event.preventDefault();
                   onRegister ? onRegister() : navigateTo(routePaths.public.register);
                 }}
-                className="px-5 py-2.5 bg-pup-maroon text-white font-medium rounded-[10px] hover:bg-deep-maroon transition-colors text-[15px]"
+                className="cc-primary-action px-5 py-2.5 bg-pup-maroon text-white font-medium rounded-[10px] hover:bg-deep-maroon transition-colors text-[15px]"
               >
                 Join Campus Creatives
               </a>

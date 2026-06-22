@@ -14,6 +14,7 @@ import {
   Star,
   Tag,
   Users,
+  X,
   XCircle,
 } from "lucide-react";
 import { ModeratorMobileBottomNav } from "./_shared/ModeratorMobileBottomNav";
@@ -82,6 +83,75 @@ function Shell({
     </div>
   );
 }
+
+type MobileModeratorEventItem = {
+  id: number;
+  title: string;
+  status: string;
+  organizer: string;
+  count: string;
+  deadline: string;
+  startDate: string;
+  endDate: string;
+  venue: string;
+  description: string;
+  image: string;
+};
+
+type MobileEventFormState = Pick<MobileModeratorEventItem, "title" | "status" | "organizer" | "deadline" | "startDate" | "endDate" | "venue" | "description">;
+
+const mobileModeratorEvents: MobileModeratorEventItem[] = [
+  {
+    id: 1,
+    title: "PUP Likha 2026",
+    status: "Open",
+    organizer: "PUP OSA",
+    count: "89 submissions",
+    deadline: "2026-06-30",
+    startDate: "2026-07-05",
+    endDate: "2026-07-12",
+    venue: "PUP Main Library Gallery",
+    description: "University-wide creative showcase for student visual, digital, and performance works.",
+    image: "/__mockup/images/event_1.jpg",
+  },
+  {
+    id: 2,
+    title: "Sinta Short Film Festival",
+    status: "Draft",
+    organizer: "CAL",
+    count: "34 submissions",
+    deadline: "2026-07-15",
+    startDate: "2026-08-01",
+    endDate: "2026-08-03",
+    venue: "Claro M. Recto Hall",
+    description: "Short film festival for student productions and campus narratives.",
+    image: "/__mockup/images/event_2.jpg",
+  },
+  {
+    id: 3,
+    title: "Guhit Iskolar",
+    status: "Closing soon",
+    organizer: "CCIS",
+    count: "67 submissions",
+    deadline: "2026-06-25",
+    startDate: "2026-06-28",
+    endDate: "2026-07-02",
+    venue: "Online gallery",
+    description: "Digital illustration call for PUP artists exploring identity, learning, and service.",
+    image: "/__mockup/images/event_3.jpg",
+  },
+];
+
+const toMobileEventForm = (event: MobileModeratorEventItem): MobileEventFormState => ({
+  title: event.title,
+  status: event.status,
+  organizer: event.organizer,
+  deadline: event.deadline,
+  startDate: event.startDate,
+  endDate: event.endDate,
+  venue: event.venue,
+  description: event.description,
+});
 
 export function OfficialContentReviewPageMobile(props: ModeratorMobileProps = {}) {
   const createdItem = (() => {
@@ -248,11 +318,74 @@ export function ModerationHistoryPageMobile(props: ModeratorMobileProps = {}) {
 }
 
 export function ModeratorEventsPageMobile(props: ModeratorMobileProps = {}) {
-  const events = [
-    ["PUP Likha 2026", "Open", "PUP OSA", "89 submissions", "June 30, 2026", "/__mockup/images/event_1.jpg"],
-    ["Sinta Short Film Festival", "Draft", "CAL", "34 submissions", "July 15, 2026", "/__mockup/images/event_2.jpg"],
-    ["Guhit Iskolar", "Closing soon", "CCIS", "67 submissions", "June 25, 2026", "/__mockup/images/event_3.jpg"],
-  ];
+  const [events, setEvents] = useState(mobileModeratorEvents);
+  const [editingId, setEditingId] = useState<number | null>(null);
+  const [form, setForm] = useState<MobileEventFormState>(toMobileEventForm(mobileModeratorEvents[0]));
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [saving, setSaving] = useState(false);
+  const [showDiscard, setShowDiscard] = useState(false);
+
+  const selectedEvent = events.find((event) => event.id === editingId) ?? null;
+  const dirty = selectedEvent ? JSON.stringify(form) !== JSON.stringify(toMobileEventForm(selectedEvent)) : false;
+
+  const openEdit = (event: MobileModeratorEventItem) => {
+    setEditingId(event.id);
+    setForm(toMobileEventForm(event));
+    setErrors({});
+    setShowDiscard(false);
+  };
+
+  const update = (field: keyof MobileEventFormState, value: string) => {
+    setForm((current) => ({ ...current, [field]: value }));
+    setErrors((current) => {
+      const next = { ...current };
+      delete next[field];
+      return next;
+    });
+  };
+
+  const validate = () => {
+    const nextErrors: Record<string, string> = {};
+    if (!form.title.trim()) nextErrors.title = "Title is required.";
+    if (!form.organizer.trim()) nextErrors.organizer = "Organizer is required.";
+    if (!form.deadline) nextErrors.deadline = "Deadline is required.";
+    if (!form.startDate) nextErrors.startDate = "Start date is required.";
+    if (!form.endDate) nextErrors.endDate = "End date is required.";
+    if (!form.venue.trim()) nextErrors.venue = "Venue is required.";
+    if (!form.description.trim()) nextErrors.description = "Description is required.";
+    if (form.startDate && form.endDate && form.endDate < form.startDate) nextErrors.endDate = "End must be after start.";
+    if (form.deadline && form.endDate && form.deadline > form.endDate) nextErrors.deadline = "Deadline must be before end.";
+    setErrors(nextErrors);
+    return Object.keys(nextErrors).length === 0;
+  };
+
+  const closeEdit = () => {
+    setEditingId(null);
+    setShowDiscard(false);
+    setSaving(false);
+  };
+
+  const requestClose = () => {
+    if (dirty) {
+      setShowDiscard(true);
+      return;
+    }
+    closeEdit();
+  };
+
+  const saveEvent = () => {
+    if (!selectedEvent || !validate()) return;
+    setSaving(true);
+    window.setTimeout(() => {
+      setEvents((current) => current.map((event) => (event.id === selectedEvent.id ? { ...event, ...form } : event)));
+      closeEdit();
+    }, 350);
+  };
+
+  const fieldClass = (field: keyof MobileEventFormState) =>
+    `w-full min-w-0 rounded-xl border bg-secondary-surface px-3 py-3 text-sm outline-none transition-all focus:border-pup-maroon focus:ring-2 focus:ring-pup-maroon/20 ${
+      errors[field] ? "border-status-rejected" : "border-border"
+    }`;
 
   return (
     <Shell {...props} active="More" title="Events" subtitle="Manage moderator-created events">
@@ -263,8 +396,15 @@ export function ModeratorEventsPageMobile(props: ModeratorMobileProps = {}) {
       >
         <Plus size={18} /> Add Event
       </button>
-      {events.map(([title, status, organizer, count, deadline, image]) => (
-        <article key={title} className="rounded-2xl border border-border bg-card-bg overflow-hidden shadow-sm">
+      {events.map((event) => {
+        const title = event.title;
+        const status = event.status;
+        const organizer = event.organizer;
+        const count = event.count;
+        const deadline = event.deadline;
+        const image = event.image;
+        return (
+        <article key={event.id} className="rounded-2xl border border-border bg-card-bg overflow-hidden shadow-sm">
           <div className="h-28 bg-secondary-surface overflow-hidden">
             <img src={image} alt={`${title} event preview`} className="h-full w-full object-cover" />
           </div>
@@ -280,11 +420,123 @@ export function ModeratorEventsPageMobile(props: ModeratorMobileProps = {}) {
               <span className="font-bold text-secondary-text">Deadline</span>
               <span className="font-black text-primary-text">{deadline}</span>
             </div>
-            <button className="mt-3 w-full rounded-xl border border-border py-2 text-xs font-black text-pup-maroon">Edit event</button>
+            <button
+              type="button"
+              onClick={() => openEdit(event)}
+              className="mt-3 w-full rounded-xl border border-border py-2 text-xs font-black text-pup-maroon transition-all hover:bg-soft-maroon focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pup-maroon/30 active:scale-[0.98]"
+            >
+              Edit event
+            </button>
           </div>
         </article>
-      ))}
+        );
+      })}
+      {selectedEvent && (
+        <div className="absolute inset-0 z-[120] flex items-end bg-black/40">
+          <div className="max-h-[76vh] w-full overflow-y-auto rounded-t-3xl bg-card-bg p-5 shadow-2xl">
+            <div className="mb-4 flex items-start justify-between gap-3">
+              <div className="min-w-0">
+                <p className="text-[10px] font-black uppercase tracking-wide text-pup-maroon">Edit event</p>
+                <h2 className="text-lg font-black leading-tight text-primary-text">{selectedEvent.title}</h2>
+                <p className="mt-1 text-xs text-secondary-text">Local prototype changes only.</p>
+              </div>
+              <button
+                type="button"
+                onClick={requestClose}
+                className="rounded-full border border-border p-2 text-secondary-text transition-all hover:bg-secondary-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pup-maroon/30 active:scale-95"
+                aria-label="Close edit event sheet"
+              >
+                <X size={16} />
+              </button>
+            </div>
+            <div className="space-y-3">
+              <MobileEditField label="Title" error={errors.title}>
+                <input value={form.title} onChange={(event) => update("title", event.target.value)} className={fieldClass("title")} />
+              </MobileEditField>
+              <div className="grid grid-cols-2 gap-3">
+                <MobileEditField label="Status" error={errors.status}>
+                  <select value={form.status} onChange={(event) => update("status", event.target.value)} className={fieldClass("status")}>
+                    <option>Draft</option>
+                    <option>Open</option>
+                    <option>Closing soon</option>
+                    <option>Scheduled</option>
+                  </select>
+                </MobileEditField>
+                <MobileEditField label="Organizer" error={errors.organizer}>
+                  <input value={form.organizer} onChange={(event) => update("organizer", event.target.value)} className={fieldClass("organizer")} />
+                </MobileEditField>
+              </div>
+              <MobileEditField label="Venue" error={errors.venue}>
+                <input value={form.venue} onChange={(event) => update("venue", event.target.value)} className={fieldClass("venue")} />
+              </MobileEditField>
+              <MobileEditField label="Start date" error={errors.startDate}>
+                <input type="date" value={form.startDate} onChange={(event) => update("startDate", event.target.value)} className={fieldClass("startDate")} />
+              </MobileEditField>
+              <MobileEditField label="End date" error={errors.endDate}>
+                <input type="date" value={form.endDate} onChange={(event) => update("endDate", event.target.value)} className={fieldClass("endDate")} />
+              </MobileEditField>
+              <MobileEditField label="Deadline" error={errors.deadline}>
+                <input type="date" value={form.deadline} onChange={(event) => update("deadline", event.target.value)} className={fieldClass("deadline")} />
+              </MobileEditField>
+              <MobileEditField label="Description" error={errors.description}>
+                <textarea value={form.description} onChange={(event) => update("description", event.target.value)} rows={3} className={fieldClass("description")} />
+              </MobileEditField>
+            </div>
+            <div className="sticky bottom-0 -mx-5 mt-5 grid grid-cols-2 gap-2 border-t border-border bg-card-bg p-5">
+              <button
+                type="button"
+                onClick={requestClose}
+                className="rounded-xl border border-border py-3 text-sm font-black transition-all hover:bg-secondary-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pup-maroon/30 active:scale-[0.98]"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={saveEvent}
+                disabled={saving}
+                className="rounded-xl bg-pup-maroon py-3 text-sm font-black text-white transition-all hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pup-maroon/30 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                {saving ? "Saving..." : "Save"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {showDiscard && (
+        <div className="absolute inset-0 z-[130] flex items-end bg-black/45">
+          <div className="w-full rounded-t-3xl bg-card-bg p-6 shadow-2xl">
+            <h2 className="text-lg font-black text-primary-text">Discard event edits?</h2>
+            <p className="mt-2 text-sm text-secondary-text">Unsaved changes to {selectedEvent?.title ?? "this event"} will be lost.</p>
+            <div className="mt-5 grid grid-cols-2 gap-2">
+              <button
+                type="button"
+                onClick={() => setShowDiscard(false)}
+                className="rounded-xl border border-border py-3 font-bold transition-all hover:bg-secondary-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pup-maroon/30 active:scale-[0.98]"
+              >
+                Keep Editing
+              </button>
+              <button
+                type="button"
+                onClick={closeEdit}
+                className="rounded-xl bg-status-rejected py-3 font-bold text-white transition-all hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-status-rejected/30 active:scale-[0.98]"
+              >
+                Discard
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </Shell>
+  );
+}
+
+function MobileEditField({ label, error, children }: { label: string; error?: string; children: React.ReactNode }) {
+  return (
+    <label className="block min-w-0">
+      <span className="mb-1 block text-[11px] font-black uppercase tracking-wide text-secondary-text">{label}</span>
+      {children}
+      {error && <p className="mt-1 text-[11px] font-bold text-status-rejected">{error}</p>}
+    </label>
   );
 }
 

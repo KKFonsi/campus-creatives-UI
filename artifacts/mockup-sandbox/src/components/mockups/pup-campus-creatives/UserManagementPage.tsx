@@ -256,8 +256,8 @@ function NavItem({ icon, label, active, onClick }: { icon: React.ReactNode, labe
 
 function FilterSelect({ label, options }: { label: string, options: string[] }) {
   return (
-    <select className="px-4 py-2.5 bg-card-bg border border-border rounded-xl text-sm font-medium focus:outline-none focus:border-pup-maroon transition-colors cursor-pointer min-w-[140px]">
-      <option value="" disabled selected>{label}</option>
+    <select defaultValue="" className="px-4 py-2.5 bg-card-bg border border-border rounded-xl text-sm font-medium focus:outline-none focus:border-pup-maroon transition-colors cursor-pointer min-w-[140px]">
+      <option value="" disabled>{label}</option>
       {options.map(opt => (
         <option key={opt} value={opt}>{opt}</option>
       ))}

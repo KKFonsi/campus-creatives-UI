@@ -135,8 +135,8 @@ export default function SubmitWorkPage({ onSubmitted }: SubmitWorkPageProps = {}
                 <div className="grid grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <label className="text-sm font-bold text-primary-text">Content Type</label>
-                    <select className="w-full px-4 py-3 bg-white border border-border rounded-xl appearance-none outline-none focus:border-pup-maroon transition-all">
-                      <option selected>Artwork</option>
+                    <select defaultValue="Artwork" className="w-full px-4 py-3 bg-white border border-border rounded-xl appearance-none outline-none focus:border-pup-maroon transition-all">
+                      <option>Artwork</option>
                       <option>Project</option>
                       <option>Performance</option>
                       <option>Writing</option>
@@ -349,16 +349,16 @@ export default function SubmitWorkPage({ onSubmitted }: SubmitWorkPageProps = {}
                 <div className="grid grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <label className="text-sm font-bold text-primary-text">Portfolio Collection</label>
-                    <select className="w-full px-4 py-3 bg-white border border-border rounded-xl appearance-none outline-none focus:border-pup-maroon transition-all">
-                      <option selected>UI/UX and Multimedia</option>
+                    <select defaultValue="UI/UX and Multimedia" className="w-full px-4 py-3 bg-white border border-border rounded-xl appearance-none outline-none focus:border-pup-maroon transition-all">
+                      <option>UI/UX and Multimedia</option>
                       <option>Featured Highlights</option>
                       <option>Academic Projects</option>
                     </select>
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-bold text-primary-text">Content Language</label>
-                    <select className="w-full px-4 py-3 bg-white border border-border rounded-xl appearance-none outline-none focus:border-pup-maroon transition-all">
-                      <option selected>Filipino/English (Mixed)</option>
+                    <select defaultValue="Filipino/English (Mixed)" className="w-full px-4 py-3 bg-white border border-border rounded-xl appearance-none outline-none focus:border-pup-maroon transition-all">
+                      <option>Filipino/English (Mixed)</option>
                       <option>Filipino</option>
                       <option>English</option>
                     </select>

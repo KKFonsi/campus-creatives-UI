@@ -1,13 +1,6 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { 
-  LayoutDashboard, 
-  ClipboardList, 
-  Flag, 
   Star, 
-  Shield, 
-  History, 
-  ChevronRight,
-  Bell,
   Search,
   Plus,
   Calendar,
@@ -36,58 +29,6 @@ interface ModeratorNavigationProps {
   onEvents?: () => void;
 }
 
-const ModeratorSidebar = ({ active, navigation }: { active: string; navigation?: ModeratorNavigationProps }) => (
-  <aside className="w-[240px] bg-dark-surface text-white flex flex-col flex-shrink-0 min-h-screen">
-    <div className="p-6">
-      <div className="text-pup-gold font-bold text-xl tracking-tight leading-tight mb-1">
-        CAMPUS<br />CREATIVES
-      </div>
-      <div className="inline-block bg-white/10 text-pup-gold text-[10px] font-bold px-2 py-0.5 rounded tracking-wider uppercase">
-        Moderator
-      </div>
-    </div>
-    
-    <nav className="flex-1 px-3 space-y-1">
-      {[
-        { id: 'Dashboard', icon: LayoutDashboard, label: 'Dashboard', onClick: navigation?.onDashboard },
-        { id: 'Pending Reviews', icon: ClipboardList, label: 'Pending Reviews', badge: '24', onClick: navigation?.onPending },
-        { id: 'Reports', icon: Flag, label: 'Reports', badge: '6', onClick: navigation?.onReports },
-        { id: 'Featured Works', icon: Star, label: 'Featured Works', onClick: navigation?.onFeatured },
-        { id: 'Official Content', icon: Shield, label: 'Official Content', onClick: navigation?.onOfficialContent },
-        { id: 'Events', icon: Calendar, label: 'Events', onClick: navigation?.onEvents },
-        { id: 'Moderation History', icon: History, label: 'Moderation History', onClick: navigation?.onHistory },
-      ].map((item) => (
-        <button
-          key={item.id}
-          onClick={item.onClick}
-          className={`w-full flex items-center justify-between border-l-4 px-3 py-2 rounded-lg transition-colors ${
-            active === item.id 
-              ? 'bg-white/10 text-white border-pup-gold' 
-              : 'border-transparent text-white/70 hover:bg-white/5 hover:text-white'
-          }`}
-        >
-          <div className="flex items-center gap-3">
-            <item.icon size={18} />
-            <span className="text-sm font-medium">{item.label}</span>
-          </div>
-          {item.badge && (
-            <span className="bg-pup-maroon text-white text-[10px] px-1.5 py-0.5 rounded-full font-bold">
-              {item.badge}
-            </span>
-          )}
-        </button>
-      ))}
-    </nav>
-    
-    <div className="p-4 border-t border-white/10">
-      <button className="flex items-center gap-2 text-sm text-pup-gold hover:underline">
-        <span>Switch to Student View</span>
-        <ChevronRight size={14} />
-      </button>
-    </div>
-  </aside>
-);
-
 const TopBar = ({ role = "Moderator" }) => (
   <header className="h-16 bg-card-bg border-b border-border flex items-center justify-between px-6 sticky top-0 z-10">
     <div className="relative w-96">
@@ -100,11 +41,6 @@ const TopBar = ({ role = "Moderator" }) => (
     </div>
     
     <div className="flex items-center gap-4">
-      <button className="relative p-2 text-secondary-text hover:bg-secondary-surface rounded-full transition-colors">
-        <Bell size={20} />
-        <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-crimson-accent rounded-full border-2 border-card-bg"></span>
-      </button>
-      <div className="h-8 w-px bg-border mx-2"></div>
       <div className="flex items-center gap-3">
         <div className="text-right">
           <div className="text-sm font-semibold text-primary-text leading-tight text-right">Maria Moderator</div>
@@ -119,8 +55,19 @@ const TopBar = ({ role = "Moderator" }) => (
 export default function FeaturedWorksPage(props: ModeratorNavigationProps = {}) {
   const [showAddModal, setShowAddModal] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [addProcessing, setAddProcessing] = useState(false);
+  const [featureModal, setFeatureModal] = useState<
+    | { type: "edit"; id: number }
+    | { type: "delete"; id: number }
+    | { type: "discard"; id: number; next: () => void }
+    | null
+  >(null);
+  const [editForm, setEditForm] = useState({ title: "", type: "", dates: "", recognition: "" });
+  const [editErrors, setEditErrors] = useState<Record<string, string>>({});
+  const [processingAction, setProcessingAction] = useState<string | null>(null);
+  const featureTriggerRef = useRef<HTMLElement | null>(null);
 
-  const currentFeatures = [
+  const [features, setFeatures] = useState([
     {
       id: 1,
       title: "Digital Sinta",
@@ -165,7 +112,100 @@ export default function FeaturedWorksPage(props: ModeratorNavigationProps = {}) 
       recognition: "COC College Highlight",
       image: "/__mockup/images/thumbnail_4.jpg"
     }
-  ];
+  ]);
+
+  const openFeatureModal = (modal: Exclude<typeof featureModal, null>) => {
+    featureTriggerRef.current =
+      typeof document !== "undefined" && document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null;
+    if (modal.type === "edit") {
+      const item = features.find((feature) => feature.id === modal.id);
+      if (item) {
+        setEditForm({
+          title: item.title,
+          type: item.type,
+          dates: item.dates,
+          recognition: item.recognition,
+        });
+        setEditErrors({});
+      }
+    }
+    setFeatureModal(modal);
+  };
+
+  const closeFeatureModal = () => {
+    setFeatureModal(null);
+    setProcessingAction(null);
+    window.setTimeout(() => {
+      featureTriggerRef.current?.focus();
+      featureTriggerRef.current = null;
+    }, 0);
+  };
+
+  const selectedFeature =
+    featureModal && "id" in featureModal
+      ? features.find((feature) => feature.id === featureModal.id)
+      : null;
+
+  const editDirty =
+    Boolean(selectedFeature) &&
+    (editForm.title !== selectedFeature?.title ||
+      editForm.type !== selectedFeature?.type ||
+      editForm.dates !== selectedFeature?.dates ||
+      editForm.recognition !== selectedFeature?.recognition);
+
+  const validateEditFeature = () => {
+    const nextErrors: Record<string, string> = {};
+    if (!editForm.title.trim()) nextErrors.title = "Title is required.";
+    if (!editForm.type.trim()) nextErrors.type = "Select a content type.";
+    if (!editForm.dates.trim()) nextErrors.dates = "Date range is required.";
+    if (!editForm.recognition.trim()) nextErrors.recognition = "Recognition label is required.";
+    setEditErrors(nextErrors);
+    return Object.keys(nextErrors).length === 0;
+  };
+
+  const saveEditFeature = () => {
+    if (!selectedFeature || !validateEditFeature() || processingAction) return;
+    setProcessingAction("feature-save");
+    window.setTimeout(() => {
+      setFeatures((items) =>
+        items.map((item) =>
+          item.id === selectedFeature.id
+            ? { ...item, ...editForm }
+            : item,
+        ),
+      );
+      closeFeatureModal();
+    }, 550);
+  };
+
+  const deleteFeature = () => {
+    if (!selectedFeature || processingAction) return;
+    setProcessingAction("feature-delete");
+    window.setTimeout(() => {
+      setFeatures((items) => items.filter((item) => item.id !== selectedFeature.id));
+      closeFeatureModal();
+    }, 550);
+  };
+
+  const requestCloseEdit = () => {
+    if (editDirty) {
+      openFeatureModal({ type: "discard", id: selectedFeature?.id ?? 0, next: closeFeatureModal });
+      return;
+    }
+    closeFeatureModal();
+  };
+
+  const saveAddFeature = () => {
+    if (addProcessing) return;
+    setAddProcessing(true);
+    window.setTimeout(() => {
+      setShowAddModal(false);
+      setSearchQuery("");
+      setAddProcessing(false);
+    }, 550);
+  };
 
   const collegeHighlights = [
     { id: 'CAF', name: 'College of Accountancy and Finance', img: '/__mockup/images/colleges/caf-pup-main-building.jpg' },
@@ -222,16 +262,27 @@ export default function FeaturedWorksPage(props: ModeratorNavigationProps = {}) 
             </h2>
             <div className="p-4 bg-card-bg rounded-b-xl rounded-r-xl border border-border shadow-sm">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                {currentFeatures.map((item) => (
+                {features.map((item) => (
                   <div key={item.id} className="bg-white border border-border rounded-xl overflow-hidden group relative shadow-sm">
                     <div className="aspect-[3/2] bg-secondary-surface relative overflow-hidden">
                       <img src={item.image} alt={`${item.title} preview`} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent" />
                       <div className="absolute top-2 right-2 flex flex-col gap-1">
-                        <button className="p-1.5 bg-white/90 backdrop-blur-sm text-red-600 rounded-full hover:bg-white shadow-sm">
+                        <button
+                          type="button"
+                          onClick={() => openFeatureModal({ type: "delete", id: item.id })}
+                          disabled={processingAction === `delete-${item.id}`}
+                          aria-label={`Remove ${item.title}`}
+                          className="p-1.5 bg-white/90 backdrop-blur-sm text-red-600 rounded-full hover:bg-white shadow-sm"
+                        >
                           <Trash2 size={14} />
                         </button>
-                        <button className="p-1.5 bg-white/90 backdrop-blur-sm text-pup-maroon rounded-full hover:bg-white shadow-sm">
+                        <button
+                          type="button"
+                          onClick={() => openFeatureModal({ type: "edit", id: item.id })}
+                          aria-label={`Edit ${item.title}`}
+                          className="p-1.5 bg-white/90 backdrop-blur-sm text-pup-maroon rounded-full hover:bg-white shadow-sm"
+                        >
                           <Edit2 size={14} />
                         </button>
                       </div>
@@ -255,6 +306,20 @@ export default function FeaturedWorksPage(props: ModeratorNavigationProps = {}) 
                     </div>
                   </div>
                 ))}
+                {features.length === 0 && (
+                  <div className="col-span-full rounded-2xl border border-dashed border-border bg-secondary-surface p-8 text-center">
+                    <StarHalf className="mx-auto text-pup-maroon" size={34} />
+                    <h3 className="mt-3 text-lg font-black text-primary-text">No featured works yet.</h3>
+                    <p className="mt-1 text-sm text-secondary-text">Removed works disappear from this mock Featured Works list.</p>
+                    <button
+                      type="button"
+                      onClick={() => setShowAddModal(true)}
+                      className="cc-primary-action mt-4 rounded-xl bg-pup-maroon px-4 py-2 text-sm font-black text-white"
+                    >
+                      Add Feature
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           </section>
@@ -341,6 +406,102 @@ export default function FeaturedWorksPage(props: ModeratorNavigationProps = {}) 
           </div>
         </div>
       </main>
+
+      {featureModal && featureModal.type !== "discard" && selectedFeature && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/55 p-4">
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="moderator-feature-modal-title"
+            className="w-full max-w-lg rounded-2xl border border-border bg-card-bg p-6 shadow-2xl"
+          >
+            {featureModal.type === "delete" ? (
+              <div className="space-y-4">
+                <div className="rounded-2xl border border-status-rejected/30 bg-status-rejected/10 p-4">
+                  <p className="text-xs font-black uppercase tracking-wide text-status-rejected">Delete featured work</p>
+                  <h2 id="moderator-feature-modal-title" className="mt-1 text-xl font-black text-primary-text">{selectedFeature.title}</h2>
+                </div>
+                <p className="text-sm leading-relaxed text-secondary-text">
+                  This work will be removed from the Featured Works list for this mock session. The underlying student work is not deleted.
+                </p>
+                <div className="grid grid-cols-2 gap-3">
+                  <button type="button" onClick={closeFeatureModal} disabled={processingAction === "feature-delete"} className="cc-control rounded-xl border border-border py-3 text-sm font-black">
+                    Cancel
+                  </button>
+                  <button type="button" onClick={deleteFeature} disabled={processingAction === "feature-delete"} className="cc-danger-action rounded-xl bg-status-rejected py-3 text-sm font-black text-white">
+                    {processingAction === "feature-delete" ? "Deleting..." : "Remove Feature"}
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <h2 id="moderator-feature-modal-title" className="text-xl font-black text-primary-text">Edit Feature</h2>
+                    <p className="text-sm text-secondary-text">Update the mock feature details for {selectedFeature.title}.</p>
+                  </div>
+                  <button type="button" onClick={requestCloseEdit} className="rounded-full bg-secondary-surface p-2 text-secondary-text" aria-label="Close edit feature">
+                    <X size={18} />
+                  </button>
+                </div>
+                <div className="grid gap-3">
+                  {([
+                    ["title", "Title", "Title is required."],
+                    ["type", "Feature type", "Select a content type."],
+                    ["dates", "Date range", "Date range is required."],
+                    ["recognition", "Recognition label", "Recognition label is required."],
+                  ] as const).map(([key, label]) => (
+                    <label key={key} className="block">
+                      <span className="mb-1 flex items-center gap-1 text-[11px] font-black uppercase tracking-wide text-secondary-text">
+                        {label} <span aria-hidden="true" className="text-status-rejected">*</span>
+                      </span>
+                      <input
+                        value={editForm[key]}
+                        onChange={(event) => {
+                          setEditForm({ ...editForm, [key]: event.target.value });
+                          if (editErrors[key]) setEditErrors({ ...editErrors, [key]: "" });
+                        }}
+                        aria-invalid={Boolean(editErrors[key])}
+                        className={`w-full rounded-xl border bg-secondary-surface px-4 py-3 text-sm outline-none focus:border-pup-maroon ${editErrors[key] ? "border-status-rejected ring-2 ring-status-rejected/20" : "border-border"}`}
+                      />
+                      {editErrors[key] && (
+                        <p className="mt-1 flex items-center gap-1 text-xs font-bold text-status-rejected">
+                          <Info size={12} /> {editErrors[key]}
+                        </p>
+                      )}
+                    </label>
+                  ))}
+                </div>
+                <div className="grid grid-cols-2 gap-3 pt-2">
+                  <button type="button" onClick={requestCloseEdit} disabled={processingAction === "feature-save"} className="cc-control rounded-xl border border-border py-3 text-sm font-black">
+                    Cancel
+                  </button>
+                  <button type="button" onClick={saveEditFeature} disabled={!editForm.title.trim() || !editForm.type.trim() || !editForm.dates.trim() || !editForm.recognition.trim() || processingAction === "feature-save"} className="cc-primary-action rounded-xl bg-pup-maroon py-3 text-sm font-black text-white">
+                    {processingAction === "feature-save" ? "Saving..." : "Save Changes"}
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {featureModal?.type === "discard" && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/55 p-4">
+          <div role="dialog" aria-modal="true" className="w-full max-w-md rounded-2xl border border-border bg-card-bg p-6 shadow-2xl">
+            <h2 className="text-xl font-black text-primary-text">Discard changes?</h2>
+            <p className="mt-2 text-sm text-secondary-text">Your edited feature details have not been saved.</p>
+            <div className="mt-6 grid grid-cols-2 gap-3">
+              <button type="button" onClick={() => openFeatureModal({ type: "edit", id: featureModal.id })} className="cc-control rounded-xl border border-border py-3 text-sm font-black">
+                Stay Editing
+              </button>
+              <button type="button" onClick={featureModal.next} className="cc-danger-action rounded-xl bg-status-rejected py-3 text-sm font-black text-white">
+                Discard Changes
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Add Feature Modal */}
       {showAddModal && (
@@ -483,10 +644,11 @@ export default function FeaturedWorksPage(props: ModeratorNavigationProps = {}) 
                   Preview on Home
                 </button>
                 <button 
-                  onClick={() => setShowAddModal(false)}
-                  className="px-6 py-2 bg-pup-maroon text-white rounded-lg text-xs font-bold hover:bg-deep-maroon transition-colors shadow-sm uppercase tracking-widest"
+                  onClick={saveAddFeature}
+                  disabled={addProcessing}
+                  className="cc-primary-action px-6 py-2 bg-pup-maroon text-white rounded-lg text-xs font-bold hover:bg-deep-maroon transition-colors shadow-sm uppercase tracking-widest disabled:opacity-60"
                 >
-                  Save Feature
+                  {addProcessing ? "Saving..." : "Save Feature"}
                 </button>
               </div>
             </div>

@@ -2,7 +2,6 @@ import React from "react";
 import {
   Calendar,
   ClipboardList,
-  ExternalLink,
   Flag,
   History,
   LayoutDashboard,
@@ -89,8 +88,8 @@ export function ModeratorDesktopSidebar({
             onClick={() => (item.onClick ? item.onClick() : navigateTo(item.href))}
             className={`w-full flex items-center justify-between border-l-4 px-3 py-2.5 rounded-lg transition-all ${
               active === item.id
-                ? "bg-white/10 border-pup-gold text-white"
-                : "border-transparent text-gray-400 hover:bg-white/5 hover:text-white"
+                ? "bg-white/10 border-pup-gold text-white shadow-inner"
+                : "border-transparent text-gray-400 hover:bg-white/5 hover:text-white hover:border-white/20"
             }`}
             aria-current={active === item.id ? "page" : undefined}
           >
@@ -107,11 +106,8 @@ export function ModeratorDesktopSidebar({
         ))}
       </nav>
 
-      <div className="p-4 border-t border-white/10">
-        <button className="flex items-center gap-2 text-[14px] text-gray-400 hover:text-white transition-colors w-full px-3 py-2">
-          <span>Switch to Student View</span>
-          <ExternalLink size={14} />
-        </button>
+      <div className="p-4 border-t border-white/10 text-[11px] font-bold uppercase tracking-wide text-white/45">
+        Moderator tools only
       </div>
     </aside>
   );
